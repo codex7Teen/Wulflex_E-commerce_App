@@ -12,4 +12,5 @@ class AppTextStyles {
       fontSize: 14,
       fontWeight: FontWeight.bold);
   static TextStyle mediumText = TextStyle(fontSize: 16);
+  static TextStyle smallText = TextStyle(fontSize: 14);
 }
