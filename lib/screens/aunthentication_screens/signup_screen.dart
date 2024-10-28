@@ -154,23 +154,62 @@ class ScreenSignUp extends StatelessWidget {
                                           width: 0.4))))),
                     ],
                   ),
-                  SizedBox(height: 22),
+                  SizedBox(height: 25),
 
-                  // Login Button
+                  // Terms and conditions
+                  Row(
+                    children: [
+                      Text(
+                        "By signing up, you're agreeing to our",
+                        style: GoogleFonts.robotoCondensed(
+                            textStyle: AppTextStyles.smallText.copyWith(
+                                color: Colors.grey, letterSpacing: 0.6)),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        "Terms & Conditions",
+                        style: GoogleFonts.robotoCondensed(
+                            textStyle: AppTextStyles.smallText.copyWith(
+                                color: AppColors.greenThemeColor, letterSpacing: 0.6, fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "and",
+                        style: GoogleFonts.robotoCondensed(
+                            textStyle: AppTextStyles.smallText.copyWith(
+                                color: Colors.grey, letterSpacing: 0.6)),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        "Privacy Policy",
+                        style: GoogleFonts.robotoCondensed(
+                            textStyle: AppTextStyles.smallText.copyWith(
+                                color: AppColors.greenThemeColor, letterSpacing: 0.6, fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
+
+                  // Submit Button
                   GreenButtonWidget(buttonText: 'Submit'),
                   SizedBox(height: 22),
 
-                  // New User. Sign-UP text
+                  // Already signed up? login
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Joined us before?',
+                        'Already have an account?',
                         style: GoogleFonts.robotoCondensed(
                                 textStyle: AppTextStyles.mediumText)
                             .copyWith(
                                 color: AppColors.greyThemeColor,
-                                letterSpacing: 1),
+                                letterSpacing: 0.8),
                       ),
                       SizedBox(width: 5),
                       GestureDetector(
@@ -192,7 +231,7 @@ class ScreenSignUp extends StatelessWidget {
                                   textStyle: AppTextStyles.mediumText)
                               .copyWith(
                                   color: AppColors.greenThemeColor,
-                                  letterSpacing: 1)
+                                  letterSpacing: 0.8)
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),

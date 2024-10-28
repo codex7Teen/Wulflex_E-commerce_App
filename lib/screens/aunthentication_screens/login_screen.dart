@@ -6,8 +6,20 @@ import 'package:wulflex/screens/aunthentication_screens/signup_screen.dart';
 import 'package:wulflex/widgets/google_button.dart';
 import 'package:wulflex/widgets/green_button.dart';
 
-class ScreenLogin extends StatelessWidget {
+class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
+
+  @override
+  State<ScreenLogin> createState() => _ScreenLoginState();
+}
+
+class _ScreenLoginState extends State<ScreenLogin> {
+  // key
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // email text controller
+  final TextEditingController _emailTextController = TextEditingController();
+  // email text controller
+  final TextEditingController _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,169 +29,200 @@ class ScreenLogin extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 15),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 15),
 
-                  // image
-                  Center(
-                    child: Image.asset('assets/login_illustric.png',
-                        width: MediaQuery.sizeOf(context).width * 0.645),
-                  ),
-                  SizedBox(height: 40),
+                    // image
+                    Center(
+                      child: Image.asset('assets/login_illustric.png',
+                          width: MediaQuery.sizeOf(context).width * 0.645),
+                    ),
+                    SizedBox(height: 40),
 
-                  // heading
-                  Text('Login',
-                      style: GoogleFonts.bebasNeue(
-                              textStyle: AppTextStyles.headingLarge)
-                          .copyWith(letterSpacing: 1)),
-                  SizedBox(height: 14),
+                    // heading
+                    Text('Login',
+                        style: GoogleFonts.bebasNeue(
+                                textStyle: AppTextStyles.headingLarge)
+                            .copyWith(letterSpacing: 1)),
+                    SizedBox(height: 14),
 
-                  // email textfield
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: Icon(
-                          Icons.alternate_email_rounded,
-                          color: AppColors.greyThemeColor,
+                    // email textfield
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: Icon(
+                            Icons.alternate_email_rounded,
+                            color: AppColors.greyThemeColor,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: 'Email ID',
-                                  hintStyle: GoogleFonts.robotoCondensed(
-                                      textStyle: AppTextStyles.mediumText
-                                          .copyWith(
-                                              color: Colors.grey,
-                                              letterSpacing: 0.5)),
-                                  enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColors.greyThemeColor,
-                                          width: 0.4))))),
-                    ],
-                  ),
-                  SizedBox(height: 30),
+                        SizedBox(width: 10),
+                        Expanded(
+                            child: TextFormField(
+                                validator: (value) {
+                                  // Check if the field is empty
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter you email address';
+                                  }
+                                  // regular expression for email format
+                                  final RegExp emailRegex = RegExp(
+                                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                                  // Checking if the email matches the regular expression
+                                  if (!emailRegex.hasMatch(value)) {
+                                    return 'Please enter a valid email address';
+                                  }
+                                  return null;
+                                },
+                                controller: _emailTextController,
+                                decoration: InputDecoration(
+                                    hintText: 'Email ID',
+                                    hintStyle: GoogleFonts.robotoCondensed(
+                                        textStyle: AppTextStyles.mediumText
+                                            .copyWith(
+                                                color: Colors.grey,
+                                                letterSpacing: 0.5)),
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.greyThemeColor,
+                                            width: 0.4))))),
+                      ],
+                    ),
+                    SizedBox(height: 30),
 
-                  // password field
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Icon(
-                          Icons.lock_outline_rounded,
-                          color: AppColors.greyThemeColor,
+                    // password field
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Icon(
+                            Icons.lock_outline_rounded,
+                            color: AppColors.greyThemeColor,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                  suffixIcon: Icon(
-                                    Icons.visibility_off_sharp,
-                                    color: AppColors.greyThemeColor,
-                                  ),
-                                  hintText: 'Password',
-                                  hintStyle: GoogleFonts.robotoCondensed(
-                                      textStyle: AppTextStyles.mediumText
-                                          .copyWith(
-                                              color: Colors.grey,
-                                              letterSpacing: 0.5)),
-                                  enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: AppColors.greyThemeColor,
-                                          width: 0.4))))),
-                    ],
-                  ),
-                  SizedBox(height: 22),
+                        SizedBox(width: 10),
+                        Expanded(
+                            child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  return null;
+                                },
+                                controller: _passwordTextController,
+                                decoration: InputDecoration(
+                                    suffixIcon: Icon(
+                                      Icons.visibility_off_sharp,
+                                      color: AppColors.greyThemeColor,
+                                    ),
+                                    hintText: 'Password',
+                                    hintStyle: GoogleFonts.robotoCondensed(
+                                        textStyle: AppTextStyles.mediumText
+                                            .copyWith(
+                                                color: Colors.grey,
+                                                letterSpacing: 0.5)),
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.greyThemeColor,
+                                            width: 0.4))))),
+                      ],
+                    ),
+                    SizedBox(height: 22),
 
-                  // forgot password
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Text('Forgot Password?',
-                        style: GoogleFonts.robotoCondensed(
-                          textStyle: AppTextStyles.mediumText.copyWith(
-                              color: AppColors.greenThemeColor,
-                              letterSpacing: 0.5,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ),
-                  SizedBox(height: 22),
+                    // forgot password
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Text('Forgot Password?',
+                          style: GoogleFonts.robotoCondensed(
+                            textStyle: AppTextStyles.mediumText.copyWith(
+                                color: AppColors.greenThemeColor,
+                                letterSpacing: 0.5,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                    SizedBox(height: 22),
 
-                  // Login Button
-                  GreenButtonWidget(buttonText: 'Login'),
-                  SizedBox(height: 22),
+                    // Login Button
+                    GestureDetector(
+                      onTap: () {
+                        _formKey.currentState!.validate();
+                      },
+                        child: GreenButtonWidget(buttonText: 'Login')),
+                    SizedBox(height: 22),
 
-                  // OR divider with lines
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Divider(
-                              color: AppColors.greyThemeColor, thickness: 0.4)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          'OR',
-                          style: GoogleFonts.roboto(
-                              textStyle: AppTextStyles.smallText.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.greyThemeColor)),
-                        ),
-                      ),
-                      Expanded(
-                          child: Divider(
-                              color: AppColors.greyThemeColor, thickness: 0.4))
-                    ],
-                  ),
-                  SizedBox(height: 22),
-
-                  // Google Button
-                  GoogleButtonWidget(),
-                  SizedBox(height: 22),
-
-                  // New User. Sign-UP text
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'New to Wulflex?',
-                        style: GoogleFonts.robotoCondensed(
-                                textStyle: AppTextStyles.mediumText)
-                            .copyWith(
+                    // OR divider with lines
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Divider(
                                 color: AppColors.greyThemeColor,
-                                letterSpacing: 1),
-                      ),
-                      SizedBox(width: 5),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushReplacement(PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  ScreenSignUp(),
-                          transitionDuration: Duration(milliseconds: 400),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(
-                                opacity: animation, child: child);
-                          },
-                        )),
-                        child: Text(
-                          'Sign up',
+                                thickness: 0.4)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'OR',
+                            style: GoogleFonts.roboto(
+                                textStyle: AppTextStyles.smallText.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.greyThemeColor)),
+                          ),
+                        ),
+                        Expanded(
+                            child: Divider(
+                                color: AppColors.greyThemeColor,
+                                thickness: 0.4))
+                      ],
+                    ),
+                    SizedBox(height: 22),
+
+                    // Google Button
+                    GoogleButtonWidget(),
+                    SizedBox(height: 22),
+
+                    // New User. Sign-UP text
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'New to Wulflex?',
                           style: GoogleFonts.robotoCondensed(
                                   textStyle: AppTextStyles.mediumText)
                               .copyWith(
-                                  color: AppColors.greenThemeColor,
-                                  letterSpacing: 1)
-                              .copyWith(fontWeight: FontWeight.bold),
+                                  color: AppColors.greyThemeColor,
+                                  letterSpacing: 0.8),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () => Navigator.of(context)
+                              .pushReplacement(PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    ScreenSignUp(),
+                            transitionDuration: Duration(milliseconds: 400),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return FadeTransition(
+                                  opacity: animation, child: child);
+                            },
+                          )),
+                          child: Text(
+                            'Sign up',
+                            style: GoogleFonts.robotoCondensed(
+                                    textStyle: AppTextStyles.mediumText)
+                                .copyWith(
+                                    color: AppColors.greenThemeColor,
+                                    letterSpacing: 0.8)
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
