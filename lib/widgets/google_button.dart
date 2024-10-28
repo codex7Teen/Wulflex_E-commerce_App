@@ -17,7 +17,7 @@ class GoogleButtonWidget extends StatelessWidget {
                   child: Row(
                     children: [
                        SizedBox(width: 50),
-                      Image.asset('assets/pngwing.com.png', width: 32),
+                      Image.asset('assets/google_logo.png', width: 32),
                       SizedBox(width: 37),
                       Text(
                         'Login with Google',

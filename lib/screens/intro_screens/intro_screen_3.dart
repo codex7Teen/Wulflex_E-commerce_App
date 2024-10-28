@@ -5,19 +5,48 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/consts/app_colors.dart';
 import 'package:wulflex/consts/text_styles.dart';
 
-class ScreenIntro3 extends StatelessWidget {
+class ScreenIntro3 extends StatefulWidget {
   const ScreenIntro3({super.key});
+
+  @override
+  State<ScreenIntro3> createState() => _ScreenIntro3State();
+}
+
+class _ScreenIntro3State extends State<ScreenIntro3> {
+  // bool to shoow animation for image
+  bool _imageLoaded = false;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Background image
-        SizedBox.expand(
+        // Black placeholder background while image loads
+        Container(color: Colors.black),
+        
+        // Background image with fade
+        AnimatedOpacity(
+          opacity: _imageLoaded ? 1.0 : 0.0,
+          duration: Duration(milliseconds: 500),
+          child: SizedBox.expand(
             child: Image.asset(
-          'assets/intro_image_3.jpg',
-          fit: BoxFit.cover,
-        )),
+              'assets/intro_image_3.png',
+              fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (frame != null) {
+                  // Image has loaded
+                  Future.delayed(Duration(milliseconds: 100), () {
+                    if (mounted) {
+                      setState(() {
+                        _imageLoaded = true;
+                      });
+                    }
+                  });
+                }
+                return child;
+              },
+            ),
+          ),
+        ),
 
         // Applying blur
         Positioned.fill(

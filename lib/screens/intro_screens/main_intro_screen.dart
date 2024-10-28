@@ -24,6 +24,20 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
   bool onLastpage = false;
 
   @override
+  void initState() {
+    super.initState();
+    // Delaying the pre-caching to ensure the context is fully built
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
+        // pre-caching images to make them fully loaded
+        precacheImage(AssetImage('assets/intro_image_1.jpg'), context);
+        precacheImage(AssetImage('assets/intro_image_2.jpg'), context);
+        precacheImage(AssetImage('assets/intro_image_3.png'), context);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -60,11 +74,18 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
                   child: GestureDetector(
                       onTap: () {
                         onLastpage
-                            ? Navigator.of(context).pushReplacement(
-                                PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                            secondaryAnimation) =>
-                                        ScreenLogin()))
+                            ? Navigator.of(context)
+                                .pushReplacement(PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        ScreenLogin(),
+                                transitionDuration: Duration(milliseconds: 600),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  return FadeTransition(
+                                      opacity: animation, child: child);
+                                },
+                              ))
                             : _pageController.nextPage(
                                 //TODO Adjust this curve animation and duration
                                 duration: Duration(milliseconds: 500),
