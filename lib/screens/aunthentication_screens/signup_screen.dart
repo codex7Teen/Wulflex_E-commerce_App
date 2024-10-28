@@ -25,6 +25,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   // confirm password text controller
   final TextEditingController _confirmPasswordTextController =
       TextEditingController();
+  // boolean for password visiblity
+  bool _isCreatePasswordVisible = false;
+  // boolean for password visiblity
+  bool _isConfirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -150,22 +154,35 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(width: 10),
                         Expanded(
                             child: TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              validator: (value) {
-                                if(value == null || value.trim().isEmpty) {
-                                  return 'Please enter your password';
-                                }
-                                // password mismatch
-                                if(_createPasswordTextController.text != _confirmPasswordTextController.text && _confirmPasswordTextController.text.isNotEmpty) {
-                                  return "Both passwords doesn't match";
-                                }
-                                return null;
-                              },
-                              controller: _createPasswordTextController,
+                                autovalidateMode: AutovalidateMode.onUnfocus,
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  // password mismatch
+                                  if (_createPasswordTextController.text !=
+                                          _confirmPasswordTextController.text &&
+                                      _confirmPasswordTextController
+                                          .text.isNotEmpty) {
+                                    return "Both passwords doesn't match";
+                                  }
+                                  return null;
+                                },
+                                controller: _createPasswordTextController,
+                                obscureText: !_isCreatePasswordVisible,
                                 decoration: InputDecoration(
-                                    suffixIcon: Icon(
-                                      Icons.visibility_off_sharp,
-                                      color: AppColors.greyThemeColor,
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _isCreatePasswordVisible = !_isCreatePasswordVisible;
+                                        });
+                                      },
+                                      child: Icon(
+                                        _isCreatePasswordVisible
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: AppColors.greyThemeColor,
+                                      ),
                                     ),
                                     hintText: 'Create password',
                                     hintStyle: GoogleFonts.robotoCondensed(
@@ -194,22 +211,36 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(width: 10),
                         Expanded(
                             child: TextFormField(
-                              autovalidateMode: AutovalidateMode.onUnfocus,
-                              validator: (value) {
-                                if(value == null || value.trim().isEmpty) {
-                                  return 'Please enter your password';
-                                }
-                                // password mismatch
-                                if(_createPasswordTextController.text != _confirmPasswordTextController.text && _createPasswordTextController.text.isNotEmpty) {
-                                  return "Both passwords doesn't match";
-                                }
-                                return null;
-                              },
-                              controller: _confirmPasswordTextController,
+                                autovalidateMode: AutovalidateMode.onUnfocus,
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  // password mismatch
+                                  if (_createPasswordTextController.text !=
+                                          _confirmPasswordTextController.text &&
+                                      _createPasswordTextController
+                                          .text.isNotEmpty) {
+                                    return "Both passwords doesn't match";
+                                  }
+                                  return null;
+                                },
+                                controller: _confirmPasswordTextController,
+                                obscureText: !_isConfirmPasswordVisible,
                                 decoration: InputDecoration(
-                                    suffixIcon: Icon(
-                                      Icons.visibility_off_sharp,
-                                      color: AppColors.greyThemeColor,
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _isConfirmPasswordVisible =
+                                              !_isConfirmPasswordVisible;
+                                        });
+                                      },
+                                      child: Icon(
+                                        _isConfirmPasswordVisible
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: AppColors.greyThemeColor,
+                                      ),
                                     ),
                                     hintText: 'Confirm password',
                                     hintStyle: GoogleFonts.robotoCondensed(
@@ -270,9 +301,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
 
                     // Submit Button
                     GestureDetector(
-                      onTap: () {
-                        _formKey.currentState!.validate();
-                      },
+                        onTap: () {
+                          _formKey.currentState!.validate();
+                        },
                         child: GreenButtonWidget(buttonText: 'Submit')),
                     SizedBox(height: 22),
 

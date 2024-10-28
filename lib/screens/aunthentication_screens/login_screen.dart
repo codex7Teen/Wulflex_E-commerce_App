@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/consts/app_colors.dart';
 import 'package:wulflex/consts/text_styles.dart';
+import 'package:wulflex/screens/aunthentication_screens/forgot_password_screen.dart';
 import 'package:wulflex/screens/aunthentication_screens/signup_screen.dart';
 import 'package:wulflex/widgets/google_button_widget.dart';
 import 'package:wulflex/widgets/green_button_widget.dart';
@@ -150,13 +151,29 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     // forgot password
                     Align(
                       alignment: Alignment.topRight,
-                      child: Text('Forgot Password?',
-                          style: GoogleFonts.robotoCondensed(
-                            textStyle: AppTextStyles.mediumText.copyWith(
-                                color: AppColors.greenThemeColor,
-                                letterSpacing: 0.5,
-                                fontWeight: FontWeight.bold),
-                          )),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    ScreenForgotPassword(),
+                            transitionDuration: Duration(milliseconds: 400),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return FadeTransition(
+                                  opacity: animation, child: child);
+                            },
+                          ));
+                        },
+                        child: Text('Forgot Password?',
+                            style: GoogleFonts.robotoCondensed(
+                              textStyle: AppTextStyles.mediumText.copyWith(
+                                  color: AppColors.greenThemeColor,
+                                  letterSpacing: 0.5,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ),
                     ),
                     SizedBox(height: 22),
 
