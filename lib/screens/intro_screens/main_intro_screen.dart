@@ -7,7 +7,7 @@ import 'package:wulflex/screens/aunthentication_screens/login_screen.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_1.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_2.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_3.dart';
-import 'package:wulflex/widgets/green_button.dart';
+import 'package:wulflex/widgets/green_button_widget.dart';
 
 class ScreenMainIntro extends StatefulWidget {
   const ScreenMainIntro({super.key});

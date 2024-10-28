@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/consts/app_colors.dart';
 import 'package:wulflex/consts/text_styles.dart';
 import 'package:wulflex/screens/aunthentication_screens/signup_screen.dart';
-import 'package:wulflex/widgets/google_button.dart';
-import 'package:wulflex/widgets/green_button.dart';
+import 'package:wulflex/widgets/google_button_widget.dart';
+import 'package:wulflex/widgets/green_button_widget.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -18,8 +18,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // email text controller
   final TextEditingController _emailTextController = TextEditingController();
-  // email text controller
+  // password text controller
   final TextEditingController _passwordTextController = TextEditingController();
+  // boolean for password visiblity
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +66,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         SizedBox(width: 10),
                         Expanded(
                             child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   // Check if the field is empty
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null || value.trim().isEmpty) {
                                     return 'Please enter you email address';
                                   }
                                   // regular expression for email format
@@ -107,17 +111,27 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         SizedBox(width: 10),
                         Expanded(
                             child: TextFormField(
+                              obscureText: !_isPasswordVisible,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null || value.trim().isEmpty) {
                                     return 'Please enter your password';
                                   }
                                   return null;
                                 },
                                 controller: _passwordTextController,
                                 decoration: InputDecoration(
-                                    suffixIcon: Icon(
-                                      Icons.visibility_off_sharp,
-                                      color: AppColors.greyThemeColor,
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _isPasswordVisible = !_isPasswordVisible;
+                                        });
+                                      },
+                                      child:  Icon( _isPasswordVisible ?
+                                        Icons.visibility_off_sharp : Icons.visibility,
+                                        color: AppColors.greyThemeColor,
+                                      ),
                                     ),
                                     hintText: 'Password',
                                     hintStyle: GoogleFonts.robotoCondensed(
@@ -148,9 +162,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
                     // Login Button
                     GestureDetector(
-                      onTap: () {
-                        _formKey.currentState!.validate();
-                      },
+                        onTap: () {
+                          _formKey.currentState!.validate();
+                        },
                         child: GreenButtonWidget(buttonText: 'Login')),
                     SizedBox(height: 22),
 
