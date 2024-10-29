@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "57079492115",
+    "project_id": "wulflex",
+    "storage_bucket": "wulflex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57079492115:android:92daac2b52f3edfc3fd9e6",
+        "android_client_info": {
+          "package_name": "com.example.wulflex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZNM8QEi94cBw-SgC0NtF-sy2eK_x5dIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

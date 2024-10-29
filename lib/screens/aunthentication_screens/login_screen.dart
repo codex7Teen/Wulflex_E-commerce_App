@@ -24,6 +24,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
   // boolean for password visiblity
   bool _isPasswordVisible = false;
 
+  // disposed things when screen is moved from interface
+  @override
+  void dispose() {
+    super.dispose();
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
