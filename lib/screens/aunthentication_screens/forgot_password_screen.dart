@@ -15,12 +15,15 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
   // key
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // forgot password email controller
-  final TextEditingController _forgotPasswordEmailTextController = TextEditingController();
+  final TextEditingController _forgotPasswordEmailTextController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppColors.lightScaffoldColor,),
+        appBar: AppBar(
+          backgroundColor: AppColors.lightScaffoldColor,
+        ),
         backgroundColor: AppColors.lightScaffoldColor,
         body: SingleChildScrollView(
           child: Center(
@@ -49,16 +52,15 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                     SizedBox(height: 14),
 
                     Text(
-                          "Don't worry! It happens. Please enter the address associated with your account. We will sent you a password reset link.",
-                          style: GoogleFonts.robotoCondensed(
-                                  textStyle: AppTextStyles.mediumText)
-                              .copyWith(
-                                  color: AppColors.darkScaffoldColor,
-                                  letterSpacing: 0.8,
-                                  fontWeight: FontWeight.bold
-                                  ),
-                        ),
-                        SizedBox(height: 20),
+                      "Don't worry! It happens. Please enter the address associated with your account. We will sent you a password reset link.",
+                      style: GoogleFonts.robotoCondensed(
+                              textStyle: AppTextStyles.mediumText)
+                          .copyWith(
+                              color: AppColors.darkScaffoldColor,
+                              letterSpacing: 0.8,
+                              fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 20),
 
                     // email textfield
                     Row(
@@ -110,7 +112,6 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                         },
                         child: GreenButtonWidget(buttonText: 'Submit')),
                     SizedBox(height: 22),
-
                   ],
                 ),
               ),

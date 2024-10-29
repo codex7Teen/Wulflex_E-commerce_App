@@ -38,14 +38,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 15),
+                    SizedBox(height: 20),
 
                     // image
                     Center(
-                      child: Image.asset('assets/login_illustric.png',
+                      child: Image.asset('assets/Login-green.png',
                           width: MediaQuery.sizeOf(context).width * 0.645),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 30),
 
                     // heading
                     Text('Login',

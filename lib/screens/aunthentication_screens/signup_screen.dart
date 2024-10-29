@@ -44,14 +44,14 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 15),
+                    SizedBox(height: 10),
 
                     // image
                     Center(
                       child: Image.asset('assets/signup_illustric.png',
                           width: MediaQuery.sizeOf(context).width * 0.645),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 30),
 
                     // heading
                     Text('SIGN UP',
