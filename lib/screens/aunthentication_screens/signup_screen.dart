@@ -54,25 +54,24 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Form(
-                key: _formKey,
-                child:
-                    BlocConsumer<AuthenticatonBlocBloc, AuthenticatonBlocState>(
-                  listener: (context, state) {
-                    if (state is SignUpSuccess) {
-                      // Show snacbar
-                      CustomSnackbar.showCustomSnackBar(
-                          context, "Sign-Up success...  🎉🎉🎉");
-                      // Navigate to Home
-                      NavigationHelper.navigateToWithReplacement(
-                          context, ScreenHome());
-                    } else if (state is SignUpFailture) {
-                      // show-snacbar
-                      CustomSnackbar.showCustomSnackBar(context, state.error,
-                          icon: Icons.error_outline_rounded);
-                    }
-                  },
-                  builder: (context, state) {
-                    return Column(
+                  key: _formKey,
+                  child: BlocListener<AuthenticatonBlocBloc,
+                      AuthenticatonBlocState>(
+                    listener: (context, state) {
+                      if (state is SignUpSuccess) {
+                        // Show successnacbar
+                        CustomSnackbar.showCustomSnackBar(
+                            context, "Sign-Up success...  🎉🎉🎉");
+                        // Navigate to Home
+                        NavigationHelper.navigateToWithReplacement(
+                            context, ScreenHome());
+                      } else if (state is SignUpFailture) {
+                        // show-snacbar
+                        CustomSnackbar.showCustomSnackBar(context, state.error,
+                            icon: Icons.error_outline_rounded);
+                      }
+                    },
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -348,7 +347,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           height: 22,
                         ),
 
-                        // Submit Button
+                        // ! S I G N U P - B U T T O N
                         GestureDetector(onTap: () {
                           if (_formKey.currentState!.validate()) {
                             BlocProvider.of<AuthenticatonBlocBloc>(context).add(
@@ -360,6 +359,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         }, child: BlocBuilder<AuthenticatonBlocBloc,
                             AuthenticatonBlocState>(
                           builder: (context, state) {
+                            // shows loading when state is loading
                             return GreenButtonWidget(
                               buttonText: 'Submit',
                               isLoading: state is SignUpLoading,
@@ -407,10 +407,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           ],
                         ),
                       ],
-                    );
-                  },
-                ),
-              ),
+                    ),
+                  )),
             ),
           ),
         ));
