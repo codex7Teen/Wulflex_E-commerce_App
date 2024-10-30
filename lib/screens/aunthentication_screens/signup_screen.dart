@@ -6,6 +6,7 @@ import 'package:wulflex/screens/main_screens/home_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/screens/aunthentication_screens/login_screen.dart';
+import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
 
@@ -58,12 +59,16 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                     BlocConsumer<AuthenticatonBlocBloc, AuthenticatonBlocState>(
                   listener: (context, state) {
                     if (state is SignUpSuccess) {
+                      // Show snacbar
+                      CustomSnackbar.showCustomSnackBar(
+                          context, "Sign-Up success...  🎉🎉🎉");
                       // Navigate to Home
                       NavigationHelper.navigateToWithReplacement(
                           context, ScreenHome());
                     } else if (state is SignUpFailture) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(state.error)));
+                      // show-snacbar
+                      CustomSnackbar.showCustomSnackBar(context, state.error,
+                          icon: Icons.error_outline_rounded);
                     }
                   },
                   builder: (context, state) {
@@ -190,6 +195,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                           value.trim().isEmpty) {
                                         return 'Please enter your password';
                                       }
+                                      // minimum 8 characters
+                                      if (value.trim().length < 8) {
+                                        return 'Password should be at least 8 characters';
+                                      }
                                       // password mismatch
                                       if (_createPasswordTextController.text !=
                                               _confirmPasswordTextController
@@ -250,6 +259,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       if (value == null ||
                                           value.trim().isEmpty) {
                                         return 'Please enter your password';
+                                      }
+                                      // minimum 8 characters
+                                      if (value.trim().length < 8) {
+                                        return 'Password should be at least 8 characters';
                                       }
                                       // password mismatch
                                       if (_createPasswordTextController.text !=
@@ -344,9 +357,13 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                     password:
                                         _confirmPasswordTextController.text));
                           }
-                        }, child: BlocBuilder<AuthenticatonBlocBloc, AuthenticatonBlocState>(
+                        }, child: BlocBuilder<AuthenticatonBlocBloc,
+                            AuthenticatonBlocState>(
                           builder: (context, state) {
-                            return GreenButtonWidget(buttonText: 'Submit', isLoading: state is SignUpLoading,);
+                            return GreenButtonWidget(
+                              buttonText: 'Submit',
+                              isLoading: state is SignUpLoading,
+                            );
                           },
                         )),
                         SizedBox(height: 22),

@@ -12,7 +12,7 @@ class GreenButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.93,
+      width: MediaQuery.sizeOf(context).width * 0.89,
       height: MediaQuery.sizeOf(context).height * 0.065,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -21,9 +21,9 @@ class GreenButtonWidget extends StatelessWidget {
         // show loading indication when some state is loading
         child: isLoading
             ? SizedBox(
-              height: 18,
-              width: 18,
-              child: CircularProgressIndicator())
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(color: AppColors.lightScaffoldColor,))
             : Text(
                 buttonText,
                 style: GoogleFonts.robotoCondensed(

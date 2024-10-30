@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/screens/intro_screens/main_intro_screen.dart';
+import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -38,17 +39,7 @@ class _ScreenSplash2State extends State<ScreenSplash> {
     // Navigate to intro screen after some seconds
     Future.delayed(Duration(seconds: 4), () {
       if (mounted) {
-        Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  ScreenMainIntro(),
-              transitionDuration: Duration(milliseconds: 600),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-            ));
+        NavigationHelper.navigateToWithReplacement(context, ScreenMainIntro(), milliseconds: 600);
       }
     });
   }

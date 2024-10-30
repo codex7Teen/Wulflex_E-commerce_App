@@ -37,8 +37,10 @@ class MyApp extends StatelessWidget {
     final auth = AuthService();
     return MultiBlocProvider(
       providers: [
+        // Authentication Bloc
         BlocProvider<AuthenticatonBlocBloc>(
             create: (context) => AuthenticatonBlocBloc(authService: auth))
+        // Next Bloc
       ],
       child: MaterialApp(
           title: 'Wulflex Shopping',

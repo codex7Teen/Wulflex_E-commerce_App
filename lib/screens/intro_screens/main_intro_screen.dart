@@ -8,6 +8,7 @@ import 'package:wulflex/screens/intro_screens/intro_screen_1.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_2.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_3.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
+import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
 class ScreenMainIntro extends StatefulWidget {
   const ScreenMainIntro({super.key});
@@ -74,20 +75,8 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
                   child: GestureDetector(
                       onTap: () {
                         onLastpage
-                            ? Navigator.of(context)
-                                .pushReplacement(PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) =>
-                                        ScreenLogin(),
-                                transitionDuration: Duration(milliseconds: 600),
-                                transitionsBuilder: (context, animation,
-                                    secondaryAnimation, child) {
-                                  return FadeTransition(
-                                      opacity: animation, child: child);
-                                },
-                              ))
+                            ? NavigationHelper.navigateToWithReplacement(context, ScreenLogin(), milliseconds: 600)
                             : _pageController.nextPage(
-                                //TODO Adjust this curve animation and duration
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.ease);
                       },
