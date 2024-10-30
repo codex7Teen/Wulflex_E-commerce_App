@@ -38,3 +38,9 @@ class PasswordResetButtonPressed extends AuthenticatonBlocEvent {
   @override
   List<Object> get props => [email];
 }
+
+//! L O G - O U T
+class LogOutButtonPressed extends AuthenticatonBlocEvent {}
+
+//! G O O G L E - S I G N U P
+class GoogleLoginPressed extends AuthenticatonBlocEvent {}

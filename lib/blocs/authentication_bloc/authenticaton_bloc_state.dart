@@ -48,3 +48,29 @@ class PasswordResetFailture extends AuthenticatonBlocState {
   @override
   List<Object> get props => [error];
 }
+
+//! L O G - O U T
+class LogOutLoading extends AuthenticatonBlocState {}
+
+class LogOutSuccess extends AuthenticatonBlocState {}
+
+class LogOutFailture extends AuthenticatonBlocState {
+  final String error;
+  LogOutFailture({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
+
+//! G O O G L E - S I G N U P
+class GoogleLogInLoading extends AuthenticatonBlocState {}
+
+class GoogleLogInSuccess extends AuthenticatonBlocState {}
+
+class GoogleLogInFailture extends AuthenticatonBlocState {
+  final String error;
+  GoogleLogInFailture({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}

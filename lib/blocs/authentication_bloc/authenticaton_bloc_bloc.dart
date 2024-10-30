@@ -21,8 +21,6 @@ class AuthenticatonBlocBloc
         if (user != null) {
           log("USER CREATE SUCCESS");
           emit(SignUpSuccess());
-        } else {
-          emit(SignUpFailture(error: "Failed to sign-up user"));
         }
       } catch (error) {
         emit(SignUpFailture(error: error.toString()));
@@ -38,10 +36,9 @@ class AuthenticatonBlocBloc
         if (user != null) {
           log("USER LOGIN SUCCESS");
           emit(LoginSuccess());
-        } else {
-          emit(LoginFailture(error: "Failed to login user"));
         }
       } catch (error) {
+        log("LOGIN UNKNOWN ERROR ${error.toString()}");
         emit(LoginFailture(error: error.toString()));
       }
     });
@@ -55,6 +52,33 @@ class AuthenticatonBlocBloc
         emit(PasswordResetSuccess());
       } catch (error) {
         emit(LoginFailture(error: error.toString()));
+      }
+    });
+
+    //! Handling the logOut event
+    on<LogOutButtonPressed>((event, emit) async {
+      emit(LogOutLoading());
+      try {
+        await authService.signOut();
+        log("LOG OUT SUCCESS");
+        emit(LogOutSuccess());
+      } catch (error) {
+        emit(LogOutFailture(error: error.toString()));
+      }
+    });
+
+    //! Handling the Google Login event
+    on<GoogleLoginPressed>((event, emit) async {
+      emit(GoogleLogInLoading());
+      try {
+        final user = await authService.loginWithGoogle();
+        if (user != null) {
+          log("GOOGLE LOGIN SUCCESS");
+          emit(GoogleLogInSuccess());
+        }
+      } catch (error) {
+        log("GOOGLE LOGIN ERROR ${error.toString()}");
+        emit(GoogleLogInFailture(error: error.toString()));
       }
     });
   }

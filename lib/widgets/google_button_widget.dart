@@ -4,7 +4,8 @@ import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 
 class GoogleButtonWidget extends StatelessWidget {
-  const GoogleButtonWidget({super.key});
+  final bool isLoading;
+  const GoogleButtonWidget({super.key, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,10 @@ class GoogleButtonWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: AppColors.lightGreyThemeColor),
-                  child: Row(
+                  child: isLoading ? Center(child: SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(color: AppColors.darkScaffoldColor,))) : Row(
                     children: [
                        SizedBox(width: 50),
                       Image.asset('assets/google_logo.png', width: 32),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
-import 'package:wulflex/screens/main_screens/home_screen.dart';
+import 'package:wulflex/screens/main_screens/home_screen/home_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/screens/aunthentication_screens/forgot_password_screen.dart';
@@ -50,7 +50,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                 child:
                     BlocListener<AuthenticatonBlocBloc, AuthenticatonBlocState>(
                   listener: (context, state) {
-                    if (state is LoginSuccess) {
+                    if (state is LoginSuccess || state is GoogleLogInSuccess) {
                       // Show success snacbar
                       CustomSnackbar.showCustomSnackBar(
                           context, "Login success...  🎉🎉🎉");
@@ -58,6 +58,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       NavigationHelper.navigateToWithReplacement(
                           context, ScreenHome());
                     } else if (state is LoginFailture) {
+                      // show failed snacbar
+                      CustomSnackbar.showCustomSnackBar(context, state.error,
+                          icon: Icons.error_outline_rounded);
+                    } else if (state is GoogleLogInFailture) {
                       // show failed snacbar
                       CustomSnackbar.showCustomSnackBar(context, state.error,
                           icon: Icons.error_outline_rounded);
@@ -253,8 +257,19 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       ),
                       SizedBox(height: 22),
 
-                      // Google Button
-                      GoogleButtonWidget(),
+                      //! G O O G L E - L O G I N - B U T T O N
+                      GestureDetector(
+                          onTap: () =>
+                              BlocProvider.of<AuthenticatonBlocBloc>(context)
+                                  .add(GoogleLoginPressed()),
+                          child: BlocBuilder<AuthenticatonBlocBloc,
+                              AuthenticatonBlocState>(
+                            builder: (context, state) {
+                              return GoogleButtonWidget(
+                                isLoading: state is GoogleLogInLoading,
+                              );
+                            },
+                          )),
                       SizedBox(height: 22),
 
                       // New User. Sign-UP text

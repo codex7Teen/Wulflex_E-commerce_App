@@ -12,6 +12,7 @@ class CustomSnackbar {
             Icon(icon, color: AppColors.lightScaffoldColor, size: 18,),
             SizedBox(width: 15),
             Text(
+              overflow: TextOverflow.ellipsis,
               message,
               style: GoogleFonts.robotoCondensed(
                 color: AppColors.lightScaffoldColor,
