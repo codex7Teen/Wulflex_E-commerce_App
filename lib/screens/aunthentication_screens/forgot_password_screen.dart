@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wulflex/consts/app_colors.dart';
-import 'package:wulflex/consts/text_styles.dart';
-import 'package:wulflex/widgets/green_button_widget.dart';
+import 'package:wulflex/utils/consts/app_colors.dart';
+import 'package:wulflex/utils/consts/text_styles.dart';
+import 'package:wulflex/widgets/custom_green_button_widget.dart';
 
 class ScreenForgotPassword extends StatefulWidget {
   const ScreenForgotPassword({super.key});

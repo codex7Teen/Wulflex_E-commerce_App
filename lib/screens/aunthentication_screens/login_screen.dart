@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wulflex/consts/app_colors.dart';
-import 'package:wulflex/consts/text_styles.dart';
+import 'package:wulflex/screens/main_screens/home_screen.dart';
+import 'package:wulflex/services/authentication/login_authorization.dart';
+import 'package:wulflex/utils/consts/app_colors.dart';
+import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/screens/aunthentication_screens/forgot_password_screen.dart';
 import 'package:wulflex/screens/aunthentication_screens/signup_screen.dart';
 import 'package:wulflex/widgets/google_button_widget.dart';
-import 'package:wulflex/widgets/green_button_widget.dart';
+import 'package:wulflex/widgets/custom_green_button_widget.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -23,6 +27,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
   final TextEditingController _passwordTextController = TextEditingController();
   // boolean for password visiblity
   bool _isPasswordVisible = false;
+  // instance for auth services
+  final _auth = AuthService();
 
   // disposed things when screen is moved from interface
   @override
@@ -120,7 +126,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         SizedBox(width: 10),
                         Expanded(
                             child: TextFormField(
-                              obscureText: !_isPasswordVisible,
+                                obscureText: !_isPasswordVisible,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -134,11 +140,14 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                     suffixIcon: GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          _isPasswordVisible = !_isPasswordVisible;
+                                          _isPasswordVisible =
+                                              !_isPasswordVisible;
                                         });
                                       },
-                                      child:  Icon( _isPasswordVisible ?
-                                        Icons.visibility_off_sharp : Icons.visibility,
+                                      child: Icon(
+                                        _isPasswordVisible
+                                            ? Icons.visibility_off_sharp
+                                            : Icons.visibility,
                                         color: AppColors.greyThemeColor,
                                       ),
                                     ),
@@ -161,8 +170,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.of(context)
-                              .push(PageRouteBuilder(
+                          Navigator.of(context).push(PageRouteBuilder(
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
                                     ScreenForgotPassword(),
@@ -188,7 +196,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     // Login Button
                     GestureDetector(
                         onTap: () {
-                          _formKey.currentState!.validate();
+                          if (_formKey.currentState!.validate()) {
+                            _logIn();
+                          }
                         },
                         child: GreenButtonWidget(buttonText: 'Login')),
                     SizedBox(height: 22),
@@ -266,5 +276,23 @@ class _ScreenLoginState extends State<ScreenLogin> {
             ),
           ),
         ));
+  }
+
+  _logIn() async {
+    final user = await _auth.loginUserWithEmailAndPassword(
+        _emailTextController.text, _passwordTextController.text);
+    if (user != null) {
+      log('USER LOGGED IN SUCCESS');
+      // Navigate to home
+      if (mounted) {
+        Navigator.of(context).pushReplacement(PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => ScreenHome(),
+          transitionDuration: Duration(milliseconds: 400),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ));
+      }
+    }
   }
 }

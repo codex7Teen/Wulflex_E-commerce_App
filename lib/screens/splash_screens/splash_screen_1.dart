@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wulflex/consts/app_colors.dart';
+import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/screens/intro_screens/main_intro_screen.dart';
 
 class ScreenSplash extends StatefulWidget {

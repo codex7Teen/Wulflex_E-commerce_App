@@ -1,24 +1,29 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/screens/splash_screens/splash_screen_1.dart';
+import 'package:wulflex/services/authentication/login_authorization.dart';
 
 void main() async {
   // Ensures the bindings with native platform has done properly
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize firebase
-  if(kIsWeb) {
-    Firebase.initializeApp(options: FirebaseOptions(apiKey: "AIzaSyDMzuQfFMY4pScI7ihyfVFV5fsT0pcsATI",
-  authDomain: "wulflex.firebaseapp.com",
-  projectId: "wulflex",
-  storageBucket: "wulflex.appspot.com",
-  messagingSenderId: "57079492115",
-  appId: "1:57079492115:web:4366c95936974dda3fd9e6"));
+  if (kIsWeb) {
+    Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: "AIzaSyDMzuQfFMY4pScI7ihyfVFV5fsT0pcsATI",
+            authDomain: "wulflex.firebaseapp.com",
+            projectId: "wulflex",
+            storageBucket: "wulflex.appspot.com",
+            messagingSenderId: "57079492115",
+            appId: "1:57079492115:web:4366c95936974dda3fd9e6"));
   } else {
     await Firebase.initializeApp();
   }
-  
+
   runApp(const MyApp());
 }
 
@@ -28,14 +33,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wulflex Shopping',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const ScreenSplash()
+    // instance for authorisation services
+    final auth = AuthService();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticatonBlocBloc>(
+            create: (context) => AuthenticatonBlocBloc(authService: auth))
+      ],
+      child: MaterialApp(
+          title: 'Wulflex Shopping',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const ScreenSplash()),
     );
   }
 }

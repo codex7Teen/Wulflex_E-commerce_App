@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wulflex/consts/app_colors.dart';
-import 'package:wulflex/consts/text_styles.dart';
+import 'package:wulflex/utils/consts/app_colors.dart';
+import 'package:wulflex/utils/consts/text_styles.dart';
 
 class GoogleButtonWidget extends StatelessWidget {
   const GoogleButtonWidget({super.key});
