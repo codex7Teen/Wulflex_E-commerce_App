@@ -13,7 +13,7 @@ class AuthService {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      log('something went wrong');
+      log('Error: something went wrong $e');
     }
     return null;
   }
@@ -26,9 +26,18 @@ class AuthService {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      log('something went wrong');
+      log('Error: something went wrong $e');
     }
     return null;
+  }
+
+  //! F O R G O T - P A S S W O R D
+  Future<void> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      log("Error: $e");
+    }
   }
 
   //! S I G N - O U T
@@ -36,7 +45,7 @@ class AuthService {
     try {
       await _auth.signOut();
     } catch (e) {
-      log('something went wrong');
+      log('Error: something went wrong $e');
     }
   }
 }

@@ -35,3 +35,16 @@ class LoginFailture extends AuthenticatonBlocState {
   @override
   List<Object> get props => [error];
 }
+
+//! R E S E T - P A S S W O R D
+class PasswordResetLoading extends AuthenticatonBlocState {}
+
+class PasswordResetSuccess extends AuthenticatonBlocState {}
+
+class PasswordResetFailture extends AuthenticatonBlocState {
+  final String error;
+  PasswordResetFailture({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}

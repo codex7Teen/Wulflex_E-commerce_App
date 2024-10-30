@@ -28,3 +28,13 @@ class LoginButtonPressed extends AuthenticatonBlocEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+//! R E S E T - P A S S W O R D
+class PasswordResetButtonPressed extends AuthenticatonBlocEvent {
+  final String email;
+  
+  PasswordResetButtonPressed({required this.email});
+
+  @override
+  List<Object> get props => [email];
+}

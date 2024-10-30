@@ -45,5 +45,17 @@ class AuthenticatonBlocBloc
         emit(LoginFailture(error: error.toString()));
       }
     });
+
+    //! Handling the password reset event
+    on<PasswordResetButtonPressed>((event, emit) async {
+      emit(PasswordResetLoading());
+      try {
+        await authService.resetPassword(event.email);
+        log("PASSWORD RESET SUCCESS");
+        emit(PasswordResetSuccess());
+      } catch (error) {
+        emit(LoginFailture(error: error.toString()));
+      }
+    });
   }
 }
