@@ -1,8 +1,5 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 
 class ScreenIntro1 extends StatefulWidget {
@@ -65,8 +62,7 @@ class _ScreenIntro1State extends State<ScreenIntro1> {
               Text(
                   textAlign: TextAlign.center,
                   'UNLEASH\n YOUR FITNESS POTENTIAL',
-                  style: GoogleFonts.bebasNeue(
-                      textStyle: AppTextStyles.headingLarge).copyWith(color: AppColors.lightScaffoldColor)),
+                  style: AppTextStyles.headLineLarge),
               SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -74,9 +70,7 @@ class _ScreenIntro1State extends State<ScreenIntro1> {
                 child: Text(
                     textAlign: TextAlign.center,
                     'Discover top-quality gym equipment and gear tailored for fitness enthusiasts. Begin your journey to a stronger you with just a few taps!',
-                    style: GoogleFonts.robotoCondensed(
-                        textStyle: AppTextStyles.headingSmall
-                            .copyWith(color: Colors.grey, letterSpacing: 0.5))),
+                    style: AppTextStyles.titleSmall),
               ),
 
               SizedBox(height: 120)

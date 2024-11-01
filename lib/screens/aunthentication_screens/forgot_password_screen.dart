@@ -62,18 +62,15 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                       // heading
                       Text('Forgot\nPassword?',
                           style: GoogleFonts.bebasNeue(
-                                  textStyle: AppTextStyles.headingLarge)
+                                  textStyle: AppTextStyles.headLineLarge.copyWith(color: AppColors.darkScaffoldColor))
                               .copyWith(letterSpacing: 1)),
                       SizedBox(height: 14),
 
                       Text(
                         "Don't worry! It happens. Please enter the address associated with your account. We will sent you a password reset link.",
-                        style: GoogleFonts.robotoCondensed(
-                                textStyle: AppTextStyles.mediumText)
-                            .copyWith(
-                                color: AppColors.darkScaffoldColor,
-                                letterSpacing: 0.8,
-                                fontWeight: FontWeight.bold),
+                        style: AppTextStyles.titleSmall.copyWith(
+                                  color: AppColors.darkScaffoldColor,
+                                  fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 20),
 

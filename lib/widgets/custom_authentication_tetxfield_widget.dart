@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 
@@ -28,16 +27,14 @@ class CustomAuthenticationTetxfieldWidget extends StatelessWidget {
         SizedBox(width: 10),
         Expanded(
           child: TextFormField(
+            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w500, color: AppColors.darkScaffoldColor),
             controller: controller,
             obscureText: obscureText && !isPasswordVisible,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: validator,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: GoogleFonts.robotoCondensed(
-                textStyle: AppTextStyles.mediumText
-                    .copyWith(color: Colors.grey, letterSpacing: 0.5),
-              ),
+              hintStyle:AppTextStyles.titleSmallThin.copyWith(fontWeight: FontWeight.w400),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: AppColors.greyThemeColor,

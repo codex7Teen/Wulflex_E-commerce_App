@@ -65,8 +65,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
               Text(
                   textAlign: TextAlign.center,
                   'Gear Up\n for Peak Performance',
-                  style: GoogleFonts.bebasNeue(
-                      textStyle: AppTextStyles.headingLarge).copyWith(color: AppColors.lightScaffoldColor)),
+                  style: AppTextStyles.headLineLarge),
               SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -74,9 +73,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
                 child: Text(
                     textAlign: TextAlign.center,
                     'From essential equipment to pro-level accessories, we bring everything to support your goals. Unleash your potential with the right gear.',
-                    style: GoogleFonts.robotoCondensed(
-                        textStyle: AppTextStyles.headingSmall
-                            .copyWith(color: Colors.grey, letterSpacing: 0.5))),
+                    style: AppTextStyles.titleSmall),
               ),
 
               SizedBox(height: 120)

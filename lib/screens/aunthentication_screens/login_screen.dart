@@ -80,9 +80,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
                       // heading
                       Text('Login',
-                          style: GoogleFonts.bebasNeue(
-                                  textStyle: AppTextStyles.headingLarge)
-                              .copyWith(letterSpacing: 1)),
+                          style: AppTextStyles.headLineLarge
+                              .copyWith(color: AppColors.darkScaffoldColor)),
                       SizedBox(height: 14),
 
                       // email textfield
@@ -135,12 +134,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                 context, ScreenForgotPassword());
                           },
                           child: Text('Forgot Password?',
-                              style: GoogleFonts.robotoCondensed(
-                                textStyle: AppTextStyles.mediumText.copyWith(
-                                    color: AppColors.greenThemeColor,
-                                    letterSpacing: 0.5,
-                                    fontWeight: FontWeight.bold),
-                              )),
+                              style: AppTextStyles.titleSmall.copyWith(
+                                  color: AppColors.greenThemeColor,
+                                  fontWeight: FontWeight.bold)),
                         ),
                       ),
                       SizedBox(height: 22),
@@ -176,10 +172,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               'OR',
-                              style: GoogleFonts.roboto(
-                                  textStyle: AppTextStyles.smallText.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.greyThemeColor)),
+                              style: AppTextStyles.titleXSmall
+                                  .copyWith(color: AppColors.greyThemeColor),
                             ),
                           ),
                           Expanded(
@@ -211,11 +205,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         children: [
                           Text(
                             'New to Wulflex?',
-                            style: GoogleFonts.robotoCondensed(
-                                    textStyle: AppTextStyles.mediumText)
-                                .copyWith(
-                                    color: AppColors.greyThemeColor,
-                                    letterSpacing: 0.8),
+                            style: AppTextStyles.titleSmall,
                           ),
                           SizedBox(width: 5),
                           GestureDetector(
@@ -233,12 +223,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
                             )),
                             child: Text(
                               'Sign up',
-                              style: GoogleFonts.robotoCondensed(
-                                      textStyle: AppTextStyles.mediumText)
-                                  .copyWith(
-                                      color: AppColors.greenThemeColor,
-                                      letterSpacing: 0.8)
-                                  .copyWith(fontWeight: FontWeight.bold),
+                              style: AppTextStyles.titleSmall.copyWith(
+                                  color: AppColors.greenThemeColor,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],

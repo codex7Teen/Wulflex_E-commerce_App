@@ -65,8 +65,7 @@ class _ScreenIntro3State extends State<ScreenIntro3> {
               Text(
                   textAlign: TextAlign.center,
                   'Track, Order, Achieve',
-                  style: GoogleFonts.bebasNeue(
-                      textStyle: AppTextStyles.headingLarge).copyWith(color: AppColors.lightScaffoldColor)),
+                  style: AppTextStyles.headLineLarge),
               SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -74,9 +73,7 @@ class _ScreenIntro3State extends State<ScreenIntro3> {
                 child: Text(
                     textAlign: TextAlign.center,
                     'Easily explore, order, and track your fitness essentials. Start achieving with confidence and get closer to your goals every day.',
-                    style: GoogleFonts.robotoCondensed(
-                        textStyle: AppTextStyles.headingSmall
-                            .copyWith(color: Colors.grey, letterSpacing: 0.5))),
+                    style: AppTextStyles.titleSmall),
               ),
 
               SizedBox(height: 120)

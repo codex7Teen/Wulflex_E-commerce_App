@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
+import 'package:wulflex/utils/consts/text_styles.dart';
 
 class CustomSnackbar {
   static void showCustomSnackBar(BuildContext context, String message, {IconData icon = Icons.done_outline_rounded}) {
@@ -10,14 +10,14 @@ class CustomSnackbar {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: AppColors.lightScaffoldColor, size: 18,),
-            SizedBox(width: 15),
-            Text(
-              overflow: TextOverflow.ellipsis,
-              message,
-              style: GoogleFonts.robotoCondensed(
-                color: AppColors.lightScaffoldColor,
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                overflow: TextOverflow.ellipsis,
+                message,
+                style: AppTextStyles.bodySmall,
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),

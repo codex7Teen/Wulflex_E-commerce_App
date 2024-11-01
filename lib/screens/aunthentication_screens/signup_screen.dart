@@ -81,47 +81,22 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
 
                         // heading
                         Text('SIGN UP',
-                            style: GoogleFonts.bebasNeue(
-                                    textStyle: AppTextStyles.headingLarge)
-                                .copyWith(letterSpacing: 1)),
+                            style: AppTextStyles.headLineLarge
+                                .copyWith(color: Colors.black)),
                         SizedBox(height: 14),
 
                         // Name textfield
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 6),
-                              child: Icon(
-                                Icons.person,
-                                color: AppColors.greyThemeColor,
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                                child: TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      // empty validation
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return 'Please enter your name';
-                                      }
-                                      return null;
-                                    },
-                                    controller: _nameTextController,
-                                    decoration: InputDecoration(
-                                        hintText: 'Full name',
-                                        hintStyle: GoogleFonts.robotoCondensed(
-                                            textStyle: AppTextStyles.mediumText
-                                                .copyWith(
-                                                    color: Colors.grey,
-                                                    letterSpacing: 0.5)),
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AppColors.greyThemeColor,
-                                                width: 0.4))))),
-                          ],
+                        CustomAuthenticationTetxfieldWidget(
+                          controller: _nameTextController,
+                          hintText: "Full name",
+                          icon: Icons.person,
+                          validator: (value) {
+                            // empty validation
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter your name';
+                            }
+                            return null;
+                          },
                         ),
                         SizedBox(height: 22),
 
@@ -156,11 +131,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                             if (value == null || value.trim().isEmpty) {
                               return 'Please enter your password';
                             }
-                            // minimum 8 characters
                             if (value.trim().length < 8) {
                               return 'Password should be at least 8 characters';
                             }
-                            // password mismatch
                             if (_createPasswordTextController.text !=
                                     _confirmPasswordTextController.text &&
                                 _confirmPasswordTextController
@@ -187,11 +160,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                             if (value == null || value.trim().isEmpty) {
                               return 'Please enter your password';
                             }
-                            // minimum 8 characters
                             if (value.trim().length < 8) {
                               return 'Password should be at least 8 characters';
                             }
-                            // password mismatch
                             if (_createPasswordTextController.text !=
                                     _confirmPasswordTextController.text &&
                                 _createPasswordTextController.text.isNotEmpty) {
@@ -213,43 +184,29 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           children: [
                             Text(
                               "By signing up, you're agreeing to our",
-                              style: GoogleFonts.robotoCondensed(
-                                  textStyle: AppTextStyles.smallText.copyWith(
-                                      color: Colors.grey, letterSpacing: 0.6)),
+                              style: AppTextStyles.titleXSmallThin,
                             ),
                             SizedBox(width: 5),
-                            Text(
-                              "Terms & Conditions",
-                              style: GoogleFonts.robotoCondensed(
-                                  textStyle: AppTextStyles.smallText.copyWith(
-                                      color: AppColors.greenThemeColor,
-                                      letterSpacing: 0.6,
-                                      fontWeight: FontWeight.bold)),
-                            ),
+                            Text("Terms & Conditions",
+                                style: AppTextStyles.titleXSmall.copyWith(
+                                    color: AppColors.greenThemeColor)),
                           ],
                         ),
                         Row(
                           children: [
                             Text(
                               "and",
-                              style: GoogleFonts.robotoCondensed(
-                                  textStyle: AppTextStyles.smallText.copyWith(
-                                      color: Colors.grey, letterSpacing: 0.6)),
+                              style: AppTextStyles.titleXSmallThin,
                             ),
                             SizedBox(width: 5),
                             Text(
                               "Privacy Policy",
-                              style: GoogleFonts.robotoCondensed(
-                                  textStyle: AppTextStyles.smallText.copyWith(
-                                      color: AppColors.greenThemeColor,
-                                      letterSpacing: 0.6,
-                                      fontWeight: FontWeight.bold)),
+                              style: AppTextStyles.titleXSmall
+                                  .copyWith(color: AppColors.greenThemeColor),
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 22,
-                        ),
+                        SizedBox(height: 22),
 
                         // ! S I G N U P - B U T T O N
                         GestureDetector(onTap: () {
@@ -278,11 +235,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           children: [
                             Text(
                               'Already have an account?',
-                              style: GoogleFonts.robotoCondensed(
-                                      textStyle: AppTextStyles.mediumText)
-                                  .copyWith(
-                                      color: AppColors.greyThemeColor,
-                                      letterSpacing: 0.8),
+                              style: AppTextStyles.titleSmall,
                             ),
                             SizedBox(width: 5),
                             GestureDetector(
@@ -291,12 +244,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       context, ScreenLogin()),
                               child: Text(
                                 'Login',
-                                style: GoogleFonts.robotoCondensed(
-                                        textStyle: AppTextStyles.mediumText)
-                                    .copyWith(
-                                        color: AppColors.greenThemeColor,
-                                        letterSpacing: 0.8)
-                                    .copyWith(fontWeight: FontWeight.bold),
+                                style: AppTextStyles.titleSmall.copyWith(
+                                  color: AppColors.greenThemeColor,
+                                  fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],

@@ -37,7 +37,8 @@ class _ScreenSplash2State extends State<ScreenSplash> {
     });
 
     // Navigate to intro screen after some seconds
-    Future.delayed(Duration(seconds: 4), () {
+    //TODO CHANGE SECONDS TO 4
+    Future.delayed(Duration(seconds: 1), () {
       if (mounted) {
         NavigationHelper.navigateToWithReplacement(context, ScreenMainIntro(), milliseconds: 600);
       }

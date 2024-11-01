@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 
@@ -26,9 +25,7 @@ class GreenButtonWidget extends StatelessWidget {
               child: CircularProgressIndicator(color: AppColors.lightScaffoldColor,))
             : Text(
                 buttonText,
-                style: GoogleFonts.robotoCondensed(
-                        textStyle: AppTextStyles.greenButtonText)
-                    .copyWith(letterSpacing: 1),
+                style: AppTextStyles.titleMedium,
               ),
       ),
     );

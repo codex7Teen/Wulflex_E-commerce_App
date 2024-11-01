@@ -95,9 +95,7 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
                     child: Center(
                       child: Text(
                         'Skip',
-                        style: GoogleFonts.robotoCondensed(
-                                textStyle: AppTextStyles.skipButtonText)
-                            .copyWith(letterSpacing: 1),
+                        style: AppTextStyles.titleXSmall,
                       ),
                     ),
                   ),

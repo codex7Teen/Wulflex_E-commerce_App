@@ -25,8 +25,7 @@ class GoogleButtonWidget extends StatelessWidget {
                       SizedBox(width: 37),
                       Text(
                         'Login with Google',
-                        style: GoogleFonts.robotoCondensed(
-                            textStyle: AppTextStyles.greenButtonText).copyWith(color: AppColors.darkScaffoldColor, letterSpacing: 1),
+                        style: AppTextStyles.titleMedium.copyWith(color: AppColors.darkScaffoldColor),
                       ),
                     ],
                   ),
