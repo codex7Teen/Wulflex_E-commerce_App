@@ -22,7 +22,6 @@ class ScreenHome extends StatelessWidget {
                 onPressed: () {
                   BlocProvider.of<AuthenticatonBlocBloc>(context)
                       .add(LogOutButtonPressed());
-                  
                 },
                 child: Text('signout'))),
       ),

@@ -6,6 +6,7 @@ import 'package:wulflex/screens/main_screens/home_screen/home_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/screens/aunthentication_screens/login_screen.dart';
+import 'package:wulflex/widgets/custom_authentication_tetxfield_widget.dart';
 import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
@@ -18,16 +19,11 @@ class ScreenSignUp extends StatefulWidget {
 }
 
 class _ScreenSignUpState extends State<ScreenSignUp> {
-  // key
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // name text controller
   final TextEditingController _nameTextController = TextEditingController();
-  // email text controller
   final TextEditingController _emailTextController = TextEditingController();
-  // create password text controller
   final TextEditingController _createPasswordTextController =
       TextEditingController();
-  // confirm password text controller
   final TextEditingController _confirmPasswordTextController =
       TextEditingController();
   // boolean for password visiblity
@@ -35,7 +31,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   // boolean for password visiblity
   bool _isConfirmPasswordVisible = false;
 
-  // disposed things when screen is moved from interface
   @override
   void dispose() {
     super.dispose();
@@ -131,176 +126,85 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 22),
 
                         // email textfield
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 6),
-                              child: Icon(
-                                Icons.alternate_email_rounded,
-                                color: AppColors.greyThemeColor,
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                                child: TextFormField(
-                                    validator: (value) {
-                                      // Check if the field is empty
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return 'Please enter you email address';
-                                      }
-                                      // regular expression for email format
-                                      final RegExp emailRegex = RegExp(
-                                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-                                      // Checking if the email matches the regular expression
-                                      if (!emailRegex.hasMatch(value)) {
-                                        return 'Please enter a valid email address';
-                                      }
-                                      return null;
-                                    },
-                                    controller: _emailTextController,
-                                    decoration: InputDecoration(
-                                        hintText: 'Email ID',
-                                        hintStyle: GoogleFonts.robotoCondensed(
-                                            textStyle: AppTextStyles.mediumText
-                                                .copyWith(
-                                                    color: Colors.grey,
-                                                    letterSpacing: 0.5)),
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AppColors.greyThemeColor,
-                                                width: 0.4))))),
-                          ],
+                        CustomAuthenticationTetxfieldWidget(
+                          controller: _emailTextController,
+                          hintText: 'Email ID',
+                          icon: Icons.alternate_email_rounded,
+                          validator: (value) {
+                            // Check if the field is empty
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter you email address';
+                            }
+                            // regular expression for email format
+                            final RegExp emailRegex = RegExp(
+                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                            // Checking if the email matches the regular expression
+                            if (!emailRegex.hasMatch(value)) {
+                              return 'Please enter a valid email address';
+                            }
+                            return null;
+                          },
                         ),
                         SizedBox(height: 22),
 
                         // create password field
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Icon(
-                                Icons.lock_outline_rounded,
-                                color: AppColors.greyThemeColor,
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                                child: TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUnfocus,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return 'Please enter your password';
-                                      }
-                                      // minimum 8 characters
-                                      if (value.trim().length < 8) {
-                                        return 'Password should be at least 8 characters';
-                                      }
-                                      // password mismatch
-                                      if (_createPasswordTextController.text !=
-                                              _confirmPasswordTextController
-                                                  .text &&
-                                          _confirmPasswordTextController
-                                              .text.isNotEmpty) {
-                                        return "Both passwords doesn't match";
-                                      }
-                                      return null;
-                                    },
-                                    controller: _createPasswordTextController,
-                                    obscureText: !_isCreatePasswordVisible,
-                                    decoration: InputDecoration(
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _isCreatePasswordVisible =
-                                                  !_isCreatePasswordVisible;
-                                            });
-                                          },
-                                          child: Icon(
-                                            _isCreatePasswordVisible
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                            color: AppColors.greyThemeColor,
-                                          ),
-                                        ),
-                                        hintText: 'Create password',
-                                        hintStyle: GoogleFonts.robotoCondensed(
-                                            textStyle: AppTextStyles.mediumText
-                                                .copyWith(
-                                                    color: Colors.grey,
-                                                    letterSpacing: 0.5)),
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AppColors.greyThemeColor,
-                                                width: 0.4))))),
-                          ],
+                        CustomAuthenticationTetxfieldWidget(
+                          controller: _createPasswordTextController,
+                          hintText: 'Create password',
+                          icon: Icons.lock_outline_rounded,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            // minimum 8 characters
+                            if (value.trim().length < 8) {
+                              return 'Password should be at least 8 characters';
+                            }
+                            // password mismatch
+                            if (_createPasswordTextController.text !=
+                                    _confirmPasswordTextController.text &&
+                                _confirmPasswordTextController
+                                    .text.isNotEmpty) {
+                              return "Both passwords doesn't match";
+                            }
+                            return null;
+                          },
+                          toggleVisibility: () => setState(() {
+                            _isCreatePasswordVisible =
+                                !_isCreatePasswordVisible;
+                          }),
+                          isPasswordVisible: _isCreatePasswordVisible,
+                          obscureText: true,
                         ),
                         SizedBox(height: 22),
 
                         // confirm password field
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Icon(
-                                Icons.lock_outline_rounded,
-                                color: AppColors.greyThemeColor,
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                                child: TextFormField(
-                                    autovalidateMode:
-                                        AutovalidateMode.onUnfocus,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.trim().isEmpty) {
-                                        return 'Please enter your password';
-                                      }
-                                      // minimum 8 characters
-                                      if (value.trim().length < 8) {
-                                        return 'Password should be at least 8 characters';
-                                      }
-                                      // password mismatch
-                                      if (_createPasswordTextController.text !=
-                                              _confirmPasswordTextController
-                                                  .text &&
-                                          _createPasswordTextController
-                                              .text.isNotEmpty) {
-                                        return "Both passwords doesn't match";
-                                      }
-                                      return null;
-                                    },
-                                    controller: _confirmPasswordTextController,
-                                    obscureText: !_isConfirmPasswordVisible,
-                                    decoration: InputDecoration(
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _isConfirmPasswordVisible =
-                                                  !_isConfirmPasswordVisible;
-                                            });
-                                          },
-                                          child: Icon(
-                                            _isConfirmPasswordVisible
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                            color: AppColors.greyThemeColor,
-                                          ),
-                                        ),
-                                        hintText: 'Confirm password',
-                                        hintStyle: GoogleFonts.robotoCondensed(
-                                            textStyle: AppTextStyles.mediumText
-                                                .copyWith(
-                                                    color: Colors.grey,
-                                                    letterSpacing: 0.5)),
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AppColors.greyThemeColor,
-                                                width: 0.4))))),
-                          ],
+                        CustomAuthenticationTetxfieldWidget(
+                          controller: _confirmPasswordTextController,
+                          hintText: 'Confirm password',
+                          icon: Icons.lock_outline_rounded,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            // minimum 8 characters
+                            if (value.trim().length < 8) {
+                              return 'Password should be at least 8 characters';
+                            }
+                            // password mismatch
+                            if (_createPasswordTextController.text !=
+                                    _confirmPasswordTextController.text &&
+                                _createPasswordTextController.text.isNotEmpty) {
+                              return "Both passwords doesn't match";
+                            }
+                            return null;
+                          },
+                          obscureText: true,
+                          isPasswordVisible: _isConfirmPasswordVisible,
+                          toggleVisibility: () => setState(() {
+                            _isConfirmPasswordVisible =
+                                !_isConfirmPasswordVisible;
+                          }),
                         ),
                         SizedBox(height: 25),
 
@@ -382,18 +286,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                             ),
                             SizedBox(width: 5),
                             GestureDetector(
-                              onTap: () => Navigator.of(context)
-                                  .pushReplacement(PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) =>
-                                        ScreenLogin(),
-                                transitionDuration: Duration(milliseconds: 400),
-                                transitionsBuilder: (context, animation,
-                                    secondaryAnimation, child) {
-                                  return FadeTransition(
-                                      opacity: animation, child: child);
-                                },
-                              )),
+                              onTap: () =>
+                                  NavigationHelper.navigateToWithReplacement(
+                                      context, ScreenLogin()),
                               child: Text(
                                 'Login',
                                 style: GoogleFonts.robotoCondensed(

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
+import 'package:wulflex/widgets/custom_authentication_tetxfield_widget.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 
@@ -15,9 +16,7 @@ class ScreenForgotPassword extends StatefulWidget {
 }
 
 class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
-  // key
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // forgot password email controller
   final TextEditingController _forgotPasswordEmailTextController =
       TextEditingController();
 
@@ -79,64 +78,44 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                       SizedBox(height: 20),
 
                       // email textfield
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
-                            child: Icon(
-                              Icons.alternate_email_rounded,
-                              color: AppColors.greyThemeColor,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                              child: TextFormField(
-                                  validator: (value) {
-                                    // Check if the field is empty
-                                    if (value == null || value.trim().isEmpty) {
-                                      return 'Please enter you email address';
-                                    }
-                                    // regular expression for email format
-                                    final RegExp emailRegex = RegExp(
-                                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-                                    // Checking if the email matches the regular expression
-                                    if (!emailRegex.hasMatch(value)) {
-                                      return 'Please enter a valid email address';
-                                    }
-                                    return null;
-                                  },
-                                  controller:
-                                      _forgotPasswordEmailTextController,
-                                  decoration: InputDecoration(
-                                      hintText: 'Email ID',
-                                      hintStyle: GoogleFonts.robotoCondensed(
-                                          textStyle: AppTextStyles.mediumText
-                                              .copyWith(
-                                                  color: Colors.grey,
-                                                  letterSpacing: 0.5)),
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColors.greyThemeColor,
-                                              width: 0.4))))),
-                        ],
+                      CustomAuthenticationTetxfieldWidget(
+                        controller: _forgotPasswordEmailTextController,
+                        hintText: 'Email ID',
+                        icon: Icons.alternate_email_rounded,
+                        validator: (value) {
+                          // Check if the field is empty
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please enter you email address';
+                          }
+                          // regular expression for email format
+                          final RegExp emailRegex = RegExp(
+                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                          // Checking if the email matches the regular expression
+                          if (!emailRegex.hasMatch(value)) {
+                            return 'Please enter a valid email address';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 35),
 
                       //! P A S S W O R D - R E S E T - B U T T O N
-                      GestureDetector(
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              BlocProvider.of<AuthenticatonBlocBloc>(context)
-                                  .add(PasswordResetButtonPressed(
-                                      email: _forgotPasswordEmailTextController
-                                          .text));
-                            }
-                          },
-                          child: BlocBuilder<AuthenticatonBlocBloc, AuthenticatonBlocState>(
-                            builder: (context, state) {
-                              return GreenButtonWidget(buttonText: 'Submit', isLoading: state is PasswordResetLoading,);
-                            },
-                          )),
+                      GestureDetector(onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          BlocProvider.of<AuthenticatonBlocBloc>(context).add(
+                              PasswordResetButtonPressed(
+                                  email:
+                                      _forgotPasswordEmailTextController.text));
+                        }
+                      }, child: BlocBuilder<AuthenticatonBlocBloc,
+                          AuthenticatonBlocState>(
+                        builder: (context, state) {
+                          return GreenButtonWidget(
+                            buttonText: 'Submit',
+                            isLoading: state is PasswordResetLoading,
+                          );
+                        },
+                      )),
                       SizedBox(height: 22),
                     ],
                   ),
