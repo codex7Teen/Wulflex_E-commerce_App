@@ -10,7 +10,7 @@ class CustomSnackbar {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: AppColors.lightScaffoldColor, size: 18,),
-            SizedBox(width: 10),
+            SizedBox(width: 5),
             Expanded(
               child: Text(
                 overflow: TextOverflow.ellipsis,

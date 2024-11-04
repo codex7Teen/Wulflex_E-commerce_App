@@ -5,5 +5,5 @@ class AppColors {
   static const Color darkScaffoldColor = Colors.black;
   static const Color greenThemeColor = Color.fromARGB(255, 174, 213, 0);
   static const Color greyThemeColor = Colors.grey;
-  static Color? lightGreyThemeColor = Colors.grey[200];
+  static const Color lightGreyThemeColor = Color.fromARGB(255, 232, 232, 232);
 }

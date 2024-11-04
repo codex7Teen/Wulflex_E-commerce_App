@@ -6,6 +6,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
   final _auth = FirebaseAuth.instance;
 
+  // For handling errors without the "Exception:" prefix
+  void handleError(String errorMessage) {
+    log(errorMessage); // Log the error
+    throw errorMessage; // Directly throw the string error message
+  }
+
   //! S I G N - U P
   Future<User?> createUserWithEmailAndPassword(
       String email, String password) async {
@@ -17,17 +23,17 @@ class AuthService {
     } on FirebaseException catch (e) {
       log('SIGNUP AUTHORISATION ERROR');
       if (e.code == 'email-already-in-use') {
-        throw Exception('Email is already in use.');
+        handleError('Email is already in use.');
       } else if (e.code == 'invalid-email') {
-        throw Exception('Email is not valid');
+       handleError('Email is not valid');
       } else if (e.code == 'weak-password') {
-        throw Exception('Pasword is weak');
+        handleError('Pasword is weak');
       } else {
-        throw Exception('Sign-Up failed. Please try again.');
+        handleError('Sign-Up failed. Please try again.');
       }
     } catch (e) {
       log('SIGNUP UNKNOWN ERROR');
-      throw Exception('Error: Something went wrong');
+      handleError('Error: Something went wrong');
     }
   }
 
@@ -42,16 +48,16 @@ class AuthService {
     } on FirebaseException catch (e) {
       log('LOGIN AUTHORISATION ERROR');
       if (e.code == 'user-not-found') {
-        throw Exception('No account found with this email.');
+        handleError('No account found with this email.');
       } else if (e.code == 'wrong-password') {
-        throw Exception('Incorrect password.');
+        handleError('Incorrect password.');
       } else {
         log('UNKNOWN EXCEPTION $e');
-        throw Exception('Login failed. Incorrect credentials.');
+        handleError('Login failed. Incorrect credentials.');
       }
     } catch (e) {
       log('LOGIN UNKNOWN ERROR $e');
-      throw Exception('Error: Something went wrong $e');
+      handleError('Error: Something went wrong $e');
     }
   }
 
@@ -62,7 +68,7 @@ class AuthService {
     } catch (e) {
       // handling errors
       log("Something went wrong. Error: $e");
-      throw Exception('Something went wrong. Error: $e');
+      handleError('Something went wrong. Error: $e');
     }
   }
 
@@ -73,7 +79,7 @@ class AuthService {
     } catch (e) {
       // handling errors
       log("Something went wrong. Error: $e");
-      throw Exception('Something went wrong. Error: $e ');
+      handleError('Something went wrong. Error: $e ');
     }
   }
 
@@ -90,7 +96,8 @@ class AuthService {
       return await _auth.signInWithCredential(cred);
     } catch (e) {
       log("GOOGLE AUTHORISATION ERROR");
-      throw Exception("Error: Something went wrong");
+      handleError("Error: Something went wrong");
     }
+    return null;
   }
 }

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:wulflex/screens/main_screens/home_screen/home_screen.dart';
+import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/screens/splash_screens/splash_screen_1.dart';
 
 class MainWrapperWidget extends StatelessWidget {
@@ -22,7 +21,7 @@ class MainWrapperWidget extends StatelessWidget {
           if(snapshot.data == null) {
             return ScreenSplash();
           } else {
-            return ScreenHome();
+            return MainScreen();
           }
          }
       },),

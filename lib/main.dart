@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
-import 'package:wulflex/widgets/main_wrapper_widget.dart';
+import 'package:wulflex/utils/consts/app_colors.dart';
+import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
 
 void main() async {
   // Ensures the bindings with native platform has done properly
@@ -46,8 +47,9 @@ class MyApp extends StatelessWidget {
           title: 'Wulflex Shopping',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: AppColors.greenThemeColor
+            )
           ),
           home: const MainWrapperWidget()),
     );

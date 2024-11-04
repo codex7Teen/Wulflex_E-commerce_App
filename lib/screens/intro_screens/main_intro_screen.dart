@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
-import 'package:wulflex/screens/aunthentication_screens/login_screen.dart';
+import 'package:wulflex/screens/aunthentication_screens/login_screen/login_screen.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_1.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_2.dart';
 import 'package:wulflex/screens/intro_screens/intro_screen_3.dart';

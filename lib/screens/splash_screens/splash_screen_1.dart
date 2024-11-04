@@ -18,8 +18,8 @@ class _ScreenSplash2State extends State<ScreenSplash> {
   void initState() {
     super.initState();
 
-    // Delay for 1 second before triggering the animations
-    Future.delayed(Duration(seconds: 2), () {
+    // Delay for 1.5 second before triggering the animations
+    Future.delayed(Duration(milliseconds: 1500), () {
       if (mounted) {
         setState(() {
           _animateLogo = true;
@@ -37,8 +37,7 @@ class _ScreenSplash2State extends State<ScreenSplash> {
     });
 
     // Navigate to intro screen after some seconds
-    //TODO CHANGE SECONDS TO 4
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(seconds: 3), () {
       if (mounted) {
         NavigationHelper.navigateToWithReplacement(context, ScreenMainIntro(), milliseconds: 600);
       }
