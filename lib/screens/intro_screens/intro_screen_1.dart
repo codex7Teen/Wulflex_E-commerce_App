@@ -62,7 +62,7 @@ class _ScreenIntro1State extends State<ScreenIntro1> {
               Text(
                   textAlign: TextAlign.center,
                   'UNLEASH\n YOUR FITNESS POTENTIAL',
-                  style: AppTextStyles.headLineLarge),
+                  style: AppTextStyles.introScreenHeading),
               SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -70,7 +70,7 @@ class _ScreenIntro1State extends State<ScreenIntro1> {
                 child: Text(
                     textAlign: TextAlign.center,
                     'Discover top-quality gym equipment and gear tailored for fitness enthusiasts. Begin your journey to a stronger you with just a few taps!',
-                    style: AppTextStyles.titleSmall),
+                    style: AppTextStyles.introScreenSubheading),
               ),
 
               SizedBox(height: 120)

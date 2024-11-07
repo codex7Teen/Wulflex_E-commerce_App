@@ -16,17 +16,13 @@ Widget buildForgotPassImage(BuildContext context) {
 
 Widget buildForgotPassText() {
   return Text('Forgot\nPassword?',
-      style: GoogleFonts.bebasNeue(
-              textStyle: AppTextStyles.headLineLarge
-                  .copyWith(color: AppColors.darkScaffoldColor))
-          .copyWith(letterSpacing: 1));
+      style: AppTextStyles.authenticationHeadings);
 }
 
 Widget buildDontWorryText() {
   return Text(
     "Don't worry! It happens. Please enter the address associated with your account. We will sent you a password reset link.",
-    style: AppTextStyles.titleSmall.copyWith(
-        color: AppColors.darkScaffoldColor, fontWeight: FontWeight.bold),
+    style: AppTextStyles.forgotPasswordDescriptionText,
   );
 }
 

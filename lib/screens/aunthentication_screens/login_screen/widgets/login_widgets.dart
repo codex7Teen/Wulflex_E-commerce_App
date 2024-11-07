@@ -14,7 +14,7 @@ import 'package:wulflex/widgets/navigation_helper_widget.dart';
 Widget buildLoginImage(BuildContext context) {
   return Center(
     child: Image.asset(
-      'assets/Login-green.png',
+      'assets/login_img.png',
       width: MediaQuery.sizeOf(context).width * 0.645,
     ),
   );
@@ -23,8 +23,7 @@ Widget buildLoginImage(BuildContext context) {
 Widget buildLoginHeading() {
   return Text(
     'Login',
-    style: AppTextStyles.headLineLarge
-        .copyWith(color: AppColors.darkScaffoldColor),
+    style: AppTextStyles.authenticationHeadings,
   );
 }
 
@@ -75,10 +74,7 @@ Widget buildForgotPasswordLink(BuildContext context) {
       },
       child: Text(
         'Forgot Password?',
-        style: AppTextStyles.titleSmall.copyWith(
-          color: AppColors.greenThemeColor,
-          fontWeight: FontWeight.bold,
-        ),
+        style: AppTextStyles.forgotPasswordStyle,
       ),
     ),
   );
@@ -126,7 +122,7 @@ Widget buildSignUpLink(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text('New to Wulflex?', style: AppTextStyles.titleSmall),
+      Text('New to Wulflex?', style: AppTextStyles.newToWulflexOrAlreadyHaveAccountText),
       const SizedBox(width: 5),
       GestureDetector(
         onTap: () {
@@ -134,10 +130,7 @@ Widget buildSignUpLink(BuildContext context) {
         },
         child: Text(
           'Sign up',
-          style: AppTextStyles.titleSmall.copyWith(
-            color: AppColors.greenThemeColor,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTextStyles.signUpAndLoginGreenText,
         ),
       ),
     ],
@@ -152,8 +145,7 @@ Widget buildOrDivider() {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Text(
           'OR',
-          style: AppTextStyles.titleXSmall
-              .copyWith(color: AppColors.greyThemeColor),
+          style: AppTextStyles.orDividerText,
         ),
       ),
       Expanded(child: Divider(color: AppColors.greyThemeColor, thickness: 0.4))

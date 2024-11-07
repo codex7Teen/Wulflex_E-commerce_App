@@ -44,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
     double displayWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
       body: screens[currentIndex],
-      backgroundColor: AppColors.lightScaffoldColor,
+      backgroundColor: AppColors.whiteThemeColor,
       bottomNavigationBar: Container(
         margin: EdgeInsets.symmetric(
             vertical: displayWidth * 0.044, horizontal: displayWidth * 0.04),
@@ -88,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
                           width: index == currentIndex ? displayWidth * .32 : 0,
                           decoration: BoxDecoration(
                               color: index == currentIndex
-                                  ? AppColors.lightScaffoldColor
+                                  ? AppColors.whiteThemeColor
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(50)),
                         ),
@@ -118,7 +118,7 @@ class _MainScreenState extends State<MainScreen> {
                                     index == currentIndex
                                         ? listOfStrings[index]
                                         : '',
-                                    style: AppTextStyles.titleSmallBold),
+                                    style: AppTextStyles.bottomNavigationBarText),
                               )
                             ],
                           ),
@@ -136,7 +136,7 @@ class _MainScreenState extends State<MainScreen> {
                                 size: displayWidth * .076,
                                 color: index == currentIndex
                                     ? AppColors.greenThemeColor
-                                    : AppColors.darkScaffoldColor,
+                                    : AppColors.blackThemeColor,
                               ),
                             ],
                           )

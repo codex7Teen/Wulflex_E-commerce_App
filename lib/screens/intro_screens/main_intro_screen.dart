@@ -95,7 +95,7 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
                     child: Center(
                       child: Text(
                         'Skip',
-                        style: AppTextStyles.titleXSmall,
+                        style: AppTextStyles.introScreenSkipButton,
                       ),
                     ),
                   ),

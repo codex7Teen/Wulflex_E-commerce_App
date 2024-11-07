@@ -65,7 +65,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
               Text(
                   textAlign: TextAlign.center,
                   'Gear Up\n for Peak Performance',
-                  style: AppTextStyles.headLineLarge),
+                  style: AppTextStyles.introScreenHeading),
               SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -73,7 +73,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
                 child: Text(
                     textAlign: TextAlign.center,
                     'From essential equipment to pro-level accessories, we bring everything to support your goals. Unleash your potential with the right gear.',
-                    style: AppTextStyles.titleSmall),
+                    style: AppTextStyles.introScreenSubheading),
               ),
 
               SizedBox(height: 120)

@@ -22,10 +22,10 @@ class GreenButtonWidget extends StatelessWidget {
             ? SizedBox(
               height: 20,
               width: 20,
-              child: CircularProgressIndicator(color: AppColors.lightScaffoldColor,))
+              child: CircularProgressIndicator(color: AppColors.whiteThemeColor,))
             : Text(
                 buttonText,
-                style: AppTextStyles.titleMedium,
+                style: AppTextStyles.customGreenButtonText,
               ),
       ),
     );

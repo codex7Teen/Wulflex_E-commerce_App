@@ -17,7 +17,7 @@ Widget buildSignUpImage(BuildContext context) {
 
 Widget buildSignUpText() {
   return Text('SIGN UP',
-      style: AppTextStyles.headLineLarge.copyWith(color: Colors.black));
+      style: AppTextStyles.authenticationHeadings);
 }
 
 Widget buildNameTextField(TextEditingController nameTextController) {
@@ -116,15 +116,17 @@ Widget buildConfirmPasswordTextField(
 
 Widget buildTermsAndConditonsText() {
   return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text(
-        "By signing up, you're agreeing to our",
-        style: AppTextStyles.titleXSmallThin,
+      Flexible(
+        child: Text(
+          "By signing up, you're agreeing to our",
+          style: AppTextStyles.termsAndConditionAndPrivacyPolicyBaseText,
+        ),
       ),
       SizedBox(width: 5),
       Text("Terms & Conditions",
-          style: AppTextStyles.titleXSmall
-              .copyWith(color: AppColors.greenThemeColor)),
+          style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText),
     ],
   );
 }
@@ -134,13 +136,12 @@ Widget buildPrivacyPolicyText() {
     children: [
       Text(
         "and",
-        style: AppTextStyles.titleXSmallThin,
+        style: AppTextStyles.termsAndConditionAndPrivacyPolicyBaseText,
       ),
       SizedBox(width: 5),
       Text(
         "Privacy Policy",
-        style: AppTextStyles.titleXSmall
-            .copyWith(color: AppColors.greenThemeColor),
+        style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText,
       ),
     ],
   );
@@ -174,7 +175,7 @@ Widget buildAlreadySignedUpAndLoginText(BuildContext context) {
     children: [
       Text(
         'Already have an account?',
-        style: AppTextStyles.titleSmall,
+        style: AppTextStyles.newToWulflexOrAlreadyHaveAccountText,
       ),
       SizedBox(width: 5),
       GestureDetector(
@@ -182,8 +183,7 @@ Widget buildAlreadySignedUpAndLoginText(BuildContext context) {
             NavigationHelper.navigateToWithReplacement(context, ScreenLogin()),
         child: Text(
           'Login',
-          style: AppTextStyles.titleSmall.copyWith(
-              color: AppColors.greenThemeColor, fontWeight: FontWeight.bold),
+          style: AppTextStyles.signUpAndLoginGreenText,
         ),
       ),
     ],

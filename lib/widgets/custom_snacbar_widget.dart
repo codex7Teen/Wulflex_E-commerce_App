@@ -9,19 +9,19 @@ class CustomSnackbar {
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: AppColors.lightScaffoldColor, size: 18,),
+            Icon(icon, color: AppColors.whiteThemeColor, size: 18,),
             SizedBox(width: 5),
             Expanded(
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 message,
-                style: AppTextStyles.bodySmall,
+                style: AppTextStyles.snackBarText,
                 textAlign: TextAlign.center,
               ),
             ),
           ],
         ),
-        backgroundColor: AppColors.darkScaffoldColor,
+        backgroundColor: AppColors.blackThemeColor,
         duration: Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.symmetric(

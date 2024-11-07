@@ -35,6 +35,7 @@ class AuthService {
       log('SIGNUP UNKNOWN ERROR');
       handleError('Error: Something went wrong');
     }
+    return null;
   }
 
   //! L O G - I N
@@ -59,6 +60,7 @@ class AuthService {
       log('LOGIN UNKNOWN ERROR $e');
       handleError('Error: Something went wrong $e');
     }
+    return null;
   }
 
   //! F O R G O T - P A S S W O R D

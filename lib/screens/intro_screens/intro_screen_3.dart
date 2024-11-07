@@ -65,7 +65,7 @@ class _ScreenIntro3State extends State<ScreenIntro3> {
               Text(
                   textAlign: TextAlign.center,
                   'Track, Order, Achieve',
-                  style: AppTextStyles.headLineLarge),
+                  style: AppTextStyles.introScreenHeading),
               SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -73,7 +73,7 @@ class _ScreenIntro3State extends State<ScreenIntro3> {
                 child: Text(
                     textAlign: TextAlign.center,
                     'Easily explore, order, and track your fitness essentials. Start achieving with confidence and get closer to your goals every day.',
-                    style: AppTextStyles.titleSmall),
+                    style: AppTextStyles.introScreenSubheading),
               ),
 
               SizedBox(height: 120)
