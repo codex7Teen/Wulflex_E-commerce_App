@@ -1,37 +1,70 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/view_product_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_categories_container_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
-Widget buildExploreTextAndLogo() {
+Widget buildExploreTextAndLogo(BuildContext context) {
+  final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
+
   return Row(
     children: [
       Padding(
         padding: const EdgeInsets.only(top: 5),
         child: Text(
           'EXPLORE',
-          style: AppTextStyles.exploreTextStyle,
+          style: AppTextStyles.exploreTextStyle(context),
         ),
       ),
       SizedBox(width: 14),
-      Image.asset('assets/wulflex_logo_nobg.png', width: 30),
+      Image.asset(
+        'assets/wulflex_logo_nobg.png',
+        width: 30,
+        color: isLightTheme
+            ? AppColors.blackThemeColor
+            : AppColors.whiteThemeColor,
+      ),
       Spacer(),
-      Icon(Icons.person, color: AppColors.blackThemeColor, size: 28)
+      IconButton(
+          onPressed: () {
+            HapticFeedback.mediumImpact();
+            BlocProvider.of<ThemeBloc>(context).add(ToggleThemeButtonPressed());
+          },
+          icon: Icon(
+              isLightTheme ? Icons.brightness_4 : Icons.light_mode_outlined,
+              color: isLightTheme
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor,
+              size: 24)),
+      IconButton(
+        icon: Icon(Icons.person,
+            color: isLightTheme
+                ? AppColors.blackThemeColor
+                : AppColors.whiteThemeColor,
+            size: 28),
+        onPressed: () {
+          // do pressed event
+        },
+      )
     ],
   );
 }
 
-Widget buildSearchBar(double screenWidth) {
+Widget buildSearchBar(double screenWidth, BuildContext context) {
   return Container(
     height: 48,
     width: screenWidth * 0.92,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        color: AppColors.lightGreyThemeColor),
+        color: Theme.of(context).brightness == Brightness.light
+            ? AppColors.lightGreyThemeColor
+            : AppColors.whiteThemeColor),
     child: Row(
       children: [
         SizedBox(width: 20),
@@ -200,13 +233,13 @@ Widget buildcarouselView(
   );
 }
 
-Widget buildCategoriesText() {
+Widget buildCategoriesText(BuildContext context) {
   return Align(
     alignment: Alignment.topLeft,
     child: Text(
       textAlign: TextAlign.start,
       'CATEGORIES',
-      style: AppTextStyles.mainScreenHeadings,
+      style: AppTextStyles.mainScreenHeadings(context),
     ),
   );
 }
@@ -239,13 +272,13 @@ Widget buildAllCategories() {
   );
 }
 
-Widget buildLastestArrivalsText() {
+Widget buildLastestArrivalsText(BuildContext context) {
   return Align(
     alignment: Alignment.topLeft,
     child: Text(
       textAlign: TextAlign.start,
       'LATEST ARRIVALS',
-      style: AppTextStyles.mainScreenHeadings,
+      style: AppTextStyles.mainScreenHeadings(context),
     ),
   );
 }
@@ -259,7 +292,9 @@ Widget buildItemCard(BuildContext context) {
       height: 249,
       width: MediaQuery.sizeOf(context).width * 0.43,
       decoration: BoxDecoration(
-        color: AppColors.lightGreyThemeColor,
+        color: Theme.of(context).brightness == Brightness.light
+            ? AppColors.lightGreyThemeColor
+            : AppColors.whiteThemeColor,
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(

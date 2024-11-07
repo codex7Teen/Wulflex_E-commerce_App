@@ -16,14 +16,14 @@ class CustomCategoriesContainerWidget extends StatelessWidget {
                         height: 55,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.lightGreyThemeColor),
+                            color: Theme.of(context).brightness == Brightness.light ? AppColors.lightGreyThemeColor : AppColors.whiteThemeColor),
                         child: Center(
                             child:
                                 Image.asset(iconImagePath, scale: 21)),
                       ),
                       SizedBox(height: 10),
                       Text(categoryTitleText,
-                          style: AppTextStyles.allMiniCircledCategoriesText)
+                          style: AppTextStyles.allMiniCircledCategoriesText(context))
                     ],
                   );
   }

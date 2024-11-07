@@ -106,16 +106,16 @@ class AppTextStyles {
           letterSpacing: 1);
 
 //! HOME EXPLORE TEXT BIG.
-  static final TextStyle exploreTextStyle = GoogleFonts.bebasNeue(
+  static TextStyle exploreTextStyle(BuildContext context) => GoogleFonts.bebasNeue(
       fontSize: 28,
-      color: Colors.black,
+      color: Theme.of(context).brightness == Brightness.light ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
       letterSpacing: 3,
       fontWeight: FontWeight.w600);
 
 //! MAIN SCREEN HEADINGS
-  static final TextStyle mainScreenHeadings = GoogleFonts.bebasNeue(
+  static TextStyle mainScreenHeadings(BuildContext context) => GoogleFonts.bebasNeue(
       fontSize: 26,
-      color: Colors.black,
+      color: Theme.of(context).brightness == Brightness.light ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
       letterSpacing: 3,
       fontWeight: FontWeight.w600);
 
@@ -139,8 +139,8 @@ class AppTextStyles {
       fontSize: 16, color: AppColors.blackThemeColor, letterSpacing: 1);
 
 //! ALL MINI CIRCLED CATEGORIES TEXT
-  static final TextStyle allMiniCircledCategoriesText = GoogleFonts.bebasNeue(
-      color: AppColors.blackThemeColor,
+  static TextStyle allMiniCircledCategoriesText(BuildContext context) => GoogleFonts.bebasNeue(
+      color: Theme.of(context).brightness == Brightness.light ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
       fontWeight: FontWeight.w600,
       letterSpacing: 1.5,
       fontSize: 13.5);

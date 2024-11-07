@@ -134,6 +134,7 @@ Widget buildTermsAndConditonsText() {
 Widget buildPrivacyPolicyText() {
   return Row(
     children: [
+      SizedBox(width: 15),
       Text(
         "and",
         style: AppTextStyles.termsAndConditionAndPrivacyPolicyBaseText,

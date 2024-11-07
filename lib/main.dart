@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
+import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
-import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
 
 void main() async {
@@ -40,18 +40,21 @@ class MyApp extends StatelessWidget {
       providers: [
         // Authentication Bloc
         BlocProvider<AuthenticatonBlocBloc>(
-            create: (context) => AuthenticatonBlocBloc(authService: auth))
-        // Next Bloc
+            create: (context) => AuthenticatonBlocBloc(authService: auth)),
+        BlocProvider(
+          create: (context) => ThemeBloc(),
+          child: Container(),
+        )
       ],
-      child: MaterialApp(
-          title: 'Wulflex Shopping',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSwatch().copyWith(
-              primary: AppColors.greenThemeColor
-            )
-          ),
-          home: const MainWrapperWidget()),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, themeState) {
+          return MaterialApp(
+              title: 'Wulflex Shopping',
+              debugShowCheckedModeBanner: false,
+              theme: themeState.themeData,
+              home: const MainWrapperWidget());
+        },
+      ),
     );
   }
 }

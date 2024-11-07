@@ -33,17 +33,17 @@ class _ScreenHomeState extends State<ScreenHome> {
     final screenWidth = MediaQuery.sizeOf(context).width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.whiteThemeColor,
+        backgroundColor: AppColors.scaffoldColor(context),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 14, left: 18, right: 18),
             child: Column(
               children: [
                 //! TOP => EXPLORE & PERSON LOGO SECTION
-                buildExploreTextAndLogo(),
+                buildExploreTextAndLogo(context),
                 SizedBox(height: 15),
                 //! SEARCH BAR
-                buildSearchBar(screenWidth),
+                buildSearchBar(screenWidth, context),
                 SizedBox(height: 18),
                 //! CAROUSEL VIEW
                 buildcarouselView(
@@ -54,13 +54,13 @@ class _ScreenHomeState extends State<ScreenHome> {
                         })),
                 SizedBox(height: 24),
                 //! CATEGORIES TEXT
-                buildCategoriesText(),
-                SizedBox(height: 12),
+                buildCategoriesText(context),
+                SizedBox(height: 10),
                 //! ALL CATEGORIES
                 buildAllCategories(),
                 SizedBox(height: 24),
                 //! LATEST ARRIVALS TEXT
-                buildLastestArrivalsText(),
+                buildLastestArrivalsText(context),
                 SizedBox(height: 14),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

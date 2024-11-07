@@ -29,7 +29,7 @@ class CustomAuthenticationTetxfieldWidget extends StatelessWidget {
             style: AppTextStyles.authenticationTextfieldStyle,
             controller: controller,
             obscureText: obscureText && !isPasswordVisible,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autovalidateMode: AutovalidateMode.onUnfocus,
             validator: validator,
             decoration: InputDecoration(
               hintText: hintText,
