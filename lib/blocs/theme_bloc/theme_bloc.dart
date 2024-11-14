@@ -17,7 +17,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
             themeData: ThemeData(
                 primaryColor: AppColors.greenThemeColor,
                 colorScheme: ColorScheme.fromSwatch(
-                  primarySwatch: Colors.green,
+                  primarySwatch: Colors.grey,
                   brightness:
                       Brightness.light, // Default brightness set to light
                 ).copyWith(
@@ -33,7 +33,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
           themeData: ThemeData(
         primaryColor: AppColors.greenThemeColor,
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.grey,
           brightness: isCurrentlyLight
               ? Brightness.dark
               : Brightness.light, // Toggle to dark if light, or vice versa

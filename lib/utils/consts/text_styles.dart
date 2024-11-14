@@ -267,4 +267,31 @@ class AppTextStyles {
           : AppColors.whiteThemeColor,
       letterSpacing: 3,
       fontWeight: FontWeight.w600);
+
+//! HEY USER WELCOME TEXT
+      static TextStyle heyUserWelcomeText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 28,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 3,
+          fontWeight: FontWeight.w600);
+
+          //! SCREEN SUB HEADINGS
+  static TextStyle screenSubHeadings(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 22,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.blackThemeColor,
+          letterSpacing: 1,
+          fontWeight: FontWeight.w600);
+
+          //! SCREEN SUB TITLES
+  static final TextStyle screenSubTitles = GoogleFonts.robotoCondensed(
+      fontWeight: FontWeight.bold,
+      color: AppColors.blackThemeColor,
+      fontSize: 18,
+      letterSpacing: 1);
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 
-PreferredSizeWidget customAppbarWithBackbutton(BuildContext context, String appbarTitle) {
+PreferredSizeWidget customAppbarWithBackbutton(BuildContext context, String appbarTitle, [double spacingWidth = 0.178]) {
+  final isLightTheme = Theme.of(context).brightness == Brightness.light;
   return AppBar(
     backgroundColor: Colors.transparent,
     automaticallyImplyLeading: false,
@@ -20,13 +21,13 @@ PreferredSizeWidget customAppbarWithBackbutton(BuildContext context, String appb
                   width: 55,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.whiteThemeColor),
+                      color: isLightTheme ? AppColors.lightGreyThemeColor : AppColors.whiteThemeColor),
                   child: Icon(Icons.arrow_back_ios_new_rounded,
                       color: AppColors.blackThemeColor),
                 ),
               ),
             ),
-            SizedBox(width: MediaQuery.sizeOf(context).width * 0.178),
+            SizedBox(width: MediaQuery.sizeOf(context).width * spacingWidth),
             Text(appbarTitle, style: AppTextStyles.appbarTextBig(context)),
           ],
         ),

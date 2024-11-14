@@ -52,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
         height: displayWidth * .15,
         decoration: BoxDecoration(
             color: isLightTheme
-                ? AppColors.lightGreyThemeColor
+                ? AppColors.appBarLightGreyThemeColor
                 : AppColors.whiteThemeColor,
             boxShadow: [
               BoxShadow(

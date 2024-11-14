@@ -38,6 +38,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
+  image_picker: ^1.1.2
   like_button: ^2.0.5
   smooth_page_indicator: ^1.2.0+3
 

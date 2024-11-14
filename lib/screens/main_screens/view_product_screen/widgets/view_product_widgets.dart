@@ -210,7 +210,7 @@ Widget buildPriceDetailsContainer(BuildContext context) {
     width: double.infinity,
     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(20),
         color: isLightTheme
             ? AppColors.lightGreyThemeColor
             : AppColors.whiteThemeColor),
