@@ -106,18 +106,24 @@ class AppTextStyles {
           letterSpacing: 1);
 
 //! HOME EXPLORE TEXT BIG.
-  static TextStyle exploreTextStyle(BuildContext context) => GoogleFonts.bebasNeue(
-      fontSize: 28,
-      color: Theme.of(context).brightness == Brightness.light ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
-      letterSpacing: 3,
-      fontWeight: FontWeight.w600);
+  static TextStyle exploreTextStyle(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 28,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 3,
+          fontWeight: FontWeight.w600);
 
 //! MAIN SCREEN HEADINGS
-  static TextStyle mainScreenHeadings(BuildContext context) => GoogleFonts.bebasNeue(
-      fontSize: 26,
-      color: Theme.of(context).brightness == Brightness.light ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
-      letterSpacing: 3,
-      fontWeight: FontWeight.w600);
+  static TextStyle mainScreenHeadings(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 26,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 3,
+          fontWeight: FontWeight.w600);
 
 //! SEARCHBAR HINT TEXT
   static final TextStyle searchBarHintText =
@@ -139,11 +145,14 @@ class AppTextStyles {
       fontSize: 16, color: AppColors.blackThemeColor, letterSpacing: 1);
 
 //! ALL MINI CIRCLED CATEGORIES TEXT
-  static TextStyle allMiniCircledCategoriesText(BuildContext context) => GoogleFonts.bebasNeue(
-      color: Theme.of(context).brightness == Brightness.light ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 1.5,
-      fontSize: 13.5);
+  static TextStyle allMiniCircledCategoriesText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 1.5,
+          fontSize: 13.5);
 
 //! ITEM-CARD TITLE TEXT (ITEM NAME)
   static final TextStyle itemCardTitleText = GoogleFonts.robotoCondensed(
@@ -161,11 +170,14 @@ class AppTextStyles {
   );
 
 //! VIEW PRODUCT MAIN HEADING
-  static final TextStyle viewProductMainHeading = GoogleFonts.bebasNeue(
-      fontSize: 32,
-      color: Colors.black,
-      letterSpacing: 3,
-      fontWeight: FontWeight.w600);
+  static TextStyle viewProductMainHeading(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 32,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 3,
+          fontWeight: FontWeight.w600);
 
 //! VIEW PRODUCT RATINGS TEXT
   static final TextStyle viewProductratingsText = GoogleFonts.robotoCondensed(
@@ -175,16 +187,38 @@ class AppTextStyles {
       fontWeight: FontWeight.w400);
 
 //! BOTTOM NAVBAR TEXT
-  static final TextStyle bottomNavigationBarText = GoogleFonts.bebasNeue(
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-      color: Colors.black,
-      letterSpacing: 2);
+  static TextStyle bottomNavigationBarText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 2);
 
 //! SNACKBAR TEXT
   static final TextStyle snackBarText = GoogleFonts.robotoCondensed(
       fontSize: 14,
-      color: Colors.white,
+      color: AppColors.whiteThemeColor,
       letterSpacing: 0.4,
       fontWeight: FontWeight.w400);
+
+  //! SIZE HEADING TEXT
+  static final TextStyle sizeHeadingText = GoogleFonts.robotoCondensed(
+      textStyle: TextStyle(
+          fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 0.5));
+
+  //! SIZE CHART TEXT
+  static final TextStyle sizeChartText = GoogleFonts.robotoCondensed(
+      textStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: AppColors.greenThemeColor));
+
+  //! OFFER PRICE HEADING TEXT
+  static final TextStyle offerPriceHeadingText = GoogleFonts.bebasNeue(
+      fontSize: 28,
+      color: AppColors.greenThemeColor,
+      letterSpacing: 1.5,
+      fontWeight: FontWeight.w600);
 }

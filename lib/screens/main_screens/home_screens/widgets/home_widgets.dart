@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
+import 'package:wulflex/screens/main_screens/home_screens/widgets/theme_toggle_widget.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/view_product_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
@@ -31,23 +29,14 @@ Widget buildExploreTextAndLogo(BuildContext context) {
             : AppColors.whiteThemeColor,
       ),
       Spacer(),
-      IconButton(
-          onPressed: () {
-            HapticFeedback.mediumImpact();
-            BlocProvider.of<ThemeBloc>(context).add(ToggleThemeButtonPressed());
-          },
-          icon: Icon(
-              isLightTheme ? Icons.brightness_4 : Icons.light_mode_outlined,
-              color: isLightTheme
-                  ? AppColors.blackThemeColor
-                  : AppColors.whiteThemeColor,
-              size: 24)),
+      // Theme toggle switch widget
+      ThemeToggleSwitchWidget(isLightTheme: isLightTheme),
       IconButton(
         icon: Icon(Icons.person,
             color: isLightTheme
                 ? AppColors.blackThemeColor
                 : AppColors.whiteThemeColor,
-            size: 28),
+            size: 30),
         onPressed: () {
           // do pressed event
         },
@@ -213,7 +202,7 @@ Widget buildcarouselView(
           options: CarouselOptions(
               height: 185,
               viewportFraction: 1.0,
-              autoPlay: true,
+              // autoPlay: true,
               onPageChanged: onPageChanged,
               autoPlayInterval: Duration(seconds: 3)),
           items: [buildSaleBanner(), buildEquipmentsBanner()]),

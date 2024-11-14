@@ -31,7 +31,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     // Instance for authorisation services
@@ -43,16 +42,23 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthenticatonBlocBloc(authService: auth)),
         BlocProvider(
           create: (context) => ThemeBloc(),
-          child: Container(),
         )
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
-          return MaterialApp(
-              title: 'Wulflex Shopping',
-              debugShowCheckedModeBanner: false,
-              theme: themeState.themeData,
-              home: const MainWrapperWidget());
+          return AnimatedSwitcher(
+            duration: Duration(milliseconds: 600),
+            transitionBuilder: (child, animation) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+            child: MaterialApp(
+                key: ValueKey(themeState.themeData
+                    .brightness), // key based on brightness to trigger animation only when theme changes
+                title: 'Wulflex Shopping',
+                debugShowCheckedModeBanner: false,
+                theme: themeState.themeData,
+                home: const MainWrapperWidget()),
+          );
         },
       ),
     );

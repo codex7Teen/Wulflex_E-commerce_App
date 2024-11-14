@@ -41,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
     double displayWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
       body: screens[currentIndex],
@@ -50,7 +51,9 @@ class _MainScreenState extends State<MainScreen> {
             vertical: displayWidth * 0.044, horizontal: displayWidth * 0.04),
         height: displayWidth * .15,
         decoration: BoxDecoration(
-            color: AppColors.lightGreyThemeColor,
+            color: isLightTheme
+                ? AppColors.lightGreyThemeColor
+                : AppColors.whiteThemeColor,
             boxShadow: [
               BoxShadow(
                   color: Colors.black.withOpacity(.1),
@@ -88,7 +91,9 @@ class _MainScreenState extends State<MainScreen> {
                           width: index == currentIndex ? displayWidth * .32 : 0,
                           decoration: BoxDecoration(
                               color: index == currentIndex
-                                  ? AppColors.whiteThemeColor
+                                  ? isLightTheme
+                                      ? AppColors.whiteThemeColor
+                                      : AppColors.blackThemeColor
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(50)),
                         ),
@@ -119,7 +124,8 @@ class _MainScreenState extends State<MainScreen> {
                                         ? listOfStrings[index]
                                         : '',
                                     style:
-                                        AppTextStyles.bottomNavigationBarText),
+                                        AppTextStyles.bottomNavigationBarText(
+                                            context)),
                               )
                             ],
                           ),
@@ -150,3 +156,4 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+ 
