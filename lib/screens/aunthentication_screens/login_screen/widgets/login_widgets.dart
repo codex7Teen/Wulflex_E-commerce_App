@@ -99,6 +99,7 @@ Widget buildLoginButton(
         return GreenButtonWidget(
           buttonText: 'Login',
           isLoading: state is LoginLoading,
+          borderRadius: 15,
         );
       },
     ),

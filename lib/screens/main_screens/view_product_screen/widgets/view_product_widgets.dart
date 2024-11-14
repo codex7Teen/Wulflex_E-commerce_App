@@ -3,6 +3,7 @@ import 'package:like_button/like_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
+import 'package:wulflex/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/widgets/custom_weightandsize_selector_container_widget.dart';
 
 PreferredSizeWidget buildAppBarWithIcons(BuildContext context) {
@@ -47,6 +48,17 @@ PreferredSizeWidget buildAppBarWithIcons(BuildContext context) {
                         : AppColors.blackThemeColor),
                 child: Center(
                   child: LikeButton(
+                    likeBuilder: (isLiked) {
+                      return Icon(
+                        Icons.favorite,
+                        color: isLiked
+                            ? Colors.pinkAccent
+                            : isLightTheme
+                                ? AppColors.blackThemeColor
+                                : AppColors.whiteThemeColor,
+                        size: 28,
+                      );
+                    },
                     circleColor: CircleColor(
                         start: isLightTheme
                             ? AppColors.blackThemeColor
@@ -151,7 +163,7 @@ Widget buildSizeAndSizeChartText() {
     children: [
       Text(
         'SIZE',
-        style: AppTextStyles.sizeHeadingText,
+        style: AppTextStyles.viewProductTitleText,
       ),
       Spacer(),
       Icon(
@@ -190,4 +202,69 @@ Widget buildWeightAndSizeSelectors(
           onTap: onLargeTapped),
     ],
   );
+}
+
+Widget buildPriceDetailsContainer(BuildContext context) {
+  final isLightTheme = Theme.of(context).brightness == Brightness.light;
+  return Container(
+    width: double.infinity,
+    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: isLightTheme
+            ? AppColors.lightGreyThemeColor
+            : AppColors.whiteThemeColor),
+    child: Row(
+      children: [
+        Text(
+          "₹ 1099.00",
+          style: AppTextStyles.offerPriceHeadingText,
+        ),
+        SizedBox(width: 14),
+        Text(
+          "₹ 3499.00",
+          style: AppTextStyles.originalPriceText,
+        ),
+        SizedBox(width: 16),
+        Text(
+          "46% OFF",
+          style: AppTextStyles.offerPercentageText,
+        ),
+        Spacer(),
+        Icon(
+          Icons.info,
+          color: AppColors.darkishGrey,
+        )
+      ],
+    ),
+  );
+}
+
+Widget buildDescriptionTitle() {
+  return Text("DESCRIPTION", style: AppTextStyles.viewProductTitleText);
+}
+
+Widget buildDescription(BuildContext context, bool isExpanded) {
+  return Text(
+      textAlign: TextAlign.justify,
+      style: AppTextStyles.descriptionText(context),
+      overflow: TextOverflow.fade,
+      maxLines: isExpanded ? null : 5,
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+}
+
+Widget buildReammoreAndReadlessButton(
+    bool isExpanded, VoidCallback onTap, BuildContext context) {
+  return Align(
+      alignment: Alignment.topRight,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Text(isExpanded ? "Read Less" : "Read more",
+            style: AppTextStyles.readmoreAndreadLessText(context)),
+      ));
+}
+
+Widget buildAddToCartButton() {
+  return GreenButtonWidget(
+      buttonText: 'Add to cart', borderRadius: 25, width: 1);
 }

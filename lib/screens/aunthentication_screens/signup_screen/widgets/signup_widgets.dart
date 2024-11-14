@@ -165,6 +165,7 @@ Widget buildSignUpButton(
       return GreenButtonWidget(
         buttonText: 'Submit',
         isLoading: state is SignUpLoading,
+        borderRadius: 15,
       );
     },
   ));

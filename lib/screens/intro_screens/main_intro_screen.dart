@@ -81,7 +81,7 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
                                 curve: Curves.ease);
                       },
                       child: GreenButtonWidget(
-                          buttonText: onLastpage ? 'Explore' : 'Next')))),
+                          buttonText: onLastpage ? 'Explore' : 'Next', borderRadius: 15,)))),
 
           //! S K I P - B U T T O N
           onLastpage

@@ -203,10 +203,10 @@ class AppTextStyles {
       letterSpacing: 0.4,
       fontWeight: FontWeight.w400);
 
-  //! SIZE HEADING TEXT
-  static final TextStyle sizeHeadingText = GoogleFonts.robotoCondensed(
+  //! VIEW PRODUCT HEADING TEXT
+  static final TextStyle viewProductTitleText = GoogleFonts.bebasNeue(
       textStyle: TextStyle(
-          fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 0.5));
+          fontSize: 23, fontWeight: FontWeight.bold, letterSpacing: 1));
 
   //! SIZE CHART TEXT
   static final TextStyle sizeChartText = GoogleFonts.robotoCondensed(
@@ -221,4 +221,41 @@ class AppTextStyles {
       color: AppColors.greenThemeColor,
       letterSpacing: 1.5,
       fontWeight: FontWeight.w600);
+
+//! ORIGINAL PRICE TEXT
+  static final TextStyle originalPriceText = GoogleFonts.bebasNeue(
+      fontSize: 16,
+      color: AppColors.darkishGrey,
+      letterSpacing: 1.5,
+      fontWeight: FontWeight.w600,
+      decoration: TextDecoration.lineThrough,
+      decorationColor: AppColors.darkishGrey,
+      decorationThickness: 1);
+
+//! OFFER PERCENTAGE TEXT
+  static final TextStyle offerPercentageText = GoogleFonts.bebasNeue(
+    fontSize: 18,
+    color: AppColors.greenThemeColor,
+    letterSpacing: 1.5,
+    fontWeight: FontWeight.w600,
+  );
+
+  //! DESCRIPTION TEXT
+  static TextStyle descriptionText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? AppColors.darkishGrey
+                  : AppColors.lightGreyThemeColor));
+
+  //! READ MORE & READ LESS TEXT
+  static TextStyle readmoreAndreadLessText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? AppColors.darkishGrey
+                  : AppColors.lightGreyThemeColor));
 }

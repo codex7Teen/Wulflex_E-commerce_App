@@ -62,6 +62,7 @@ Widget buildResetButton(GlobalKey<FormState> formkey, TextEditingController forg
                           return GreenButtonWidget(
                             buttonText: 'Submit',
                             isLoading: state is PasswordResetLoading,
+                            borderRadius: 15,
                           );
                         },
                       ));
