@@ -255,13 +255,13 @@ Widget buildDescription(BuildContext context, bool isExpanded) {
 
 Widget buildReammoreAndReadlessButton(
     bool isExpanded, VoidCallback onTap, BuildContext context) {
-  return Align(
-      alignment: Alignment.topRight,
-      child: GestureDetector(
-        onTap: onTap,
+  return GestureDetector(
+    onTap: onTap,
+    child: Align(
+        alignment: Alignment.topRight,
         child: Text(isExpanded ? "Read Less" : "Read more",
-            style: AppTextStyles.readmoreAndreadLessText(context)),
-      ));
+            style: AppTextStyles.readmoreAndreadLessText(context))),
+  );
 }
 
 Widget buildAddToCartButton() {

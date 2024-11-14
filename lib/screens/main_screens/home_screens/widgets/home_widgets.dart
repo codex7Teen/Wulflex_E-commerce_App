@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/screens/main_screens/account_screens/profile_screen/profile_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/theme_toggle_widget.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/view_product_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -38,7 +39,8 @@ Widget buildExploreTextAndLogo(BuildContext context) {
                 : AppColors.whiteThemeColor,
             size: 30),
         onPressed: () {
-          // do pressed event
+          NavigationHelper.navigateToWithoutReplacement(
+              context, ScreenProfile());
         },
       )
     ],

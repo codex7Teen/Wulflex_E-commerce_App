@@ -55,7 +55,6 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                 buildPageIndicator(pageController, context),
                 SizedBox(height: 20),
                 Container(
-                  height: MediaQuery.sizeOf(context).height,
                   width: double.infinity,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -94,7 +93,8 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                 }),
                             context),
                         SizedBox(height: 24),
-                        buildAddToCartButton()
+                        buildAddToCartButton(),
+                        SizedBox(height: 20)
                       ],
                     ),
                   ),

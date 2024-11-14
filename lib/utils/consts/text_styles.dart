@@ -258,4 +258,13 @@ class AppTextStyles {
               color: Theme.of(context).brightness == Brightness.light
                   ? AppColors.darkishGrey
                   : AppColors.lightGreyThemeColor));
+
+  //! APPBAR TEXT BIG SIZED
+  static TextStyle appbarTextBig(BuildContext context) => GoogleFonts.bebasNeue(
+      fontSize: 32,
+      color: Theme.of(context).brightness == Brightness.light
+          ? AppColors.blackThemeColor
+          : AppColors.whiteThemeColor,
+      letterSpacing: 3,
+      fontWeight: FontWeight.w600);
 }
