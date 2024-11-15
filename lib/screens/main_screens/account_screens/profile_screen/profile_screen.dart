@@ -5,7 +5,7 @@ import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/widgets/custom_grey_container_widget.dart';
-import 'package:wulflex/widgets/custom_red_button_widget.dart';
+import 'package:wulflex/widgets/custom_black_button_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
 class ScreenProfile extends StatelessWidget {
@@ -66,10 +66,10 @@ class ScreenProfile extends StatelessWidget {
                     icon: Icons.cake_rounded),
                     SizedBox(height: 20),
                     GestureDetector(
-                      onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenEditProfile(screenTitle: 'Edit Profile')),
+                      onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenEditProfile(screenTitle: 'Edit Profile', name: 'Dennis Johnson',)),
                       child: GreenButtonWidget(buttonText: 'Edit Profile', borderRadius: 25, width: 1,)),
                     SizedBox(height: 20),
-                    CustomRedButtonWidget(buttonText: "Delete Account", borderRadius: 25)
+                    CustomBlackButtonWidget(buttonText: "Delete Account", borderRadius: 25)
               ],
             ),
           ),

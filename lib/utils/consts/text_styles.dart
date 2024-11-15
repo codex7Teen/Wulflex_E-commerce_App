@@ -269,7 +269,7 @@ class AppTextStyles {
       fontWeight: FontWeight.w600);
 
 //! HEY USER WELCOME TEXT
-      static TextStyle heyUserWelcomeText(BuildContext context) =>
+  static TextStyle heyUserWelcomeText(BuildContext context) =>
       GoogleFonts.bebasNeue(
           fontSize: 28,
           color: Theme.of(context).brightness == Brightness.light
@@ -278,8 +278,9 @@ class AppTextStyles {
           letterSpacing: 3,
           fontWeight: FontWeight.w600);
 
-          //! SCREEN SUB HEADINGS
-  static TextStyle screenSubHeadings(BuildContext context) =>
+  //! SCREEN SUB HEADINGS
+  static TextStyle screenSubHeadings(
+          BuildContext context) =>
       GoogleFonts.bebasNeue(
           fontSize: 22,
           color: Theme.of(context).brightness == Brightness.light
@@ -288,10 +289,46 @@ class AppTextStyles {
           letterSpacing: 1,
           fontWeight: FontWeight.w600);
 
-          //! SCREEN SUB TITLES
+  //! SCREEN SUB TITLES
   static final TextStyle screenSubTitles = GoogleFonts.robotoCondensed(
       fontWeight: FontWeight.bold,
       color: AppColors.blackThemeColor,
       fontSize: 18,
       letterSpacing: 1);
+
+  //! EDIT SCREEN SUB HEADINGS
+  static TextStyle editScreenSubHeadings(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 22,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 1,
+          fontWeight: FontWeight.w600);
+
+  //! EDIT SCREEN TEXT FIELD STYLES
+  static TextStyle editScreenTextfieldStyles(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              color: AppColors.blackThemeColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20));
+
+  //! EDIT SCREEN HINT TEXT STYLE
+  static TextStyle editScreenHinttextStyles(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              color: AppColors.greyThemeColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 15));
+
+  //! CUSTOM BLACK BUTTON TEXT
+  static TextStyle customBlackButtonText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 18,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.whiteThemeColor
+              : AppColors.blackThemeColor,
+          letterSpacing: 1,
+          fontWeight: FontWeight.bold);
 }
