@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
+import 'package:wulflex/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
 import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthenticatonBlocBloc(authService: auth)),
         BlocProvider(
           create: (context) => ThemeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => EditProfileBloc(),
         )
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(

@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_appbar_with_backbutton.dart';
@@ -23,21 +23,6 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _dateofbirthController = TextEditingController();
-
-  // store picked image
-  File? _selectedImage;
-
-  Future pickImage() async {
-    // Open image picker
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        _selectedImage = File(image.path);
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -72,22 +57,31 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                 SizedBox(height: 15),
                 Center(
                   child: GestureDetector(
-                    onTap: pickImage,
-                    child: SizedBox(
-                      height: 130,
-                      width: 130,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: _selectedImage != null
-                            ? Image.file(_selectedImage!, fit: BoxFit.cover)
-                            : Image.asset(
-                                'assets/add_profile.png',
-                                fit: BoxFit.cover,
-                                color: isLightTheme
-                                    ? AppColors.blackThemeColor
-                                    : AppColors.whiteThemeColor,
-                              ),
-                      ),
+                    onTap: () =>
+                        context.read<EditProfileBloc>().add(PickImageEvent()),
+                    child: BlocBuilder<EditProfileBloc, EditProfileState>(
+                      builder: (context, state) {
+                        File? selectedImage;
+                        if (state is ImagePickerLoaded) {
+                          selectedImage = state.selectedImage;
+                        }
+                        return SizedBox(
+                          height: 140,
+                          width: 140,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: selectedImage != null
+                                ? Image.file(selectedImage, fit: BoxFit.cover)
+                                : Image.asset(
+                                    'assets/add_profile.png',
+                                    fit: BoxFit.cover,
+                                    color: isLightTheme
+                                        ? AppColors.blackThemeColor
+                                        : AppColors.whiteThemeColor,
+                                  ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
