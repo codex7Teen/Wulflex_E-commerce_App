@@ -17,14 +17,14 @@ class AppTextStyles {
 //! INTRO SCREEN SKIP BUTTON
   static final TextStyle introScreenSkipButton = GoogleFonts.robotoCondensed(
       fontSize: 14,
-      color: Colors.white,
+      color: AppColors.whiteThemeColor,
       letterSpacing: 1,
       fontWeight: FontWeight.bold);
 
 //! CUSTOM GREEN BUTTON TEXT
   static final TextStyle customGreenButtonText = GoogleFonts.robotoCondensed(
       fontSize: 18,
-      color: Colors.white,
+      color: AppColors.whiteThemeColor,
       letterSpacing: 1,
       fontWeight: FontWeight.bold);
 

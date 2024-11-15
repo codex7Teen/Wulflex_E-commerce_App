@@ -23,7 +23,7 @@ class CustomTextfieldsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.9,
+      width: MediaQuery.sizeOf(context).width * 1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: AppColors.lightGreyThemeColor,
@@ -32,7 +32,7 @@ class CustomTextfieldsWidget extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 0),
         child: TextFormField(
           maxLength: maxCharacterLength,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.onUnfocus,
           controller: controller,
           validator: validator,
           minLines: minLines,

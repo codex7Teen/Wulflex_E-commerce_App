@@ -138,10 +138,15 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                   hintText: 'Please enter your date of birth',
                 ),
                 SizedBox(height: 39),
-                GreenButtonWidget(
-                  buttonText: "Save Details",
-                  borderRadius: 25,
-                  width: 1,
+                GestureDetector(
+                  onTap: () {
+                    formKey.currentState!.validate();
+                  },
+                  child: GreenButtonWidget(
+                    buttonText: "Save Details",
+                    borderRadius: 25,
+                    width: 1,
+                  ),
                 )
               ],
             ),

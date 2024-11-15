@@ -7,11 +7,20 @@ class GreenButtonWidget extends StatelessWidget {
   final bool isLoading;
   final double borderRadius;
   final double? width;
+  final bool? addIcon;
+  final IconData? icon;
   const GreenButtonWidget(
-      {super.key, required this.buttonText, this.isLoading = false, required this.borderRadius, this.width = 0.89});
+      {super.key,
+      required this.buttonText,
+      this.isLoading = false,
+      required this.borderRadius,
+      this.width = 0.89,
+      this.addIcon = false,
+      this.icon = Icons.ac_unit});
 
   @override
   Widget build(BuildContext context) {
+    final isLightTheme = Theme.of(context).brightness == Brightness.light;
     return Center(
       child: Container(
         width: MediaQuery.sizeOf(context).width * width!,
@@ -23,13 +32,27 @@ class GreenButtonWidget extends StatelessWidget {
           // show loading indication when some state is loading
           child: isLoading
               ? SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(color: AppColors.whiteThemeColor,))
-              : Text(
-                  buttonText,
-                  style: AppTextStyles.customGreenButtonText,
-                ),
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    color: AppColors.whiteThemeColor,
+                  ))
+              : addIcon!
+                  ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(icon, size: 24, color: AppColors.whiteThemeColor),
+                        SizedBox(width: 8),
+                        Text(
+                          buttonText,
+                          style: AppTextStyles.customGreenButtonText,
+                        ),
+                      ],
+                    )
+                  : Text(
+                      buttonText,
+                      style: AppTextStyles.customGreenButtonText,
+                    ),
         ),
       ),
     );
