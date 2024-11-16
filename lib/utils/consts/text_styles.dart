@@ -200,7 +200,7 @@ class AppTextStyles {
 //! SNACKBAR TEXT
   static TextStyle snackBarText(BuildContext context) =>
       GoogleFonts.robotoCondensed(
-          fontSize: 14,
+          fontSize: 16,
           color: isLightTheme(context)
               ? AppColors.whiteThemeColor
               : AppColors.blackThemeColor,

@@ -35,37 +35,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Instance for authorisation services
     final auth = AuthService();
     return MultiBlocProvider(
       providers: [
-        // Authentication Bloc
         BlocProvider<AuthenticatonBlocBloc>(
             create: (context) => AuthenticatonBlocBloc(authService: auth)),
-        BlocProvider(
-          create: (context) => ThemeBloc(),
-        ),
-        BlocProvider(
-          create: (context) => EditProfileBloc(),
-        ),
-        BlocProvider(
-          create: (context) => DeleteAccountBloc(authService: auth),
-        )
+        BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider(create: (context) => EditProfileBloc()),
+        BlocProvider(create: (context) => DeleteAccountBloc(authService: auth)),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
-          return AnimatedSwitcher(
-            duration: Duration(milliseconds: 600),
-            transitionBuilder: (child, animation) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            child: MaterialApp(
-                key: ValueKey(themeState.themeData
-                    .brightness), // key based on brightness to trigger animation only when theme changes
-                title: 'Wulflex Shopping',
-                debugShowCheckedModeBanner: false,
-                theme: themeState.themeData,
-                home: const MainWrapperWidget()),
+          return MaterialApp(
+            title: 'Wulflex Shopping',
+            debugShowCheckedModeBanner: false,
+            theme: themeState.themeData,
+            home: const MainWrapperWidget(),
           );
         },
       ),

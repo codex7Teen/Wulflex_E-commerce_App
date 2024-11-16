@@ -25,23 +25,32 @@ class ThemeToggleSwitchWidget extends StatelessWidget {
           color: isLightTheme ? AppColors.lightGreyThemeColor : Colors.white,
         ),
         child: Stack(
-          alignment: Alignment.center,
           children: [
-            Positioned(
+            AnimatedPositioned( // Replace Positioned with AnimatedPositioned
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut, // Add smooth easing curve
               left: isLightTheme ? 5.0 : 30.0,
+              top: 4.0, // Center vertically
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  // Add fade transition for icon change
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
                 child: isLightTheme
                     ? Icon(
                         Icons.brightness_medium_outlined,
-                        key: ValueKey('sun'),
+                        key: const ValueKey('sun'),
                         color: AppColors.blackThemeColor,
                         size: 20,
                       )
                     : Icon(
                         Icons.dark_mode_sharp,
-                        key: ValueKey('moon'),
-                        color: Colors.deepPurpleAccent[200],
+                        key: const ValueKey('moon'),
+                        color: AppColors.blackThemeColor,
                         size: 20,
                       ),
               ),

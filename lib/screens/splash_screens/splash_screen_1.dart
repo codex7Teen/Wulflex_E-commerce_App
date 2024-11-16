@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
@@ -39,8 +41,11 @@ class _ScreenSplash1State extends State<ScreenSplash1> {
       }
     });
 
+    // Trigger the event to load the saved theme
+    context.read<ThemeBloc>().add(LoadSavedTheme());
+
     // Navigate to intro-screen or Main screen based on argument
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(milliseconds: 3000), () {
       if (mounted) {
         NavigationHelper.navigateToWithReplacement(context, widget.screen,
             milliseconds: 800);

@@ -125,7 +125,7 @@ class ScreenDeleteAccount extends StatelessWidget {
                         } else {
                           // trigger snackbar
                           CustomSnackbar.showCustomSnackBar(
-                              context, "Please check the fields",
+                              context, "Please check the fields!",
                               icon: Icons.warning_rounded);
                         }
                       },

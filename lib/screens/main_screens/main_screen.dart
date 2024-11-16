@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/screens/main_screens/account_screens/sign_out_screen.dart';
 import 'package:wulflex/screens/main_screens/cart_screens.dart/cart_screen.dart';
 import 'package:wulflex/screens/main_screens/favorites_screens/favorite_screen.dart';
@@ -43,117 +45,142 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
     double displayWidth = MediaQuery.sizeOf(context).width;
-    return Scaffold(
-      body: screens[currentIndex],
-      backgroundColor: AppColors.scaffoldColor(context),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: displayWidth * 0.044, horizontal: displayWidth * 0.04),
-        height: displayWidth * .15,
-        decoration: BoxDecoration(
-            color: isLightTheme
-                ? AppColors.appBarLightGreyThemeColor
-                : AppColors.whiteThemeColor,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(.1),
-                  blurRadius: 30,
-                  offset: Offset(0, 10))
-            ],
-            borderRadius: BorderRadius.circular(50)),
-        child: ListView.builder(
-            itemCount: 4,
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: displayWidth * .02),
-            itemBuilder: (context, index) => InkWell(
-                  onTap: () {
-                    setState(() {
-                      currentIndex = index;
-                      HapticFeedback.heavyImpact();
-                    });
-                  },
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  child: Stack(
-                    children: [
-                      AnimatedContainer(
-                        duration: Duration(seconds: 1),
-                        curve: Curves.fastLinearToSlowEaseIn,
-                        width: index == currentIndex
-                            ? displayWidth * .32
-                            : displayWidth * .18,
-                        alignment: Alignment.center,
-                        child: AnimatedContainer(
-                          duration: Duration(seconds: 1),
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 800),
+      switchInCurve: Curves.easeInOut,
+      switchOutCurve: Curves.easeInOut,
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInOut,
+          ),
+          child: ScaleTransition(
+            scale: Tween<double>(
+              begin: 0.98,
+              end: 1.0,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeInOut,
+            )),
+            child: child,
+          ),
+        );
+      },
+      child: Scaffold(
+        key: ValueKey(isLightTheme), // Key based on theme to trigger animation
+        body: screens[currentIndex],
+        backgroundColor: AppColors.scaffoldColor(context),
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.symmetric(
+              vertical: displayWidth * 0.044, horizontal: displayWidth * 0.04),
+          height: displayWidth * .15,
+          decoration: BoxDecoration(
+              color: isLightTheme
+                  ? AppColors.appBarLightGreyThemeColor
+                  : AppColors.whiteThemeColor,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(.1),
+                    blurRadius: 30,
+                    offset: const Offset(0, 10))
+              ],
+              borderRadius: BorderRadius.circular(50)),
+          child: ListView.builder(
+              itemCount: 4,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.symmetric(horizontal: displayWidth * .02),
+              itemBuilder: (context, index) => InkWell(
+                    onTap: () {
+                      setState(() {
+                        currentIndex = index;
+                        HapticFeedback.heavyImpact();
+                      });
+                    },
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    child: Stack(
+                      children: [
+                        AnimatedContainer(
+                          duration: const Duration(seconds: 1),
                           curve: Curves.fastLinearToSlowEaseIn,
-                          height:
-                              index == currentIndex ? displayWidth * .12 : 0,
-                          width: index == currentIndex ? displayWidth * .32 : 0,
-                          decoration: BoxDecoration(
-                              color: index == currentIndex
-                                  ? isLightTheme
-                                      ? AppColors.whiteThemeColor
-                                      : AppColors.blackThemeColor
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(50)),
-                        ),
-                      ),
-                      AnimatedContainer(
-                        duration: Duration(seconds: 1),
-                        curve: Curves.fastLinearToSlowEaseIn,
-                        width: index == currentIndex
-                            ? displayWidth * .31
-                            : displayWidth * .18,
-                        alignment: Alignment.center,
-                        child: Stack(children: [
-                          Row(
-                            children: [
-                              AnimatedContainer(
-                                duration: Duration(seconds: 1),
-                                curve: Curves.fastLinearToSlowEaseIn,
-                                width: index == currentIndex
-                                    ? displayWidth * .13
-                                    : 0,
-                              ),
-                              AnimatedOpacity(
-                                opacity: index == currentIndex ? 1 : 0,
-                                duration: Duration(seconds: 1),
-                                curve: Curves.fastLinearToSlowEaseIn,
-                                child: Text(
-                                    index == currentIndex
-                                        ? listOfStrings[index]
-                                        : '',
-                                    style:
-                                        AppTextStyles.bottomNavigationBarText(
-                                            context)),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              AnimatedContainer(
-                                duration: Duration(seconds: 1),
-                                curve: Curves.fastLinearToSlowEaseIn,
-                                width: index == currentIndex
-                                    ? displayWidth * .03
-                                    : 20,
-                              ),
-                              Icon(
-                                listOfIcons[index],
-                                size: displayWidth * .076,
+                          width: index == currentIndex
+                              ? displayWidth * .32
+                              : displayWidth * .18,
+                          alignment: Alignment.center,
+                          child: AnimatedContainer(
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                            height:
+                                index == currentIndex ? displayWidth * .12 : 0,
+                            width:
+                                index == currentIndex ? displayWidth * .32 : 0,
+                            decoration: BoxDecoration(
                                 color: index == currentIndex
-                                    ? AppColors.greenThemeColor
-                                    : AppColors.blackThemeColor,
-                              ),
-                            ],
-                          )
-                        ]),
-                      ),
-                    ],
-                  ),
-                )),
+                                    ? isLightTheme
+                                        ? AppColors.whiteThemeColor
+                                        : AppColors.blackThemeColor
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(50)),
+                          ),
+                        ),
+                        AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                          width: index == currentIndex
+                              ? displayWidth * .31
+                              : displayWidth * .18,
+                          alignment: Alignment.center,
+                          child: Stack(children: [
+                            Row(
+                              children: [
+                                AnimatedContainer(
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.fastLinearToSlowEaseIn,
+                                  width: index == currentIndex
+                                      ? displayWidth * .13
+                                      : 0,
+                                ),
+                                AnimatedOpacity(
+                                  opacity: index == currentIndex ? 1 : 0,
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.fastLinearToSlowEaseIn,
+                                  child: Text(
+                                      index == currentIndex
+                                          ? listOfStrings[index]
+                                          : '',
+                                      style:
+                                          AppTextStyles.bottomNavigationBarText(
+                                              context)),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                AnimatedContainer(
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.fastLinearToSlowEaseIn,
+                                  width: index == currentIndex
+                                      ? displayWidth * .03
+                                      : 20,
+                                ),
+                                Icon(
+                                  listOfIcons[index],
+                                  size: displayWidth * .076,
+                                  color: index == currentIndex
+                                      ? AppColors.greenThemeColor
+                                      : AppColors.blackThemeColor,
+                                ),
+                              ],
+                            )
+                          ]),
+                        ),
+                      ],
+                    ),
+                  )),
+        ),
       ),
     );
   }
 }
- 

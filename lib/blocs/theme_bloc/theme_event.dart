@@ -7,5 +7,8 @@ abstract class ThemeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-//! THEME EVENT
+//! Toggled button pressed event
 class ToggleThemeButtonPressed extends ThemeEvent {}
+
+//! Event to load saved theme
+class LoadSavedTheme extends ThemeEvent {}
