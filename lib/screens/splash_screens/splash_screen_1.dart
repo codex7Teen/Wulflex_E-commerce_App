@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/screens/intro_screens/main_intro_screen.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
 class ScreenSplash extends StatefulWidget {
-  const ScreenSplash({super.key});
+  final User? authenticatedUser;
+  const ScreenSplash({super.key, this.authenticatedUser});
 
   @override
   State<ScreenSplash> createState() => _ScreenSplash2State();
@@ -36,10 +39,17 @@ class _ScreenSplash2State extends State<ScreenSplash> {
       }
     });
 
-    // Navigate to intro screen after some seconds
+    // Navigate to intro-screen if not authenticated else navigate to home
     Future.delayed(Duration(seconds: 3), () {
       if (mounted) {
-        NavigationHelper.navigateToWithReplacement(context, ScreenMainIntro(), milliseconds: 600);
+        // If user is logged in, navigate to MainScreen, otherwise to ScreenMainIntro
+        if (widget.authenticatedUser != null) {
+          NavigationHelper.navigateToWithReplacement(context, MainScreen(),
+              milliseconds: 600);
+        } else {
+          NavigationHelper.navigateToWithReplacement(context, ScreenMainIntro(),
+              milliseconds: 600);
+        }
       }
     });
   }
@@ -77,8 +87,7 @@ class _ScreenSplash2State extends State<ScreenSplash> {
                       SizedBox(
                           width: 75,
                           height: 75,
-                          child:
-                              ColoredBox(color: AppColors.whiteThemeColor)),
+                          child: ColoredBox(color: AppColors.whiteThemeColor)),
                       Image.asset(
                         'assets/wulflex_logo_white_bg.jpg',
                         width: 75,

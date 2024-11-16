@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/screens/splash_screens/splash_screen_1.dart';
 
 class MainWrapperWidget extends StatelessWidget {
@@ -9,22 +8,21 @@ class MainWrapperWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot) {
-         if(snapshot.connectionState == ConnectionState.waiting) {
-          // show circular progress indicator
-          return Center(child: CircularProgressIndicator());
-         } else if(snapshot.hasError) {
-          // show error
-          return Center(child: Text("Error"));
-         } else {
-          // goto screens (success stage)
-          if(snapshot.data == null) {
-            return ScreenSplash();
+      body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // show circular progress indicator
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            // show error
+            return Center(child: Text("Error"));
           } else {
-            return MainScreen();
+            /// Show the Splash screen first, then navigate based on the authentication state form there
+            return ScreenSplash(authenticatedUser: snapshot.data);
           }
-         }
-      },),
+        },
+      ),
     );
   }
 }
