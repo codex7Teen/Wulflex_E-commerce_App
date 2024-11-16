@@ -24,8 +24,8 @@ class MainWrapperWidget extends StatelessWidget {
               // Show splash and navigate to intro screen
               return ScreenSplash1(screen: ScreenMainIntro());
             } else {
-              // Show splash and navigate to main screen
-              return ScreenSplash1(screen: MainScreen());
+              //TODO Show splash and navigate to main screen
+              return MainScreen();
             }
           }
         },

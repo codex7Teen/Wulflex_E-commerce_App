@@ -27,7 +27,14 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
                     onSecondary: AppColors.whiteThemeColor,
                     onSurface: AppColors.blackThemeColor,
                     onError: AppColors.whiteThemeColor,
-                    brightness: Brightness.light)))) {
+                    brightness: Brightness.light),
+                checkboxTheme: CheckboxThemeData(
+                    side: WidgetStateBorderSide.resolveWith((states) {
+                  if (!states.contains(WidgetState.selected)) {
+                    return BorderSide(color: AppColors.greenThemeColor);
+                  }
+                  return BorderSide(color: AppColors.greenThemeColor);
+                }))))) {
     //! EVENT WHICH TOGGLES B/W LIGHT AND DARK THEME
     on<ToggleThemeButtonPressed>((event, emit) {
       // Check if the current theme is light
@@ -36,23 +43,30 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       // Emit a new theme state with the toggled brightness
       emit(ThemeState(
           themeData: ThemeData(
-        primaryColor: AppColors.greenThemeColor,
-        colorScheme: ColorScheme(
-          primary: AppColors.greenThemeColor,
-          primaryContainer: AppColors.greenThemeColor,
-          secondary: AppColors.blueThemeColor,
-          secondaryContainer: AppColors.blueThemeColor,
-          surface: AppColors.whiteThemeColor,
-          error: AppColors.redThemeColor,
-          onPrimary: AppColors.whiteThemeColor,
-          onSecondary: AppColors.whiteThemeColor,
-          onSurface: AppColors.blackThemeColor,
-          onError: AppColors.whiteThemeColor,
-          brightness: isCurrentlyLight
-              ? Brightness.dark
-              : Brightness.light, // Toggle brightness
-        ),
-      )));
+              primaryColor: AppColors.greenThemeColor,
+              colorScheme: ColorScheme(
+                primary: AppColors.greenThemeColor,
+                primaryContainer: AppColors.greenThemeColor,
+                secondary: AppColors.blueThemeColor,
+                secondaryContainer: AppColors.blueThemeColor,
+                surface: AppColors.whiteThemeColor,
+                error: AppColors.redThemeColor,
+                onPrimary: AppColors.whiteThemeColor,
+                onSecondary: AppColors.whiteThemeColor,
+                onSurface: AppColors.blackThemeColor,
+                onError: AppColors.whiteThemeColor,
+                brightness: isCurrentlyLight
+                    ? Brightness.dark
+                    : Brightness.light, // Toggle brightness
+              ),
+              
+              checkboxTheme: CheckboxThemeData(
+                  side: WidgetStateBorderSide.resolveWith((states) {
+                if (!states.contains(WidgetState.selected)) {
+                  return BorderSide(color: AppColors.greenThemeColor);
+                }
+                return BorderSide(color: AppColors.greenThemeColor);
+              })))));
       log('THEME CHANGE SUCCESS');
     });
   }

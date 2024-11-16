@@ -38,6 +38,7 @@ void showCustomWarningAlertBox(BuildContext context) {
       width: 120,
       onConfirmBtnTap: () {
         context.read<DeleteAccountBloc>().add(DeleteAccountButtonPressed());
+        Navigator.pop(context);
       },
       );
 }

@@ -25,6 +25,7 @@ class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
     on<DeleteAccountButtonPressed>((event, emit) async {
       if (state is DeleteAccountInitial) {
         final currentStates = (state as DeleteAccountInitial).checkBoxStates;
+        emit(DeleteAccountLoading());
         try {
           await authService.deleteUser();
           log("ACCOUNT DELETED SUCCESS");
