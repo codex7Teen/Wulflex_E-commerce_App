@@ -37,7 +37,7 @@ class CustomBlackButtonWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.warning_amber_rounded,
+                      Icons.warning_rounded,
                       size: 24,
                       color: isLightTheme
                           ? AppColors.whiteThemeColor

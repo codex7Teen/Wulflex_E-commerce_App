@@ -16,13 +16,18 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       : super(ThemeState(
             themeData: ThemeData(
                 primaryColor: AppColors.greenThemeColor,
-                colorScheme: ColorScheme.fromSwatch(
-                  primarySwatch: Colors.grey,
-                  brightness:
-                      Brightness.light, // Default brightness set to light
-                ).copyWith(
-                    secondary: AppColors.blueThemeColor), // Secondary color
-                brightness: Brightness.light))) {
+                colorScheme: ColorScheme(
+                    primary: AppColors.greenThemeColor,
+                    primaryContainer: AppColors.greenThemeColor,
+                    secondary: AppColors.blueThemeColor,
+                    secondaryContainer: AppColors.blueThemeColor,
+                    surface: const Color.fromRGBO(255, 255, 255, 1),
+                    error: AppColors.redThemeColor,
+                    onPrimary: AppColors.whiteThemeColor,
+                    onSecondary: AppColors.whiteThemeColor,
+                    onSurface: AppColors.blackThemeColor,
+                    onError: AppColors.whiteThemeColor,
+                    brightness: Brightness.light)))) {
     //! EVENT WHICH TOGGLES B/W LIGHT AND DARK THEME
     on<ToggleThemeButtonPressed>((event, emit) {
       // Check if the current theme is light
@@ -32,15 +37,21 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       emit(ThemeState(
           themeData: ThemeData(
         primaryColor: AppColors.greenThemeColor,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.grey,
+        colorScheme: ColorScheme(
+          primary: AppColors.greenThemeColor,
+          primaryContainer: AppColors.greenThemeColor,
+          secondary: AppColors.blueThemeColor,
+          secondaryContainer: AppColors.blueThemeColor,
+          surface: AppColors.whiteThemeColor,
+          error: AppColors.redThemeColor,
+          onPrimary: AppColors.whiteThemeColor,
+          onSecondary: AppColors.whiteThemeColor,
+          onSurface: AppColors.blackThemeColor,
+          onError: AppColors.whiteThemeColor,
           brightness: isCurrentlyLight
               ? Brightness.dark
-              : Brightness.light, // Toggle to dark if light, or vice versa
-        ).copyWith(secondary: AppColors.blueThemeColor),
-        brightness: isCurrentlyLight
-            ? Brightness.dark
-            : Brightness.light, // Apply the toggled brightness
+              : Brightness.light, // Toggle brightness
+        ),
       )));
       log('THEME CHANGE SUCCESS');
     });

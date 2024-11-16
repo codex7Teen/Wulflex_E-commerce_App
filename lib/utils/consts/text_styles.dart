@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
+import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
 class AppTextStyles {
   //! SPLASH SCREEN HEADINGS
@@ -197,11 +198,14 @@ class AppTextStyles {
           letterSpacing: 2);
 
 //! SNACKBAR TEXT
-  static final TextStyle snackBarText = GoogleFonts.robotoCondensed(
-      fontSize: 14,
-      color: AppColors.whiteThemeColor,
-      letterSpacing: 0.4,
-      fontWeight: FontWeight.w400);
+  static TextStyle snackBarText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 14,
+          color: isLightTheme(context)
+              ? AppColors.whiteThemeColor
+              : AppColors.blackThemeColor,
+          letterSpacing: 0.4,
+          fontWeight: FontWeight.bold);
 
   //! VIEW PRODUCT HEADING TEXT
   static final TextStyle viewProductTitleText = GoogleFonts.bebasNeue(
@@ -331,4 +335,36 @@ class AppTextStyles {
               : AppColors.blackThemeColor,
           letterSpacing: 1,
           fontWeight: FontWeight.bold);
+
+  //! DELETE ACCOUNT RED WARNING TEXT
+  static TextStyle delteAccountRedWarningText = GoogleFonts.robotoCondensed(
+      textStyle: TextStyle(
+          color: Colors.red[400], fontSize: 14.8, letterSpacing: 0.35));
+
+  //! DELETE ACCOUNT CONFIRM TITLE
+  static TextStyle pleaseConfirmText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              color: isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor,
+              fontSize: 21,
+              letterSpacing: 0.5,
+              fontWeight: FontWeight.bold));
+
+  //! DELETE ACCOUNT CONFIRMATION LINES
+  static TextStyle confimationLinesText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              color: isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor,
+              fontSize: 16.4,
+              letterSpacing: 0.7,
+              fontWeight: FontWeight.w500));
+
+  //! DELETE ACCOUNT ACNOWLEDGET TEXT GREY COLO
+  static TextStyle deleteAccountAcknowledgeText = GoogleFonts.robotoCondensed(
+      textStyle: TextStyle(
+          color: AppColors.greyThemeColor, fontSize: 15, letterSpacing: 0.4));
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
+import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
 class CustomSnackbar {
   static void showCustomSnackBar(BuildContext context, String message, {IconData icon = Icons.done_outline_rounded}) {
@@ -9,19 +10,19 @@ class CustomSnackbar {
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: AppColors.whiteThemeColor, size: 18,),
+            Icon(icon, color: isLightTheme(context) ? AppColors.whiteThemeColor : AppColors.blackThemeColor, size: 18,),
             SizedBox(width: 5),
             Expanded(
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 message,
-                style: AppTextStyles.snackBarText,
+                style: AppTextStyles.snackBarText(context),
                 textAlign: TextAlign.center,
               ),
             ),
           ],
         ),
-        backgroundColor: AppColors.blackThemeColor,
+        backgroundColor: isLightTheme(context) ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
         duration: Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.symmetric(

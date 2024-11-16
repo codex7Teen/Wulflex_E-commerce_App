@@ -25,7 +25,7 @@ class AuthService {
       if (e.code == 'email-already-in-use') {
         handleError('Email is already in use.');
       } else if (e.code == 'invalid-email') {
-       handleError('Email is not valid');
+        handleError('Email is not valid');
       } else if (e.code == 'weak-password') {
         handleError('Pasword is weak');
       } else {
@@ -101,5 +101,21 @@ class AuthService {
       handleError("Error: Something went wrong");
     }
     return null;
+  }
+
+  //! DELETE USER ACCOUNT
+  Future<void> deleteUser() async {
+    try {
+      User? user = _auth.currentUser;
+
+      if (user != null) {
+        await user.delete();
+        log("ACCOUNT DELETE SUCCESS");
+      }
+    } catch (e) {
+      log("ERROR DELETING ACCOUNT: $e");
+      // Rethrow the error to be caught by the caller
+      throw Exception("Failed to delete account: $e");
+    }
   }
 }

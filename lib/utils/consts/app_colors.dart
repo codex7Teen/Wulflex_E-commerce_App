@@ -4,6 +4,7 @@ class AppColors {
   //! CONSTANT APP COLORS
   static const Color whiteThemeColor = Colors.white;
   static const Color blackThemeColor = Colors.black;
+  static const Color redThemeColor= Colors.red;
   static const Color darkRedThemeColor = Color.fromARGB(255, 163, 11, 0);
   static const Color greenThemeColor = Color.fromARGB(255, 173, 221, 0);
   static const Color greyThemeColor = Colors.grey;

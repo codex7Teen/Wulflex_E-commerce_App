@@ -23,7 +23,7 @@ class ScreenProfile extends StatelessWidget {
               children: [
                 buildProfilePicture(context),
                 buildWelcomeText(context),
-                SizedBox(height: 20),
+                SizedBox(height: 15),
                 buildName(),
                 SizedBox(height: 15),
                 buildAccountInfo(),
@@ -31,7 +31,7 @@ class ScreenProfile extends StatelessWidget {
                 buildPhoneNumber(),
                 SizedBox(height: 15),
                 buildDob(),
-                SizedBox(height: 20),
+                SizedBox(height: 28),
                 buildEditButton(context),
                 SizedBox(height: 20),
                 buildDeleteButton(context)

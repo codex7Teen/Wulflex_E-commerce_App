@@ -17,8 +17,8 @@ PreferredSizeWidget customAppbarWithBackbutton(BuildContext context, String appb
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: Container(
-                  height: 55,
-                  width: 55,
+                  height: 52,
+                  width: 52,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isLightTheme ? AppColors.lightGreyThemeColor : AppColors.whiteThemeColor),

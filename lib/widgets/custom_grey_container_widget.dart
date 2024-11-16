@@ -12,7 +12,7 @@ class CustomGreyContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 22),
+      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme

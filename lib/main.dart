@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
+import 'package:wulflex/blocs/delete_account_bloc/delete_account_bloc.dart';
 import 'package:wulflex/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => EditProfileBloc(),
+        ),
+        BlocProvider(
+          create: (context) => DeleteAccountBloc(authService: auth),
         )
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
