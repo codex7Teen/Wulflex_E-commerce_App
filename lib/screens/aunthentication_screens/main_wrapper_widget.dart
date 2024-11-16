@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wulflex/screens/intro_screens/main_intro_screen.dart';
+import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/screens/splash_screens/splash_screen_1.dart';
 
 class MainWrapperWidget extends StatelessWidget {
@@ -18,8 +20,13 @@ class MainWrapperWidget extends StatelessWidget {
             // show error
             return Center(child: Text("Error"));
           } else {
-            /// Show the Splash screen first, then navigate based on the authentication state form there
-            return ScreenSplash(authenticatedUser: snapshot.data);
+            if (snapshot.data == null) {
+              // Show splash and navigate to intro screen
+              return ScreenSplash1(screen: ScreenMainIntro());
+            } else {
+              // Show splash and navigate to main screen
+              return ScreenSplash1(screen: MainScreen());
+            }
           }
         },
       ),

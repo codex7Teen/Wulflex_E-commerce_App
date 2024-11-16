@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
-import 'package:wulflex/screens/intro_screens/main_intro_screen.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
-class ScreenSplash extends StatefulWidget {
+class ScreenSplash1 extends StatefulWidget {
   final User? authenticatedUser;
-  const ScreenSplash({super.key, this.authenticatedUser});
+  final Widget screen;
+  const ScreenSplash1(
+      {super.key, this.authenticatedUser, required this.screen});
 
   @override
-  State<ScreenSplash> createState() => _ScreenSplash2State();
+  State<ScreenSplash1> createState() => _ScreenSplash1State();
 }
 
-class _ScreenSplash2State extends State<ScreenSplash> {
+class _ScreenSplash1State extends State<ScreenSplash1> {
   bool _animateTextLogo = false;
   bool _animateLogo = false;
 
@@ -39,17 +39,11 @@ class _ScreenSplash2State extends State<ScreenSplash> {
       }
     });
 
-    // Navigate to intro-screen if not authenticated else navigate to home
+    // Navigate to intro-screen or Main screen based on argument
     Future.delayed(Duration(seconds: 3), () {
       if (mounted) {
-        // If user is logged in, navigate to MainScreen, otherwise to ScreenMainIntro
-        if (widget.authenticatedUser != null) {
-          NavigationHelper.navigateToWithReplacement(context, MainScreen(),
-              milliseconds: 600);
-        } else {
-          NavigationHelper.navigateToWithReplacement(context, ScreenMainIntro(),
-              milliseconds: 600);
-        }
+        NavigationHelper.navigateToWithReplacement(context, widget.screen,
+            milliseconds: 800);
       }
     });
   }
