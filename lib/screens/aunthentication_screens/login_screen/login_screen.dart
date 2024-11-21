@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
+import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
+import 'package:wulflex/models/user_model.dart';
 import 'package:wulflex/screens/aunthentication_screens/login_screen/widgets/login_widgets.dart';
 import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -41,10 +43,20 @@ class _ScreenLoginState extends State<ScreenLogin> {
               child:
                   BlocListener<AuthenticatonBlocBloc, AuthenticatonBlocState>(
                 listener: (context, state) {
-                  if (state is LoginSuccess || state is GoogleLogInSuccess) {
+                  if (state is LoginSuccess ||
+                      state is GoogleFirstLoginSuccess ||
+                      state is GoogleLogInSuccess) {
+                    // Save user details to firebase when user login for first time
+                    if (state is GoogleFirstLoginSuccess) {
+                      context.read<UserProfileBloc>().add(
+                          CreateUserProfileEvent(UserModel(
+                              uid: state.userId,
+                              name: state.name,
+                              email: state.emailId)));
+                    }
                     // Show success snacbar
                     CustomSnackbar.showCustomSnackBar(
-                        context, "Login success...  🎉🎉🎉");
+                        context, "Login success... 🎉🎉🎉");
                     // Navigate to Home
                     NavigationHelper.navigateToWithReplacement(
                         context, MainScreen());

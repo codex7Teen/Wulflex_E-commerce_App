@@ -13,7 +13,15 @@ class AuthenticatonInitial extends AuthenticatonBlocState {}
 //! S I G N - U P
 class SignUpLoading extends AuthenticatonBlocState {}
 
-class SignUpSuccess extends AuthenticatonBlocState {}
+class SignUpSuccess extends AuthenticatonBlocState {
+  final String userId;
+  final String emailId;
+
+  SignUpSuccess({required this.userId, required this.emailId});
+
+  @override
+  List<Object> get props => [userId, emailId];
+}
 
 class SignUpFailture extends AuthenticatonBlocState {
   final String error;
@@ -26,7 +34,15 @@ class SignUpFailture extends AuthenticatonBlocState {
 //! L O G I N
 class LoginLoading extends AuthenticatonBlocState {}
 
-class LoginSuccess extends AuthenticatonBlocState {}
+class LoginSuccess extends AuthenticatonBlocState {
+  final String userId;
+  final String emailId;
+
+  LoginSuccess({required this.userId, required this.emailId});
+
+  @override
+  List<Object> get props => [userId, emailId];
+}
 
 class LoginFailture extends AuthenticatonBlocState {
   final String error;
@@ -64,6 +80,17 @@ class LogOutFailture extends AuthenticatonBlocState {
 
 //! G O O G L E - S I G N U P
 class GoogleLogInLoading extends AuthenticatonBlocState {}
+
+class GoogleFirstLoginSuccess extends AuthenticatonBlocState {
+  final String userId;
+  final String name;
+  final String emailId;
+  GoogleFirstLoginSuccess(
+      {required this.userId, required this.name, required this.emailId});
+
+  @override
+  List<Object> get props => [userId, name, emailId];
+}
 
 class GoogleLogInSuccess extends AuthenticatonBlocState {}
 

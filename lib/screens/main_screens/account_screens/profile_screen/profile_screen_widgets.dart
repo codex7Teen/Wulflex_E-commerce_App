@@ -21,19 +21,19 @@ Widget buildProfilePicture(BuildContext context) {
   );
 }
 
-Widget buildWelcomeText(BuildContext context) {
-  return Text('Hey, Dennis', style: AppTextStyles.heyUserWelcomeText(context));
+Widget buildWelcomeText(BuildContext context, String name) {
+  return Text('Hey, $name', style: AppTextStyles.heyUserWelcomeText(context));
 }
 
-Widget buildName() {
+Widget buildName(String name) {
   return CustomGreyContainerWidget(
-      titleText: 'NAME', subtitleText: 'Dennis Johnson', icon: Icons.person);
+      titleText: 'NAME', subtitleText: name, icon: Icons.person);
 }
 
-Widget buildAccountInfo() {
+Widget buildAccountInfo(String email) {
   return CustomGreyContainerWidget(
       titleText: 'ACCOUNT INFORMATION',
-      subtitleText: 'djconnect189@gmail.com',
+      subtitleText: email,
       icon: Icons.account_circle_rounded);
 }
 

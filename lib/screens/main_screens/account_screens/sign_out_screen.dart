@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/screens/aunthentication_screens/login_screen/login_screen.dart';
+import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 
 class ScreenSignOut extends StatelessWidget {
   const ScreenSignOut({super.key});
@@ -11,9 +12,11 @@ class ScreenSignOut extends StatelessWidget {
     return Scaffold(
       body: BlocListener<AuthenticatonBlocBloc, AuthenticatonBlocState>(
         listener: (context, state) {
-          if(state is LogOutSuccess) {
+          if (state is LogOutSuccess) {
+            CustomSnackbar.showCustomSnackBar(
+                context, "Sign-out success...  🎉🎉🎉");
             Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => ScreenLogin()));
+                MaterialPageRoute(builder: (context) => ScreenLogin()));
           }
         },
         child: Center(

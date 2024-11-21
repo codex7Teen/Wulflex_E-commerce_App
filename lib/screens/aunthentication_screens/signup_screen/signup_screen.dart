@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
+import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
+import 'package:wulflex/models/user_model.dart';
 import 'package:wulflex/screens/aunthentication_screens/signup_screen/widgets/signup_widgets.dart';
 import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -50,6 +52,14 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                       AuthenticatonBlocState>(
                     listener: (context, state) {
                       if (state is SignUpSuccess) {
+                        // Sent data to firebase
+                        final user = UserModel(
+                            uid: state.userId,
+                            name: _nameTextController.text.toString(),
+                            email: state.emailId);
+                        context
+                            .read<UserProfileBloc>()
+                            .add(CreateUserProfileEvent(user));
                         // Show successnacbar
                         CustomSnackbar.showCustomSnackBar(
                             context, "Sign-Up success...  🎉🎉🎉");
@@ -112,7 +122,11 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 22),
 
                         // ! S I G N U P - B U T T O N
-                        buildSignUpButton(_formKey, context, _emailTextController, _confirmPasswordTextController),
+                        buildSignUpButton(
+                            _formKey,
+                            context,
+                            _emailTextController,
+                            _confirmPasswordTextController),
                         SizedBox(height: 22),
 
                         // Already signed up? login

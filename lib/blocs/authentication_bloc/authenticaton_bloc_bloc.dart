@@ -19,8 +19,8 @@ class AuthenticatonBlocBloc
         final user = await authService.createUserWithEmailAndPassword(
             event.email, event.password);
         if (user != null) {
-          log("USER CREATE SUCCESS");
-          emit(SignUpSuccess());
+          log("USER CREATE SUCCESS: EMAIL = ${user.email}");
+          emit(SignUpSuccess(emailId: user.email.toString(), userId: user.uid));
         }
       } catch (error) {
         emit(SignUpFailture(error: error.toString()));
@@ -34,8 +34,8 @@ class AuthenticatonBlocBloc
         final user = await authService.loginUserWithEmailAndPassword(
             event.email, event.password);
         if (user != null) {
-          log("USER LOGIN SUCCESS");
-          emit(LoginSuccess());
+          log("USER LOGIN SUCCESS: EMAIL = ${user.email}");
+          emit(LoginSuccess(emailId: user.email.toString(), userId: user.uid));
         }
       } catch (error) {
         log("LOGIN UNKNOWN ERROR ${error.toString()}");
@@ -71,10 +71,18 @@ class AuthenticatonBlocBloc
     on<GoogleLoginPressed>((event, emit) async {
       emit(GoogleLogInLoading());
       try {
-        final user = await authService.loginWithGoogle();
-        if (user != null) {
+        final authResults = await authService.loginWithGoogle();
+        if (authResults != null) {
           log("GOOGLE LOGIN SUCCESS");
-          emit(GoogleLogInSuccess());
+          // If new user loggin in save the details to firebase
+          if (authResults.additionalUserInfo!.isNewUser) {
+            emit(GoogleFirstLoginSuccess(
+                userId: authResults.user!.uid,
+                emailId: authResults.user!.email!,
+                name: authResults.user!.displayName!));
+          } else {
+            emit(GoogleLogInSuccess());
+          }
         }
       } catch (error) {
         log("GOOGLE LOGIN ERROR ${error.toString()}");

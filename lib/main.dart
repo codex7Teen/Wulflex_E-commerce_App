@@ -6,8 +6,10 @@ import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/blocs/delete_account_bloc/delete_account_bloc.dart';
 import 'package:wulflex/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
+import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
 import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
+import 'package:wulflex/services/user_profile_services.dart';
 
 void main() async {
   // Ensures the bindings with native platform has done properly
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = AuthService();
+    final userProfile = UserProfileServices();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticatonBlocBloc>(
@@ -43,6 +46,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => EditProfileBloc()),
         BlocProvider(create: (context) => DeleteAccountBloc(authService: auth)),
+        BlocProvider(create: (context) => UserProfileBloc(userProfile))
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {

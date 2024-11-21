@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/screens/aunthentication_screens/login_screen/login_screen.dart';
-import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_authentication_tetxfield_widget.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
@@ -16,8 +15,7 @@ Widget buildSignUpImage(BuildContext context) {
 }
 
 Widget buildSignUpText() {
-  return Text('SIGN UP',
-      style: AppTextStyles.authenticationHeadings);
+  return Text('SIGN UP', style: AppTextStyles.authenticationHeadings);
 }
 
 Widget buildNameTextField(TextEditingController nameTextController) {
