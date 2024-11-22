@@ -28,3 +28,13 @@ class UserProfileError extends UserProfileState {
   @override
   List<Object> get props => [error];
 }
+
+class ImagePickerLoaded extends UserProfileState {
+  final File selectedImage;
+  ImagePickerLoaded(this.selectedImage);
+
+  @override
+  List<Object> get props => [selectedImage];
+}
+
+class ImagePickerFailed extends UserProfileState {}

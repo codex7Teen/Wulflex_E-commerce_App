@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/screens/main_screens/account_screens/sign_out_screen.dart';
 import 'package:wulflex/screens/main_screens/cart_screens.dart/cart_screen.dart';
 import 'package:wulflex/screens/main_screens/favorites_screens/favorite_screen.dart';

@@ -33,18 +33,19 @@ class ScreenProfile extends StatelessWidget {
                       top: 10, left: 18, right: 18, bottom: 18),
                   child: Column(
                     children: [
-                      buildProfilePicture(context),
+                      buildProfilePicture(context, user.userImage ?? ''),
                       buildWelcomeText(context, user.name),
                       SizedBox(height: 15),
                       buildName(user.name),
                       SizedBox(height: 15),
                       buildAccountInfo(user.email),
                       SizedBox(height: 15),
-                      buildPhoneNumber(),
+                      buildPhoneNumber(user.phoneNumber ?? ''),
                       SizedBox(height: 15),
-                      buildDob(),
+                      buildDob(user.dob ?? ''),
                       SizedBox(height: 28),
-                      buildEditButton(context),
+                      buildEditButton(context, user.name,
+                          user.phoneNumber ?? '', user.dob ?? ''),
                       SizedBox(height: 20),
                       buildDeleteButton(context)
                     ],

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/blocs/delete_account_bloc/delete_account_bloc.dart';
-import 'package:wulflex/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
@@ -17,7 +16,7 @@ void main() async {
 
   // Initialize firebase
   if (kIsWeb) {
-    Firebase.initializeApp(
+    await Firebase.initializeApp(
         options: FirebaseOptions(
             apiKey: "AIzaSyDMzuQfFMY4pScI7ihyfVFV5fsT0pcsATI",
             authDomain: "wulflex.firebaseapp.com",
@@ -44,7 +43,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthenticatonBlocBloc>(
             create: (context) => AuthenticatonBlocBloc(authService: auth)),
         BlocProvider(create: (context) => ThemeBloc()),
-        BlocProvider(create: (context) => EditProfileBloc()),
         BlocProvider(create: (context) => DeleteAccountBloc(authService: auth)),
         BlocProvider(create: (context) => UserProfileBloc(userProfile))
       ],

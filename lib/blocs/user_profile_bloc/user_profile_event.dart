@@ -28,3 +28,6 @@ class UpdateUserProfileEvent extends UserProfileEvent {
   @override
   List<Object> get props => [updates];
 }
+
+//! PICK USER IMAGE EVENT
+class PickImageEvent extends UserProfileEvent {}

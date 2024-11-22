@@ -8,15 +8,31 @@ import 'package:wulflex/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/widgets/custom_grey_container_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
-Widget buildProfilePicture(BuildContext context) {
+Widget buildProfilePicture(BuildContext context, String imageUrl) {
   return Center(
     child: SizedBox(
       height: 180,
       width: 180,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(100),
-        child: Lottie.asset('assets/lottie/profile.json'),
-      ),
+      child: imageUrl.isNotEmpty
+          ? Stack(children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Lottie.asset('assets/lottie/profile.json'),
+              ),
+              Positioned(
+                  child: SizedBox(
+                height: 180 * 0.7, // 70% of the Lottie's size
+                width: 180 * 0.7,
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ))
+            ])
+          : ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Lottie.asset('assets/lottie/profile.json'),
+            ),
     ),
   );
 }
@@ -37,25 +53,28 @@ Widget buildAccountInfo(String email) {
       icon: Icons.account_circle_rounded);
 }
 
-Widget buildPhoneNumber() {
+Widget buildPhoneNumber(String phoneNumber) {
   return CustomGreyContainerWidget(
       titleText: 'PHONE NUMBER',
-      subtitleText: '',
+      subtitleText: phoneNumber,
       icon: Icons.phone_android_rounded);
 }
 
-Widget buildDob() {
+Widget buildDob(String dob) {
   return CustomGreyContainerWidget(
-      titleText: 'D O B', subtitleText: '', icon: Icons.cake_rounded);
+      titleText: 'D O B', subtitleText: dob, icon: Icons.cake_rounded);
 }
 
-Widget buildEditButton(BuildContext context) {
+Widget buildEditButton(
+    BuildContext context, String name, String phoneNumber, String dob) {
   return GestureDetector(
       onTap: () => NavigationHelper.navigateToWithoutReplacement(
           context,
           ScreenEditProfile(
             screenTitle: 'Edit Profile',
-            name: 'Dennis Johnson',
+            name: name,
+            phoneNumber: phoneNumber,
+            dob: dob,
           )),
       child: GreenButtonWidget(
         buttonText: 'Edit Profile',
@@ -68,8 +87,9 @@ Widget buildEditButton(BuildContext context) {
 
 Widget buildDeleteButton(BuildContext context) {
   return GestureDetector(
-    onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenDeleteAccount()),
-    child: CustomBlackButtonWidget(
-        buttonText: "Delete Account", borderRadius: 25),
+    onTap: () => NavigationHelper.navigateToWithoutReplacement(
+        context, ScreenDeleteAccount()),
+    child:
+        CustomBlackButtonWidget(buttonText: "Delete Account", borderRadius: 25),
   );
 }
