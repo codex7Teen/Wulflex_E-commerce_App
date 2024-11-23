@@ -38,3 +38,14 @@ class ImagePickerLoaded extends UserProfileState {
 }
 
 class ImagePickerFailed extends UserProfileState {}
+
+//! TRACK IMAGE UPLOAD PROGRESS
+class ImageUploadProgress extends UserProfileState {
+  final double progress;
+  final File selectedImage;
+
+  ImageUploadProgress({required this.progress, required this.selectedImage});
+
+  @override
+  List<Object> get props => [progress, selectedImage];
+}

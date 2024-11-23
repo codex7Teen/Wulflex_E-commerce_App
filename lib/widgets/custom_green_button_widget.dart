@@ -20,7 +20,6 @@ class GreenButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLightTheme = Theme.of(context).brightness == Brightness.light;
     return Center(
       child: Container(
         width: MediaQuery.sizeOf(context).width * width!,

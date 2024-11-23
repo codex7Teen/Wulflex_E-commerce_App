@@ -20,14 +20,41 @@ Widget buildProfilePicture(BuildContext context, String imageUrl) {
                 child: Lottie.asset('assets/lottie/profile.json'),
               ),
               Positioned(
+                  left: 36.6,
+                  top: 36,
                   child: SizedBox(
-                height: 180 * 0.7, // 70% of the Lottie's size
-                width: 180 * 0.7,
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ))
+                    height: 180 * 0.6, // 70% of the Lottie's size
+                    width: 180 * 0.6,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          // show image loading indicator
+                          return Center(
+                              child: Container(
+                            height: 180 * 0.6,
+                            width: 180 * 0.6,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.4),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: CircularProgressIndicator(
+                                strokeWidth: 6,
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null),
+                          ));
+                        },
+                      ),
+                    ),
+                  ))
             ])
           : ClipRRect(
               borderRadius: BorderRadius.circular(100),

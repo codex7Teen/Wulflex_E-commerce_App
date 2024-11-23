@@ -45,25 +45,32 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     on<UpdateUserProfileEvent>((event, emit) async {
       emit(UserProfileLoading());
       try {
-        // Handle image upload first if there's an image
+        // Handle image upload if there's an image
         if (selectedImage != null) {
-          event.updates['userImage'] = selectedImage!.path;
-          final uploadResult =
-              await userProfileService.uploadImage(selectedImage!);
-          event.updates['userImage'] = uploadResult;
-        } else {
-          emit(UserProfileError('Image upload failed!'));
-          throw Exception('Image upload failed');
+          try {
+            // Upload with progress tracking
+            final uploadResult = await userProfileService
+                .uploadImage(selectedImage!, (progress) {
+              emit(ImageUploadProgress(
+                  progress: progress, selectedImage: selectedImage!));
+            });
+            event.updates['userImage'] = uploadResult;
+          } catch (error) {
+            log('Image upload failed: $error');
+            // You can optionally show a warning here but continue updating other fields
+          }
         }
 
-        /// >>> Now, Update the user profile in Firestore
+        // Proceed to update other fields in Firestore
         await userProfileService.updateUser(event.updates);
+
+        // Fetch the updated user profile
         final updatedUser = await userProfileService.fetchUserProfile();
         if (updatedUser != null) {
           emit(UserProfileLoaded(updatedUser));
           log('UPDATE USER PROFILE SUCCESS');
         } else {
-          emit(UserProfileError('Failed to fetch updated profile'));
+          throw Exception('Failed to fetch updated profile');
         }
       } catch (error) {
         emit(UserProfileError(error.toString()));

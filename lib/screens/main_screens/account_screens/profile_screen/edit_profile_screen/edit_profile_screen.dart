@@ -9,6 +9,7 @@ import 'package:wulflex/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/widgets/custom_textfields_widget.dart';
+import 'package:wulflex/widgets/upload_progress_indicator_widget.dart';
 
 class ScreenEditProfile extends StatefulWidget {
   final String screenTitle;
@@ -38,6 +39,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
     _nameController.text = widget.name;
     _phoneNumberController.text = widget.phoneNumber;
     _dateofbirthController.text = widget.dob;
+    
   }
 
   @override
@@ -51,12 +53,12 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
         listener: (context, state) {
           if (state is UserProfileLoaded) {
             CustomSnackbar.showCustomSnackBar(
-                context, 'Profile updated success... 🎉🎉🎉');
+                context, 'Profile updated success... 🎉🎉🎉', appearFromTop: true);
             Navigator.pop(context);
           } else if (state is UserProfileError) {
             CustomSnackbar.showCustomSnackBar(
                 context, 'Profile updated failed! ⚠️',
-                icon: Icons.error);
+                icon: Icons.error, appearFromTop: true);
           }
         },
         child: SingleChildScrollView(
@@ -80,22 +82,33 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                               context.read<UserProfileBloc>().selectedImage;
                           if (state is ImagePickerLoaded) {
                             selectedImage = state.selectedImage;
+                          } else if (state is ImageUploadProgress) {
+                            selectedImage = state.selectedImage;
                           }
-                          return SizedBox(
-                            height: 140,
-                            width: 140,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: selectedImage != null
-                                  ? Image.file(selectedImage, fit: BoxFit.cover)
-                                  : Image.asset(
-                                      'assets/add_profile.png',
-                                      fit: BoxFit.cover,
-                                      color: isLightTheme
-                                          ? AppColors.blackThemeColor
-                                          : AppColors.whiteThemeColor,
-                                    ),
-                            ),
+                          return Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                height: 140,
+                                width: 140,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: selectedImage != null
+                                      ? Image.file(selectedImage,
+                                          fit: BoxFit.cover)
+                                      : Image.asset(
+                                          'assets/add_profile.png',
+                                          fit: BoxFit.cover,
+                                          color: isLightTheme
+                                              ? AppColors.blackThemeColor
+                                              : AppColors.whiteThemeColor,
+                                        ),
+                                ),
+                              ),
+                              if (state is ImageUploadProgress)
+                                // show upload progress indicator
+                                showUploadProgressIndicator(state)
+                            ],
                           );
                         },
                       ),
@@ -188,7 +201,8 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     child: BlocBuilder<UserProfileBloc, UserProfileState>(
                       builder: (context, state) {
                         return GreenButtonWidget(
-                          isLoading: state is UserProfileLoading,
+                          isLoading: state is UserProfileLoading ||
+                              state is ImageUploadProgress,
                           buttonText: "Save Details",
                           borderRadius: 25,
                           width: 1,

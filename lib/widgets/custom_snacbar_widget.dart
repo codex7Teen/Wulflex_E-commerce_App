@@ -5,13 +5,15 @@ import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
 class CustomSnackbar {
   static void showCustomSnackBar(BuildContext context, String message,
-      {IconData icon = Icons.done_outline_rounded}) {
+      {IconData icon = Icons.done_outline_rounded,
+      bool appearFromTop = false}) {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => _SnackbarContent(
         message: message,
         icon: icon,
         context: context,
+        appearFromTop: appearFromTop,
       ),
     );
 
@@ -29,12 +31,13 @@ class _SnackbarContent extends StatefulWidget {
   final String message;
   final IconData icon;
   final BuildContext context;
+  final bool appearFromTop;
 
-  const _SnackbarContent({
-    required this.message,
-    required this.icon,
-    required this.context,
-  });
+  const _SnackbarContent(
+      {required this.message,
+      required this.icon,
+      required this.context,
+      required this.appearFromTop});
 
   @override
   State<_SnackbarContent> createState() => _SnackbarContentState();
@@ -65,7 +68,8 @@ class _SnackbarContentState extends State<_SnackbarContent>
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 20,
+      top: widget.appearFromTop ? 40 : null,
+      bottom: widget.appearFromTop ? null : 20,
       left: MediaQuery.of(context).size.width * 0.05,
       right: MediaQuery.of(context).size.width * 0.05,
       child: FadeTransition(

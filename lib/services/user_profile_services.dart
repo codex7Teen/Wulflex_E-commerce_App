@@ -9,7 +9,6 @@ import 'package:wulflex/utils/consts/app_constants.dart';
 
 class UserProfileServices {
   final _firestore = FirebaseFirestore.instance;
-  final _storage = FirebaseStorage.instance;
 
   //! CREATE USER PROFILE WITH NAME, EMAIL, ETC. IN FIREBASE
   Future<void> createUserProfile(UserModel userModel) async {
@@ -39,25 +38,42 @@ class UserProfileServices {
   }
 
   //! UPLOAD IMAGE TO FIREBASE STORAGE
-  Future<String?> uploadImage(File image) async {
+  Future<String?> uploadImage(File image, Function(double) onProgress) async {
     try {
       // Get current user
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) return null;
-      final storage =
-          FirebaseStorage.instanceFor(bucket: bucket);
+      final storage = FirebaseStorage.instanceFor(bucket: bucket);
+
+      // Format date and time for the filename
+      final now = DateTime.now();
+      final formattedDate =
+          '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+      final formattedTime =
+          '${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}${now.second.toString().padLeft(2, '0')}';
+      // Create a proper image filename
+      final sanitizedDisplayName =
+          user.displayName?.replaceAll(RegExp(r'\s+'), '_') ?? 'user';
+
+      final fileName =
+          '${sanitizedDisplayName}_${formattedDate}_$formattedTime.jpg';
 
       // Create storage reference
-      final ref = storage.ref(
-          'profile_images/${user.displayName!.split(' ').join()}${Timestamp.now()}.jpg');
+      final ref = storage.ref('profile_images/$fileName');
 
       // Upload file
-      final puttedFile = ref.putFile(image);
+      final uploadingTask = ref.putFile(image);
 
-      final snapshot = await puttedFile.whenComplete(() => null);
+      // Listen to upload progress
+      uploadingTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+        double progress = snapshot.bytesTransferred / snapshot.totalBytes;
+        onProgress(progress);
+      });
+
+      final snapshot = await uploadingTask.whenComplete(() => null);
 
       final urlImageUser = await snapshot.ref.getDownloadURL();
-      log('IMAGE UPLOADED AND IMAGE-URL GOT SUCCESSFULLY');
+      log('IMAGE UPLOADED AND IMAGE-URL GOT SUCCESSFULLY URL: $urlImageUser');
 
       return urlImageUser;
     } on FirebaseException catch (e) {
