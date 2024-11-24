@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wulflex/screens/intro_screens/main_intro_screen.dart';
 import 'package:wulflex/screens/main_screens/main_screen.dart';
-import 'package:wulflex/screens/splash_screens/splash_screen_1.dart';
+import 'package:wulflex/screens/intro_screens/splash_screens/splash_screen_1.dart';
 
 class MainWrapperWidget extends StatelessWidget {
   const MainWrapperWidget({super.key});
