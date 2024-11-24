@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
@@ -84,13 +85,13 @@ PreferredSizeWidget buildAppBarWithIcons(BuildContext context) {
 }
 
 Widget buildItemImageSlider(
-    BuildContext context, PageController pageController) {
+    BuildContext context, PageController pageController, ProductModel product) {
   return SizedBox(
       height: 300,
       width: MediaQuery.sizeOf(context).width * 1,
       child: PageView.builder(
         controller: pageController,
-        itemCount: 3,
+        itemCount: product.imageUrls.length,
         itemBuilder: (context, index) {
           return Center(
             child: ClipRRect(
@@ -99,11 +100,26 @@ Widget buildItemImageSlider(
                 height: 250,
                 width: 250,
                 child: ClipRRect(
-                  child: Image.asset(
+                    child: Image.network(
+                  product.imageUrls[index],
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => Image.asset(
                     'assets/wulflex_logo_nobg.png',
                     fit: BoxFit.contain,
                   ),
-                ),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    // show image loading indicator
+                    return Center(
+                        child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null));
+                  },
+                )),
               ),
             ),
           );
@@ -111,11 +127,12 @@ Widget buildItemImageSlider(
       ));
 }
 
-Widget buildPageIndicator(PageController pageController, BuildContext context) {
+Widget buildPageIndicator(
+    PageController pageController, BuildContext context, ProductModel product) {
   final isLightTheme = Theme.of(context).brightness == Brightness.light;
   return SmoothPageIndicator(
     controller: pageController,
-    count: 3,
+    count: product.imageUrls.length,
     effect: ExpandingDotsEffect(
         activeDotColor: AppColors.greenThemeColor,
         dotColor: isLightTheme
@@ -126,8 +143,8 @@ Widget buildPageIndicator(PageController pageController, BuildContext context) {
   );
 }
 
-Widget buildProductHeadingText(BuildContext context) {
-  return Text('LOREM IPSUM SYNTHESIS, BLACK',
+Widget buildProductHeadingText(BuildContext context, ProductModel product) {
+  return Text(product.name,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
       style: AppTextStyles.viewProductMainHeading(context));
@@ -179,33 +196,29 @@ Widget buildSizeAndSizeChartText() {
   );
 }
 
-Widget buildWeightAndSizeSelectors(
-    Set<String> selectedWeights,
-    VoidCallback onSmallTapped,
-    VoidCallback onMediumTapped,
-    VoidCallback onLargeTapped) {
+Widget buildWeightAndSizeSelectors(String? selectedSize, ProductModel product,
+    void Function(String) onSizeTapped) {
   return Row(
-    children: [
-      CustomWeightandsizeSelectorContainerWidget(
-          weightOrSize: 'S',
-          isSelected: selectedWeights.contains('S'),
-          onTap: onSmallTapped),
-      SizedBox(width: 10),
-      CustomWeightandsizeSelectorContainerWidget(
-          weightOrSize: 'M',
-          isSelected: selectedWeights.contains('M'),
-          onTap: onMediumTapped),
-      SizedBox(width: 10),
-      CustomWeightandsizeSelectorContainerWidget(
-          weightOrSize: 'L',
-          isSelected: selectedWeights.contains('L'),
-          onTap: onLargeTapped),
-    ],
+    children: product.sizes.map((size) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: CustomWeightandsizeSelectorContainerWidget(
+          weightOrSize: size,
+          isSelected: selectedSize == size,
+          onTap: () => onSizeTapped(size),
+        ),
+      );
+    }).toList(),
   );
 }
 
-Widget buildPriceDetailsContainer(BuildContext context) {
+Widget buildPriceDetailsContainer(BuildContext context, ProductModel product) {
   final isLightTheme = Theme.of(context).brightness == Brightness.light;
+
+  // Calculating discount percentage
+  final discountPercentage =
+      ((product.retailPrice - product.offerPrice) / product.retailPrice) * 100;
+
   return Container(
     width: double.infinity,
     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25),
@@ -217,17 +230,17 @@ Widget buildPriceDetailsContainer(BuildContext context) {
     child: Row(
       children: [
         Text(
-          "₹ 1099.00",
+          "₹ ${product.offerPrice}",
           style: AppTextStyles.offerPriceHeadingText,
         ),
         SizedBox(width: 14),
         Text(
-          "₹ 3499.00",
+          "₹ ${product.retailPrice}",
           style: AppTextStyles.originalPriceText,
         ),
         SizedBox(width: 16),
         Text(
-          "46% OFF",
+          "${discountPercentage.toStringAsFixed(0)}% OFF",
           style: AppTextStyles.offerPercentageText,
         ),
         Spacer(),
@@ -244,13 +257,13 @@ Widget buildDescriptionTitle() {
   return Text("DESCRIPTION", style: AppTextStyles.viewProductTitleText);
 }
 
-Widget buildDescription(BuildContext context, bool isExpanded) {
+Widget buildDescription(BuildContext context, bool isExpanded , ProductModel product) {
   return Text(
       textAlign: TextAlign.justify,
       style: AppTextStyles.descriptionText(context),
       overflow: TextOverflow.fade,
       maxLines: isExpanded ? null : 5,
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+      product.description);
 }
 
 Widget buildReammoreAndReadlessButton(

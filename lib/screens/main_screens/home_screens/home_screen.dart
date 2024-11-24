@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/home_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 
@@ -30,6 +32,7 @@ class _ScreenHomeState extends State<ScreenHome> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ProductBloc>().add(LoadProducts());
     final screenWidth = MediaQuery.sizeOf(context).width;
     return SafeArea(
       child: Scaffold(
@@ -62,23 +65,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                 //! LATEST ARRIVALS TEXT
                 buildLastestArrivalsText(context),
                 SizedBox(height: 14),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildItemCard(context),
-                    SizedBox(width: 12),
-                    buildItemCard(context),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildItemCard(context),
-                    SizedBox(width: 12),
-                    buildItemCard(context),
-                  ],
-                )
+                buildLatestArrivalsSection(context),
               ],
             ),
           ),

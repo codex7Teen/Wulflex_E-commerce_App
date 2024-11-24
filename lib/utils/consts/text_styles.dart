@@ -159,14 +159,14 @@ class AppTextStyles {
   static final TextStyle itemCardTitleText = GoogleFonts.robotoCondensed(
       fontWeight: FontWeight.bold,
       color: AppColors.blackThemeColor,
-      fontSize: 16,
+      fontSize: 18,
       letterSpacing: 1);
 
 //! ITEM-CARD SUB-TITLE TEXT (PRICE)
   static final TextStyle itemCardSubTitleText = GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.bold,
     color: AppColors.darkishGrey,
-    fontSize: 18,
+    fontSize: 16,
     letterSpacing: 1,
   );
 

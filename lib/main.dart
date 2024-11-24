@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/blocs/delete_account_bloc/delete_account_bloc.dart';
+import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
 import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
 import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
+import 'package:wulflex/services/product_services.dart';
 import 'package:wulflex/services/user_profile_services.dart';
 
 void main() async {
@@ -38,13 +40,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = AuthService();
     final userProfile = UserProfileServices();
+    final productServices = ProductServices();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticatonBlocBloc>(
             create: (context) => AuthenticatonBlocBloc(authService: auth)),
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => DeleteAccountBloc(authService: auth)),
-        BlocProvider(create: (context) => UserProfileBloc(userProfile))
+        BlocProvider(create: (context) => UserProfileBloc(userProfile)),
+        BlocProvider(create: (context) => ProductBloc(productServices))
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {

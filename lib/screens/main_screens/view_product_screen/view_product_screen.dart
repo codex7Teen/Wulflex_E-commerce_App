@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/widgets/view_product_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 
 class ScreenViewProducts extends StatefulWidget {
-  const ScreenViewProducts({super.key});
+  final ProductModel productModel;
+  const ScreenViewProducts({super.key, required this.productModel});
 
   @override
   State<ScreenViewProducts> createState() => _ScreenViewProductsState();
 }
 
 class _ScreenViewProductsState extends State<ScreenViewProducts> {
-  // Track selected weights
-  Set<String> selectedWeights = {};
+  // Track selected size (only one can be selected)
+  String? selectedSize;
+
+  void updateSelectedSize(String size) {
+    setState(() {
+      selectedSize = size;
+    });
+  }
 
   // Track expand or collapse of the description
   bool isExpanded = false;
-
-  void updateSelectedWeights(String weight) {
-    setState(() {
-      if (selectedWeights.contains(weight)) {
-        selectedWeights.remove(weight);
-      } else {
-        selectedWeights.add(weight);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +48,11 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
             child: Column(
               children: [
                 //! ITEM IMAGE WITH SLIDER (PAGEVIEW)
-                buildItemImageSlider(context, pageController),
+                buildItemImageSlider(
+                    context, pageController, widget.productModel),
                 SizedBox(height: 4),
-                buildPageIndicator(pageController, context),
+                buildPageIndicator(
+                    pageController, context, widget.productModel),
                 SizedBox(height: 20),
                 Container(
                   width: double.infinity,
@@ -69,23 +69,22 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 10),
-                        buildProductHeadingText(context),
+                        buildProductHeadingText(context, widget.productModel),
                         SizedBox(height: 14),
                         buildRatingsContainer(),
                         SizedBox(height: 20),
                         buildSizeAndSizeChartText(),
                         SizedBox(height: 8),
                         buildWeightAndSizeSelectors(
-                            selectedWeights,
-                            () => updateSelectedWeights('S'),
-                            () => updateSelectedWeights('M'),
-                            () => updateSelectedWeights('L')),
+                            selectedSize,
+                            widget.productModel,
+                            (size) => updateSelectedSize(size)),
                         SizedBox(height: 24),
-                        buildPriceDetailsContainer(context),
+                        buildPriceDetailsContainer(context, widget.productModel),
                         SizedBox(height: 24),
                         buildDescriptionTitle(),
                         SizedBox(height: 6),
-                        buildDescription(context, isExpanded),
+                        buildDescription(context, isExpanded, widget.productModel),
                         buildReammoreAndReadlessButton(
                             isExpanded,
                             () => setState(() {

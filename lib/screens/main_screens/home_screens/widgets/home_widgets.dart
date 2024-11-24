@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
+import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/account_screens/profile_screen/profile_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/theme_toggle_widget.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/view_product_screen.dart';
@@ -246,18 +249,18 @@ Widget buildAllCategories() {
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             iconImagePath: 'assets/suppliments.png',
-            categoryTitleText: 'SUPPLIMENTS'),
+            categoryTitleText: 'SUPPLEMENTS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
-            iconImagePath: 'assets/clothing.png',
-            categoryTitleText: 'CLOTHING'),
+            iconImagePath: 'assets/apparels.png',
+            categoryTitleText: 'APPARELS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             iconImagePath: 'assets/watch.png',
             categoryTitleText: 'ACCESSORIES'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
-            iconImagePath: 'assets/shoe.png', categoryTitleText: 'APPARELS'),
+            iconImagePath: 'assets/more_categories_image.png', categoryTitleText: '  MORE >>'),
       ],
     ),
   );
@@ -274,13 +277,14 @@ Widget buildLastestArrivalsText(BuildContext context) {
   );
 }
 
-Widget buildItemCard(BuildContext context) {
+// Modified buildItemCard widget
+Widget buildItemCard(BuildContext context, ProductModel product) {
   return GestureDetector(
     onTap: () => NavigationHelper.navigateToWithoutReplacement(
-        context, ScreenViewProducts()),
+        context, ScreenViewProducts(productModel: product)),
     child: Container(
       padding: EdgeInsets.all(15),
-      height: 249,
+      height: 245,
       width: MediaQuery.sizeOf(context).width * 0.43,
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.light
@@ -292,26 +296,74 @@ Widget buildItemCard(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: SizedBox(
-                  height: 150,
-                  width: MediaQuery.sizeOf(context).width * 0.38,
-                  child: Image.asset(
-                    'assets/wulflex_logo_nobg.png',
-                    fit: BoxFit.fitWidth,
-                  ))),
-          SizedBox(height: 14),
-          Text(
-            "Men's dumbell set",
-            style: AppTextStyles.itemCardTitleText,
+            borderRadius: BorderRadius.circular(10),
+            child: SizedBox(
+                height: 150,
+                width: MediaQuery.sizeOf(context).width * 0.38,
+                child: Image.network(
+                  product.imageUrls[0],
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Image.asset('assets/wulflex_logo_nobg.png'),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    // show image loading indicator
+                    return Center(
+                        child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null));
+                  },
+                )),
           ),
-          SizedBox(height: 6),
+          SizedBox(height: 14),
+          Flexible(
+            child: Text(
+              product.name,
+              style: AppTextStyles.itemCardTitleText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          SizedBox(height: 5),
           Text(
-            "₹ 1099.00",
+            "₹ ${product.offerPrice}",
             style: AppTextStyles.itemCardSubTitleText,
           )
         ],
       ),
     ),
+  );
+}
+
+// Latest Arrivals Section Implementation
+Widget buildLatestArrivalsSection(BuildContext context) {
+  return BlocBuilder<ProductBloc, ProductState>(
+    builder: (context, state) {
+      if (state is ProductLoading) {
+        return Center(child: CircularProgressIndicator());
+      } else if (state is ProductLoaded) {
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 18,
+            mainAxisSpacing: 18,
+            childAspectRatio: 0.75,
+          ),
+          itemCount: state.products.length,
+          itemBuilder: (context, index) {
+            return buildItemCard(context, state.products[index]);
+          },
+        );
+      } else if (state is ProductError) {
+        return Center(child: Text('Error: ${state.message}'));
+      }
+      return SizedBox();
+    },
   );
 }
