@@ -1,9 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
+import 'package:wulflex/main.dart';
+import 'package:wulflex/models/product_model.dart';
+import 'package:wulflex/screens/main_screens/home_screens/widgets/home_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
+import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 
-class ScreenSearchScreen extends StatelessWidget {
+class ScreenSearchScreen extends StatefulWidget {
   const ScreenSearchScreen({super.key});
+
+  @override
+  State<ScreenSearchScreen> createState() => _ScreenSearchScreenState();
+}
+
+class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
+  final _focusNode = FocusNode();
+  List<ProductModel> _filteredProducts = [];
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // Load all products initially
+    context.read<ProductBloc>().add(LoadProducts());
+    // Automatically focus the TextField when the screen is opened
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  // filter products
+  void _filterProducts(List<ProductModel> products) {
+    if (_searchQuery.isEmpty) {
+      _filteredProducts = products;
+    } else {
+      _filteredProducts = products.where((product) {
+        return product.name
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()) ||
+            product.description
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()) ||
+            product.category.toLowerCase().contains(_searchQuery.toLowerCase());
+      }).toList();
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +64,11 @@ class ScreenSearchScreen extends StatelessWidget {
       backgroundColor:
           isLightTheme ? AppColors.whiteThemeColor : AppColors.blackThemeColor,
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 18, right: 18, top: 15),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 18, right: 18, top: 15),
+          child: Column(
+            children: [
+              Row(
                 children: [
                   // Back Button
                   GestureDetector(
@@ -33,39 +83,99 @@ class ScreenSearchScreen extends StatelessWidget {
                   const SizedBox(width: 15),
                   // Search Bar
                   Expanded(
-                      child: Container(
-                    height: 50,
-                    width: screenWidth * 0.92,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? AppColors.lightGreyThemeColor
-                          : AppColors.whiteThemeColor,
+                    child: Container(
+                      height: 50,
+                      width: screenWidth * 0.92,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? AppColors.lightGreyThemeColor
+                            : AppColors.whiteThemeColor,
+                      ),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          Image.asset(
+                            'assets/Search.png',
+                            scale: 28,
+                            color: AppColors.darkishGrey,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: TextField(
+                              focusNode: _focusNode,
+                              onChanged: (value) {
+                                // Handle search logic here
+                                setState(() {
+                                  _searchQuery = value;
+                                });
+                                // Get current products from bloc state and filter
+                                if (context.read<ProductBloc>().state
+                                    is ProductLoaded) {
+                                  final products = (context
+                                          .read<ProductBloc>()
+                                          .state as ProductLoaded)
+                                      .products;
+                                  _filterProducts(products);
+                                }
+                              },
+                              style: AppTextStyles.searchBarTextStyle,
+                              decoration: InputDecoration(
+                                hintText: 'Search...',
+                                hintStyle: AppTextStyles.searchBarHintText,
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 16),
-                        Image.asset(
-                          'assets/Search.png',
-                          scale: 28,
-                          color: AppColors.darkishGrey,
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Search...',
-                          style: AppTextStyles.searchBarHintText,
-                        ),
-                      ],
-                    ),
-                  )),
+                  ),
                 ],
               ),
-            ),
-            // Blank space below
-            Expanded(
-              child: Container(),
-            ),
-          ],
+              SizedBox(height: 22),
+              // Build products
+              BlocBuilder<ProductBloc, ProductState>(
+                builder: (context, state) {
+                  if (state is ProductLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is ProductError) {
+                    return Center(child: Text('Error: ${state.message}'));
+                  } else if (state is ProductLoaded) {
+                    if (_searchQuery.isEmpty) {
+                      _filteredProducts = state.products;
+                    }
+
+                    if (_filteredProducts.isEmpty) {
+                      return Center(
+                          child: Text('No products found! 😔',
+                              style: AppTextStyles.emptyProductsMessageText(
+                                  context)));
+                    }
+                    // Show product card
+                    return Expanded(
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 18,
+                            mainAxisSpacing: 18,
+                            childAspectRatio: 0.75),
+                            itemCount: _filteredProducts.length,
+                        itemBuilder: (context, index) {
+                          return buildItemCard(context, _filteredProducts[index]);
+                        },
+                      ),
+                    );
+                  }
+                  return Center(
+                      child: Text(
+                    'Start searching for products...',
+                    style: AppTextStyles.emptyProductsMessageText(context),
+                  ));
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -165,10 +165,30 @@ class AppTextStyles {
 //! ITEM-CARD SUB-TITLE TEXT (PRICE)
   static final TextStyle itemCardSubTitleText = GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.bold,
-    color: AppColors.darkishGrey,
-    fontSize: 16,
+    color: AppColors.greenThemeColor,
+    fontSize: 18,
     letterSpacing: 1,
   );
+
+//! ITEM-CARD Third SUB-TITLE TEXT (percentade)
+  static final TextStyle itemCardThirdSubTitleText =
+      GoogleFonts.robotoCondensed(
+    fontWeight: FontWeight.bold,
+    color: AppColors.greenThemeColor,
+    fontSize: 14,
+    letterSpacing: 0,
+  );
+
+  //! ITEM-CARD SECOND SUB-TITLE TEXT (retail PRICE)
+  static final TextStyle itemCardSecondSubTitleText =
+      GoogleFonts.robotoCondensed(
+          fontWeight: FontWeight.bold,
+          color: AppColors.darkishGrey,
+          fontSize: 12,
+          letterSpacing: 1,
+          decoration: TextDecoration.lineThrough,
+          decorationColor: AppColors.darkishGrey,
+          decorationThickness: 1);
 
 //! VIEW PRODUCT MAIN HEADING
   static TextStyle viewProductMainHeading(BuildContext context) =>
@@ -367,4 +387,17 @@ class AppTextStyles {
   static TextStyle deleteAccountAcknowledgeText = GoogleFonts.robotoCondensed(
       textStyle: TextStyle(
           color: AppColors.greyThemeColor, fontSize: 15, letterSpacing: 0.4));
+
+  //! SEARCHBAR TEXT STYLE
+  static final TextStyle searchBarTextStyle = GoogleFonts.robotoCondensed(
+      fontSize: 18, color: AppColors.blackThemeColor);
+
+  //! EMPTY PRODUCTS MESSAGE TEXT STYLE
+  static TextStyle emptyProductsMessageText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 20,
+          color: isLightTheme(context)
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 1);
 }

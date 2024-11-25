@@ -53,7 +53,8 @@ Widget buildExploreTextAndLogo(BuildContext context) {
 
 Widget buildSearchBar(double screenWidth, BuildContext context) {
   return GestureDetector(
-    onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenSearchScreen()),
+    onTap: () => NavigationHelper.navigateToWithoutReplacement(
+        context, ScreenSearchScreen()),
     child: Container(
       height: 48,
       width: screenWidth * 0.92,
@@ -247,7 +248,7 @@ Widget buildAllCategories() {
     scrollDirection: Axis.horizontal,
     child: Row(
       children: [
-        CustomCategoriesContainerWidget(                   
+        CustomCategoriesContainerWidget(
             iconImagePath: 'assets/dumbell.png',
             categoryTitleText: 'EQUIPMENTS'),
         SizedBox(width: 14),
@@ -264,7 +265,8 @@ Widget buildAllCategories() {
             categoryTitleText: 'ACCESSORIES'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
-            iconImagePath: 'assets/more_categories_image.png', categoryTitleText: '  MORE >>'),
+            iconImagePath: 'assets/more_categories_image.png',
+            categoryTitleText: '  MORE >>'),
       ],
     ),
   );
@@ -281,8 +283,12 @@ Widget buildLastestArrivalsText(BuildContext context) {
   );
 }
 
-// Modified buildItemCard widget
+// buildItemCard widget
 Widget buildItemCard(BuildContext context, ProductModel product) {
+  // Calculating discount percentage
+  final discountPercentage =
+      (((product.retailPrice - product.offerPrice) / product.retailPrice) * 100)
+          .round();
   return GestureDetector(
     onTap: () => NavigationHelper.navigateToWithoutReplacement(
         context, ScreenViewProducts(productModel: product)),
@@ -333,10 +339,26 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
             ),
           ),
           SizedBox(height: 5),
-          Text(
-            "₹ ${product.offerPrice}",
-            style: AppTextStyles.itemCardSubTitleText,
-          )
+          Row(
+            children: [
+              Text(
+                "₹${product.offerPrice}",
+                style: AppTextStyles.itemCardSubTitleText,
+              ),
+              SizedBox(width: 8),
+              Text(
+                "₹${product.retailPrice}",
+                style: AppTextStyles.itemCardSecondSubTitleText,
+              ),
+              Spacer(),
+              Icon(Icons.arrow_downward_rounded,
+                  color: AppColors.greenThemeColor, size: 15),
+              Text(
+                "$discountPercentage% OFF",
+                style: AppTextStyles.itemCardThirdSubTitleText,
+              ),
+            ],
+          ),
         ],
       ),
     ),
