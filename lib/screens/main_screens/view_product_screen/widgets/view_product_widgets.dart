@@ -144,8 +144,8 @@ Widget buildPageIndicator(
 }
 
 Widget buildProductHeadingText(BuildContext context, ProductModel product) {
-  return Text(product.name,
-      maxLines: 2,
+  return Text("${product.brandName} ${product.name}",
+      maxLines: 3,
       overflow: TextOverflow.ellipsis,
       style: AppTextStyles.viewProductMainHeading(context));
 }
@@ -257,7 +257,8 @@ Widget buildDescriptionTitle() {
   return Text("DESCRIPTION", style: AppTextStyles.viewProductTitleText);
 }
 
-Widget buildDescription(BuildContext context, bool isExpanded , ProductModel product) {
+Widget buildDescription(
+    BuildContext context, bool isExpanded, ProductModel product) {
   return Text(
       textAlign: TextAlign.justify,
       style: AppTextStyles.descriptionText(context),

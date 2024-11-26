@@ -289,12 +289,14 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
   final discountPercentage =
       (((product.retailPrice - product.offerPrice) / product.retailPrice) * 100)
           .round();
+
   return GestureDetector(
     onTap: () => NavigationHelper.navigateToWithoutReplacement(
         context, ScreenViewProducts(productModel: product)),
     child: Container(
-      padding: EdgeInsets.all(15),
-      height: 245,
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.only(
+          bottom: 10), // Added margin to prevent potential overflow
       width: MediaQuery.sizeOf(context).width * 0.43,
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.light
@@ -304,60 +306,75 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min, // Added to prevent overflow
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: SizedBox(
-                height: 150,
-                width: MediaQuery.sizeOf(context).width * 0.38,
-                child: Image.network(
-                  product.imageUrls[0],
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
-                      Image.asset('assets/wulflex_logo_nobg.png'),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    // show image loading indicator
-                    return Center(
-                        child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null));
-                  },
-                )),
-          ),
-          SizedBox(height: 14),
-          Flexible(
-            child: Text(
-              product.name,
-              style: AppTextStyles.itemCardTitleText,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+          Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: SizedBox(
+                  height: 150,
+                  width: MediaQuery.sizeOf(context).width * 0.38,
+                  child: Image.network(
+                    product.imageUrls[0],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Image.asset('assets/wulflex_logo_nobg.png'),
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                          child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null));
+                    },
+                  )),
             ),
           ),
-          SizedBox(height: 5),
-          Row(
-            children: [
-              Text(
-                "₹${product.offerPrice}",
-                style: AppTextStyles.itemCardSubTitleText,
-              ),
-              SizedBox(width: 8),
-              Text(
-                "₹${product.retailPrice}",
-                style: AppTextStyles.itemCardSecondSubTitleText,
-              ),
-              Spacer(),
-              Icon(Icons.arrow_downward_rounded,
-                  color: AppColors.greenThemeColor, size: 15),
-              Text(
-                "$discountPercentage% OFF",
-                style: AppTextStyles.itemCardThirdSubTitleText,
-              ),
-            ],
+          SizedBox(height: 9),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.brandName,
+                  style: AppTextStyles.itemCardBrandText,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  product.name,
+                  style: AppTextStyles.itemCardNameText,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text(
+                      "₹${product.retailPrice.round()}",
+                      style: AppTextStyles.itemCardSecondSubTitleText,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      "₹${product.offerPrice.round()}",
+                      style: AppTextStyles.itemCardSubTitleText,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 3),
+                Center(
+                  child: Text(
+                    "Save upto $discountPercentage%",
+                    style: AppTextStyles.itemCardThirdSubTitleText,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -379,7 +396,7 @@ Widget buildLatestArrivalsSection(BuildContext context) {
             crossAxisCount: 2,
             crossAxisSpacing: 18,
             mainAxisSpacing: 18,
-            childAspectRatio: 0.75,
+            childAspectRatio: 0.64,
           ),
           itemCount: state.products.length,
           itemBuilder: (context, index) {

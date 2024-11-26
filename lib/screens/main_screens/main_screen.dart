@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wulflex/screens/main_screens/account_screens/sign_out_screen.dart';
+import 'package:wulflex/screens/main_screens/account_screens/sign_out_screens/sign_out_screen.dart';
 import 'package:wulflex/screens/main_screens/cart_screens.dart/cart_screen.dart';
 import 'package:wulflex/screens/main_screens/favorites_screens/favorite_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/home_screen.dart';

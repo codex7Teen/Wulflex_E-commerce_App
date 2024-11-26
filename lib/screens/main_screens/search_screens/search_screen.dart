@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
-import 'package:wulflex/main.dart';
 import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/home_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
-import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 
 class ScreenSearchScreen extends StatefulWidget {
   const ScreenSearchScreen({super.key});
@@ -43,9 +41,10 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
       _filteredProducts = products;
     } else {
       _filteredProducts = products.where((product) {
-        return product.name
+        return product.brandName
                 .toLowerCase()
                 .contains(_searchQuery.toLowerCase()) ||
+            product.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
             product.description
                 .toLowerCase()
                 .contains(_searchQuery.toLowerCase()) ||
@@ -121,7 +120,7 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                               },
                               style: AppTextStyles.searchBarTextStyle,
                               decoration: InputDecoration(
-                                hintText: 'Search...',
+                                hintText: 'Search by product or category',
                                 hintStyle: AppTextStyles.searchBarHintText,
                                 border: InputBorder.none,
                               ),
@@ -159,10 +158,11 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: 18,
                             mainAxisSpacing: 18,
-                            childAspectRatio: 0.75),
-                            itemCount: _filteredProducts.length,
+                            childAspectRatio: 0.64),
+                        itemCount: _filteredProducts.length,
                         itemBuilder: (context, index) {
-                          return buildItemCard(context, _filteredProducts[index]);
+                          return buildItemCard(
+                              context, _filteredProducts[index]);
                         },
                       ),
                     );

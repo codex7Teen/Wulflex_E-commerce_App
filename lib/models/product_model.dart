@@ -1,4 +1,5 @@
 class ProductModel {
+  final String brandName;
   final String name;
   final String description;
   final String category;
@@ -10,7 +11,8 @@ class ProductModel {
   final bool isOnSale;
 
   ProductModel(
-      {required this.name,
+      {required this.brandName,
+      required this.name,
       required this.description,
       required this.category,
       required this.imageUrls,
@@ -22,6 +24,7 @@ class ProductModel {
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
+      brandName: map['brandName'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
       category: map['category'] ?? '',

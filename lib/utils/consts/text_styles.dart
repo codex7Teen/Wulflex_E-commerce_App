@@ -155,25 +155,33 @@ class AppTextStyles {
           letterSpacing: 1.5,
           fontSize: 13.5);
 
-//! ITEM-CARD TITLE TEXT (ITEM NAME)
-  static final TextStyle itemCardTitleText = GoogleFonts.robotoCondensed(
+//! ITEM-CARD BRAND TEXT (ITEM BRAND)
+  static final TextStyle itemCardBrandText = GoogleFonts.robotoCondensed(
       fontWeight: FontWeight.bold,
       color: AppColors.blackThemeColor,
-      fontSize: 18,
+      fontSize: 17.5,
       letterSpacing: 1);
+
+  //! ITEM-CARD PRODUCT NAME TEXT (ITEM NAME)
+  static final TextStyle itemCardNameText = GoogleFonts.robotoCondensed(
+    fontWeight: FontWeight.bold,
+    color: AppColors.darkishGrey,
+    fontSize: 12.5,
+    letterSpacing: 0.8,
+  );
 
 //! ITEM-CARD SUB-TITLE TEXT (PRICE)
   static final TextStyle itemCardSubTitleText = GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.bold,
     color: AppColors.greenThemeColor,
-    fontSize: 18,
-    letterSpacing: 1,
+    fontSize: 16.5,
+    letterSpacing: 0.2,
   );
 
 //! ITEM-CARD Third SUB-TITLE TEXT (percentade)
   static final TextStyle itemCardThirdSubTitleText =
       GoogleFonts.robotoCondensed(
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w500,
     color: AppColors.greenThemeColor,
     fontSize: 14,
     letterSpacing: 0,
@@ -183,11 +191,11 @@ class AppTextStyles {
   static final TextStyle itemCardSecondSubTitleText =
       GoogleFonts.robotoCondensed(
           fontWeight: FontWeight.bold,
-          color: AppColors.darkishGrey,
-          fontSize: 12,
-          letterSpacing: 1,
+          color: AppColors.greyThemeColor,
+          fontSize: 14,
+          letterSpacing: 0.2,
           decoration: TextDecoration.lineThrough,
-          decorationColor: AppColors.darkishGrey,
+          decorationColor: AppColors.greyThemeColor,
           decorationThickness: 1);
 
 //! VIEW PRODUCT MAIN HEADING
