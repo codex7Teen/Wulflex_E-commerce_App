@@ -60,7 +60,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                 buildCategoriesText(context),
                 SizedBox(height: 10),
                 //! ALL CATEGORIES
-                buildAllCategories(),
+                buildAllCategories(context),
                 SizedBox(height: 24),
                 //! LATEST ARRIVALS TEXT
                 buildLastestArrivalsText(context),

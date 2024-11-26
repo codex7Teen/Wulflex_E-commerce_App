@@ -5,6 +5,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
 import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/account_screens/profile_screen/profile_screen.dart';
+import 'package:wulflex/screens/main_screens/home_screens/all_categories_screen.dart';
+import 'package:wulflex/screens/main_screens/home_screens/categorized_product_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/theme_toggle_widget.dart';
 import 'package:wulflex/screens/main_screens/search_screens/search_screen.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/view_product_screen.dart';
@@ -12,6 +14,7 @@ import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_categories_container_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
+import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
 Widget buildExploreTextAndLogo(BuildContext context) {
   final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
@@ -70,7 +73,7 @@ Widget buildSearchBar(double screenWidth, BuildContext context) {
               scale: 24, color: AppColors.darkishGrey),
           SizedBox(width: 16),
           Text(
-            'Search...',
+            'What are you looking for today?',
             style: AppTextStyles.searchBarHintText,
           )
         ],
@@ -243,28 +246,33 @@ Widget buildCategoriesText(BuildContext context) {
   );
 }
 
-Widget buildAllCategories() {
+Widget buildAllCategories(BuildContext context) {
   return SingleChildScrollView(
     scrollDirection: Axis.horizontal,
     child: Row(
       children: [
         CustomCategoriesContainerWidget(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'EQUIPMENTS')),
             iconImagePath: 'assets/dumbell.png',
             categoryTitleText: 'EQUIPMENTS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'SUPPLEMENTS')),
             iconImagePath: 'assets/suppliments.png',
             categoryTitleText: 'SUPPLEMENTS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'APPARELS')),
             iconImagePath: 'assets/apparels.png',
             categoryTitleText: 'APPARELS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'ACCESSORIES')),
             iconImagePath: 'assets/watch.png',
             categoryTitleText: 'ACCESSORIES'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenAllCategories(screenTitle: 'ALL CATEGORIES')),
             iconImagePath: 'assets/more_categories_image.png',
             categoryTitleText: '  MORE >>'),
       ],
@@ -365,13 +373,19 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                     ),
                   ],
                 ),
-                SizedBox(height: 3),
-                Center(
-                  child: Text(
-                    "Save upto $discountPercentage%",
-                    style: AppTextStyles.itemCardThirdSubTitleText,
-                    textAlign: TextAlign.center,
+                SizedBox(height: 5),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: isLightTheme(context)
+                        ? AppColors.whiteThemeColor
+                        : const Color.fromARGB(
+                            255, 247, 247, 247), // Light red background
+                    borderRadius: BorderRadius.circular(5),
                   ),
+                  child: Text("Save upto $discountPercentage%",
+                      style: AppTextStyles.itemCardThirdSubTitleText),
                 ),
               ],
             ),
@@ -396,7 +410,7 @@ Widget buildLatestArrivalsSection(BuildContext context) {
             crossAxisCount: 2,
             crossAxisSpacing: 18,
             mainAxisSpacing: 18,
-            childAspectRatio: 0.64,
+            childAspectRatio: 0.63,
           ),
           itemCount: state.products.length,
           itemBuilder: (context, index) {

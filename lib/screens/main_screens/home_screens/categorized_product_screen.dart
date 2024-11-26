@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
@@ -5,16 +7,18 @@ import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/home_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
+import 'package:wulflex/widgets/custom_appbar_with_backbutton.dart';
 
-class ScreenSearchScreen extends StatefulWidget {
-  const ScreenSearchScreen({super.key});
+class ScreenCategorizedProduct extends StatefulWidget {
+  final String categoryName;
+  const ScreenCategorizedProduct({super.key, required this.categoryName});
 
   @override
-  State<ScreenSearchScreen> createState() => _ScreenSearchScreenState();
+  State<ScreenCategorizedProduct> createState() =>
+      _ScreenCategorizedProductState();
 }
 
-class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
-  final _focusNode = FocusNode();
+class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
   List<ProductModel> _filteredProducts = [];
   String _searchQuery = '';
 
@@ -23,24 +27,21 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
     super.initState();
     // Load all products initially
     context.read<ProductBloc>().add(LoadProducts());
-    // Automatically focus the TextField when the screen is opened
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _focusNode.requestFocus();
-    });
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
   }
 
   // filter products
   void _filterProducts(List<ProductModel> products) {
+    // First filter by category
+    List<ProductModel> categoryProducts = products
+        .where((product) =>
+            product.category.toLowerCase() == widget.categoryName.toLowerCase())
+        .toList();
+
+    // Then apply search filter if search query exists
     if (_searchQuery.isEmpty) {
-      _filteredProducts = products;
+      _filteredProducts = categoryProducts;
     } else {
-      _filteredProducts = products.where((product) {
+      _filteredProducts = categoryProducts.where((product) {
         return product.brandName
                 .toLowerCase()
                 .contains(_searchQuery.toLowerCase()) ||
@@ -62,75 +63,59 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
     return Scaffold(
       backgroundColor:
           isLightTheme ? AppColors.whiteThemeColor : AppColors.blackThemeColor,
+      appBar: customAppbarWithBackbutton(context, widget.categoryName,
+          widget.categoryName.length <= 9 ? 0.150 : 0.100),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18, top: 15),
           child: Column(
             children: [
-              Row(
-                children: [
-                  // Back Button
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: isLightTheme
-                          ? AppColors.blackThemeColor
-                          : AppColors.whiteThemeColor,
+              // Search Bar
+              Container(
+                height: 50,
+                width: screenWidth * 0.92,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18),
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.lightGreyThemeColor
+                      : AppColors.whiteThemeColor,
+                ),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 16),
+                    Image.asset(
+                      'assets/Search.png',
+                      scale: 28,
+                      color: AppColors.darkishGrey,
                     ),
-                  ),
-                  const SizedBox(width: 15),
-                  // Search Bar
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      width: screenWidth * 0.92,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? AppColors.lightGreyThemeColor
-                            : AppColors.whiteThemeColor,
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 16),
-                          Image.asset(
-                            'assets/Search.png',
-                            scale: 28,
-                            color: AppColors.darkishGrey,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: TextField(
-                              focusNode: _focusNode,
-                              onChanged: (value) {
-                                // Handle search logic here
-                                setState(() {
-                                  _searchQuery = value;
-                                });
-                                // Get current products from bloc state and filter
-                                if (context.read<ProductBloc>().state
-                                    is ProductLoaded) {
-                                  final products = (context
-                                          .read<ProductBloc>()
-                                          .state as ProductLoaded)
-                                      .products;
-                                  _filterProducts(products);
-                                }
-                              },
-                              style: AppTextStyles.searchBarTextStyle,
-                              decoration: InputDecoration(
-                                hintText: 'Search by product or category',
-                                hintStyle: AppTextStyles.searchBarHintText,
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ],
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: TextField(
+                        onChanged: (value) {
+                          // Handle search logic here
+                          setState(() {
+                            _searchQuery = value;
+                          });
+                          // Get current products from bloc state and filter
+                          if (context.read<ProductBloc>().state
+                              is ProductLoaded) {
+                            final products = (context.read<ProductBloc>().state
+                                    as ProductLoaded)
+                                .products;
+                            _filterProducts(products);
+                          }
+                        },
+                        style: AppTextStyles.searchBarTextStyle,
+                        decoration: InputDecoration(
+                          hintText:
+                              'Search for any ${widget.categoryName.toLowerCase()}...',
+                          hintStyle: AppTextStyles.searchBarHintText,
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(height: 22),
               // Build products
@@ -141,8 +126,13 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                   } else if (state is ProductError) {
                     return Center(child: Text('Error: ${state.message}'));
                   } else if (state is ProductLoaded) {
+                    // Filter products by category first
                     if (_searchQuery.isEmpty) {
-                      _filteredProducts = state.products;
+                      _filteredProducts = state.products
+                          .where((product) =>
+                              product.category.toLowerCase() ==
+                              widget.categoryName.toLowerCase())
+                          .toList();
                     }
 
                     if (_filteredProducts.isEmpty) {
