@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,29 +44,49 @@ class _ScreenHomeState extends State<ScreenHome> {
             child: Column(
               children: [
                 //! TOP => EXPLORE & PERSON LOGO SECTION
-                buildExploreTextAndLogo(context),
+                FadeInDown(
+                  child: buildExploreTextAndLogo(context),
+                ),
                 SizedBox(height: 15),
                 //! SEARCH BAR
-                buildSearchBar(screenWidth, context),
+                FadeInDown(
+                  delay: Duration(milliseconds: 150),
+                  child: buildSearchBar(screenWidth, context),
+                ),
                 SizedBox(height: 18),
                 //! CAROUSEL VIEW
-                buildcarouselView(
-                    _carouselController,
-                    _currentSlide,
-                    (index, reason) => setState(() {
-                          _currentSlide = index;
-                        })),
+                FadeInDown(
+                  delay: Duration(milliseconds: 250),
+                  child: buildcarouselView(
+                      _carouselController,
+                      _currentSlide,
+                      (index, reason) => setState(() {
+                            _currentSlide = index;
+                          })),
+                ),
                 SizedBox(height: 24),
                 //! CATEGORIES TEXT
-                buildCategoriesText(context),
+                FadeInDown(
+                  delay: Duration(milliseconds: 550),
+                  child: buildCategoriesText(context),
+                ),
                 SizedBox(height: 10),
                 //! ALL CATEGORIES
-                buildAllCategories(context),
+                FadeInDown(
+                  delay: Duration(milliseconds: 750),
+                  child: buildAllCategories(context),
+                ),
                 SizedBox(height: 24),
                 //! LATEST ARRIVALS TEXT
-                buildLastestArrivalsText(context),
+                FadeInDown(
+                  delay: Duration(milliseconds: 950),
+                  child: buildLastestArrivalsText(context),
+                ),
                 SizedBox(height: 14),
-                buildLatestArrivalsSection(context),
+                FadeInUp(
+                  delay: Duration(milliseconds: 1150),
+                  child: buildLatestArrivalsSection(context),
+                ),
               ],
             ),
           ),

@@ -252,27 +252,32 @@ Widget buildAllCategories(BuildContext context) {
     child: Row(
       children: [
         CustomCategoriesContainerWidget(
-          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'EQUIPMENTS')),
+            onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                context, ScreenCategorizedProduct(categoryName: 'EQUIPMENTS')),
             iconImagePath: 'assets/dumbell.png',
             categoryTitleText: 'EQUIPMENTS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
-          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'SUPPLEMENTS')),
+            onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                context, ScreenCategorizedProduct(categoryName: 'SUPPLEMENTS')),
             iconImagePath: 'assets/suppliments.png',
             categoryTitleText: 'SUPPLEMENTS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
-          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'APPARELS')),
+            onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                context, ScreenCategorizedProduct(categoryName: 'APPARELS')),
             iconImagePath: 'assets/apparels.png',
             categoryTitleText: 'APPARELS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
-          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenCategorizedProduct(categoryName: 'ACCESSORIES')),
+            onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                context, ScreenCategorizedProduct(categoryName: 'ACCESSORIES')),
             iconImagePath: 'assets/watch.png',
             categoryTitleText: 'ACCESSORIES'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
-          onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenAllCategories(screenTitle: 'ALL CATEGORIES')),
+            onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                context, ScreenAllCategories(screenTitle: 'ALL CATEGORIES')),
             iconImagePath: 'assets/more_categories_image.png',
             categoryTitleText: '  MORE >>'),
       ],
