@@ -80,11 +80,13 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                             widget.productModel,
                             (size) => updateSelectedSize(size)),
                         SizedBox(height: 24),
-                        buildPriceDetailsContainer(context, widget.productModel),
+                        buildPriceDetailsContainer(
+                            context, widget.productModel),
                         SizedBox(height: 24),
                         buildDescriptionTitle(),
                         SizedBox(height: 6),
-                        buildDescription(context, isExpanded, widget.productModel),
+                        buildDescription(
+                            context, isExpanded, widget.productModel),
                         buildReammoreAndReadlessButton(
                             isExpanded,
                             () => setState(() {

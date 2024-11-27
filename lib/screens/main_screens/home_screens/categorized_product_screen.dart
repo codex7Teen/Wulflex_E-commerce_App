@@ -1,13 +1,12 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
 import 'package:wulflex/models/product_model.dart';
-import 'package:wulflex/screens/main_screens/home_screens/widgets/home_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_appbar_with_backbutton.dart';
+import 'package:wulflex/widgets/custom_itemCard_widget.dart';
 
 class ScreenCategorizedProduct extends StatefulWidget {
   final String categoryName;
@@ -147,7 +146,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 18,
-                            mainAxisSpacing: 18,
+                            mainAxisSpacing: 7.5,
                             childAspectRatio: 0.63),
                         itemCount: _filteredProducts.length,
                         itemBuilder: (context, index) {

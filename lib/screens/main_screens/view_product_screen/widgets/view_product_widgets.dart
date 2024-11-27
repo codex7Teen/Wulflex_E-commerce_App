@@ -50,7 +50,7 @@ PreferredSizeWidget buildAppBarWithIcons(BuildContext context) {
                 child: Center(
                   child: LikeButton(
                     likeBuilder: (isLiked) {
-                      return Icon(
+                      return isLiked ? Icon(
                         Icons.favorite,
                         color: isLiked
                             ? Colors.pinkAccent
@@ -58,7 +58,15 @@ PreferredSizeWidget buildAppBarWithIcons(BuildContext context) {
                                 ? AppColors.blackThemeColor
                                 : AppColors.whiteThemeColor,
                         size: 28,
-                      );
+                      ) : Icon(
+                        Icons.favorite,
+                        color: isLiked
+                            ? Colors.pinkAccent
+                            : isLightTheme
+                                ? AppColors.blackThemeColor
+                                : AppColors.whiteThemeColor,
+                        size: 28,
+                      ) ;
                     },
                     circleColor: CircleColor(
                         start: isLightTheme

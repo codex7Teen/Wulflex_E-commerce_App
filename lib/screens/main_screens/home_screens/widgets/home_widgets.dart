@@ -3,18 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
-import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/account_screens/profile_screen/profile_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/all_categories_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/categorized_product_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/theme_toggle_widget.dart';
 import 'package:wulflex/screens/main_screens/search_screens/search_screen.dart';
-import 'package:wulflex/screens/main_screens/view_product_screen/view_product_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_categories_container_widget.dart';
+import 'package:wulflex/widgets/custom_itemCard_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
-import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
 Widget buildExploreTextAndLogo(BuildContext context) {
   final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
@@ -253,31 +251,36 @@ Widget buildAllCategories(BuildContext context) {
       children: [
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'EQUIPMENTS')),
+                context, ScreenCategorizedProduct(categoryName: 'EQUIPMENTS'),
+                transitionDuration: 300),
             iconImagePath: 'assets/dumbell.png',
             categoryTitleText: 'EQUIPMENTS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'SUPPLEMENTS')),
+                context, ScreenCategorizedProduct(categoryName: 'SUPPLEMENTS'),
+                transitionDuration: 300),
             iconImagePath: 'assets/suppliments.png',
             categoryTitleText: 'SUPPLEMENTS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'APPARELS')),
+                context, ScreenCategorizedProduct(categoryName: 'APPARELS'),
+                transitionDuration: 300),
             iconImagePath: 'assets/apparels.png',
             categoryTitleText: 'APPARELS'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'ACCESSORIES')),
+                context, ScreenCategorizedProduct(categoryName: 'ACCESSORIES'),
+                transitionDuration: 300),
             iconImagePath: 'assets/watch.png',
             categoryTitleText: 'ACCESSORIES'),
         SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenAllCategories(screenTitle: 'ALL CATEGORIES')),
+                context, ScreenAllCategories(screenTitle: 'ALL CATEGORIES'),
+                transitionDuration: 300),
             iconImagePath: 'assets/more_categories_image.png',
             categoryTitleText: '  MORE >>'),
       ],
@@ -296,111 +299,6 @@ Widget buildLastestArrivalsText(BuildContext context) {
   );
 }
 
-// buildItemCard widget
-Widget buildItemCard(BuildContext context, ProductModel product) {
-  // Calculating discount percentage
-  final discountPercentage =
-      (((product.retailPrice - product.offerPrice) / product.retailPrice) * 100)
-          .round();
-
-  return GestureDetector(
-    onTap: () => NavigationHelper.navigateToWithoutReplacement(
-        context, ScreenViewProducts(productModel: product)),
-    child: Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(
-          bottom: 10), // Added margin to prevent potential overflow
-      width: MediaQuery.sizeOf(context).width * 0.43,
-      decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light
-            ? AppColors.lightGreyThemeColor
-            : AppColors.whiteThemeColor,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min, // Added to prevent overflow
-        children: [
-          Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: SizedBox(
-                  height: 150,
-                  width: MediaQuery.sizeOf(context).width * 0.38,
-                  child: Image.network(
-                    product.imageUrls[0],
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        Image.asset('assets/wulflex_logo_nobg.png'),
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                          child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null));
-                    },
-                  )),
-            ),
-          ),
-          SizedBox(height: 9),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.brandName,
-                  style: AppTextStyles.itemCardBrandText,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  product.name,
-                  style: AppTextStyles.itemCardNameText,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 5),
-                Row(
-                  children: [
-                    Text(
-                      "₹${product.retailPrice.round()}",
-                      style: AppTextStyles.itemCardSecondSubTitleText,
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      "₹${product.offerPrice.round()}",
-                      style: AppTextStyles.itemCardSubTitleText,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: isLightTheme(context)
-                        ? AppColors.whiteThemeColor
-                        : const Color.fromARGB(
-                            255, 247, 247, 247), // Light red background
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text("Save upto $discountPercentage%",
-                      style: AppTextStyles.itemCardThirdSubTitleText),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 // Latest Arrivals Section Implementation
 Widget buildLatestArrivalsSection(BuildContext context) {
   return BlocBuilder<ProductBloc, ProductState>(
@@ -414,7 +312,7 @@ Widget buildLatestArrivalsSection(BuildContext context) {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 18,
-            mainAxisSpacing: 18,
+            mainAxisSpacing: 7.5,
             childAspectRatio: 0.63,
           ),
           itemCount: state.products.length,

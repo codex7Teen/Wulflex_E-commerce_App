@@ -23,17 +23,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
-    //! LOAD LATEST PRODUCTS
-    on<LoadLatestProducts>((event, emit) async {
-      emit(ProductLoading());
-      try {
-        final products = await _productServices.getLatestProducts();
-        emit(ProductLoaded(products));
-      } catch (e) {
-        emit(ProductError(e.toString()));
-      }
-    });
-
     
   }
 }

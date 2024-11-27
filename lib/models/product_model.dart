@@ -1,4 +1,5 @@
 class ProductModel {
+  final String? id;
   final String brandName;
   final String name;
   final String description;
@@ -9,9 +10,11 @@ class ProductModel {
   final double retailPrice;
   final double offerPrice;
   final bool isOnSale;
+  final bool isLiked;
 
   ProductModel(
-      {required this.brandName,
+      {required this.id,
+      required this.brandName,
       required this.name,
       required this.description,
       required this.category,
@@ -20,10 +23,12 @@ class ProductModel {
       required this.sizes,
       required this.retailPrice,
       required this.offerPrice,
-      required this.isOnSale});
+      required this.isOnSale,
+      this.isLiked = false});
 
-  factory ProductModel.fromMap(Map<String, dynamic> map) {
+  factory ProductModel.fromMap(Map<String, dynamic> map, {String? documentId}) {
     return ProductModel(
+      id: documentId ?? map['id'] ?? '',
       brandName: map['brandName'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
@@ -34,6 +39,25 @@ class ProductModel {
       retailPrice: (map['retailPrice'] as num?)?.toDouble() ?? 0.0,
       offerPrice: (map['offerPrice'] as num?)?.toDouble() ?? 0.0,
       isOnSale: map['isOnSale'] ?? false,
+      isLiked: map['isLiked'] ?? false,
     );
+  }
+
+  // Method to convert to map for Firestore
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'brandName': brandName,
+      'name': name,
+      'description': description,
+      'category': category,
+      'imageUrls': imageUrls,
+      'weights': weights,
+      'sizes': sizes,
+      'retailPrice': retailPrice,
+      'offerPrice': offerPrice,
+      'isOnSale': isOnSale,
+      'isLiked': isLiked,
+    };
   }
 }

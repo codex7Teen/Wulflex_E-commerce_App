@@ -13,10 +13,10 @@ class NavigationHelper {
   }
 
   // You can add more methods for different navigation needs
-  static void navigateToWithoutReplacement(BuildContext context, Widget page) {
+  static void navigateToWithoutReplacement(BuildContext context, Widget page, {int transitionDuration = 400}) {
     Navigator.of(context).push(PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionDuration: const Duration(milliseconds: 400),
+      transitionDuration: Duration(milliseconds: transitionDuration),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(opacity: animation, child: child);
       },

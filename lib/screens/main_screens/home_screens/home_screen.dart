@@ -54,7 +54,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                   child: buildSearchBar(screenWidth, context),
                 ),
                 SizedBox(height: 18),
-                //! CAROUSEL VIEW
+                //! CAROUSEL VIEW 
                 FadeInDown(
                   delay: Duration(milliseconds: 250),
                   child: buildcarouselView(

@@ -128,7 +128,7 @@ class AppTextStyles {
 
 //! SEARCHBAR HINT TEXT
   static final TextStyle searchBarHintText =
-      GoogleFonts.robotoCondensed(fontSize: 18, color: AppColors.darkishGrey);
+      GoogleFonts.robotoCondensed(fontSize: 17, color: AppColors.darkishGrey);
 
 //! CAROUSEL TITLE
   static final TextStyle carouselTitleText = GoogleFonts.bebasNeue(

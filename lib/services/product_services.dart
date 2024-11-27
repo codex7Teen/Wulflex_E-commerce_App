@@ -7,17 +7,8 @@ class ProductServices {
 
   Stream<List<ProductModel>> getProducts() {
     return _firestore.collection('products').snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => ProductModel.fromMap(doc.data())).toList());
-  }
-
-  Future<List<ProductModel>> getLatestProducts() {
-    return _firestore
-        .collection('products')
-        .orderBy('timestamp', descending: true)
-        .limit(10)
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => ProductModel.fromMap(doc.data()))
+        snapshot.docs
+            .map((doc) => ProductModel.fromMap(doc.data(), documentId: doc.id))
             .toList());
   }
 }
