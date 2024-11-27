@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/widgets/view_product_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -25,6 +27,12 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
   bool isExpanded = false;
 
   @override
+  void initState() {
+    context.read<FavoriteBloc>().add(LoadFavoritesEvent());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     PageController pageController = PageController();
 
@@ -41,7 +49,7 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
             pinned: false,
             expandedHeight: 50.0,
             flexibleSpace: FlexibleSpaceBar(
-              background: buildAppBarWithIcons(context),
+              background: buildAppBarWithIcons(context, widget.productModel),
             ),
           ),
           SliverToBoxAdapter(

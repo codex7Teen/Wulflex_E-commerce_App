@@ -1,13 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/widgets/custom_weightandsize_selector_container_widget.dart';
 
-PreferredSizeWidget buildAppBarWithIcons(BuildContext context) {
+PreferredSizeWidget buildAppBarWithIcons(
+    BuildContext context, ProductModel product) {
   final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
 
   return AppBar(
@@ -48,39 +53,63 @@ PreferredSizeWidget buildAppBarWithIcons(BuildContext context) {
                         ? AppColors.whiteThemeColor
                         : AppColors.blackThemeColor),
                 child: Center(
-                  child: LikeButton(
-                    likeBuilder: (isLiked) {
-                      return isLiked ? Icon(
-                        Icons.favorite,
-                        color: isLiked
-                            ? Colors.pinkAccent
-                            : isLightTheme
+                  child: BlocBuilder<FavoriteBloc, FavoriteState>(
+                    builder: (context, state) {
+                      final isFavorite = state is FavoriteLoaded
+                          ? product.checkIsFavorite(state.favorites)
+                          : false;
+                      log(isFavorite.toString());
+                      return LikeButton(
+                        isLiked: isFavorite,
+                        onTap: (isLiked) async {
+                          if (isLiked) {
+                            context
+                                .read<FavoriteBloc>()
+                                .add(RemoveFromFavoritesEvent(product.id!));
+                            log(product.id!);
+                          } else {
+                            context
+                                .read<FavoriteBloc>()
+                                .add(AddToFavoritesEvent(product));
+                          }
+                          return !isLiked;
+                        },
+                        likeBuilder: (isLiked) {
+                          return isLiked
+                              ? Icon(
+                                  Icons.favorite,
+                                  color: isLiked
+                                      ? Colors.pinkAccent
+                                      : isLightTheme
+                                          ? AppColors.blackThemeColor
+                                          : AppColors.whiteThemeColor,
+                                  size: 28,
+                                )
+                              : Icon(
+                                  Icons.favorite,
+                                  color: isLiked
+                                      ? Colors.pinkAccent
+                                      : isLightTheme
+                                          ? AppColors.blackThemeColor
+                                          : AppColors.whiteThemeColor,
+                                  size: 28,
+                                );
+                        },
+                        circleColor: CircleColor(
+                            start: isLightTheme
                                 ? AppColors.blackThemeColor
                                 : AppColors.whiteThemeColor,
-                        size: 28,
-                      ) : Icon(
-                        Icons.favorite,
-                        color: isLiked
-                            ? Colors.pinkAccent
-                            : isLightTheme
+                            end: isLightTheme
                                 ? AppColors.blackThemeColor
-                                : AppColors.whiteThemeColor,
+                                : AppColors.whiteThemeColor),
+                        bubblesColor: BubblesColor(
+                            dotPrimaryColor: AppColors.blueThemeColor,
+                            dotSecondaryColor: isLightTheme
+                                ? AppColors.blackThemeColor
+                                : AppColors.whiteThemeColor),
                         size: 28,
-                      ) ;
+                      );
                     },
-                    circleColor: CircleColor(
-                        start: isLightTheme
-                            ? AppColors.blackThemeColor
-                            : AppColors.whiteThemeColor,
-                        end: isLightTheme
-                            ? AppColors.blackThemeColor
-                            : AppColors.whiteThemeColor),
-                    bubblesColor: BubblesColor(
-                        dotPrimaryColor: AppColors.blueThemeColor,
-                        dotSecondaryColor: isLightTheme
-                            ? AppColors.blackThemeColor
-                            : AppColors.whiteThemeColor),
-                    size: 28,
                   ),
                 ),
               ),

@@ -10,7 +10,7 @@ class ProductModel {
   final double retailPrice;
   final double offerPrice;
   final bool isOnSale;
-  final bool isLiked;
+  final bool isFavorite;
 
   ProductModel(
       {required this.id,
@@ -24,7 +24,7 @@ class ProductModel {
       required this.retailPrice,
       required this.offerPrice,
       required this.isOnSale,
-      this.isLiked = false});
+      this.isFavorite = false});
 
   factory ProductModel.fromMap(Map<String, dynamic> map, {String? documentId}) {
     return ProductModel(
@@ -39,7 +39,7 @@ class ProductModel {
       retailPrice: (map['retailPrice'] as num?)?.toDouble() ?? 0.0,
       offerPrice: (map['offerPrice'] as num?)?.toDouble() ?? 0.0,
       isOnSale: map['isOnSale'] ?? false,
-      isLiked: map['isLiked'] ?? false,
+      isFavorite: map['isFavorite'] ?? false,
     );
   }
 
@@ -57,7 +57,29 @@ class ProductModel {
       'retailPrice': retailPrice,
       'offerPrice': offerPrice,
       'isOnSale': isOnSale,
-      'isLiked': isLiked,
+      'isFavorite': isFavorite,
     };
+  }
+
+  // Add a method to copy the model with updated favorite status
+  ProductModel copyWith({bool? isFavorite}) {
+    return ProductModel(
+      id: id,
+      brandName: brandName,
+      name: name,
+      description: description,
+      category: category,
+      imageUrls: imageUrls,
+      weights: weights,
+      sizes: sizes,
+      retailPrice: retailPrice,
+      offerPrice: offerPrice,
+      isOnSale: isOnSale,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
+
+  bool checkIsFavorite(List<ProductModel> favorites) {
+    return favorites.any((favorite) => favorite.id == id);
   }
 }
