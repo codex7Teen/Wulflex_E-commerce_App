@@ -27,7 +27,6 @@ class _ScreenSaleScreenState extends State<ScreenSaleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(

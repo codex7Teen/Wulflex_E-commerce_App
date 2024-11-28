@@ -17,9 +17,18 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
   // Track selected size (only one can be selected)
   String? selectedSize;
 
+  // Track selected weight (only one can be selected)
+  String? selectedWeight;
+
   void updateSelectedSize(String size) {
     setState(() {
       selectedSize = size;
+    });
+  }
+
+  void updateSelectedWeight(String weight) {
+    setState(() {
+      selectedWeight = weight;
     });
   }
 
@@ -81,12 +90,25 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                         SizedBox(height: 14),
                         buildRatingsContainer(),
                         SizedBox(height: 20),
-                        buildSizeAndSizeChartText(),
-                        SizedBox(height: 8),
-                        buildWeightAndSizeSelectors(
+                        buildSizeAndSizeChartText(widget.productModel),
+                        Visibility(
+                          visible: widget.productModel.sizes.isNotEmpty,
+                          child: SizedBox(height: 8)),
+                        buildSizeSelectors(
                             selectedSize,
                             widget.productModel,
                             (size) => updateSelectedSize(size)),
+                        Visibility(
+                          visible: widget.productModel.weights.isNotEmpty,
+                          child: SizedBox(height: 20)),
+                        buildiWeightText(widget.productModel),
+                        Visibility(
+                          visible: widget.productModel.weights.isNotEmpty,
+                          child: SizedBox(height: 8)),
+                        buildWeightSelectors(
+                            selectedWeight,
+                            widget.productModel,
+                            (weight) => updateSelectedWeight(weight)),
                         SizedBox(height: 24),
                         buildPriceDetailsContainer(
                             context, widget.productModel),

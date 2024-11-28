@@ -62,9 +62,9 @@ PreferredSizeWidget buildAppBarWithIcons(
                         isLiked: isFavorite,
                         onTap: (isLiked) async {
                           if (isLiked) {
-                            context
-                                .read<FavoriteBloc>()
-                                .add(RemoveFromFavoritesEvent(product.id!, product.brandName));
+                            context.read<FavoriteBloc>().add(
+                                RemoveFromFavoritesEvent(
+                                    product.id!, product.brandName));
                           } else {
                             context
                                 .read<FavoriteBloc>()
@@ -210,40 +210,75 @@ Widget buildRatingsContainer() {
   );
 }
 
-Widget buildSizeAndSizeChartText() {
-  return Row(
-    children: [
-      Text(
-        'SIZE',
-        style: AppTextStyles.viewProductTitleText,
-      ),
-      Spacer(),
-      Icon(
-        Icons.straighten_outlined,
-        color: AppColors.greenThemeColor,
-      ),
-      SizedBox(width: 6),
-      Text(
-        'Size Chart',
-        style: AppTextStyles.sizeChartText,
-      ),
-    ],
+Widget buildSizeAndSizeChartText(ProductModel productModel) {
+  return Visibility(
+    visible: productModel.sizes.isNotEmpty,
+    child: Row(
+      children: [
+        Text(
+          'SIZE',
+          style: AppTextStyles.viewProductTitleText,
+        ),
+        Spacer(),
+        Icon(
+          Icons.straighten_outlined,
+          color: AppColors.greenThemeColor,
+        ),
+        SizedBox(width: 6),
+        Text(
+          'Size Chart',
+          style: AppTextStyles.sizeChartText,
+        ),
+      ],
+    ),
   );
 }
 
-Widget buildWeightAndSizeSelectors(String? selectedSize, ProductModel product,
+Widget buildSizeSelectors(String? selectedSize, ProductModel product,
     void Function(String) onSizeTapped) {
-  return Row(
-    children: product.sizes.map((size) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 10),
-        child: CustomWeightandsizeSelectorContainerWidget(
-          weightOrSize: size,
-          isSelected: selectedSize == size,
-          onTap: () => onSizeTapped(size),
-        ),
-      );
-    }).toList(),
+  return Visibility(
+    visible: product.sizes.isNotEmpty,
+    child: Row(
+      children: product.sizes.map((size) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: CustomWeightandsizeSelectorContainerWidget(
+            weightOrSize: size,
+            isSelected: selectedSize == size,
+            onTap: () => onSizeTapped(size),
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
+
+Widget buildiWeightText(ProductModel productModel) {
+  return Visibility(
+    visible: productModel.weights.isNotEmpty,
+    child: Text(
+      'WEIGHT',
+      style: AppTextStyles.viewProductTitleText,
+    ),
+  );
+}
+
+Widget buildWeightSelectors(String? selectedWeight, ProductModel product,
+    void Function(String) onSizeTapped) {
+  return Visibility(
+    visible: product.weights.isNotEmpty,
+    child: Row(
+      children: product.weights.map((weight) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: CustomWeightandsizeSelectorContainerWidget(
+            weightOrSize: weight,
+            isSelected: selectedWeight == weight,
+            onTap: () => onSizeTapped(weight),
+          ),
+        );
+      }).toList(),
+    ),
   );
 }
 
