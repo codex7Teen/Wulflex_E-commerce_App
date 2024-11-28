@@ -32,7 +32,7 @@ class FavoriteServices {
         .collection('favorites')
         .doc(product.id)
         .set(product.toMap());
-    log('FAVORITED');
+    log('SERVICES: FAVORITED');
   }
 
 //! REMOVE FROM FAVORITE SERVICE
@@ -43,6 +43,6 @@ class FavoriteServices {
         .collection('favorites')
         .doc(productId)
         .delete();
-    log('UN-FAVORITED');
+    log('SERVICES: UN-FAVORITED');
   }
 }

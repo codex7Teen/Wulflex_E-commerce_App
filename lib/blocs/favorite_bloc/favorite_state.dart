@@ -9,8 +9,10 @@ abstract class FavoriteState extends Equatable {
 
 class FavoriteInitial extends FavoriteState {}
 
+//! FAVORITES LOADING STATE
 class FavoriteLoading extends FavoriteState {}
 
+//! FAVORITES LOADED STATE
 class FavoriteLoaded extends FavoriteState {
   final List<ProductModel> favorites;
 
@@ -20,6 +22,7 @@ class FavoriteLoaded extends FavoriteState {
   List<Object> get props => [favorites];
 }
 
+//! FAVORITES ERROR STATE
 class FavoriteError extends FavoriteState {
   final String error;
 

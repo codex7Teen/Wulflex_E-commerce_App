@@ -58,7 +58,6 @@ PreferredSizeWidget buildAppBarWithIcons(
                       final isFavorite = state is FavoriteLoaded
                           ? product.checkIsFavorite(state.favorites)
                           : false;
-                      log(isFavorite.toString());
                       return LikeButton(
                         isLiked: isFavorite,
                         onTap: (isLiked) async {
@@ -66,7 +65,6 @@ PreferredSizeWidget buildAppBarWithIcons(
                             context
                                 .read<FavoriteBloc>()
                                 .add(RemoveFromFavoritesEvent(product.id!));
-                            log(product.id!);
                           } else {
                             context
                                 .read<FavoriteBloc>()
