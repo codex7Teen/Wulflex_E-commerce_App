@@ -64,7 +64,7 @@ PreferredSizeWidget buildAppBarWithIcons(
                           if (isLiked) {
                             context
                                 .read<FavoriteBloc>()
-                                .add(RemoveFromFavoritesEvent(product.id!));
+                                .add(RemoveFromFavoritesEvent(product.id!, product.brandName));
                           } else {
                             context
                                 .read<FavoriteBloc>()
@@ -84,7 +84,7 @@ PreferredSizeWidget buildAppBarWithIcons(
                                   size: 28,
                                 )
                               : Icon(
-                                  Icons.favorite,
+                                  Icons.favorite_border_rounded,
                                   color: isLiked
                                       ? Colors.pinkAccent
                                       : isLightTheme

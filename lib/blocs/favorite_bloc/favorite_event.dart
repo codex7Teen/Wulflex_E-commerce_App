@@ -22,9 +22,10 @@ class AddToFavoritesEvent extends FavoriteEvent {
 //! REMOVE FROM FAVORITE EVENT
 class RemoveFromFavoritesEvent extends FavoriteEvent {
   final String productId;
+  final String productName;
 
-  const RemoveFromFavoritesEvent(this.productId);
+  const RemoveFromFavoritesEvent(this.productId, this.productName);
 
   @override
-  List<Object> get props => [productId];
+  List<Object> get props => [productId, productName];
 }

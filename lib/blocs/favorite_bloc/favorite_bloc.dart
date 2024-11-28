@@ -41,7 +41,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         await _favoritesService.removeFavorite(event.productId);
 
         final favorites = await _favoritesService.getUserFavorites();
-        emit(FavoriteLoaded(favorites));
+        emit(FavoriteLoaded(favorites, removedProductName: event.productName));
       } catch (e) {
         emit(FavoriteError(e.toString()));
       }

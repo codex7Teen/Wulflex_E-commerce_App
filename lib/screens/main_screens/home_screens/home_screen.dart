@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/home_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -21,6 +22,7 @@ class _ScreenHomeState extends State<ScreenHome> {
   @override
   void initState() {
     super.initState();
+    context.read<FavoriteBloc>().add(LoadFavoritesEvent());
     // Delaying the pre-caching to ensure the context is fully built
     Future.delayed(Duration.zero, () {
       if (mounted) {

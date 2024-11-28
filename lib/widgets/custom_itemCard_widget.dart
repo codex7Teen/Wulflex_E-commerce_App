@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
+import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/screens/main_screens/view_product_screen/view_product_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -97,7 +99,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                         color: isLightTheme(context)
                             ? AppColors.whiteThemeColor
                             : const Color.fromARGB(
-                                255, 247, 247, 247), // Light red background
+                                255, 247, 247, 247), 
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text("Save upto $discountPercentage%",
@@ -121,27 +123,47 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                     topRight: Radius.circular(18),
                     bottomLeft: Radius.circular(18))),
             child: Center(
-              child: LikeButton(
-                likeBuilder: (isLiked) {
-                  return isLiked
-                      ? Icon(
-                          Icons.favorite_rounded,
-                          color: Colors.pinkAccent,
-                          size: 21.6,
-                        )
-                      : Icon(
-                          Icons.favorite_border_rounded,
-                          color: AppColors.whiteThemeColor,
-                          size: 21.6,
-                        );
+              child: BlocBuilder<FavoriteBloc, FavoriteState>(
+                builder: (context, state) {
+                  final isFavorite = state is FavoriteLoaded
+                      ? product.checkIsFavorite(state.favorites)
+                      : false;
+                  return LikeButton(
+                    isLiked: isFavorite,
+                    onTap: (isLiked) async {
+                      if (isLiked) {
+                        context
+                            .read<FavoriteBloc>()
+                            .add(RemoveFromFavoritesEvent(product.id!, product.brandName));
+                      } else {
+                        context
+                            .read<FavoriteBloc>()
+                            .add(AddToFavoritesEvent(product));
+                      }
+                      return !isLiked;
+                    },
+                    likeBuilder: (isLiked) {
+                      return isLiked
+                          ? Icon(
+                              Icons.favorite_rounded,
+                              color: Colors.pinkAccent,
+                              size: 21.6,
+                            )
+                          : Icon(
+                              Icons.favorite_border_rounded,
+                              color: AppColors.whiteThemeColor,
+                              size: 21.6,
+                            );
+                    },
+                    circleColor: CircleColor(
+                        start: AppColors.blackThemeColor,
+                        end: AppColors.blackThemeColor),
+                    bubblesColor: BubblesColor(
+                        dotPrimaryColor: AppColors.blueThemeColor,
+                        dotSecondaryColor: AppColors.blackThemeColor),
+                    size: 21.6,
+                  );
                 },
-                circleColor: CircleColor(
-                    start: AppColors.blackThemeColor,
-                    end: AppColors.blackThemeColor),
-                bubblesColor: BubblesColor(
-                    dotPrimaryColor: AppColors.blueThemeColor,
-                    dotSecondaryColor: AppColors.blackThemeColor),
-                size: 21.6,
               ),
             ),
           ),

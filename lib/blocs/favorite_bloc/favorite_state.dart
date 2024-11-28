@@ -15,11 +15,13 @@ class FavoriteLoading extends FavoriteState {}
 //! FAVORITES LOADED STATE
 class FavoriteLoaded extends FavoriteState {
   final List<ProductModel> favorites;
+  final String? removedProductName;
 
-  const FavoriteLoaded(this.favorites);
+  const FavoriteLoaded(this.favorites, {this.removedProductName});
 
   @override
-  List<Object> get props => [favorites];
+  List<Object> get props =>
+      [favorites, if (removedProductName != null) removedProductName!];
 }
 
 //! FAVORITES ERROR STATE

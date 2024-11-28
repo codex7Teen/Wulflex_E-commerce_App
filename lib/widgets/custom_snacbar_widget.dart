@@ -2,27 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/theme_data_helper_widget.dart';
+import 'package:wulflex/utils/helpers/debouncer.dart'; // Import the Debouncer
 
 class CustomSnackbar {
-  static void showCustomSnackBar(BuildContext context, String message,
-      {IconData icon = Icons.done_outline_rounded,
-      bool appearFromTop = false}) {
-    final overlay = Overlay.of(context);
-    final overlayEntry = OverlayEntry(
-      builder: (context) => _SnackbarContent(
-        message: message,
-        icon: icon,
-        context: context,
-        appearFromTop: appearFromTop,
-      ),
-    );
+  // Create a static Debouncer instance
+  static final Debouncer _debouncer = Debouncer(milliSeconds: 500);
 
-    // Insert the overlay entry.
-    overlay.insert(overlayEntry);
+  // Keep track of the current overlay to manage multiple snackbars
+  static OverlayEntry? _currentOverlay;
 
-    // Remove the snackbar after the duration.
-    Future.delayed(const Duration(seconds: 2), () {
-      overlayEntry.remove();
+  static void showCustomSnackBar(
+    BuildContext context,
+    String message, {
+    IconData icon = Icons.done_outline_rounded,
+    bool appearFromTop = false,
+    Duration duration = const Duration(seconds: 2),
+  }) {
+    // Use the debouncer to prevent rapid successive calls
+    _debouncer.run(() {
+      // Remove any existing overlay first
+      _currentOverlay?.remove();
+
+      final overlay = Overlay.of(context);
+      final overlayEntry = OverlayEntry(
+        builder: (context) => _SnackbarContent(
+          message: message,
+          icon: icon,
+          context: context,
+          appearFromTop: appearFromTop,
+        ),
+      );
+
+      // Insert the new overlay entry
+      overlay.insert(overlayEntry);
+      _currentOverlay = overlayEntry;
+
+      // Remove the snackbar after the specified duration
+      Future.delayed(duration, () {
+        if (_currentOverlay == overlayEntry) {
+          _currentOverlay?.remove();
+          _currentOverlay = null;
+        }
+      });
     });
   }
 }
@@ -33,11 +54,12 @@ class _SnackbarContent extends StatefulWidget {
   final BuildContext context;
   final bool appearFromTop;
 
-  const _SnackbarContent(
-      {required this.message,
-      required this.icon,
-      required this.context,
-      required this.appearFromTop});
+  const _SnackbarContent({
+    required this.message,
+    required this.icon,
+    required this.context,
+    required this.appearFromTop,
+  });
 
   @override
   State<_SnackbarContent> createState() => _SnackbarContentState();
@@ -56,7 +78,7 @@ class _SnackbarContentState extends State<_SnackbarContent>
       duration: const Duration(milliseconds: 300),
     );
     _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
-    _controller.forward(); // Start the animation.
+    _controller.forward(); // Start the animation
   }
 
   @override
@@ -87,7 +109,7 @@ class _SnackbarContentState extends State<_SnackbarContent>
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 5,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
