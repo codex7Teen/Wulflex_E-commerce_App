@@ -98,8 +98,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                       decoration: BoxDecoration(
                         color: isLightTheme(context)
                             ? AppColors.whiteThemeColor
-                            : const Color.fromARGB(
-                                255, 247, 247, 247), 
+                            : const Color.fromARGB(255, 247, 247, 247),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text("Save upto $discountPercentage%",
@@ -132,9 +131,9 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                     isLiked: isFavorite,
                     onTap: (isLiked) async {
                       if (isLiked) {
-                        context
-                            .read<FavoriteBloc>()
-                            .add(RemoveFromFavoritesEvent(product.id!, product.brandName));
+                        context.read<FavoriteBloc>().add(
+                            RemoveFromFavoritesEvent(
+                                product.id!, product.brandName));
                       } else {
                         context
                             .read<FavoriteBloc>()

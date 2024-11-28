@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
 import 'package:wulflex/screens/main_screens/account_screens/profile_screen/profile_screen.dart';
-import 'package:wulflex/screens/main_screens/home_screens/all_categories_screen.dart';
-import 'package:wulflex/screens/main_screens/home_screens/categorized_product_screen.dart';
+import 'package:wulflex/screens/main_screens/home_screens/category_screens/all_categories_screen.dart';
+import 'package:wulflex/screens/main_screens/home_screens/category_screens/categorized_product_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/theme_toggle_widget.dart';
 import 'package:wulflex/screens/main_screens/search_screens/search_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -205,31 +205,34 @@ Widget buildEquipmentsBanner() {
 Widget buildcarouselView(
     CarouselSliderController carouselController,
     int currentSlide,
-    void Function(int, CarouselPageChangedReason) onPageChanged) {
-  return Stack(
-    children: [
-      CarouselSlider(
-          carouselController: carouselController,
-          options: CarouselOptions(
-              height: 185,
-              viewportFraction: 1.0,
-              // autoPlay: true,
-              onPageChanged: onPageChanged,
-              autoPlayInterval: Duration(seconds: 3)),
-          items: [buildSaleBanner(), buildEquipmentsBanner()]),
-      Positioned(
-          left: 170,
-          top: 160,
-          child: SmoothPageIndicator(
-            controller: PageController(initialPage: currentSlide),
-            count: 2,
-            effect: WormEffect(
-                activeDotColor: AppColors.greenThemeColor,
-                dotColor: AppColors.whiteThemeColor,
-                dotHeight: 7,
-                dotWidth: 18),
-          ))
-    ],
+    void Function(int, CarouselPageChangedReason) onPageChanged, VoidCallback onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Stack(
+      children: [
+        CarouselSlider(
+            carouselController: carouselController,
+            options: CarouselOptions(
+                height: 185,
+                viewportFraction: 1.0,
+                // autoPlay: true,
+                onPageChanged: onPageChanged,
+                autoPlayInterval: Duration(seconds: 3)),
+            items: [buildSaleBanner(), buildEquipmentsBanner()]),
+        Positioned(
+            left: 170,
+            top: 160,
+            child: SmoothPageIndicator(
+              controller: PageController(initialPage: currentSlide),
+              count: 2,
+              effect: WormEffect(
+                  activeDotColor: AppColors.greenThemeColor,
+                  dotColor: AppColors.whiteThemeColor,
+                  dotHeight: 7,
+                  dotWidth: 18),
+            ))
+      ],
+    ),
   );
 }
 

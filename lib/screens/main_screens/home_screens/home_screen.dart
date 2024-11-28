@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
+import 'package:wulflex/screens/main_screens/home_screens/sale_screens/sale_screen.dart';
 import 'package:wulflex/screens/main_screens/home_screens/widgets/home_widgets.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
+import 'package:wulflex/widgets/navigation_helper_widget.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
@@ -56,7 +58,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                   child: buildSearchBar(screenWidth, context),
                 ),
                 SizedBox(height: 18),
-                //! CAROUSEL VIEW 
+                //! CAROUSEL VIEW
                 FadeInDown(
                   delay: Duration(milliseconds: 250),
                   child: buildcarouselView(
@@ -64,7 +66,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                       _currentSlide,
                       (index, reason) => setState(() {
                             _currentSlide = index;
-                          })),
+                          }), () => NavigationHelper.navigateToWithoutReplacement(context, ScreenSaleScreen(screenName: 'Sale'))),
                 ),
                 SizedBox(height: 24),
                 //! CATEGORIES TEXT
