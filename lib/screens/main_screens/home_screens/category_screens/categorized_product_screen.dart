@@ -20,6 +20,7 @@ class ScreenCategorizedProduct extends StatefulWidget {
 class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
   List<ProductModel> _filteredProducts = [];
   String _searchQuery = '';
+  String _selectedFilter = 'Featured';
 
   @override
   void initState() {
@@ -28,8 +29,8 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
     context.read<ProductBloc>().add(LoadProducts());
   }
 
-  // filter products
-  void _filterProducts(List<ProductModel> products) {
+  // Filter and sort products
+  void _filterAndSortProducts(List<ProductModel> products) {
     // First filter by category
     List<ProductModel> categoryProducts = products
         .where((product) =>
@@ -51,6 +52,14 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
             product.category.toLowerCase().contains(_searchQuery.toLowerCase());
       }).toList();
     }
+
+    // Apply sorting based on the selected filter
+    if (_selectedFilter == 'Price: Low to High') {
+      _filteredProducts.sort((a, b) => a.offerPrice.compareTo(b.offerPrice));
+    } else if (_selectedFilter == 'Price: High to Low') {
+      _filteredProducts.sort((a, b) => b.offerPrice.compareTo(a.offerPrice));
+    }
+
     setState(() {});
   }
 
@@ -75,7 +84,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                 width: screenWidth * 0.92,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18),
-                  color: Theme.of(context).brightness == Brightness.light
+                  color: isLightTheme
                       ? AppColors.lightGreyThemeColor
                       : AppColors.whiteThemeColor,
                 ),
@@ -91,17 +100,15 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                     Expanded(
                       child: TextField(
                         onChanged: (value) {
-                          // Handle search logic here
                           setState(() {
                             _searchQuery = value;
                           });
-                          // Get current products from bloc state and filter
                           if (context.read<ProductBloc>().state
                               is ProductLoaded) {
                             final products = (context.read<ProductBloc>().state
                                     as ProductLoaded)
                                 .products;
-                            _filterProducts(products);
+                            _filterAndSortProducts(products);
                           }
                         },
                         style: AppTextStyles.searchBarTextStyle,
@@ -116,17 +123,56 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                   ],
                 ),
               ),
-              SizedBox(height: 22),
+              const SizedBox(height: 9),
+              // Filter Dropdown
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Sort by:',
+                    style: AppTextStyles.searchFilterHeading,
+                  ),
+                  DropdownButton<String>(
+                    value: _selectedFilter,
+                    borderRadius: BorderRadius.circular(18),
+                    items: [
+                      'Featured',
+                      'Price: Low to High',
+                      'Price: High to Low',
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value,
+                            style: AppTextStyles.searchFilterHeading),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {
+                          _selectedFilter = value;
+                        });
+                        if (context.read<ProductBloc>().state
+                            is ProductLoaded) {
+                          final products = (context.read<ProductBloc>().state
+                                  as ProductLoaded)
+                              .products;
+                          _filterAndSortProducts(products);
+                        }
+                      }
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
               // Build products
               BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) {
                   if (state is ProductLoading) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state is ProductError) {
                     return Center(child: Text('Error: ${state.message}'));
                   } else if (state is ProductLoaded) {
-                    // Filter products by category first
-                    if (_searchQuery.isEmpty) {
+                    if (_searchQuery.isEmpty && _selectedFilter == 'Featured') {
                       _filteredProducts = state.products
                           .where((product) =>
                               product.category.toLowerCase() ==
@@ -140,14 +186,14 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                               style: AppTextStyles.emptyProductsMessageText(
                                   context)));
                     }
-                    // Show product card
                     return Expanded(
                       child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 18,
-                            mainAxisSpacing: 7.5,
-                            childAspectRatio: 0.63),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 18,
+                                mainAxisSpacing: 7.5,
+                                childAspectRatio: 0.63),
                         itemCount: _filteredProducts.length,
                         itemBuilder: (context, index) {
                           return buildItemCard(

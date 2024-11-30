@@ -408,4 +408,8 @@ class AppTextStyles {
               ? AppColors.blackThemeColor
               : AppColors.whiteThemeColor,
           letterSpacing: 1);
+
+            //! SEARCHFILTER HEADING TEXT STYLE
+  static final TextStyle searchFilterHeading = GoogleFonts.bebasNeue(
+      fontSize: 17.5, color: AppColors.blackThemeColor, letterSpacing: 1);
 }

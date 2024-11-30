@@ -92,19 +92,14 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                         SizedBox(height: 20),
                         buildSizeAndSizeChartText(widget.productModel),
                         Visibility(
-                          visible: widget.productModel.sizes.isNotEmpty,
-                          child: SizedBox(height: 8)),
-                        buildSizeSelectors(
-                            selectedSize,
-                            widget.productModel,
+                            visible: widget.productModel.sizes.isNotEmpty,
+                            child: SizedBox(height: 8)),
+                        buildSizeSelectors(selectedSize, widget.productModel,
                             (size) => updateSelectedSize(size)),
-                        Visibility(
-                          visible: widget.productModel.weights.isNotEmpty,
-                          child: SizedBox(height: 20)),
                         buildiWeightText(widget.productModel),
                         Visibility(
-                          visible: widget.productModel.weights.isNotEmpty,
-                          child: SizedBox(height: 8)),
+                            visible: widget.productModel.weights.isNotEmpty,
+                            child: SizedBox(height: 8)),
                         buildWeightSelectors(
                             selectedWeight,
                             widget.productModel,

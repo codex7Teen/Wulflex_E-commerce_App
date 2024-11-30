@@ -66,7 +66,9 @@ class _ScreenHomeState extends State<ScreenHome> {
                       _currentSlide,
                       (index, reason) => setState(() {
                             _currentSlide = index;
-                          }), () => NavigationHelper.navigateToWithoutReplacement(context, ScreenSaleScreen(screenName: 'Sale'))),
+                          }),
+                      () => NavigationHelper.navigateToWithoutReplacement(
+                          context, ScreenSaleScreen(screenName: 'Sale'))),
                 ),
                 SizedBox(height: 24),
                 //! CATEGORIES TEXT
