@@ -20,13 +20,11 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
     child: Stack(
       children: [
         Container(
-          padding: EdgeInsets.all(10.6),
+          padding: EdgeInsets.all(13),
           margin: EdgeInsets.only(bottom: 10),
           width: MediaQuery.sizeOf(context).width * 0.43,
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.light
-                ? AppColors.lightGreyThemeColor
-                : AppColors.whiteThemeColor,
+            color: AppColors.lightGreyThemeColor,
             borderRadius: BorderRadius.circular(18),
           ),
           child: Column(
@@ -94,12 +92,12 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                     SizedBox(height: 5),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 3),
+                          horizontal: 9, vertical: 3),
                       decoration: BoxDecoration(
                         color: isLightTheme(context)
                             ? AppColors.whiteThemeColor
                             : const Color.fromARGB(255, 247, 247, 247),
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(7.5),
                       ),
                       child: Text("Save upto $discountPercentage%",
                           style: AppTextStyles.itemCardThirdSubTitleText),
@@ -113,7 +111,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
         // Positioned Like Button
         Positioned(
           top: 0,
-          right: 2.5,
+          right: 3.95,
           child: Container(
             padding: EdgeInsets.only(left: 7, right: 5, top: 11, bottom: 11),
             decoration: BoxDecoration(

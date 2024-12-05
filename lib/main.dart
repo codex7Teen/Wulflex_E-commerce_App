@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
+import 'package:wulflex/blocs/cart_bloc/cart_bloc.dart';
+import 'package:wulflex/blocs/category_bloc/category_bloc.dart';
 import 'package:wulflex/blocs/delete_account_bloc/delete_account_bloc.dart';
 import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
@@ -10,6 +12,8 @@ import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
 import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
+import 'package:wulflex/services/cart_services.dart';
+import 'package:wulflex/services/category_services.dart';
 import 'package:wulflex/services/favorite_services.dart';
 import 'package:wulflex/services/product_services.dart';
 import 'package:wulflex/services/user_profile_services.dart';
@@ -44,6 +48,8 @@ class MyApp extends StatelessWidget {
     final userProfile = UserProfileServices();
     final productServices = ProductServices();
     final favoriteServices = FavoriteServices();
+    final categoryServices = CategoryServices();
+    final cartServices = CartServices();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticatonBlocBloc>(
@@ -53,6 +59,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserProfileBloc(userProfile)),
         BlocProvider(create: (context) => ProductBloc(productServices)),
         BlocProvider(create: (context) => FavoriteBloc(favoriteServices)),
+        BlocProvider(create: (context) => CategoryBloc(categoryServices)),
+        BlocProvider(create: (context) => CartBloc(cartServices)),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {

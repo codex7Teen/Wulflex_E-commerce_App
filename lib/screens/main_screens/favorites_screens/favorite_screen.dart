@@ -51,9 +51,9 @@ class ScreenFavorite extends StatelessWidget {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        crossAxisSpacing: 18,
+                        crossAxisSpacing: 15,
                         mainAxisSpacing: 7.5,
-                        childAspectRatio: 0.63),
+                        childAspectRatio: 0.620),
                     itemCount: state.favorites.length,
                     itemBuilder: (context, index) {
                       return buildItemCard(context, state.favorites[index]);

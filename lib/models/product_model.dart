@@ -11,6 +11,8 @@ class ProductModel {
   final double offerPrice;
   final bool isOnSale;
   final bool isFavorite;
+  final String? selectedWeight;
+  final String? selectedSize;
 
   ProductModel(
       {required this.id,
@@ -24,23 +26,26 @@ class ProductModel {
       required this.retailPrice,
       required this.offerPrice,
       required this.isOnSale,
-      this.isFavorite = false});
+      this.isFavorite = false,
+      this.selectedWeight,
+      this.selectedSize});
 
   factory ProductModel.fromMap(Map<String, dynamic> map, {String? documentId}) {
     return ProductModel(
-      id: documentId ?? map['id'] ?? '',
-      brandName: map['brandName'] ?? '',
-      name: map['name'] ?? '',
-      description: map['description'] ?? '',
-      category: map['category'] ?? '',
-      imageUrls: List<String>.from(map['imageUrls'] ?? []),
-      weights: List<String>.from(map['weights'] ?? []),
-      sizes: List<String>.from(map['sizes'] ?? []),
-      retailPrice: (map['retailPrice'] as num?)?.toDouble() ?? 0.0,
-      offerPrice: (map['offerPrice'] as num?)?.toDouble() ?? 0.0,
-      isOnSale: map['isOnSale'] ?? false,
-      isFavorite: map['isFavorite'] ?? false,
-    );
+        id: documentId ?? map['id'] ?? '',
+        brandName: map['brandName'] ?? '',
+        name: map['name'] ?? '',
+        description: map['description'] ?? '',
+        category: map['category'] ?? '',
+        imageUrls: List<String>.from(map['imageUrls'] ?? []),
+        weights: List<String>.from(map['weights'] ?? []),
+        sizes: List<String>.from(map['sizes'] ?? []),
+        retailPrice: (map['retailPrice'] as num?)?.toDouble() ?? 0.0,
+        offerPrice: (map['offerPrice'] as num?)?.toDouble() ?? 0.0,
+        isOnSale: map['isOnSale'] ?? false,
+        isFavorite: map['isFavorite'] ?? false,
+        selectedWeight: map['selectedWeight'],
+        selectedSize: map['selectedSize']);
   }
 
   // Method to convert to map for Firestore
@@ -58,11 +63,17 @@ class ProductModel {
       'offerPrice': offerPrice,
       'isOnSale': isOnSale,
       'isFavorite': isFavorite,
+      'selectedWeight': selectedWeight,
+      'selectedSize': selectedSize
     };
   }
 
   // Add a method to copy the model with updated favorite status
-  ProductModel copyWith({bool? isFavorite}) {
+  ProductModel copyWith({
+    bool? isFavorite,
+    String? selectedWeight,
+    String? selectedSize,
+  }) {
     return ProductModel(
       id: id,
       brandName: brandName,
@@ -76,6 +87,8 @@ class ProductModel {
       offerPrice: offerPrice,
       isOnSale: isOnSale,
       isFavorite: isFavorite ?? this.isFavorite,
+      selectedWeight: selectedWeight ?? this.selectedWeight,
+      selectedSize: selectedSize ?? this.selectedSize,
     );
   }
 

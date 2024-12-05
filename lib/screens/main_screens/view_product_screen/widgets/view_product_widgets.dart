@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/blocs/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
+import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/widgets/custom_weightandsize_selector_container_widget.dart';
 
 PreferredSizeWidget buildAppBarWithIcons(
@@ -348,7 +350,34 @@ Widget buildReammoreAndReadlessButton(
   );
 }
 
-Widget buildAddToCartButton() {
-  return GreenButtonWidget(
-      buttonText: 'Add to cart', borderRadius: 25, width: 1);
+Widget buildAddToCartButton(BuildContext context, ProductModel product,
+    String? selectedWeight, String? selectedSize) {
+  return GestureDetector(
+    onTap: () {
+      if ((product.weights.isNotEmpty && selectedWeight == null) ||
+          (product.sizes.isNotEmpty && selectedSize == null)) {
+        CustomSnackbar.showCustomSnackBar(
+            context,
+            product.weights.isNotEmpty
+                ? 'Please select product weight'
+                : 'Please select product size',
+            icon: Icons.error);
+        return;
+      }
+      // create a new product with selected size or weight
+      final productToCart = product.copyWith(
+          selectedWeight: selectedWeight, selectedSize: selectedSize);
+
+      context.read<CartBloc>().add(AddToCartEvent(product: productToCart));
+    },
+    child: BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        return GreenButtonWidget(
+            buttonText: 'Add to cart',
+            borderRadius: 25,
+            width: 1,
+            isLoading: state is CartLoading);
+      },
+    ),
+  );
 }

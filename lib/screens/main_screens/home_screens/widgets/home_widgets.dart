@@ -205,7 +205,8 @@ Widget buildEquipmentsBanner() {
 Widget buildcarouselView(
     CarouselSliderController carouselController,
     int currentSlide,
-    void Function(int, CarouselPageChangedReason) onPageChanged, VoidCallback onTap) {
+    void Function(int, CarouselPageChangedReason) onPageChanged,
+    VoidCallback onTap) {
   return GestureDetector(
     onTap: onTap,
     child: Stack(
@@ -314,9 +315,9 @@ Widget buildLatestArrivalsSection(BuildContext context) {
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 18,
+            crossAxisSpacing: 15,
             mainAxisSpacing: 7.5,
-            childAspectRatio: 0.63,
+            childAspectRatio: 0.620,
           ),
           itemCount: state.products.length,
           itemBuilder: (context, index) {

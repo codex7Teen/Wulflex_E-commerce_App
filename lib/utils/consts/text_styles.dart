@@ -165,8 +165,17 @@ class AppTextStyles {
   //! ITEM-CARD PRODUCT NAME TEXT (ITEM NAME)
   static final TextStyle itemCardNameText = GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.bold,
-    color: AppColors.darkishGrey,
+    color: AppColors.greyThemeColor,
     fontSize: 12.5,
+    letterSpacing: 0.8,
+  );
+
+  //! ITEM-CARD DELETE CONTAINER TEXT
+  static final TextStyle itemCardDeleteContainerText =
+      GoogleFonts.robotoCondensed(
+    fontWeight: FontWeight.bold,
+    color: AppColors.darkishGrey,
+    fontSize: 14,
     letterSpacing: 0.8,
   );
 
@@ -409,7 +418,54 @@ class AppTextStyles {
               : AppColors.whiteThemeColor,
           letterSpacing: 1);
 
-            //! SEARCHFILTER HEADING TEXT STYLE
+  //! SEARCHFILTER HEADING TEXT STYLE
   static final TextStyle searchFilterHeading = GoogleFonts.bebasNeue(
       fontSize: 17.5, color: AppColors.blackThemeColor, letterSpacing: 1);
+
+  //! ALL CATEGORIES PAGE CATEGORY TEXT STYLE
+  static TextStyle allCategoriesPageCategoryText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 1.2,
+          fontSize: 17);
+
+  //! CART SUBTOTAL AND DISCOUNT
+  static final TextStyle cartSubtotalAndDiscountText =
+      GoogleFonts.robotoCondensed(
+    fontWeight: FontWeight.bold,
+    color: AppColors.greyThemeColor,
+    fontSize: 16,
+    letterSpacing: 1,
+  );
+
+  //! CART SUBTOTAL AND DISCOUNT AMOUNT (PRICE)
+  static final TextStyle cartSubtotalAndDiscountAmountStyle = GoogleFonts.robotoCondensed(
+    fontWeight: FontWeight.w600,
+    color: AppColors.darkishGrey,
+    fontSize: 16,
+    letterSpacing: 0.5,
+  );
+
+  
+  //! CART TOTOAL TEXT
+  static final TextStyle cartTotalText =
+      GoogleFonts.robotoCondensed(
+    fontWeight: FontWeight.bold,
+    color: AppColors.blackThemeColor,
+    fontSize: 16.5,
+    letterSpacing: 1,
+  );
+
+    //! CART TOTOAL AMOUNT TEXT
+  static final TextStyle cartTotalAmountText =
+      GoogleFonts.robotoCondensed(
+    fontWeight: FontWeight.bold,
+    color: AppColors.greenThemeColor,
+    fontSize: 17,
+    letterSpacing: 0.5,
+  );
+
 }

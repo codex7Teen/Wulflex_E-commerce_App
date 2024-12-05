@@ -107,11 +107,8 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                     child: Row(
                       children: [
                         const SizedBox(width: 16),
-                        Image.asset(
-                          'assets/Search.png',
-                          scale: 28,
-                          color: AppColors.darkishGrey,
-                        ),
+                        Image.asset('assets/Search.png',
+                            scale: 28, color: AppColors.darkishGrey),
                         const SizedBox(width: 12),
                         Expanded(
                           child: TextField(

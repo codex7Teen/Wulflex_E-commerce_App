@@ -44,8 +44,9 @@ class _ScreenSplash1State extends State<ScreenSplash1> {
     // Trigger the event to load the saved theme
     context.read<ThemeBloc>().add(LoadSavedTheme());
 
+//TODO CHANGE MILLISECS TO 3000
     // Navigate to intro-screen or Main screen based on argument
-    Future.delayed(Duration(milliseconds: 3000), () {
+    Future.delayed(Duration(milliseconds: 3), () {
       if (mounted) {
         NavigationHelper.navigateToWithReplacement(context, widget.screen,
             milliseconds: 800);

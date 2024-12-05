@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
@@ -193,7 +192,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 18,
                                 mainAxisSpacing: 7.5,
-                                childAspectRatio: 0.63),
+                                childAspectRatio: 0.620),
                         itemCount: _filteredProducts.length,
                         itemBuilder: (context, index) {
                           return buildItemCard(
