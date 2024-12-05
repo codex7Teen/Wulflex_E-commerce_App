@@ -26,7 +26,7 @@ class ScreenCart extends StatelessWidget {
           listener: (context, state) {
             if (state is CartLoaded) {
               CustomSnackbar.showCustomSnackBar(
-                  context, 'Item removed from cart');
+                  appearFromTop: true, context, 'Item removed from cart');
             }
           },
           builder: (context, state) {
@@ -40,28 +40,50 @@ class ScreenCart extends StatelessWidget {
                 );
               }
               final cartItems = state.products;
+
+              // calculate subtotal, discount and total
+              // Calculate subtotal, discount, and total for all products in the cart
+              final subtotal = cartItems.fold(
+                  0.0, (sum, product) => sum + product.retailPrice);
+
+              final discount = cartItems.fold(
+                  0.0,
+                  (sum, product) =>
+                      sum + (product.retailPrice - product.offerPrice));
+
+              final total = cartItems.fold(
+                  0.0, (sum, product) => sum + product.offerPrice);
+
               return Stack(
                 children: [
                   Padding(
                     padding:
                         const EdgeInsets.only(top: 14, left: 18, right: 18),
-                    child: Expanded(
-                      child: ListView.separated(
-                        itemCount: cartItems.length,
-                        itemBuilder: (context, index) {
-                          final product = cartItems[index];
-                          return buildCustomCartCard(context, product);
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: 15);
-                        },
-                      ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.separated(
+                            itemCount: cartItems.length,
+                            itemBuilder: (context, index) {
+                              final product = cartItems[index];
+                              return buildCustomCartCard(context, product);
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox(height: 15);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 222,
+                          width: double.infinity,
+                        ),
+                      ],
                     ),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      height: 205,
+                      height: 207,
                       decoration: BoxDecoration(
                           color: AppColors.lightGreyThemeColor,
                           borderRadius: BorderRadius.only(
@@ -80,7 +102,7 @@ class ScreenCart extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  '₹ 3214.0',
+                                  '₹ ${subtotal.toString()}',
                                   style: AppTextStyles
                                       .cartSubtotalAndDiscountAmountStyle,
                                 )
@@ -96,7 +118,7 @@ class ScreenCart extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Text(
-                                  '₹ -4325.0',
+                                  '₹ –${discount.toString()}',
                                   style: AppTextStyles
                                       .cartSubtotalAndDiscountAmountStyle,
                                 )
@@ -110,17 +132,17 @@ class ScreenCart extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  'Total',
+                                  'Total Amount',
                                   style: AppTextStyles.cartTotalText,
                                 ),
                                 Spacer(),
                                 Text(
-                                  '₹ 5341.0',
+                                  '₹ ${total.toString()}',
                                   style: AppTextStyles.cartTotalAmountText,
                                 )
                               ],
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: 10),
                             GreenButtonWidget(
                               buttonText: 'Checkout Securely',
                               borderRadius: 25,

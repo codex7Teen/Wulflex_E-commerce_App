@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
@@ -19,7 +20,16 @@ class ScreenFavorite extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           centerTitle: true,
-          title: Text('FAVORITES', style: AppTextStyles.appbarTextBig(context)),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset('assets/lottie/favorite_lottie.json',
+                  fit: BoxFit.cover, width: 50),
+              Text('FAVORITES', style: AppTextStyles.appbarTextBig(context)),
+              Lottie.asset('assets/lottie/favorite_lottie.json',
+                  fit: BoxFit.cover, width: 50),
+            ],
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 14, left: 18, right: 18),

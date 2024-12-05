@@ -119,7 +119,7 @@ class AppTextStyles {
 //! MAIN SCREEN HEADINGS
   static TextStyle mainScreenHeadings(BuildContext context) =>
       GoogleFonts.bebasNeue(
-          fontSize: 26,
+          fontSize: 25.5,
           color: Theme.of(context).brightness == Brightness.light
               ? AppColors.blackThemeColor
               : AppColors.whiteThemeColor,
@@ -442,30 +442,32 @@ class AppTextStyles {
   );
 
   //! CART SUBTOTAL AND DISCOUNT AMOUNT (PRICE)
-  static final TextStyle cartSubtotalAndDiscountAmountStyle = GoogleFonts.robotoCondensed(
+  static final TextStyle cartSubtotalAndDiscountAmountStyle =
+      GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.w600,
     color: AppColors.darkishGrey,
     fontSize: 16,
-    letterSpacing: 0.5,
+    letterSpacing: 0.7,
   );
 
-  
   //! CART TOTOAL TEXT
-  static final TextStyle cartTotalText =
-      GoogleFonts.robotoCondensed(
+  static final TextStyle cartTotalText = GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.bold,
     color: AppColors.blackThemeColor,
     fontSize: 16.5,
     letterSpacing: 1,
   );
 
-    //! CART TOTOAL AMOUNT TEXT
-  static final TextStyle cartTotalAmountText =
-      GoogleFonts.robotoCondensed(
+  //! CART TOTOAL AMOUNT TEXT
+  static final TextStyle cartTotalAmountText = GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.bold,
     color: AppColors.greenThemeColor,
     fontSize: 17,
     letterSpacing: 0.5,
   );
 
+  //! BUTTON CARDS TEXT
+  static final TextStyle buttonCardsText = GoogleFonts.robotoCondensed(
+      textStyle: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 17.5, letterSpacing: 0.8, color: AppColors.blackThemeColor));
 }

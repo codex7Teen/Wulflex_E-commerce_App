@@ -55,6 +55,7 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
         listener: (context, state) {
           if (state is CartSuccess) {
             CustomSnackbar.showCustomSnackBar(
+              appearFromTop: true,
                 context, 'Item added to cart... 🎉🎉🎉');
           }
         },

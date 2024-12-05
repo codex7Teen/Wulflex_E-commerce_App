@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
-import 'package:wulflex/blocs/delete_account_bloc/delete_account_bloc.dart';
 import 'package:wulflex/screens/main_screens/main_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 
