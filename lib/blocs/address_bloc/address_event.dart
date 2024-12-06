@@ -43,3 +43,13 @@ class SelectAddressEvent extends AddressEvent {
   @override
   List<Object> get props => [address];
 }
+
+//! DELETE ADDRESS EVENT
+class DeleteAddressEvent extends AddressEvent {
+  final String addressId;
+
+  const DeleteAddressEvent({required this.addressId});
+
+  @override
+  List<Object> get props => [addressId];
+}

@@ -73,7 +73,9 @@ class ScreenAddress extends StatelessWidget {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
                                 border: Border.all(
-                                    color: isSelected ? AppColors.greenThemeColor : AppColors.greyThemeColor,
+                                    color: isSelected
+                                        ? AppColors.greenThemeColor
+                                        : AppColors.greyThemeColor,
                                     width: isSelected ? 2 : 0.5)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,

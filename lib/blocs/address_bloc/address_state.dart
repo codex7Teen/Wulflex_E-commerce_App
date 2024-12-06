@@ -13,6 +13,8 @@ final class AddressLoading extends AddressState {}
 
 final class AddressSuccess extends AddressState {}
 
+final class AddressDeletedSuccess extends AddressState {}
+
 final class AddressFailed extends AddressState {
   final String errorMessage;
 

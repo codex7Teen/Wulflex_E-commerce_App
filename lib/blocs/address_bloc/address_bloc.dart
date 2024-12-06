@@ -57,5 +57,19 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         emit(currentState.copyWith(selectedAddress: event.address));
       }
     });
+
+    //! DELETE ADDRESS BLOC
+    on<DeleteAddressEvent>((event, emit) async {
+      emit(AddressLoading());
+      try {
+        await _addressServices.removeAddress(event.addressId);
+        final updatedAddressList = await _addressServices.fetchAddress();
+        emit(AddressDeletedSuccess());
+        emit(AddressLoaded(address: updatedAddressList));
+      } catch (error) {
+        log('Delete Failed: $error');
+        emit(AddressFailed(errorMessage: "Failed to delte address: $error"));
+      }
+    });
   }
 }

@@ -498,7 +498,7 @@ class AppTextStyles {
   static final TextStyle selectAddressText = GoogleFonts.robotoCondensed(
       fontWeight: FontWeight.bold,
       color: AppColors.blackThemeColor,
-      fontSize: 15,
+      fontSize: 14,
       letterSpacing: 1);
 
   //! ADDRESS LIST ADDRESS NAME TEXT

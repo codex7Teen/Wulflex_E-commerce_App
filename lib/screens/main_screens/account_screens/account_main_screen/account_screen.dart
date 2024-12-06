@@ -5,6 +5,7 @@ import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/screens/aunthentication_screens/login_screen/login_screen.dart';
 import 'package:wulflex/screens/main_screens/account_screens/account_main_screen/main_screen_widgets.dart';
+import 'package:wulflex/screens/main_screens/account_screens/address_screen/address_manage_screen.dart';
 import 'package:wulflex/screens/main_screens/account_screens/delete%20_account_screen/delete_account_screen.dart';
 import 'package:wulflex/screens/main_screens/account_screens/profile_screen/profile_screen.dart';
 import 'package:wulflex/screens/main_screens/account_screens/settings_screen/settings_screen.dart';
@@ -156,6 +157,7 @@ class ScreenAccount extends StatelessWidget {
                           name: "MY PROFILE"),
                       SizedBox(height: 14),
                       buildButtonCards(
+                        onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenManageAddress()),
                           icon: Icons.my_library_books, name: "ADDRESS BOOK"),
                       SizedBox(height: 14),
                       buildButtonCards(
