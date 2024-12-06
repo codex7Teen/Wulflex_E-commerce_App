@@ -335,7 +335,7 @@ class AppTextStyles {
       fontWeight: FontWeight.bold,
       color: AppColors.blackThemeColor,
       fontSize: 18,
-      letterSpacing: 1);
+      letterSpacing: 0.5);
 
   //! EDIT SCREEN SUB HEADINGS
   static TextStyle editScreenSubHeadings(BuildContext context) =>
@@ -354,6 +354,24 @@ class AppTextStyles {
               color: AppColors.blackThemeColor,
               fontWeight: FontWeight.bold,
               fontSize: 20));
+
+  //! ADDRESS SCREEN TEXT FIELD STYLES
+  static TextStyle addressScreenTextfieldStyles(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              color: AppColors.blackThemeColor,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.4,
+              fontSize: 17.5));
+
+  //! ADDRESS SCREEN TEXT FIELD HINT STYLES
+  static TextStyle addressScreenTextfieldHintStyles(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              color: AppColors.greyThemeColor,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.4,
+              fontSize: 17.5));
 
   //! EDIT SCREEN HINT TEXT STYLE
   static TextStyle editScreenHinttextStyles(BuildContext context) =>
@@ -469,5 +487,15 @@ class AppTextStyles {
   //! BUTTON CARDS TEXT
   static final TextStyle buttonCardsText = GoogleFonts.robotoCondensed(
       textStyle: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 17.5, letterSpacing: 0.8, color: AppColors.blackThemeColor));
+          fontWeight: FontWeight.bold,
+          fontSize: 17.5,
+          letterSpacing: 0.8,
+          color: AppColors.blackThemeColor));
+
+  //! ADDRESS SELECT BUTTON TEXT IN ORDER SUMMARY
+  static final TextStyle selectAddressText = GoogleFonts.robotoCondensed(
+      fontWeight: FontWeight.bold,
+      color: AppColors.blackThemeColor,
+      fontSize: 15,
+      letterSpacing: 1);
 }

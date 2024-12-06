@@ -39,7 +39,6 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
     _nameController.text = widget.name;
     _phoneNumberController.text = widget.phoneNumber;
     _dateofbirthController.text = widget.dob;
-    
   }
 
   @override
@@ -53,7 +52,8 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
         listener: (context, state) {
           if (state is UserProfileLoaded) {
             CustomSnackbar.showCustomSnackBar(
-                context, 'Profile updated success... 🎉🎉🎉', appearFromTop: true);
+                context, 'Profile updated success... 🎉🎉🎉',
+                appearFromTop: true);
             Navigator.pop(context);
           } else if (state is UserProfileError) {
             CustomSnackbar.showCustomSnackBar(

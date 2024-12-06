@@ -32,7 +32,7 @@ class CustomGreyContainerWidget extends StatelessWidget {
               Column(
                 children: [
                   Icon(icon,
-                      color: AppColors.blackThemeColor, size: 21),
+                      color: AppColors.blackThemeColor, size: 22),
                   SizedBox(height: 2)
                 ],
               )
