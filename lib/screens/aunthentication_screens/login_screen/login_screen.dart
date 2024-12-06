@@ -58,8 +58,12 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     CustomSnackbar.showCustomSnackBar(
                         context, "Login success... 🎉🎉🎉");
                     // Navigate to Home
-                    NavigationHelper.navigateToWithReplacement(
-                        context, MainScreen());
+                    Future.delayed(Duration(seconds: 1), () {
+                      if (context.mounted) {
+                        NavigationHelper.navigateToWithReplacement(
+                            context, MainScreen());
+                      }
+                    });
                   } else if (state is LoginFailture) {
                     // show failed snacbar
                     CustomSnackbar.showCustomSnackBar(context, state.error,
