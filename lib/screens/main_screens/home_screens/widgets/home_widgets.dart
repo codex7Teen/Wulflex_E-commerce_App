@@ -317,7 +317,7 @@ Widget buildLatestArrivalsSection(BuildContext context) {
             crossAxisCount: 2,
             crossAxisSpacing: 15,
             mainAxisSpacing: 7.5,
-            childAspectRatio: 0.620,
+            childAspectRatio: 0.604,
           ),
           itemCount: state.products.length,
           itemBuilder: (context, index) {

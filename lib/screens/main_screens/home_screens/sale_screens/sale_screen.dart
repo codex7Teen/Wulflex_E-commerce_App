@@ -64,7 +64,7 @@ class _ScreenSaleScreenState extends State<ScreenSaleScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: 18,
                             mainAxisSpacing: 7.5,
-                            childAspectRatio: 0.63),
+                            childAspectRatio: 0.604),
                         itemCount: _filteredProducts.length,
                         itemBuilder: (context, index) {
                           return buildItemCard(

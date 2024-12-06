@@ -63,7 +63,7 @@ class ScreenFavorite extends StatelessWidget {
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 7.5,
-                        childAspectRatio: 0.620),
+                        childAspectRatio: 0.604),
                     itemCount: state.favorites.length,
                     itemBuilder: (context, index) {
                       return buildItemCard(context, state.favorites[index]);
