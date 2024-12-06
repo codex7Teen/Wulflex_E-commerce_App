@@ -7,6 +7,7 @@ import 'package:wulflex/screens/aunthentication_screens/login_screen/login_scree
 import 'package:wulflex/screens/main_screens/account_screens/account_main_screen/main_screen_widgets.dart';
 import 'package:wulflex/screens/main_screens/account_screens/delete%20_account_screen/delete_account_screen.dart';
 import 'package:wulflex/screens/main_screens/account_screens/profile_screen/profile_screen.dart';
+import 'package:wulflex/screens/main_screens/account_screens/settings_screen/settings_screen.dart';
 import 'package:wulflex/screens/main_screens/account_screens/sign_out_screens/signout_alert_widget.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
@@ -41,7 +42,7 @@ class ScreenAccount extends StatelessWidget {
         listener: (context, state) {
           if (state is LogOutSuccess) {
             CustomSnackbar.showCustomSnackBar(
-                context, "Sign-out success...  🎉🎉🎉");
+                context, "Sign-out success... 🎉🎉🎉");
             Future.delayed(
               Duration(milliseconds: 500),
               () {
@@ -157,7 +158,13 @@ class ScreenAccount extends StatelessWidget {
                       buildButtonCards(
                           icon: Icons.my_library_books, name: "ADDRESS BOOK"),
                       SizedBox(height: 14),
-                      buildButtonCards(icon: Icons.settings, name: "SETTINGS"),
+                      buildButtonCards(
+                          onTap: () {
+                            NavigationHelper.navigateToWithoutReplacement(
+                                context, ScreenSettings());
+                          },
+                          icon: Icons.settings,
+                          name: "SETTINGS"),
                       SizedBox(height: 28),
                       Text(
                         textAlign: TextAlign.start,
