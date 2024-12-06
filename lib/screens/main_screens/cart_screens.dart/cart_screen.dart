@@ -69,7 +69,7 @@ class ScreenCart extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final product = cartItems[index];
                               return buildCustomCartCard(context, product);
-                            },
+                            },  
                             separatorBuilder: (context, index) {
                               return SizedBox(height: 15);
                             },

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/address_bloc/address_bloc.dart';
 import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/blocs/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/blocs/category_bloc/category_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
 import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
 import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
+import 'package:wulflex/services/address_services.dart';
 import 'package:wulflex/services/authentication/login_authorization.dart';
 import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
 import 'package:wulflex/services/cart_services.dart';
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
     final favoriteServices = FavoriteServices();
     final categoryServices = CategoryServices();
     final cartServices = CartServices();
+    final addressServices = AddressServices();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticatonBlocBloc>(
@@ -61,6 +64,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => FavoriteBloc(favoriteServices)),
         BlocProvider(create: (context) => CategoryBloc(categoryServices)),
         BlocProvider(create: (context) => CartBloc(cartServices)),
+        BlocProvider(create: (context) => AddressBloc(addressServices)),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {

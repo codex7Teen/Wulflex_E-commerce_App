@@ -21,7 +21,7 @@ class CartServices {
           .doc(product.id)
           .set(product.toMap());
     } catch (error) {
-      log('Error fetching cart items: $error');
+      log('Error adding cart items: $error');
     }
   }
 

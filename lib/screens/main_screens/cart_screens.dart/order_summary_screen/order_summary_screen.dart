@@ -16,6 +16,7 @@ class ScreenOrderSummary extends StatelessWidget {
     // Trigger FetchUserProfileEvent when the screen is built
     context.read<UserProfileBloc>().add(FetchUserProfileEvent());
     return Scaffold(
+      backgroundColor: isLightTheme(context) ? AppColors.whiteThemeColor : AppColors.blackThemeColor,
       appBar: customAppbarWithBackbutton(context, 'ORDER SUMMARY', 0.06),
       body: BlocBuilder<UserProfileBloc, UserProfileState>(
         builder: (context, state) {
@@ -65,7 +66,7 @@ class ScreenOrderSummary extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 18),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
                     width: double.infinity,

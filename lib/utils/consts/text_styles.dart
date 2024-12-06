@@ -359,7 +359,9 @@ class AppTextStyles {
   static TextStyle addressScreenTextfieldStyles(BuildContext context) =>
       GoogleFonts.robotoCondensed(
           textStyle: TextStyle(
-              color: AppColors.blackThemeColor,
+              color: isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.4,
               fontSize: 17.5));
@@ -498,4 +500,14 @@ class AppTextStyles {
       color: AppColors.blackThemeColor,
       fontSize: 15,
       letterSpacing: 1);
+
+  //! ADDRESS LIST ADDRESS NAME TEXT
+  static final TextStyle addressNameText = GoogleFonts.robotoCondensed(
+      textStyle: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 19, letterSpacing: 0.35));
+
+  //! ADDRESS LIST ALL LIST ITEMS TEXT
+  static final TextStyle addressListItemsText = GoogleFonts.robotoCondensed(
+      textStyle: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 15, letterSpacing: 0.3));
 }
