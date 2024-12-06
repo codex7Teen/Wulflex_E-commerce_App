@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 
-PreferredSizeWidget customAppbarWithBackbutton(BuildContext context, String appbarTitle, [double spacingWidth = 0.178]) {
+PreferredSizeWidget customAppbarWithBackbutton(
+    BuildContext context, String appbarTitle,
+    [double spacingWidth = 0.178]) {
   final isLightTheme = Theme.of(context).brightness == Brightness.light;
   return AppBar(
     backgroundColor: Colors.transparent,
@@ -17,18 +19,25 @@ PreferredSizeWidget customAppbarWithBackbutton(BuildContext context, String appb
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: Container(
-                  height: 52,
-                  width: 52,
+                  height: 50,
+                  width: 50,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isLightTheme ? AppColors.lightGreyThemeColor : AppColors.whiteThemeColor),
+                      color: isLightTheme
+                          ? AppColors.lightGreyThemeColor
+                          : AppColors.whiteThemeColor),
                   child: Icon(Icons.arrow_back_ios_new_rounded,
-                      color: AppColors.blackThemeColor),
+                      size: 24, color: AppColors.blackThemeColor),
                 ),
               ),
             ),
             SizedBox(width: MediaQuery.sizeOf(context).width * spacingWidth),
-            Text(appbarTitle, style: AppTextStyles.appbarTextBig(context)),
+            Column(
+              children: [
+                SizedBox(height: 6.5),
+                Text(appbarTitle, style: AppTextStyles.appbarTextBig(context)),
+              ],
+            ),
           ],
         ),
       ),

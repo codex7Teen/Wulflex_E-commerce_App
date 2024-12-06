@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/cart_bloc/cart_bloc.dart';
+import 'package:wulflex/screens/main_screens/cart_screens.dart/order_summary_screen/order_summary_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_cart_card_widget.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/widgets/custom_snacbar_widget.dart';
+import 'package:wulflex/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
 class ScreenCart extends StatelessWidget {
@@ -143,10 +145,16 @@ class ScreenCart extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 10),
-                            GreenButtonWidget(
-                              buttonText: 'Checkout Securely',
-                              borderRadius: 25,
-                              width: 1,
+                            GestureDetector(
+                              onTap: () {
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context, ScreenOrderSummary());
+                              },
+                              child: GreenButtonWidget(
+                                buttonText: 'Checkout Securely',
+                                borderRadius: 25,
+                                width: 1,
+                              ),
                             )
                           ],
                         ),
