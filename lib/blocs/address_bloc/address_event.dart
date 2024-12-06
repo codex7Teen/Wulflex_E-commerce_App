@@ -33,3 +33,13 @@ class AddAddressEvent extends AddressEvent {
 
 //! FETCH ADDRESS EVENT
 class FetchAddressEvent extends AddressEvent {}
+
+//! SELECT ADDRESS EVENT
+class SelectAddressEvent extends AddressEvent {
+  final AddressModel address;
+
+  const SelectAddressEvent({required this.address});
+
+  @override
+  List<Object> get props => [address];
+}

@@ -56,4 +56,42 @@ class AddressServices {
       log('Failed to delete address: $error');
     }
   }
+
+  //! SAVE SELECTED ADDRESS
+  Future<void> saveSelectedAddress(AddressModel address) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(_userId)
+          .update({'selectedAddressId': address.id});
+    } catch (error) {
+      log('SERVICES: Error saving selected address: $error');
+    }
+  }
+
+  //! GET SELECTED ADDRESS
+  Future<AddressModel?> getSelectedAddress() async {
+    try {
+      final userDoc = await _firestore.collection('users').doc(_userId).get();
+
+      final selectedAddressId = userDoc.data()?['selectedAddressId'];
+
+      if (selectedAddressId != null) {
+        final addressDoc = await _firestore
+            .collection('users')
+            .doc(_userId)
+            .collection('address')
+            .doc(selectedAddressId)
+            .get();
+
+        return AddressModel.fromMap(addressDoc.data() ?? {},
+            documentId: addressDoc.id);
+      }
+
+      return null;
+    } catch (error) {
+      log('SERVICES: Error getting selected address: $error');
+      return null;
+    }
+  }
 }

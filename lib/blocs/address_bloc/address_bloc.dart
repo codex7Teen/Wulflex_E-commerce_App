@@ -39,11 +39,22 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       emit(AddressLoading());
       try {
         final address = await _addressServices.fetchAddress();
-        emit(AddressLoaded(address: address));
+        final selectedAddress = await _addressServices.getSelectedAddress();
+        emit(AddressLoaded(address: address, selectedAddress: selectedAddress));
         log('Address fetched successfully');
       } catch (error) {
         emit(AddressFailed(errorMessage: error.toString()));
         log('Failed to fetch address: $error');
+      }
+    });
+
+    //! SELECT ADDRESS BLOC
+    on<SelectAddressEvent>((event, emit) async {
+      final currentState = state;
+      if (currentState is AddressLoaded) {
+        // Save selected address to firestore
+        await _addressServices.saveSelectedAddress(event.address);
+        emit(currentState.copyWith(selectedAddress: event.address));
       }
     });
   }

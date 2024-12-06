@@ -6,6 +6,7 @@ import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
 import 'package:wulflex/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/widgets/custom_green_button_widget.dart';
+import 'package:wulflex/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
@@ -57,71 +58,89 @@ class ScreenAddress extends StatelessWidget {
                       },
                       itemBuilder: (context, index) {
                         final address = addressList[index];
-                        return Container(
-                          padding: EdgeInsets.all(18),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              border: Border.all(
-                                  color: AppColors.greyThemeColor, width: 0.5)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(alignment: Alignment.center, children: [
-                                Container(
-                                  height: 24,
-                                  width: 24,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                          color: AppColors.greyThemeColor,
-                                          width: 2)),
-                                ),
-                                Container(
-                                  height: 14,
-                                  width: 14,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColors.greenThemeColor),
-                                ),
-                              ]),
-                              SizedBox(width: 12),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    address.name,
-                                    style: AppTextStyles.addressNameText,
+                        // Check if this address is the selected one
+                        final isSelected = state.selectedAddress != null &&
+                            state.selectedAddress!.id == address.id;
+                        return GestureDetector(
+                          onTap: () {
+                            // Select the address
+                            context
+                                .read<AddressBloc>()
+                                .add(SelectAddressEvent(address: address));
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(18),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                    color: isSelected ? AppColors.greenThemeColor : AppColors.greyThemeColor,
+                                    width: isSelected ? 2 : 0.5)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(alignment: Alignment.center, children: [
+                                  Container(
+                                    height: 24,
+                                    width: 24,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                            color: isSelected
+                                                ? AppColors.greenThemeColor
+                                                : AppColors.greyThemeColor,
+                                            width: 2)),
                                   ),
-                                  SizedBox(height: 10),
-                                  Text(address.houseName,
-                                      style:
-                                          AppTextStyles.addressListItemsText),
-                                  Text(
-                                      "${address.areaName}, ${address.cityName}",
-                                      style:
-                                          AppTextStyles.addressListItemsText),
-                                  Text(
-                                      "${address.stateName}, ${address.pincode}",
-                                      style:
-                                          AppTextStyles.addressListItemsText),
-                                  SizedBox(height: 10),
-                                  Text(address.phoneNumber,
-                                      style:
-                                          AppTextStyles.addressListItemsText),
-                                ],
-                              ),
-                              Spacer(),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 13, vertical: 4),
-                                decoration: BoxDecoration(
-                                    color: AppColors.greenThemeColor,
-                                    borderRadius: BorderRadius.circular(18)),
-                                child: Text('EDIT',
-                                    style: AppTextStyles.selectAddressText),
-                              ),
-                            ],
+                                  Visibility(
+                                    visible: isSelected,
+                                    child: Container(
+                                      height: 14,
+                                      width: 14,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: AppColors.greenThemeColor),
+                                    ),
+                                  ),
+                                ]),
+                                SizedBox(width: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      address.name,
+                                      style: AppTextStyles.addressNameText,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(address.houseName,
+                                        style:
+                                            AppTextStyles.addressListItemsText),
+                                    Text(
+                                        "${address.areaName}, ${address.cityName}",
+                                        style:
+                                            AppTextStyles.addressListItemsText),
+                                    Text(
+                                        "${address.stateName}, ${address.pincode}",
+                                        style:
+                                            AppTextStyles.addressListItemsText),
+                                    SizedBox(height: 10),
+                                    Text(address.phoneNumber,
+                                        style:
+                                            AppTextStyles.addressListItemsText),
+                                  ],
+                                ),
+                                Spacer(),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 13, vertical: 4),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.greenThemeColor,
+                                      borderRadius: BorderRadius.circular(18)),
+                                  child: Text('EDIT',
+                                      style: AppTextStyles.selectAddressText),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -130,7 +149,40 @@ class ScreenAddress extends StatelessWidget {
                 }
                 return Center(child: Text('Something went wrong'));
               },
-            )
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 16),
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       // Select address button
+            //       final state = context.read<AddressBloc>().state;
+            //       if (state is AddressLoaded && state.selectedAddress != null) {
+            //         CustomSnackbar.showCustomSnackBar(
+            //             context, "Address selected success... 🎉🎉🎉",
+            //             appearFromTop: true);
+            //         Future.delayed(
+            //           Duration(milliseconds: 500),
+            //           () {
+            //             if (context.mounted) {
+            //               Navigator.pop(context);
+            //             }
+            //           },
+            //         );
+            //       } else {
+            //         CustomSnackbar.showCustomSnackBar(
+            //             context, "Please select an address",
+            //             icon: Icons.error, appearFromTop: true);
+            //       }
+            //     },
+            //     child: GreenButtonWidget(
+            //       buttonText: 'Select Address',
+            //       borderRadius: 25,
+            //       width: 1,
+            //       addIcon: true,
+            //       icon: Icons.check_circle_outline_rounded,
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/blocs/address_bloc/address_bloc.dart';
 import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/screens/main_screens/cart_screens.dart/address_screens/address_screen.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
@@ -13,10 +14,13 @@ class ScreenOrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Trigger FetchUserProfileEvent when the screen is built
+    // Trigger FetchUserProfileEvent and fetch address event when the screen is built
     context.read<UserProfileBloc>().add(FetchUserProfileEvent());
+    context.read<AddressBloc>().add(FetchAddressEvent());
     return Scaffold(
-      backgroundColor: isLightTheme(context) ? AppColors.whiteThemeColor : AppColors.blackThemeColor,
+      backgroundColor: isLightTheme(context)
+          ? AppColors.whiteThemeColor
+          : AppColors.blackThemeColor,
       appBar: customAppbarWithBackbutton(context, 'ORDER SUMMARY', 0.06),
       body: BlocBuilder<UserProfileBloc, UserProfileState>(
         builder: (context, state) {
@@ -95,20 +99,130 @@ class ScreenOrderSummary extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 4),
-                        GestureDetector(
-                          onTap: () {
-                            NavigationHelper.navigateToWithoutReplacement(
-                                context, ScreenAddress());
+                        BlocBuilder<AddressBloc, AddressState>(
+                          builder: (context, state) {
+                            if (state is AddressLoading) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (state is AddressLoaded) {
+                              final selectedAddress = state.selectedAddress;
+                              if (selectedAddress != null) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        NavigationHelper
+                                            .navigateToWithoutReplacement(
+                                                context, ScreenAddress());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 13, vertical: 4),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.greenThemeColor,
+                                            borderRadius:
+                                                BorderRadius.circular(18)),
+                                        child: Text('SELECT',
+                                            style: AppTextStyles
+                                                .selectAddressText),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.2),
+                                    Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            height: 18,
+                                            width: 18,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                border: Border.all(
+                                                    color: AppColors
+                                                        .greenThemeColor,
+                                                    width: 2)),
+                                          ),
+                                          Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                color:
+                                                    AppColors.greenThemeColor),
+                                          ),
+                                        ]),
+                                    SizedBox(width: 5),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            selectedAddress.name,
+                                            style: AppTextStyles
+                                                .addressListItemsText,
+                                          ),
+                                          Text(
+                                            overflow: TextOverflow.ellipsis,
+                                            "${selectedAddress.houseName}, ${selectedAddress.areaName}",
+                                            style: AppTextStyles
+                                                .addressListItemsText,
+                                          ),
+                                          Text(
+                                            overflow: TextOverflow.ellipsis,
+                                            "${selectedAddress.cityName}, ${selectedAddress.stateName}",
+                                            style: AppTextStyles
+                                                .addressListItemsText,
+                                          ),
+                                          Text(
+                                            overflow: TextOverflow.ellipsis,
+                                            selectedAddress.pincode,
+                                            style: AppTextStyles
+                                                .addressListItemsText,
+                                          ),
+                                          Text(
+                                            overflow: TextOverflow.ellipsis,
+                                            "Phone: ${selectedAddress.phoneNumber}",
+                                            style: AppTextStyles
+                                                .addressListItemsText,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                );
+                              } else {
+                                return GestureDetector(
+                                  onTap: () {
+                                    NavigationHelper
+                                        .navigateToWithoutReplacement(
+                                            context, ScreenAddress());
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 13, vertical: 4),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.greenThemeColor,
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
+                                    child: Text('SELECT',
+                                        style: AppTextStyles.selectAddressText),
+                                  ),
+                                );
+                              }
+                            }
+                            return Center(
+                              child: Text('something went wrong'),
+                            );
                           },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 13, vertical: 4),
-                            decoration: BoxDecoration(
-                                color: AppColors.greenThemeColor,
-                                borderRadius: BorderRadius.circular(18)),
-                            child: Text('SELECT',
-                                style: AppTextStyles.selectAddressText),
-                          ),
                         )
                       ],
                     ),
