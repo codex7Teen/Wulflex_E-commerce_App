@@ -79,6 +79,9 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
                   context, 'Address added successfully... 🎉🎉🎉');
               // clears all the fields
               _clearAllFields();
+              // Load the address
+              context.read<AddressBloc>().add(FetchAddressEvent());
+              Navigator.of(context).pop();
             }
           },
           child: Padding(

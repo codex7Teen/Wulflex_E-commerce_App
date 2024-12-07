@@ -26,7 +26,7 @@ class CustomGreyContainerWidget extends StatelessWidget {
             children: [
               Text(
                 titleText,
-                style: AppTextStyles.screenSubHeadings(context),
+                style: AppTextStyles.screenSubHeadings(context, fixedBlackColor: true),
               ),
               SizedBox(width: 6),
               Column(

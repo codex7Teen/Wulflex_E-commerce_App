@@ -69,14 +69,14 @@ class ScreenCart extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final product = cartItems[index];
                               return buildCustomCartCard(context, product);
-                            },  
+                            },
                             separatorBuilder: (context, index) {
                               return SizedBox(height: 15);
                             },
                           ),
                         ),
                         SizedBox(
-                          height: 222,
+                          height: 245,
                           width: double.infinity,
                         ),
                       ],
@@ -85,16 +85,38 @@ class ScreenCart extends StatelessWidget {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      height: 207,
+                      height: 239,
                       decoration: BoxDecoration(
                           color: AppColors.lightGreyThemeColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(25),
                               topRight: Radius.circular(25))),
                       child: Padding(
-                        padding: const EdgeInsets.all(18),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 18),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'PRICE DETAILS',
+                                  style: AppTextStyles.screenSubHeadings(
+                                      context,
+                                      fixedBlackColor: true),
+                                ),
+                                SizedBox(width: 6),
+                                Column(
+                                  children: [
+                                    Icon(Icons.wallet,
+                                        color: AppColors.blackThemeColor,
+                                        size: 22),
+                                    SizedBox(height: 2.5)
+                                  ],
+                                )
+                              ],
+                            ),
+                            SizedBox(height: 5),
                             Row(
                               children: [
                                 Text(
@@ -128,8 +150,8 @@ class ScreenCart extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Divider(
-                                color: AppColors.greyThemeColor,
-                                thickness: 0.5),
+                                color: AppColors.hardLightGeryThemeColor,
+                                thickness: 0.3),
                             SizedBox(height: 5),
                             Row(
                               children: [
@@ -151,6 +173,8 @@ class ScreenCart extends StatelessWidget {
                                     context, ScreenOrderSummary());
                               },
                               child: GreenButtonWidget(
+                                addIcon: true,
+                                icon: Icons.shopping_cart_checkout_rounded,
                                 buttonText: 'Checkout Securely',
                                 borderRadius: 25,
                                 width: 1,

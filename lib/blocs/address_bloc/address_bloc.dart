@@ -24,8 +24,13 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
             cityName: event.cityName,
             houseName: event.houseName,
             areaName: event.areaName);
-
+        // add address
         await _addressServices.addAddress(newAddress);
+
+        // Fetch address immediately after adding
+        final address = await _addressServices.fetchAddress();
+        final selectedAddress = await _addressServices.getSelectedAddress();
+        emit(AddressLoaded(address: address, selectedAddress: selectedAddress));
         emit(AddressSuccess());
         log('NEW ADDRESS ADDED');
       } catch (error) {

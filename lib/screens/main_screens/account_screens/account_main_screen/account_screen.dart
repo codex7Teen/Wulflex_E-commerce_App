@@ -135,10 +135,11 @@ class ScreenAccount extends StatelessWidget {
                                 ),
                         ),
                       ),
-                      Center(
-                        child: Text('${getGreeting()}, ${user.name}',
-                            style: AppTextStyles.heyUserWelcomeText(context)),
-                      ),
+                      Text('${getGreeting()}, ${user.name}',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: AppTextStyles.heyUserWelcomeText(context)),
                       SizedBox(height: 28),
                       Text(
                         textAlign: TextAlign.start,
@@ -157,8 +158,11 @@ class ScreenAccount extends StatelessWidget {
                           name: "MY PROFILE"),
                       SizedBox(height: 14),
                       buildButtonCards(
-                        onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenManageAddress()),
-                          icon: Icons.my_library_books, name: "ADDRESS BOOK"),
+                          onTap: () =>
+                              NavigationHelper.navigateToWithoutReplacement(
+                                  context, ScreenManageAddress()),
+                          icon: Icons.my_library_books,
+                          name: "ADDRESS BOOK"),
                       SizedBox(height: 14),
                       buildButtonCards(
                           onTap: () {

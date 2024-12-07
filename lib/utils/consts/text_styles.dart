@@ -245,9 +245,15 @@ class AppTextStyles {
           fontWeight: FontWeight.bold);
 
   //! VIEW PRODUCT HEADING TEXT
-  static final TextStyle viewProductTitleText = GoogleFonts.bebasNeue(
-      textStyle: TextStyle(
-          fontSize: 23, fontWeight: FontWeight.bold, letterSpacing: 1));
+  static TextStyle viewProductTitleText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          textStyle: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1,
+              color: isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor));
 
   //! SIZE CHART TEXT
   static final TextStyle sizeChartText = GoogleFonts.robotoCondensed(
@@ -320,13 +326,15 @@ class AppTextStyles {
           fontWeight: FontWeight.w600);
 
   //! SCREEN SUB HEADINGS
-  static TextStyle screenSubHeadings(
-          BuildContext context) =>
+  static TextStyle screenSubHeadings(BuildContext context,
+          {bool? fixedBlackColor = false}) =>
       GoogleFonts.bebasNeue(
           fontSize: 22,
-          color: Theme.of(context).brightness == Brightness.light
+          color: fixedBlackColor!
               ? AppColors.blackThemeColor
-              : AppColors.blackThemeColor,
+              : isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor,
           letterSpacing: 1,
           fontWeight: FontWeight.w600);
 
@@ -456,7 +464,7 @@ class AppTextStyles {
   static final TextStyle cartSubtotalAndDiscountText =
       GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.bold,
-    color: AppColors.greyThemeColor,
+    color: AppColors.hardLightGeryThemeColor,
     fontSize: 16,
     letterSpacing: 1,
   );
@@ -465,7 +473,7 @@ class AppTextStyles {
   static final TextStyle cartSubtotalAndDiscountAmountStyle =
       GoogleFonts.robotoCondensed(
     fontWeight: FontWeight.w600,
-    color: AppColors.darkishGrey,
+    color: AppColors.greyThemeColor,
     fontSize: 16,
     letterSpacing: 0.7,
   );
@@ -502,12 +510,27 @@ class AppTextStyles {
       letterSpacing: 1);
 
   //! ADDRESS LIST ADDRESS NAME TEXT
-  static final TextStyle addressNameText = GoogleFonts.robotoCondensed(
-      textStyle: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 19, letterSpacing: 0.35));
+  static TextStyle addressNameText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 19,
+              letterSpacing: 0.35,
+              color: isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor));
 
   //! ADDRESS LIST ALL LIST ITEMS TEXT
-  static final TextStyle addressListItemsText = GoogleFonts.robotoCondensed(
-      textStyle: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 15, letterSpacing: 0.3));
+  static TextStyle addressListItemsText(BuildContext context,
+          {bool? fixedBlackColor = false}) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              letterSpacing: 0.3,
+              color: fixedBlackColor!
+                  ? AppColors.blackThemeColor
+                  : isLightTheme(context)
+                      ? AppColors.blackThemeColor
+                      : AppColors.whiteThemeColor));
 }

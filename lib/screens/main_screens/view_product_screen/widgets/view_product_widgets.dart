@@ -212,14 +212,15 @@ Widget buildRatingsContainer() {
   );
 }
 
-Widget buildSizeAndSizeChartText(ProductModel productModel) {
+Widget buildSizeAndSizeChartText(
+    ProductModel productModel, BuildContext context) {
   return Visibility(
     visible: productModel.sizes.isNotEmpty,
     child: Row(
       children: [
         Text(
           'SIZE',
-          style: AppTextStyles.viewProductTitleText,
+          style: AppTextStyles.viewProductTitleText(context),
         ),
         Spacer(),
         Icon(
@@ -255,12 +256,12 @@ Widget buildSizeSelectors(String? selectedSize, ProductModel product,
   );
 }
 
-Widget buildiWeightText(ProductModel productModel) {
+Widget buildiWeightText(ProductModel productModel, BuildContext context) {
   return Visibility(
     visible: productModel.weights.isNotEmpty,
     child: Text(
       'WEIGHT',
-      style: AppTextStyles.viewProductTitleText,
+      style: AppTextStyles.viewProductTitleText(context),
     ),
   );
 }
@@ -325,8 +326,9 @@ Widget buildPriceDetailsContainer(BuildContext context, ProductModel product) {
   );
 }
 
-Widget buildDescriptionTitle() {
-  return Text("DESCRIPTION", style: AppTextStyles.viewProductTitleText);
+Widget buildDescriptionTitle(BuildContext context) {
+  return Text("DESCRIPTION",
+      style: AppTextStyles.viewProductTitleText(context));
 }
 
 Widget buildDescription(
@@ -352,32 +354,34 @@ Widget buildReammoreAndReadlessButton(
 
 Widget buildAddToCartButton(BuildContext context, ProductModel product,
     String? selectedWeight, String? selectedSize) {
-  return GestureDetector(
-    onTap: () {
-      if ((product.weights.isNotEmpty && selectedWeight == null) ||
-          (product.sizes.isNotEmpty && selectedSize == null)) {
-        CustomSnackbar.showCustomSnackBar(
-            context,
-            product.weights.isNotEmpty
-                ? 'Please select product weight'
-                : 'Please select product size',
-            icon: Icons.error);
-        return;
-      }
-      // create a new product with selected size or weight
-      final productToCart = product.copyWith(
-          selectedWeight: selectedWeight, selectedSize: selectedSize);
+  return BlocBuilder<CartBloc, CartState>(
+    builder: (context, state) {
+      return GreenButtonWidget(
+          onTap: () {
+            if ((product.weights.isNotEmpty && selectedWeight == null) ||
+                (product.sizes.isNotEmpty && selectedSize == null)) {
+              CustomSnackbar.showCustomSnackBar(
+                  context,
+                  product.weights.isNotEmpty
+                      ? 'Please select product weight'
+                      : 'Please select product size',
+                  icon: Icons.error);
+              return;
+            }
+            // create a new product with selected size or weight
+            final productToCart = product.copyWith(
+                selectedWeight: selectedWeight, selectedSize: selectedSize);
 
-      context.read<CartBloc>().add(AddToCartEvent(product: productToCart));
+            context
+                .read<CartBloc>()
+                .add(AddToCartEvent(product: productToCart));
+          },
+          addIcon: true,
+          icon: Icons.add_shopping_cart_rounded,
+          buttonText: 'Add to cart',
+          borderRadius: 25,
+          width: 1,
+          isLoading: state is CartLoading);
     },
-    child: BlocBuilder<CartBloc, CartState>(
-      builder: (context, state) {
-        return GreenButtonWidget(
-            buttonText: 'Add to cart',
-            borderRadius: 25,
-            width: 1,
-            isLoading: state is CartLoading);
-      },
-    ),
   );
 }

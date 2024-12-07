@@ -55,8 +55,7 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
         listener: (context, state) {
           if (state is CartSuccess) {
             CustomSnackbar.showCustomSnackBar(
-              appearFromTop: true,
-                context, 'Item added to cart... 🎉🎉🎉');
+                appearFromTop: true, context, 'Item added to cart... 🎉🎉🎉');
           }
         },
         child: CustomScrollView(
@@ -100,13 +99,14 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                           SizedBox(height: 14),
                           buildRatingsContainer(),
                           SizedBox(height: 20),
-                          buildSizeAndSizeChartText(widget.productModel),
+                          buildSizeAndSizeChartText(
+                              widget.productModel, context),
                           Visibility(
                               visible: widget.productModel.sizes.isNotEmpty,
                               child: SizedBox(height: 8)),
                           buildSizeSelectors(selectedSize, widget.productModel,
                               (size) => updateSelectedSize(size)),
-                          buildiWeightText(widget.productModel),
+                          buildiWeightText(widget.productModel, context),
                           Visibility(
                               visible: widget.productModel.weights.isNotEmpty,
                               child: SizedBox(height: 8)),
@@ -118,7 +118,7 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                           buildPriceDetailsContainer(
                               context, widget.productModel),
                           SizedBox(height: 24),
-                          buildDescriptionTitle(),
+                          buildDescriptionTitle(context),
                           SizedBox(height: 6),
                           buildDescription(
                               context, isExpanded, widget.productModel),

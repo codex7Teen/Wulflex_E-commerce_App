@@ -79,24 +79,24 @@ class ScreenManageAddress extends StatelessWidget {
                                   children: [
                                     Text(
                                       address.name,
-                                      style: AppTextStyles.addressNameText,
+                                      style: AppTextStyles.addressNameText(context),
                                     ),
                                     SizedBox(height: 10),
                                     Text(address.houseName,
                                         style:
-                                            AppTextStyles.addressListItemsText),
+                                            AppTextStyles.addressListItemsText(context)),
                                     Text(
                                         "${address.areaName}, ${address.cityName}",
                                         style:
-                                            AppTextStyles.addressListItemsText),
+                                            AppTextStyles.addressListItemsText(context)),
                                     Text(
                                         "${address.stateName}, ${address.pincode}",
                                         style:
-                                            AppTextStyles.addressListItemsText),
+                                            AppTextStyles.addressListItemsText(context)),
                                     SizedBox(height: 10),
                                     Text("Phone: ${address.phoneNumber}",
                                         style:
-                                            AppTextStyles.addressListItemsText),
+                                            AppTextStyles.addressListItemsText(context)),
                                   ],
                                 ),
                                 Spacer(),

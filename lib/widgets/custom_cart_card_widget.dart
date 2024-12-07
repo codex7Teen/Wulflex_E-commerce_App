@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/blocs/cart_bloc/cart_bloc.dart';
-import 'package:wulflex/main.dart';
 import 'package:wulflex/models/product_model.dart';
 import 'package:wulflex/utils/consts/app_colors.dart';
 import 'package:wulflex/utils/consts/text_styles.dart';
-import 'package:wulflex/widgets/theme_data_helper_widget.dart';
 
 Widget buildCustomCartCard(BuildContext context, ProductModel product) {
   return Container(
