@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/account/presentation/widgets/edit_profile_screen_widgets.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
@@ -69,54 +70,11 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Upload Image',
-                      style: AppTextStyles.editScreenSubHeadings(context)),
+                  EditProfileScreenWidgets.buildUploadImageText(context),
                   SizedBox(height: 15),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () =>
-                          context.read<UserProfileBloc>().add(PickImageEvent()),
-                      child: BlocBuilder<UserProfileBloc, UserProfileState>(
-                        builder: (context, state) {
-                          File? selectedImage =
-                              context.read<UserProfileBloc>().selectedImage;
-                          if (state is ImagePickerLoaded) {
-                            selectedImage = state.selectedImage;
-                          } else if (state is ImageUploadProgress) {
-                            selectedImage = state.selectedImage;
-                          }
-                          return Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              SizedBox(
-                                height: 140,
-                                width: 140,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: selectedImage != null
-                                      ? Image.file(selectedImage,
-                                          fit: BoxFit.cover)
-                                      : Image.asset(
-                                          'assets/add_profile.png',
-                                          fit: BoxFit.cover,
-                                          color: isLightTheme
-                                              ? AppColors.blackThemeColor
-                                              : AppColors.whiteThemeColor,
-                                        ),
-                                ),
-                              ),
-                              if (state is ImageUploadProgress)
-                                // show upload progress indicator
-                                showUploadProgressIndicator(state)
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  EditProfileScreenWidgets.buildUploadImageIcon(context),
                   SizedBox(height: 25),
-                  Text('NAME',
-                      style: AppTextStyles.editScreenSubHeadings(context)),
+                  EditProfileScreenWidgets.buildNameText(context),
                   SizedBox(height: 8),
                   CustomTextfieldsWidget(
                     validator: (value) {
@@ -129,8 +87,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     hintText: 'Please enter your name',
                   ),
                   SizedBox(height: 25),
-                  Text('PHONE NUMBER',
-                      style: AppTextStyles.editScreenSubHeadings(context)),
+                  EditProfileScreenWidgets.buildPhoneNumberText(context),
                   SizedBox(height: 8),
                   CustomTextfieldsWidget(
                     validator: (value) {
@@ -145,8 +102,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     hintText: 'Please enter your number',
                   ),
                   SizedBox(height: 25),
-                  Text('DATE OF BIRTH',
-                      style: AppTextStyles.editScreenSubHeadings(context)),
+                  EditProfileScreenWidgets.buildDateofbirthText(context),
                   SizedBox(height: 8),
                   CustomTextfieldsWidget(
                     validator: (value) {
@@ -161,54 +117,16 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     hintText: 'Please enter your date of birth',
                   ),
                   SizedBox(height: 39),
-                  GestureDetector(
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        Map<String, dynamic> updates = {};
-
-                        // Add non-empty fields
-                        if (_nameController.text.trim().isNotEmpty) {
-                          updates['name'] = _nameController.text.trim();
-                        }
-                        if (_phoneNumberController.text.trim().isNotEmpty) {
-                          updates['phoneNumber'] =
-                              _phoneNumberController.text.trim();
-                        }
-                        if (_dateofbirthController.text.trim().isNotEmpty) {
-                          updates['dob'] = _dateofbirthController.text.trim();
-                        }
-                        // Fetch the selected image from the BLoC state
-                        final selectedImage = context
-                                .read<UserProfileBloc>()
-                                .state is ImagePickerLoaded
-                            ? (context.read<UserProfileBloc>().state
-                                    as ImagePickerLoaded)
-                                .selectedImage
-                            : null;
-
-                        if (selectedImage != null) {
-                          updates['userImage'] = selectedImage.path;
-                        } else {
-                          log('SELECTED IMAGE IS NULL');
-                        }
-
-                        // Dispatch the update event
-                        context
-                            .read<UserProfileBloc>()
-                            .add(UpdateUserProfileEvent(updates));
-                      }
+                  BlocBuilder<UserProfileBloc, UserProfileState>(
+                    builder: (context, state) {
+                      return EditProfileScreenWidgets.buildSaveButton(
+                          context,
+                          formKey,
+                          _nameController,
+                          _phoneNumberController,
+                          _dateofbirthController,
+                          state);
                     },
-                    child: BlocBuilder<UserProfileBloc, UserProfileState>(
-                      builder: (context, state) {
-                        return GreenButtonWidget(
-                          isLoading: state is UserProfileLoading ||
-                              state is ImageUploadProgress,
-                          buttonText: "Save Details",
-                          borderRadius: 25,
-                          width: 1,
-                        );
-                      },
-                    ),
                   )
                 ],
               ),

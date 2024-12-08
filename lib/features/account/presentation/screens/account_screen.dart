@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/features/auth/presentation/screens/login_screen.dart';
@@ -11,25 +10,12 @@ import 'package:wulflex/features/account/presentation/screens/profile_screen.dar
 import 'package:wulflex/features/account/presentation/screens/settings_screen.dart';
 import 'package:wulflex/features/account/presentation/widgets/signout_alert_widget.dart';
 import 'package:wulflex/core/config/app_colors.dart';
-import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class ScreenAccount extends StatelessWidget {
   const ScreenAccount({super.key});
-
-  // Helper method to determine greeting
-  String getGreeting() {
-    final hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'Good Morning';
-    } else if (hour < 17) {
-      return 'Good Afternoon';
-    } else {
-      return 'Good Evening';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,81 +57,10 @@ class ScreenAccount extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: SizedBox(
-                          height: 180,
-                          width: 180,
-                          child: imageUrl.isNotEmpty
-                              ? Stack(children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Lottie.asset(
-                                        'assets/lottie/profile.json'),
-                                  ),
-                                  Positioned(
-                                      left: 36.6,
-                                      top: 36,
-                                      child: SizedBox(
-                                        height: 180 *
-                                            0.6, // 70% of the Lottie's size
-                                        width: 180 * 0.6,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: Image.network(
-                                            imageUrl,
-                                            fit: BoxFit.cover,
-                                            loadingBuilder: (context, child,
-                                                loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
-                                              // show image loading indicator
-                                              return Center(
-                                                  child: Container(
-                                                height: 180 * 0.6,
-                                                width: 180 * 0.6,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black
-                                                      .withOpacity(0.4),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
-                                                ),
-                                                child: CircularProgressIndicator(
-                                                    strokeWidth: 6,
-                                                    value: loadingProgress
-                                                                .expectedTotalBytes !=
-                                                            null
-                                                        ? loadingProgress
-                                                                .cumulativeBytesLoaded /
-                                                            loadingProgress
-                                                                .expectedTotalBytes!
-                                                        : null),
-                                              ));
-                                            },
-                                          ),
-                                        ),
-                                      ))
-                                ])
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Lottie.asset(
-                                      'assets/lottie/profile.json'),
-                                ),
-                        ),
-                      ),
-                      Text('${getGreeting()}, ${user.name}',
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          style: AppTextStyles.heyUserWelcomeText(context)),
+                      buildUserProfileImage(imageUrl),
+                      buildUserGreetingText(user, getGreeting, context),
                       SizedBox(height: 28),
-                      Text(
-                        textAlign: TextAlign.start,
-                        'ACCOUNT',
-                        style: AppTextStyles.mainScreenHeadings(context),
-                      ),
+                      buildAccountHeading(context),
                       SizedBox(height: 8),
                       buildButtonCards(
                           icon: Icons.shopping_bag_rounded, name: "MY ORDERS"),
@@ -172,11 +87,7 @@ class ScreenAccount extends StatelessWidget {
                           icon: Icons.settings,
                           name: "SETTINGS"),
                       SizedBox(height: 28),
-                      Text(
-                        textAlign: TextAlign.start,
-                        'CONNECT',
-                        style: AppTextStyles.mainScreenHeadings(context),
-                      ),
+                      buildConnectHeading(context),
                       SizedBox(height: 8),
                       buildButtonCards(
                           onTap: () async {
@@ -185,11 +96,7 @@ class ScreenAccount extends StatelessWidget {
                           icon: Icons.smartphone_rounded,
                           name: "INSTAGRAM"),
                       SizedBox(height: 28),
-                      Text(
-                        textAlign: TextAlign.start,
-                        'APP',
-                        style: AppTextStyles.mainScreenHeadings(context),
-                      ),
+                      buildAppHeading(context),
                       SizedBox(height: 8),
                       buildButtonCards(
                           onTap: () {
@@ -221,5 +128,17 @@ class ScreenAccount extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Helper method to determine greeting
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good Morning';
+    } else if (hour < 17) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
   }
 }
