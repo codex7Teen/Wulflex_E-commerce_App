@@ -1,1 +1,0 @@
-const String bucket = 'wulflex.firebasestorage.app';

@@ -2,23 +2,24 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wulflex/blocs/address_bloc/address_bloc.dart';
-import 'package:wulflex/blocs/authentication_bloc/authenticaton_bloc_bloc.dart';
-import 'package:wulflex/blocs/cart_bloc/cart_bloc.dart';
-import 'package:wulflex/blocs/category_bloc/category_bloc.dart';
-import 'package:wulflex/blocs/delete_account_bloc/delete_account_bloc.dart';
-import 'package:wulflex/blocs/favorite_bloc/favorite_bloc.dart';
-import 'package:wulflex/blocs/product_bloc/product_bloc.dart';
-import 'package:wulflex/blocs/theme_bloc/theme_bloc.dart';
-import 'package:wulflex/blocs/user_profile_bloc/user_profile_bloc.dart';
-import 'package:wulflex/services/address_services.dart';
-import 'package:wulflex/services/authentication/login_authorization.dart';
-import 'package:wulflex/screens/aunthentication_screens/main_wrapper_widget.dart';
-import 'package:wulflex/services/cart_services.dart';
-import 'package:wulflex/services/category_services.dart';
-import 'package:wulflex/services/favorite_services.dart';
-import 'package:wulflex/services/product_services.dart';
-import 'package:wulflex/services/user_profile_services.dart';
+import 'package:wulflex/core/config/app_constants.dart';
+import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
+import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
+import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
+import 'package:wulflex/features/home/bloc/category_bloc/category_bloc.dart';
+import 'package:wulflex/features/account/bloc/delete_account_bloc/delete_account_bloc.dart';
+import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
+import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
+import 'package:wulflex/core/theme/bloc/theme_bloc/theme_bloc.dart';
+import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
+import 'package:wulflex/data/services/address_services.dart';
+import 'package:wulflex/data/services/authentication/login_authorization.dart';
+import 'package:wulflex/features/auth/presentation/widgets/main_wrapper_widget.dart';
+import 'package:wulflex/data/services/cart_services.dart';
+import 'package:wulflex/data/services/category_services.dart';
+import 'package:wulflex/data/services/favorite_services.dart';
+import 'package:wulflex/data/services/product_services.dart';
+import 'package:wulflex/data/services/user_profile_services.dart';
 
 void main() async {
   // Ensures the bindings with native platform has done properly
@@ -26,14 +27,7 @@ void main() async {
 
   // Initialize firebase
   if (kIsWeb) {
-    await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "AIzaSyDMzuQfFMY4pScI7ihyfVFV5fsT0pcsATI",
-            authDomain: "wulflex.firebaseapp.com",
-            projectId: "wulflex",
-            storageBucket: "wulflex.appspot.com",
-            messagingSenderId: "57079492115",
-            appId: "1:57079492115:web:4366c95936974dda3fd9e6"));
+    await Firebase.initializeApp(options: FirebaseConfig.firebaseOptions);
   } else {
     await Firebase.initializeApp();
   }
