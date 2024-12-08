@@ -25,6 +25,20 @@ class AddressServices {
     }
   }
 
+  //! UPDATE ADDRESES
+  Future<void> updateAddress(AddressModel address) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(_userId)
+          .collection('address')
+          .doc(address.id)
+          .update(address.toMap());
+    } catch (error) {
+      log('SERVICES: Error updating address: $error');
+    }
+  }
+
   //! FETCH ADDRESS
   Future<List<AddressModel>> fetchAddress() async {
     try {

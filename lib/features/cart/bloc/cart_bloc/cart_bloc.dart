@@ -41,6 +41,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CartLoading());
       try {
         await _cartServices.removeFromCart(event.productId);
+        emit(CartItemDeleted());
         final updatedCartItems = await _cartServices.fetchCartItems();
         emit(CartLoaded(products: updatedCartItems));
         log('ITEM REMOVED FROM CART');

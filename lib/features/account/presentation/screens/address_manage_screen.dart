@@ -7,6 +7,7 @@ import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/cart/presentation/screens/add_address_screen.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/cart/presentation/screens/edit_address_screen.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
@@ -79,24 +80,29 @@ class ScreenManageAddress extends StatelessWidget {
                                   children: [
                                     Text(
                                       address.name,
-                                      style: AppTextStyles.addressNameText(context),
+                                      style: AppTextStyles.addressNameText(
+                                          context),
                                     ),
                                     SizedBox(height: 10),
                                     Text(address.houseName,
                                         style:
-                                            AppTextStyles.addressListItemsText(context)),
+                                            AppTextStyles.addressListItemsText(
+                                                context)),
                                     Text(
                                         "${address.areaName}, ${address.cityName}",
                                         style:
-                                            AppTextStyles.addressListItemsText(context)),
+                                            AppTextStyles.addressListItemsText(
+                                                context)),
                                     Text(
                                         "${address.stateName}, ${address.pincode}",
                                         style:
-                                            AppTextStyles.addressListItemsText(context)),
+                                            AppTextStyles.addressListItemsText(
+                                                context)),
                                     SizedBox(height: 10),
                                     Text("Phone: ${address.phoneNumber}",
                                         style:
-                                            AppTextStyles.addressListItemsText(context)),
+                                            AppTextStyles.addressListItemsText(
+                                                context)),
                                   ],
                                 ),
                                 Spacer(),
@@ -104,6 +110,21 @@ class ScreenManageAddress extends StatelessWidget {
                                   onSelected: (value) {
                                     if (value == 0) {
                                       // Handle Edit action
+                                      log('${address.id} EDIT ATTEMPTED');
+                                      NavigationHelper
+                                          .navigateToWithoutReplacement(
+                                              context,
+                                              ScreenEditAddress(
+                                                addressId: address.id!,
+                                                name: address.name,
+                                                phoneNumber:
+                                                    address.phoneNumber,
+                                                pincode: address.pincode,
+                                                state: address.stateName,
+                                                city: address.cityName,
+                                                houseName: address.houseName,
+                                                areaName: address.areaName,
+                                              ));
                                     } else if (value == 1) {
                                       log('${address.id} DELETE ATTEMPTED');
                                       // Handle Delete action

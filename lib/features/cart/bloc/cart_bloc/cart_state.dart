@@ -13,6 +13,8 @@ class CartLoading extends CartState {}
 
 class CartSuccess extends CartState {}
 
+class CartItemDeleted extends CartState {}
+
 class CartError extends CartState {
   final String errorMessage;
 

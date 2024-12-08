@@ -31,6 +31,40 @@ class AddAddressEvent extends AddressEvent {
       [name, phoneNumber, pincode, stateName, cityName, houseName, areaName];
 }
 
+//! EDIT ADDRESS EVENT
+class EditAddressEvent extends AddressEvent {
+  final String addressId;
+  final String name;
+  final String phoneNumber;
+  final String pincode;
+  final String stateName;
+  final String cityName;
+  final String houseName;
+  final String areaName;
+
+  EditAddressEvent(
+      {required this.addressId,
+      required this.name,
+      required this.phoneNumber,
+      required this.pincode,
+      required this.stateName,
+      required this.cityName,
+      required this.houseName,
+      required this.areaName});
+
+  @override
+  List<Object> get props => [
+        addressId,
+        name,
+        phoneNumber,
+        pincode,
+        stateName,
+        cityName,
+        houseName,
+        areaName
+      ];
+}
+
 //! FETCH ADDRESS EVENT
 class FetchAddressEvent extends AddressEvent {}
 

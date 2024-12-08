@@ -39,6 +39,37 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       }
     });
 
+    //! EDIT ADDRESS BLOC
+    on<EditAddressEvent>((event, emit) async {
+      emit(AddressLoading());
+      try {
+        // create address model with updated details
+        final updatedAddress = AddressModel(
+            id: event.addressId,
+            name: event.name,
+            phoneNumber: event.phoneNumber,
+            pincode: event.phoneNumber,
+            stateName: event.stateName,
+            cityName: event.cityName,
+            houseName: event.houseName,
+            areaName: event.areaName);
+
+        // update product in firebase
+        await _addressServices.updateAddress(updatedAddress);
+
+        //Fetch update address list
+        final address = await _addressServices.fetchAddress();
+        final selectedAddress = await _addressServices.getSelectedAddress();
+
+        emit(AddressLoaded(address: address, selectedAddress: selectedAddress));
+        emit(AddressSuccess());
+        log('ADDRESS UPDATED SUCCESSFULLY');
+      } catch (error) {
+        emit(AddressFailed(errorMessage: error.toString()));
+        log('UPDATING ADDRESS FAILED: $error');
+      }
+    });
+
     //! FETCH ADDRESS BLOC
     on<FetchAddressEvent>((event, emit) async {
       emit(AddressLoading());

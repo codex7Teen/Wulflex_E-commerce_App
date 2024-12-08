@@ -26,9 +26,10 @@ class ScreenCart extends StatelessWidget {
         ),
         body: BlocConsumer<CartBloc, CartState>(
           listener: (context, state) {
-            if (state is CartLoaded) {
+            if (state is CartItemDeleted) {
               CustomSnackbar.showCustomSnackBar(
                   appearFromTop: true, context, 'Item removed from cart');
+              // context.read<CartBloc>().add(FetchCartEvent());
             }
           },
           builder: (context, state) {
