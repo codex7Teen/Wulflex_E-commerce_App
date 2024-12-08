@@ -50,22 +50,23 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                       SizedBox(height: 15),
 
                       // image
-                      buildForgotPassImage(context),
+                      ForgotPasswordWidgets.buildForgotPassImage(context),
                       SizedBox(height: 40),
 
                       // heading
-                      buildForgotPassText(),
+                      ForgotPasswordWidgets.buildForgotPassText(),
                       SizedBox(height: 14),
 
-                      buildDontWorryText(),
+                      ForgotPasswordWidgets.buildDontWorryText(),
                       SizedBox(height: 20),
 
                       // email textfield
-                      buildEmailTextField(_forgotPasswordEmailTextController),
+                      ForgotPasswordWidgets.buildEmailTextField(
+                          _forgotPasswordEmailTextController),
                       SizedBox(height: 35),
 
                       //! P A S S W O R D - R E S E T - B U T T O N
-                      buildResetButton(_formKey,
+                      ForgotPasswordWidgets.buildResetButton(_formKey,
                           _forgotPasswordEmailTextController, context),
                       SizedBox(height: 22),
                     ],

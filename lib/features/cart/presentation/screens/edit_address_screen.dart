@@ -35,19 +35,12 @@ class ScreenEditAddress extends StatefulWidget {
 
 class _ScreenEditAddressState extends State<ScreenEditAddress> {
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _phoneNumberController = TextEditingController();
-
   final TextEditingController _pincodeController = TextEditingController();
-
   final TextEditingController _stateNameController = TextEditingController();
-
   final TextEditingController _cityNameController = TextEditingController();
-
   final TextEditingController _houseNameController = TextEditingController();
-
   final TextEditingController _areaNameController = TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

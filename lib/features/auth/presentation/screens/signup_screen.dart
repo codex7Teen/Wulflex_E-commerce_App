@@ -79,23 +79,23 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 10),
 
                         // image
-                        buildSignUpImage(context),
+                        SignupWidgets.buildSignUpImage(context),
                         SizedBox(height: 30),
 
                         // heading
-                        buildSignUpText(),
+                        SignupWidgets.buildSignUpText(),
                         SizedBox(height: 14),
 
                         // Name textfield
-                        buildNameTextField(_nameTextController),
+                        SignupWidgets.buildNameTextField(_nameTextController),
                         SizedBox(height: 22),
 
                         // email textfield
-                        buildEmaiTextField(_emailTextController),
+                        SignupWidgets.buildEmaiTextField(_emailTextController),
                         SizedBox(height: 22),
 
                         // create password field
-                        buildCreatePasswordTextField(
+                        SignupWidgets.buildCreatePasswordTextField(
                             _createPasswordTextController,
                             _confirmPasswordTextController,
                             () => setState(() {
@@ -106,7 +106,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 22),
 
                         // confirm password field
-                        buildConfirmPasswordTextField(
+                        SignupWidgets.buildConfirmPasswordTextField(
                             _createPasswordTextController,
                             _confirmPasswordTextController,
                             () => setState(() {
@@ -117,12 +117,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 25),
 
                         // Terms and conditions
-                        buildTermsAndConditonsText(),
-                        buildPrivacyPolicyText(),
+                        SignupWidgets.buildTermsAndConditonsText(),
+                        SignupWidgets.buildPrivacyPolicyText(),
                         SizedBox(height: 22),
 
                         // ! S I G N U P - B U T T O N
-                        buildSignUpButton(
+                        SignupWidgets.buildSignUpButton(
                             _formKey,
                             context,
                             _emailTextController,
@@ -130,7 +130,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 22),
 
                         // Already signed up? login
-                        buildAlreadySignedUpAndLoginText(context),
+                        SignupWidgets.buildAlreadySignedUpAndLoginText(context),
                       ],
                     ),
                   )),

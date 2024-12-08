@@ -79,30 +79,30 @@ class _ScreenLoginState extends State<ScreenLogin> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    buildLoginImage(context),
+                    LoginWidgets.buildLoginImage(context),
                     const SizedBox(height: 30),
-                    buildLoginHeading(),
+                    LoginWidgets.buildLoginHeading(),
                     const SizedBox(height: 14),
-                    buildEmailField(_emailTextController),
+                    LoginWidgets.buildEmailField(_emailTextController),
                     const SizedBox(height: 30),
-                    buildPasswordField(
+                    LoginWidgets.buildPasswordField(
                         _passwordTextController, _isPasswordVisible, () {
                       setState(() {
                         _isPasswordVisible = !_isPasswordVisible;
                       });
                     }),
                     const SizedBox(height: 22),
-                    buildForgotPasswordLink(context),
+                    LoginWidgets.buildForgotPasswordLink(context),
                     const SizedBox(height: 22),
-                    buildLoginButton(context, _formKey, _emailTextController,
-                        _passwordTextController),
+                    LoginWidgets.buildLoginButton(context, _formKey,
+                        _emailTextController, _passwordTextController),
                     const SizedBox(height: 22),
                     // OR divider with lines
-                    buildOrDivider(),
+                    LoginWidgets.buildOrDivider(),
                     const SizedBox(height: 22),
-                    buildGoogleLoginButton(context),
+                    LoginWidgets.buildGoogleLoginButton(context),
                     const SizedBox(height: 22),
-                    buildSignUpLink(context),
+                    LoginWidgets.buildSignUpLink(context),
                   ],
                 ),
               ),
