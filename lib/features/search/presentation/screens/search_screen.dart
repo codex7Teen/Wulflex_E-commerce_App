@@ -5,6 +5,7 @@ import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/shared/widgets/custom_itemCard_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class ScreenSearchScreen extends StatefulWidget {
   const ScreenSearchScreen({super.key});
@@ -66,15 +67,15 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isLightTheme = Theme.of(context).brightness == Brightness.light;
 
     return Scaffold(
-      backgroundColor:
-          isLightTheme ? AppColors.whiteThemeColor : AppColors.blackThemeColor,
+      backgroundColor: isLightTheme(context)
+          ? AppColors.whiteThemeColor
+          : AppColors.blackThemeColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70),
         child: AppBar(
-          backgroundColor: isLightTheme
+          backgroundColor: isLightTheme(context)
               ? AppColors.whiteThemeColor
               : AppColors.blackThemeColor,
           automaticallyImplyLeading: false,
@@ -87,7 +88,7 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                   onTap: () => Navigator.pop(context),
                   child: Icon(
                     Icons.arrow_back_ios_new_rounded,
-                    color: isLightTheme
+                    color: isLightTheme(context)
                         ? AppColors.blackThemeColor
                         : AppColors.whiteThemeColor,
                   ),
@@ -154,9 +155,37 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Filters:',
-                  style: AppTextStyles.searchFilterHeading,
+                // Text(
+                //   'Filters:',
+                //   style: AppTextStyles.searchFilterHeading,
+                // ),
+                DropdownButton<String>(
+                  value: _selectedFilter,
+                  borderRadius: BorderRadius.circular(18),
+                  items: [
+                    'Featured',
+                    'Price: Low to High',
+                    'Price: High to Low',
+                  ].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child:
+                          Text(value, style: AppTextStyles.searchFilterHeading),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _selectedFilter = value;
+                      });
+                      if (context.read<ProductBloc>().state is ProductLoaded) {
+                        final products =
+                            (context.read<ProductBloc>().state as ProductLoaded)
+                                .products;
+                        _filterAndSortProducts(products);
+                      }
+                    }
+                  },
                 ),
                 DropdownButton<String>(
                   value: _selectedFilter,

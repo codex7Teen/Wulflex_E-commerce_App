@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
-import 'package:wulflex/core/config/text_styles.dart';
-import 'package:wulflex/shared/widgets/custom_itemCard_widget.dart';
+import 'package:wulflex/features/favorite/presentation/widgets/favorite_screen_widgets.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
@@ -17,20 +15,7 @@ class ScreenFavorite extends StatelessWidget {
         backgroundColor: isLightTheme(context)
             ? AppColors.whiteThemeColor
             : AppColors.blackThemeColor,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Lottie.asset('assets/lottie/favorite_lottie.json',
-                  fit: BoxFit.cover, width: 50),
-              Text('FAVORITES', style: AppTextStyles.appbarTextBig(context)),
-              Lottie.asset('assets/lottie/favorite_lottie.json',
-                  fit: BoxFit.cover, width: 50),
-            ],
-          ),
-        ),
+        appBar: FavoriteScreenWidgets.buildAppbar(context),
         body: Padding(
           padding: const EdgeInsets.only(top: 14, left: 18, right: 18),
           child: BlocConsumer<FavoriteBloc, FavoriteState>(
@@ -58,17 +43,7 @@ class ScreenFavorite extends StatelessWidget {
                         'Add somethig to favorites : TODO Design a add favorites lottie here'),
                   );
                 } else {
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 7.5,
-                        childAspectRatio: 0.604),
-                    itemCount: state.favorites.length,
-                    itemBuilder: (context, index) {
-                      return buildItemCard(context, state.favorites[index]);
-                    },
-                  );
+                  return FavoriteScreenWidgets.buildItemCards(context, state);
                 }
               }
               return const Center(

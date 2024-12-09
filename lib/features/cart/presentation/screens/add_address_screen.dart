@@ -84,107 +84,28 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AddAddressScreenWidgets.buildNameText(context),
-                  CustomAddAddressFieldWidget(
-                      hintText: 'Full Name (Required)*',
-                      textInputType: TextInputType.text,
-                      maxLength: 16,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
-                      controller: _nameController),
+                  AddAddressScreenWidgets.buildNameTextfield(
+                      context, _nameController),
                   SizedBox(height: 16),
                   AddAddressScreenWidgets.buildPhoneNumberText(context),
-                  CustomAddAddressFieldWidget(
-                      hintText: 'Phone number (Required)*',
-                      textInputType: TextInputType.number,
-                      maxLength: 12,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter contact number';
-                        }
-                        return null;
-                      },
-                      controller: _phoneNumberController),
+                  AddAddressScreenWidgets.buildPhoneNumberTextfield(
+                      context, _phoneNumberController),
                   SizedBox(height: 16),
                   AddAddressScreenWidgets.buildPincodeText(context),
-                  CustomAddAddressFieldWidget(
-                      textFieldWidth: MediaQuery.sizeOf(context).width * 0.5,
-                      hintText: 'Pincode (Required)*',
-                      textInputType: TextInputType.number,
-                      maxLength: 6,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter your area pincode';
-                        }
-                        return null;
-                      },
-                      controller: _pincodeController),
+                  AddAddressScreenWidgets.buildPincodeTextfield(
+                      context, _pincodeController),
                   SizedBox(height: 16),
                   AddAddressScreenWidgets.buildStateandcityText(context),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomAddAddressFieldWidget(
-                            textFieldWidth:
-                                MediaQuery.sizeOf(context).width * 0.5,
-                            hintText: 'State (Required)*',
-                            textInputType: TextInputType.text,
-                            maxLength: 14,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'Please enter your state';
-                              }
-                              return null;
-                            },
-                            controller: _stateNameController),
-                      ),
-                      SizedBox(width: 15),
-                      Expanded(
-                        child: CustomAddAddressFieldWidget(
-                            textFieldWidth:
-                                MediaQuery.sizeOf(context).width * 0.5,
-                            hintText: 'City (Required)*',
-                            textInputType: TextInputType.text,
-                            maxLength: 14,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'Please enter your city';
-                              }
-                              return null;
-                            },
-                            controller: _cityNameController),
-                      ),
-                    ],
-                  ),
+                  AddAddressScreenWidgets.buildStateAndCityTextfield(
+                      context, _stateNameController, _cityNameController),
                   SizedBox(height: 16),
                   AddAddressScreenWidgets.buildHouseNameText(context),
-                  CustomAddAddressFieldWidget(
-                      hintText: 'House No, Building name (Required)*',
-                      textInputType: TextInputType.text,
-                      maxLength: 30,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter your building details';
-                        }
-                        return null;
-                      },
-                      controller: _houseNameController),
+                  AddAddressScreenWidgets.buildHouseNameTextfield(
+                      context, _houseNameController),
                   SizedBox(height: 16),
                   AddAddressScreenWidgets.buildAreaNameText(context),
-                  CustomAddAddressFieldWidget(
-                      hintText: 'Road name, Area, Colony (Required)*',
-                      textInputType: TextInputType.text,
-                      maxLength: 30,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter your area details';
-                        }
-                        return null;
-                      },
-                      controller: _areaNameController),
+                  AddAddressScreenWidgets.buildAreaNameTextfield(
+                      context, _areaNameController),
                   SizedBox(height: 25),
                   BlocBuilder<AddressBloc, AddressState>(
                     builder: (context, state) {

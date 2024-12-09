@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/cart/presentation/widgets/custom_add_address_field_widget.dart';
 import 'package:wulflex/core/config/app_colors.dart';
-import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/cart/presentation/widgets/edit_address_screen_widgets.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
-import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
@@ -113,13 +112,7 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'NAME',
-                      style: AppTextStyles.screenSubHeadings(context),
-                    ),
-                  ),
+                  EditAddressScreenWidgets.buildNameText(context),
                   CustomAddAddressFieldWidget(
                       hintText: 'Full Name (Required)*',
                       textInputType: TextInputType.text,
@@ -132,13 +125,7 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
                       },
                       controller: _nameController),
                   SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'PHONE NUMBER',
-                      style: AppTextStyles.screenSubHeadings(context),
-                    ),
-                  ),
+                  EditAddressScreenWidgets.buildPhoneNumberText(context),
                   CustomAddAddressFieldWidget(
                       hintText: 'Phone number (Required)*',
                       textInputType: TextInputType.number,
@@ -151,13 +138,7 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
                       },
                       controller: _phoneNumberController),
                   SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'PINCODE',
-                      style: AppTextStyles.screenSubHeadings(context),
-                    ),
-                  ),
+                  EditAddressScreenWidgets.buildPincodeText(context),
                   CustomAddAddressFieldWidget(
                       textFieldWidth: MediaQuery.sizeOf(context).width * 0.5,
                       hintText: 'Pincode (Required)*',
@@ -171,13 +152,7 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
                       },
                       controller: _pincodeController),
                   SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'STATE & CITY',
-                      style: AppTextStyles.screenSubHeadings(context),
-                    ),
-                  ),
+                  EditAddressScreenWidgets.buildStateAndCityText(context),
                   Row(
                     children: [
                       Expanded(
@@ -214,13 +189,7 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
                     ],
                   ),
                   SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'HOUSE NO, BUILDING NAME',
-                      style: AppTextStyles.screenSubHeadings(context),
-                    ),
-                  ),
+                  EditAddressScreenWidgets.buildHouseNameText(context),
                   CustomAddAddressFieldWidget(
                       hintText: 'House No, Building name (Required)*',
                       textInputType: TextInputType.text,
@@ -233,13 +202,7 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
                       },
                       controller: _houseNameController),
                   SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'ROAD NAME, AREA, COLONY',
-                      style: AppTextStyles.screenSubHeadings(context),
-                    ),
-                  ),
+                  EditAddressScreenWidgets.buildAreanameText(context),
                   CustomAddAddressFieldWidget(
                       hintText: 'Road name, Area, Colony (Required)*',
                       textInputType: TextInputType.text,
@@ -254,28 +217,18 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
                   SizedBox(height: 25),
                   BlocBuilder<AddressBloc, AddressState>(
                     builder: (context, state) {
-                      return GreenButtonWidget(
-                        isLoading: state is AddressLoading,
-                        onTap: () async {
-                          if (_formKey.currentState!.validate()) {
-                            // do this
-                            context.read<AddressBloc>().add(EditAddressEvent(
-                                addressId: widget.addressId,
-                                name: _nameController.text.trim(),
-                                phoneNumber: _phoneNumberController.text.trim(),
-                                pincode: _pincodeController.text.trim(),
-                                stateName: _stateNameController.text.trim(),
-                                cityName: _cityNameController.text.trim(),
-                                houseName: _houseNameController.text.trim(),
-                                areaName: _areaNameController.text.trim()));
-                          }
-                        },
-                        buttonText: 'Save Address',
-                        borderRadius: 25,
-                        width: 1,
-                        addIcon: true,
-                        icon: Icons.check,
-                      );
+                      return EditAddressScreenWidgets.buildSaveButton(
+                          context,
+                          state,
+                          _formKey,
+                          widget.addressId,
+                          _nameController,
+                          _phoneNumberController,
+                          _pincodeController,
+                          _stateNameController,
+                          _cityNameController,
+                          _houseNameController,
+                          _areaNameController);
                     },
                   )
                 ],
