@@ -7,6 +7,7 @@ class AppColors {
   static const Color redThemeColor = Colors.red;
   static const Color darkRedThemeColor = Color.fromARGB(255, 163, 11, 0);
   static const Color greenThemeColor = Color.fromARGB(255, 173, 221, 0);
+  // hex color of greentheme color is #ADD500
   static const Color greyThemeColor = Colors.grey;
     static const Color hardLightGeryThemeColor = Color.fromARGB(255, 184, 184, 184);
   static const Color lightGreyThemeColor = Color.fromARGB(255, 246, 246, 246);

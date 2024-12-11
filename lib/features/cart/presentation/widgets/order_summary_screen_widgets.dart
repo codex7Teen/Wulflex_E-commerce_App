@@ -88,9 +88,31 @@ class OrderSummaryScreenWidgets {
                 );
               } else if (state is AddressLoaded) {
                 final selectedAddress = state.selectedAddress;
+                if (selectedAddress == null) {
+                  // Show select address when selectedaddress is null
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(top: 40, left: 10, bottom: 45),
+                    child: GestureDetector(
+                      onTap: () {
+                        NavigationHelper.navigateToWithoutReplacement(
+                            context, ScreenAddress());
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: AppColors.greenThemeColor,
+                            borderRadius: BorderRadius.circular(18)),
+                        child: Text('SELECT ADDRESS',
+                            style: AppTextStyles.selectAddressText),
+                      ),
+                    ),
+                  );
+                }
                 // check if selected address values are present
                 final selectedAddressContainsValues =
-                    selectedAddress?.name.trim().isNotEmpty;
+                    selectedAddress.name.trim().isNotEmpty;
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -114,12 +136,12 @@ class OrderSummaryScreenWidgets {
                       ),
                     ),
                     Visibility(
-                      visible: selectedAddressContainsValues ?? false,
+                      visible: selectedAddressContainsValues,
                       child: SizedBox(
                           width: MediaQuery.sizeOf(context).width * 0.1),
                     ),
                     Visibility(
-                      visible: selectedAddressContainsValues ?? false,
+                      visible: selectedAddressContainsValues,
                       child: Stack(alignment: Alignment.center, children: [
                         Container(
                           height: 18,
@@ -139,17 +161,17 @@ class OrderSummaryScreenWidgets {
                       ]),
                     ),
                     Visibility(
-                        visible: selectedAddressContainsValues ?? false,
+                        visible: selectedAddressContainsValues,
                         child: SizedBox(width: 8)),
                     Visibility(
-                      visible: selectedAddressContainsValues ?? false,
+                      visible: selectedAddressContainsValues,
                       child: Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              selectedAddress!.name,
+                              selectedAddress.name,
                               style: AppTextStyles.addressListItemsText(context,
                                   fixedBlackColor: true),
                             ),

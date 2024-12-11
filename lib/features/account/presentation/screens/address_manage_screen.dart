@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/presentation/widgets/address_manage_screen_widgets.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -37,8 +39,29 @@ class ScreenManageAddress extends StatelessWidget {
                     return buildAddressCard(addressList);
                   } else {
                     return Center(
-                        child:
-                            Text('Address is empty : TODO SHOW A LOTTIE HERE'));
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 90),
+                          isLightTheme(context)
+                              ? Lottie.asset(
+                                  'assets/lottie/empty_address_black.json',
+                                  width: 190,
+                                  repeat: true)
+                              : Lottie.asset(
+                                  'assets/lottie/empty_address_white.json',
+                                  width: 190,
+                                  repeat: true),
+                          Text(
+                            'Save your address for a better shopping\nexperience!',
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.emptyScreenText(context),
+                          ),
+                          SizedBox(height: 90)
+                        ],
+                      ),
+                    );
                   }
                 }
                 return Center(child: Text('Something went wrong'));

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/features/cart/presentation/widgets/cart_widgets.dart';
@@ -30,8 +32,27 @@ class ScreenCart extends StatelessWidget {
             } else if (state is CartLoaded) {
               if (state.products.isEmpty) {
                 return Center(
-                  child: Text(
-                      'Please add product to cart. TODOD IMPLEMENT A LOTTIE HERE'),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      isLightTheme(context)
+                          ? Lottie.asset(
+                              'assets/lottie/cart_empty_lottie_black.json',
+                              width: 190,
+                              repeat: false)
+                          : Lottie.asset(
+                              'assets/lottie/cart_empty_lottie_white.json',
+                              width: 190,
+                              repeat: false),
+                      Text(
+                        'Your cart is empty.\nStart adding your items!',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.emptyScreenText(context),
+                      ),
+                      SizedBox(height: 90)
+                    ],
+                  ),
                 );
               }
               final cartItems = state.products;

@@ -447,8 +447,13 @@ class AppTextStyles {
           letterSpacing: 1);
 
   //! SEARCHFILTER HEADING TEXT STYLE
-  static final TextStyle searchFilterHeading = GoogleFonts.bebasNeue(
-      fontSize: 17.5, color: AppColors.blackThemeColor, letterSpacing: 1);
+  static TextStyle searchFilterHeading(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 17.5,
+          color: isLightTheme(context)
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 1);
 
   //! ALL CATEGORIES PAGE CATEGORY TEXT STYLE
   static TextStyle allCategoriesPageCategoryText(BuildContext context) =>
@@ -509,17 +514,6 @@ class AppTextStyles {
       fontSize: 14,
       letterSpacing: 1);
 
-  //! ADDRESS LIST ADDRESS NAME TEXT
-  static TextStyle addressNameText(BuildContext context) =>
-      GoogleFonts.robotoCondensed(
-          textStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 19,
-              letterSpacing: 0.35,
-              color: isLightTheme(context)
-                  ? AppColors.blackThemeColor
-                  : AppColors.whiteThemeColor));
-
   //! ADDRESS LIST ALL LIST ITEMS TEXT
   static TextStyle addressListItemsText(BuildContext context,
           {bool? fixedBlackColor = false}) =>
@@ -533,4 +527,24 @@ class AppTextStyles {
                   : isLightTheme(context)
                       ? AppColors.blackThemeColor
                       : AppColors.whiteThemeColor));
+
+  //! ADDRESS LIST ADDRESS NAME TEXT
+  static TextStyle addressNameText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 19,
+              letterSpacing: 0.35,
+              color: isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor));
+
+  //! EMPTY SCREEN TEXT
+  static TextStyle emptyScreenText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 20,
+          color: isLightTheme(context)
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 1);
 }

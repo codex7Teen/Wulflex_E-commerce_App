@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -160,6 +161,9 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                 //   style: AppTextStyles.searchFilterHeading,
                 // ),
                 DropdownButton<String>(
+                  dropdownColor: isLightTheme(context)
+                      ? AppColors.whiteThemeColor
+                      : AppColors.darkishGrey,
                   value: _selectedFilter,
                   borderRadius: BorderRadius.circular(18),
                   items: [
@@ -169,8 +173,8 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child:
-                          Text(value, style: AppTextStyles.searchFilterHeading),
+                      child: Text(value,
+                          style: AppTextStyles.searchFilterHeading(context)),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -188,6 +192,9 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                   },
                 ),
                 DropdownButton<String>(
+                  dropdownColor: isLightTheme(context)
+                      ? AppColors.whiteThemeColor
+                      : AppColors.darkishGrey,
                   value: _selectedFilter,
                   borderRadius: BorderRadius.circular(18),
                   items: [
@@ -197,8 +204,8 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child:
-                          Text(value, style: AppTextStyles.searchFilterHeading),
+                      child: Text(value,
+                          style: AppTextStyles.searchFilterHeading(context)),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -232,9 +239,24 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
 
                   if (_filteredProducts.isEmpty) {
                     return Center(
-                        child: Text('No products found! 😔',
-                            style: AppTextStyles.emptyProductsMessageText(
-                                context)));
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 130),
+                          Lottie.asset(
+                              'assets/lottie/search_empty_lottie_white.json',
+                              width: 190,
+                              repeat: false),
+                              SizedBox(height: 18),
+                          Text(
+                            'We couldn’t find what you’re looking for. Please refine your search.',
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.emptyScreenText(context),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                   // Show product card
                   return Expanded(
