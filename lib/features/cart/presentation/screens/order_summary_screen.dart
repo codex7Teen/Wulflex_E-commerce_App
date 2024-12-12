@@ -65,6 +65,12 @@ class ScreenOrderSummary extends StatelessWidget {
                           OrderSummaryScreenWidgets.buildItemsContainer(
                               context, cartItemsList),
                           SizedBox(height: 18),
+                          // Just showing a sizedbox the strcture the ui.
+                          cartItemsList.length == 1
+                              ? SizedBox(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.08)
+                              : SizedBox(),
                           OrderSummaryScreenWidgets
                               .buildPricedetailsAndProceedButton(
                                   context, subtotal, discount, total)

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -5,8 +7,10 @@ import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/data/models/user_model.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
+import 'package:wulflex/features/cart/presentation/screens/payment_screen.dart';
 import 'package:wulflex/features/cart/presentation/screens/select_address_screen.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
+import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
@@ -433,14 +437,34 @@ class OrderSummaryScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 10),
-          GreenButtonWidget(
-              addIcon: true,
-              icon: Icons.check_circle_outline_rounded,
-              buttonText: 'Proceed to Payment',
-              borderRadius: 25,
-              width: 1),
-          SizedBox(height: 4)
+          SizedBox(height: 14),
+          BlocBuilder<AddressBloc, AddressState>(
+            builder: (context, state) {
+              // Check if address is loaded and contains values
+              bool selectedAddressContainsValues = state is AddressLoaded &&
+                  state.selectedAddress != null &&
+                  state.selectedAddress!.name.trim().isNotEmpty;
+
+              return GreenButtonWidget(
+                  onTap: () {
+                    if (selectedAddressContainsValues) {
+                      log('Selected address has value. So proceeding to payment...');
+                      NavigationHelper.navigateToWithoutReplacement(
+                          context, ScreenPayment(totalAmount: total));
+                    } else {
+                      CustomSnackbar.showCustomSnackBar(
+                          context, 'Please select an address to proceed!',
+                          icon: Icons.error);
+                    }
+                  },
+                  addIcon: true,
+                  icon: Icons.check_circle_outline_rounded,
+                  buttonText: 'Proceed to Payment',
+                  borderRadius: 25,
+                  width: 1);
+            },
+          ),
+          SizedBox(height: 8)
         ],
       ),
     );

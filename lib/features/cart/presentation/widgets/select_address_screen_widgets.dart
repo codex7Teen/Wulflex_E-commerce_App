@@ -5,6 +5,7 @@ import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/address_model.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/cart/presentation/screens/add_address_screen.dart';
+import 'package:wulflex/features/cart/presentation/screens/edit_address_screen.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 
@@ -108,12 +109,29 @@ class SelectAddressScreenWidgets {
                     ],
                   ),
                   Spacer(),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 13, vertical: 4),
-                    decoration: BoxDecoration(
-                        color: AppColors.greenThemeColor,
-                        borderRadius: BorderRadius.circular(18)),
-                    child: Text('EDIT', style: AppTextStyles.selectAddressText),
+                  GestureDetector(
+                    onTap: () {
+                      NavigationHelper.navigateToWithoutReplacement(
+                          context,
+                          ScreenEditAddress(
+                              addressId: address.id!,
+                              name: address.name,
+                              phoneNumber: address.phoneNumber,
+                              pincode: address.pincode,
+                              state: address.stateName,
+                              city: address.cityName,
+                              houseName: address.houseName,
+                              areaName: address.areaName));
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+                      decoration: BoxDecoration(
+                          color: AppColors.greenThemeColor,
+                          borderRadius: BorderRadius.circular(18)),
+                      child:
+                          Text('EDIT', style: AppTextStyles.selectAddressText),
+                    ),
                   ),
                 ],
               ),

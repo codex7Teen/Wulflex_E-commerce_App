@@ -93,7 +93,7 @@ class EditAddressScreenWidgets {
               areaName: areaNameController.text.trim()));
         }
       },
-      buttonText: 'Save Address',
+      buttonText: 'Update Address',
       borderRadius: 25,
       width: 1,
       addIcon: true,

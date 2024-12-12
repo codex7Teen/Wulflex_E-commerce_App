@@ -6,6 +6,7 @@ import 'package:wulflex/core/config/app_constants.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
+import 'package:wulflex/features/cart/bloc/payment_bloc/payment_bloc.dart';
 import 'package:wulflex/features/home/bloc/category_bloc/category_bloc.dart';
 import 'package:wulflex/features/account/bloc/delete_account_bloc/delete_account_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CategoryBloc(categoryServices)),
         BlocProvider(create: (context) => CartBloc(cartServices)),
         BlocProvider(create: (context) => AddressBloc(addressServices)),
+        BlocProvider(create: (context) => PaymentBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {

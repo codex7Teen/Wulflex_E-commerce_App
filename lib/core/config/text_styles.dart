@@ -547,4 +547,21 @@ class AppTextStyles {
               ? AppColors.blackThemeColor
               : AppColors.whiteThemeColor,
           letterSpacing: 1);
+
+  //! PAYMENT PAGE TOTOAL AMOUNT TEXT
+  static final TextStyle paymentPageTotalAmountText = GoogleFonts.bebasNeue(
+    fontWeight: FontWeight.bold,
+    color: AppColors.greenThemeColor,
+    fontSize: 20,
+    letterSpacing: 1.5,
+  );
+
+    //! ORDER CONFIRMED TEXT BIGGG
+  static TextStyle orderConfirmedTextBig(BuildContext context) => GoogleFonts.bebasNeue(
+      fontSize: 34,
+      color: Theme.of(context).brightness == Brightness.light
+          ? AppColors.blackThemeColor
+          : AppColors.whiteThemeColor,
+      letterSpacing: 2.5,
+      fontWeight: FontWeight.w600);
 }
