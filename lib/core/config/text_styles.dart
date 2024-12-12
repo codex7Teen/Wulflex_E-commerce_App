@@ -556,12 +556,13 @@ class AppTextStyles {
     letterSpacing: 1.5,
   );
 
-    //! ORDER CONFIRMED TEXT BIGGG
-  static TextStyle orderConfirmedTextBig(BuildContext context) => GoogleFonts.bebasNeue(
-      fontSize: 34,
-      color: Theme.of(context).brightness == Brightness.light
-          ? AppColors.blackThemeColor
-          : AppColors.whiteThemeColor,
-      letterSpacing: 2.5,
-      fontWeight: FontWeight.w600);
+  //! ORDER CONFIRMED TEXT BIGGG
+  static TextStyle orderConfirmedTextBig(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 34,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 2.5,
+          fontWeight: FontWeight.w600);
 }

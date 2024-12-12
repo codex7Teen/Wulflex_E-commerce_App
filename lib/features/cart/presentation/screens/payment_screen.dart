@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:wulflex/core/config/app_colors.dart';
+import 'package:wulflex/core/config/app_constants.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/cart/bloc/payment_bloc/payment_bloc.dart';
 import 'package:wulflex/features/cart/presentation/screens/order_success_screen.dart';
@@ -10,9 +12,80 @@ import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
-class ScreenPayment extends StatelessWidget {
+class ScreenPayment extends StatefulWidget {
   final double totalAmount;
   const ScreenPayment({super.key, required this.totalAmount});
+
+  @override
+  ScreenPaymentState createState() => ScreenPaymentState();
+}
+
+class ScreenPaymentState extends State<ScreenPayment> {
+  late Razorpay _razorpay;
+
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Handle successful payment
+    CustomSnackbar.showCustomSnackBar(
+        context, 'Payment Successful! Order Placed.',
+        icon: Icons.check_circle);
+
+    NavigationHelper.navigateToWithReplacement(
+        context, const ScreenOrderSuccess());
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Handle payment failure
+    CustomSnackbar.showCustomSnackBar(
+        context, 'Payment Failed: ${response.message}',
+        icon: Icons.error);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Handle external wallet
+    CustomSnackbar.showCustomSnackBar(
+        context, 'External Wallet Selected: ${response.walletName}',
+        icon: Icons.wallet);
+  }
+
+  void _startRazorpayPayment() {
+    var options = {
+      'key': razorpayApiKey, // Razorpay api key
+      'amount': (widget.totalAmount * 100).toInt(), // Amount in paise
+      'name': 'Wulflex Shopping',
+      'description': 'Payment for Order',
+      'prefill': {
+        'contact': '', // Add customer phone number
+        'email': '' // Add customer email
+      },
+      'external': {
+        'wallets': ['paytm'] // Optional: Add supported wallets
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint('Error starting Razorpay: $e');
+      CustomSnackbar.showCustomSnackBar(
+          context, 'Failed to start payment. Please try again.',
+          icon: Icons.error);
+    }
+  }
+
+  @override
+  void dispose() {
+    _razorpay.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +102,8 @@ class ScreenPayment extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
                   width: double.infinity,
                   decoration: BoxDecoration(
                       color: isLightTheme(context)
@@ -46,9 +120,9 @@ class ScreenPayment extends StatelessWidget {
                             style: AppTextStyles.screenSubHeadings(context,
                                 fixedBlackColor: true),
                           ),
-                          SizedBox(width: 6),
+                          const SizedBox(width: 6),
                           Column(
-                            children: [
+                            children: const [
                               Icon(Icons.wallet,
                                   color: AppColors.blackThemeColor, size: 22),
                               SizedBox(height: 2)
@@ -56,18 +130,18 @@ class ScreenPayment extends StatelessWidget {
                           )
                         ],
                       ),
-                      SizedBox(height: 3),
+                      const SizedBox(height: 3),
                       Text(
-                        '₹ ${totalAmount.toString()}',
+                        '₹ ${widget.totalAmount.toString()}',
                         style: AppTextStyles.paymentPageTotalAmountText,
                       )
                     ],
                   ),
                 ),
-                SizedBox(height: 18),
-                //! PAYMENT OPTIONS
+                const SizedBox(height: 18),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
                   width: double.infinity,
                   decoration: BoxDecoration(
                       color: isLightTheme(context)
@@ -84,9 +158,9 @@ class ScreenPayment extends StatelessWidget {
                             style: AppTextStyles.screenSubHeadings(context,
                                 fixedBlackColor: true),
                           ),
-                          SizedBox(width: 6),
+                          const SizedBox(width: 6),
                           Column(
-                            children: [
+                            children: const [
                               Icon(Icons.wallet,
                                   color: AppColors.blackThemeColor, size: 22),
                               SizedBox(height: 2)
@@ -94,8 +168,8 @@ class ScreenPayment extends StatelessWidget {
                           )
                         ],
                       ),
-                      SizedBox(height: 3),
-                      //! cash on delvry
+                      const SizedBox(height: 3),
+                      // Cash on Delivery Option
                       GestureDetector(
                         onTap: () {
                           context
@@ -103,7 +177,7 @@ class ScreenPayment extends StatelessWidget {
                               .add(SelectCashOnDeliveryEvent());
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 11, horizontal: 14),
                           decoration: BoxDecoration(
                             color: isLightTheme(context)
@@ -136,18 +210,18 @@ class ScreenPayment extends StatelessWidget {
                                   ),
                                 ),
                               ]),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Image.asset('assets/cash_on_delivery.png',
                                   scale: 26),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Text('Cash on delivery',
                                   style: AppTextStyles.screenSubTitles)
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(height: 8),
-                      //! razorpay
+                      const SizedBox(height: 8),
+                      // Razorpay Option
                       GestureDetector(
                         onTap: () {
                           context
@@ -155,7 +229,7 @@ class ScreenPayment extends StatelessWidget {
                               .add(SelectRazorpayEvent());
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 14, horizontal: 14),
                           decoration: BoxDecoration(
                             color: isLightTheme(context)
@@ -188,7 +262,7 @@ class ScreenPayment extends StatelessWidget {
                                   ),
                                 ),
                               ]),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Image.asset('assets/razorpay.jpeg', scale: 18.5),
                             ],
                           ),
@@ -197,7 +271,7 @@ class ScreenPayment extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 GreenButtonWidget(
                   onTap: () {
                     if (state.isCashOnDeliverySelected == false &&
@@ -205,9 +279,12 @@ class ScreenPayment extends StatelessWidget {
                       CustomSnackbar.showCustomSnackBar(
                           context, 'Please select a payment method!',
                           icon: Icons.error);
+                    } else if (state.isRazorpaySelected) {
+                      // Call Razorpay payment method
+                      _startRazorpayPayment();
                     } else {
                       NavigationHelper.navigateToWithReplacement(
-                          context, ScreenOrderSuccess());
+                          context, const ScreenOrderSuccess());
                     }
                   },
                   buttonText: 'Place Order',

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 //! FIREBASE STORAGE BUCKET NAME
 const String bucket = 'wulflex.firebasestorage.app';
+const String razorpayApiKey = 'rzp_test_jIotm3SaZbXO9x';
 
 //! FIREBASE OPTIONS
 class FirebaseConfig {

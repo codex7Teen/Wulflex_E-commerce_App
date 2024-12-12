@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
-import 'package:wulflex/features/home/presentation/screens/home_screen.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';

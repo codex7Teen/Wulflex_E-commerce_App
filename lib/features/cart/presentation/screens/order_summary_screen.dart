@@ -22,61 +22,77 @@ class ScreenOrderSummary extends StatelessWidget {
           ? AppColors.whiteThemeColor
           : AppColors.blackThemeColor,
       appBar: customAppbarWithBackbutton(context, 'ORDER SUMMARY', 0.06),
-      body: BlocBuilder<CartBloc, CartState>(
+      //! Address bloc builder
+      body: BlocBuilder<AddressBloc, AddressState>(
         builder: (context, state) {
-          if (state is CartLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is CartError) {
-            return Center(child: Text('Failed to load data'));
-          } else if (state is CartLoaded) {
-            final cartItemsList = state.products;
-
-            // Calculate subtotal, discount, and total for all products in the cart
-            final subtotal = cartItemsList.fold(
-                0.0, (sum, product) => sum + product.retailPrice);
-            final discount = cartItemsList.fold(
-                0.0,
-                (sum, product) =>
-                    sum + (product.retailPrice - product.offerPrice));
-            final total = cartItemsList.fold(
-                0.0, (sum, product) => sum + product.offerPrice);
-
-            return BlocBuilder<UserProfileBloc, UserProfileState>(
+          if (state is AddressLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is AddressLoaded) {
+            //! cart bloc builder
+            return BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
-                if (state is UserProfileLoading) {
+                if (state is CartLoading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (state is UserProfileError) {
-                  // display error
-                  Center(child: Text('User Profile error'));
-                } else if (state is UserProfileLoaded) {
-                  final user = state.user;
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 18, left: 18, right: 18, bottom: 18),
-                      child: Column(
-                        children: [
-                          OrderSummaryScreenWidgets
-                              .buildAccountInformationContainer(context, user),
-                          SizedBox(height: 18),
-                          OrderSummaryScreenWidgets
-                              .buildDeliveryAddressContainer(context),
-                          SizedBox(height: 18),
-                          OrderSummaryScreenWidgets.buildItemsContainer(
-                              context, cartItemsList),
-                          SizedBox(height: 18),
-                          // Just showing a sizedbox the strcture the ui.
-                          cartItemsList.length == 1
-                              ? SizedBox(
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.08)
-                              : SizedBox(),
-                          OrderSummaryScreenWidgets
-                              .buildPricedetailsAndProceedButton(
-                                  context, subtotal, discount, total)
-                        ],
-                      ),
-                    ),
+                } else if (state is CartError) {
+                  return Center(child: Text('Failed to load data'));
+                } else if (state is CartLoaded) {
+                  final cartItemsList = state.products;
+
+                  // Calculate subtotal, discount, and total for all products in the cart
+                  final subtotal = cartItemsList.fold(
+                      0.0, (sum, product) => sum + product.retailPrice);
+                  final discount = cartItemsList.fold(
+                      0.0,
+                      (sum, product) =>
+                          sum + (product.retailPrice - product.offerPrice));
+                  final total = cartItemsList.fold(
+                      0.0, (sum, product) => sum + product.offerPrice);
+                  //! user profile bloc builder
+                  return BlocBuilder<UserProfileBloc, UserProfileState>(
+                    builder: (context, state) {
+                      if (state is UserProfileLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is UserProfileError) {
+                        // display error
+                        Center(child: Text('User Profile error'));
+                      } else if (state is UserProfileLoaded) {
+                        final user = state.user;
+                        return SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 18, left: 18, right: 18, bottom: 18),
+                            child: Column(
+                              children: [
+                                OrderSummaryScreenWidgets
+                                    .buildAccountInformationContainer(
+                                        context, user),
+                                SizedBox(height: 18),
+                                OrderSummaryScreenWidgets
+                                    .buildDeliveryAddressContainer(context),
+                                SizedBox(height: 18),
+                                OrderSummaryScreenWidgets.buildItemsContainer(
+                                    context, cartItemsList),
+                                SizedBox(height: 18),
+                                // Just showing a sizedbox the strcture the ui.
+                                cartItemsList.length == 1
+                                    ? SizedBox(
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                0.08)
+                                    : SizedBox(),
+                                OrderSummaryScreenWidgets
+                                    .buildPricedetailsAndProceedButton(
+                                        context, subtotal, discount, total)
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      return const Center(
+                          child: Text('Some Unknown error have occured.'));
+                    },
                   );
                 }
                 return const Center(

@@ -10,3 +10,7 @@ abstract class PaymentEvent extends Equatable {
 class SelectCashOnDeliveryEvent extends PaymentEvent {}
 
 class SelectRazorpayEvent extends PaymentEvent {}
+
+class RazorpaySuccessEvent extends PaymentEvent {}
+
+class RazorpayErrorEvent extends PaymentEvent {}

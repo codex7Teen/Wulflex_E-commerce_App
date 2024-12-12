@@ -16,4 +16,7 @@ final class PaymentUpdatedState extends PaymentState {
   const PaymentUpdatedState(
       {required super.isCashOnDeliverySelected,
       required super.isRazorpaySelected});
+
+  @override
+  List<Object> get props => [isCashOnDeliverySelected, isRazorpaySelected];
 }
