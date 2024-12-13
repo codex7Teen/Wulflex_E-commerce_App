@@ -4,6 +4,10 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/app_constants.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/data/models/address_model.dart';
+import 'package:wulflex/data/models/product_model.dart';
+import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
+import 'package:wulflex/features/cart/bloc/order_bloc/order_bloc.dart';
 import 'package:wulflex/features/cart/bloc/payment_bloc/payment_bloc.dart';
 import 'package:wulflex/features/cart/presentation/screens/order_success_screen.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
@@ -13,8 +17,14 @@ import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class ScreenPayment extends StatefulWidget {
+  final List<ProductModel> cartProducts;
+  final AddressModel selectedAddress;
   final double totalAmount;
-  const ScreenPayment({super.key, required this.totalAmount});
+  const ScreenPayment(
+      {super.key,
+      required this.totalAmount,
+      required this.cartProducts,
+      required this.selectedAddress});
 
   @override
   ScreenPaymentState createState() => ScreenPaymentState();
@@ -33,6 +43,15 @@ class ScreenPaymentState extends State<ScreenPayment> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Clear all cart items
+    context.read<CartBloc>().add(ClearAllCartItemsEvent());
+    // Create order
+    context.read<OrderBloc>().add(CreateOrderEvent(
+        products: widget.cartProducts,
+        totalAmount: widget.totalAmount,
+        address: widget.selectedAddress,
+        paymentMode: 'Razorpay'));
+
     // Handle successful payment
     CustomSnackbar.showCustomSnackBar(
         context, 'Payment Successful! Order Placed.',
@@ -283,6 +302,14 @@ class ScreenPaymentState extends State<ScreenPayment> {
                       // Call Razorpay payment method
                       _startRazorpayPayment();
                     } else {
+                      // Clear all cart items
+                      context.read<CartBloc>().add(ClearAllCartItemsEvent());
+                      // Create order
+                      context.read<OrderBloc>().add(CreateOrderEvent(
+                          products: widget.cartProducts,
+                          totalAmount: widget.totalAmount,
+                          address: widget.selectedAddress,
+                          paymentMode: 'Cash on delivery'));
                       NavigationHelper.navigateToWithReplacement(
                           context, const ScreenOrderSuccess());
                     }

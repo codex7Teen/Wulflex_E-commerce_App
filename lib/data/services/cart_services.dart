@@ -52,4 +52,23 @@ class CartServices {
         .doc(productId)
         .delete();
   }
+
+  //! CLEAR ENTIRE CART
+  Future<void> clearCart() async {
+    try {
+      final cartCollection =
+          _firestore.collection('users').doc(_userId).collection('cart');
+
+      // get all documents in the cart
+      final snapShot = await cartCollection.get();
+
+      // Delete each document
+      for (DocumentSnapshot doc in snapShot.docs) {
+        await doc.reference.delete();
+      }
+      log('SERVICES: CART FULLY CLEARED');
+    } catch (error) {
+      log('Error clearing cart: $error');
+    }
+  }
 }

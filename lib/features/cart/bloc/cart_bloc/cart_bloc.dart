@@ -49,5 +49,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(CartError(errorMessage: error.toString()));
       }
     });
+
+    //! CLEAR ALL CART ITEMS
+    on<ClearAllCartItemsEvent>((event, emit) async {
+      try {
+        emit(CartLoading());
+        await _cartServices.clearCart();
+        log('BLOC: CART ITEMS FULLY CLEARED');
+      } catch (error) {
+        CartError(errorMessage: error.toString());
+      }
+    });
   }
 }

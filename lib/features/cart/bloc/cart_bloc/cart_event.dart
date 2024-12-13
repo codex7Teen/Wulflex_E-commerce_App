@@ -29,3 +29,6 @@ class RemoveFromCartEvent extends CartEvent {
   @override
   List<Object> get props => [productId];
 }
+
+//! CLEAR ALL CART ITEMS 
+class ClearAllCartItemsEvent extends CartEvent {}

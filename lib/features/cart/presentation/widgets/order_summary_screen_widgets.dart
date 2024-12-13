@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/data/models/address_model.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/data/models/user_model.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
@@ -340,7 +341,12 @@ class OrderSummaryScreenWidgets {
   }
 
   static Widget buildPricedetailsAndProceedButton(
-      BuildContext context, double subtotal, double discount, double total) {
+      BuildContext context,
+      double subtotal,
+      double discount,
+      double total,
+      List<ProductModel> cartItemsList,
+      AddressModel selectedAddress) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
@@ -450,7 +456,12 @@ class OrderSummaryScreenWidgets {
                     if (selectedAddressContainsValues) {
                       log('Selected address has value. So proceeding to payment...');
                       NavigationHelper.navigateToWithoutReplacement(
-                          context, ScreenPayment(totalAmount: total));
+                          context,
+                          ScreenPayment(
+                            totalAmount: total,
+                            cartProducts: cartItemsList,
+                            selectedAddress: selectedAddress,
+                          ));
                     } else {
                       CustomSnackbar.showCustomSnackBar(
                           context, 'Please select an address to proceed!',

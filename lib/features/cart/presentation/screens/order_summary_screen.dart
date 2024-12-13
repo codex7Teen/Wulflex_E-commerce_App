@@ -30,6 +30,7 @@ class ScreenOrderSummary extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is AddressLoaded) {
+            final selectedAddress = state.selectedAddress;
             //! cart bloc builder
             return BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
@@ -84,7 +85,12 @@ class ScreenOrderSummary extends StatelessWidget {
                                     : SizedBox(),
                                 OrderSummaryScreenWidgets
                                     .buildPricedetailsAndProceedButton(
-                                        context, subtotal, discount, total)
+                                        context,
+                                        subtotal,
+                                        discount,
+                                        total,
+                                        cartItemsList,
+                                        selectedAddress!)
                               ],
                             ),
                           ),

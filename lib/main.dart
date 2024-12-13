@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/core/config/app_constants.dart';
+import 'package:wulflex/data/services/order_services.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
+import 'package:wulflex/features/cart/bloc/order_bloc/order_bloc.dart';
 import 'package:wulflex/features/cart/bloc/payment_bloc/payment_bloc.dart';
 import 'package:wulflex/features/home/bloc/category_bloc/category_bloc.dart';
 import 'package:wulflex/features/account/bloc/delete_account_bloc/delete_account_bloc.dart';
@@ -32,7 +34,6 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-
   runApp(const MyApp());
 }
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
     final categoryServices = CategoryServices();
     final cartServices = CartServices();
     final addressServices = AddressServices();
+    final orderServices = OrderServices();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticatonBlocBloc>(
@@ -61,6 +63,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CartBloc(cartServices)),
         BlocProvider(create: (context) => AddressBloc(addressServices)),
         BlocProvider(create: (context) => PaymentBloc()),
+        BlocProvider(create: (context) => OrderBloc(orderServices)),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
