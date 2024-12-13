@@ -48,7 +48,6 @@ class ScreenPaymentState extends State<ScreenPayment> {
     // Create order
     context.read<OrderBloc>().add(CreateOrderEvent(
         products: widget.cartProducts,
-        totalAmount: widget.totalAmount,
         address: widget.selectedAddress,
         paymentMode: 'Razorpay'));
 
@@ -307,7 +306,6 @@ class ScreenPaymentState extends State<ScreenPayment> {
                       // Create order
                       context.read<OrderBloc>().add(CreateOrderEvent(
                           products: widget.cartProducts,
-                          totalAmount: widget.totalAmount,
                           address: widget.selectedAddress,
                           paymentMode: 'Cash on delivery'));
                       NavigationHelper.navigateToWithReplacement(

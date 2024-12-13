@@ -15,9 +15,16 @@ final class OrdersLoaded extends OrderState {
   final List<OrderModel> orders;
 
   OrdersLoaded({required this.orders});
+
+  @override
+  List<Object> get props => [orders];
 }
 
-final class OrderCreated extends OrderState {}
+final class OrderCreated extends OrderState {
+  final List<OrderModel> orders;
+
+  OrderCreated({required this.orders});
+}
 
 final class OrderError extends OrderState {
   final String errorMessage;

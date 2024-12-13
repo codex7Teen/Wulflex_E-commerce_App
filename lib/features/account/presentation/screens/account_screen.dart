@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/features/account/presentation/screens/my_orders_screen.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/features/auth/presentation/screens/login_screen.dart';
@@ -63,7 +64,11 @@ class ScreenAccount extends StatelessWidget {
                       buildAccountHeading(context),
                       SizedBox(height: 8),
                       buildButtonCards(
-                          icon: Icons.shopping_bag_rounded, name: "MY ORDERS"),
+                          onTap: () =>
+                              NavigationHelper.navigateToWithoutReplacement(
+                                  context, ScreenMyOrders()),
+                          icon: Icons.shopping_bag_rounded,
+                          name: "MY ORDERS"),
                       SizedBox(height: 14),
                       buildButtonCards(
                           onTap: () =>

@@ -17,13 +17,12 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<CreateOrderEvent>((event, emit) async {
       try {
         emit(OrderLoading());
-        final newOrder = await orderServices.createOrder(
+        final newOrders = await orderServices.createMultipleOrders(
             products: event.products,
             address: event.address,
-            totalAmount: event.totalAmount,
             paymentMode: event.paymentMode);
-        emit(OrderCreated());
-        log('BLOC: ORDER CREATED');
+        emit(OrderCreated(orders: newOrders));
+        log('BLOC: ORDER CREATED: ${newOrders.length} order');
       } catch (error) {
         emit(OrderError(errorMessage: error.toString()));
       }

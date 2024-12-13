@@ -10,39 +10,49 @@ class OrderServices {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
-  //! CREATE ORDER
-  Future<OrderModel> createOrder(
-      {required List<ProductModel> products,
-      required AddressModel address,
-      required double totalAmount, required String paymentMode}) async {
+  //! CREATE MULTIPLE ORDERS (ONE PER PRODUCT)
+  Future<List<OrderModel>> createMultipleOrders({
+    required List<ProductModel> products,
+    required AddressModel address,
+    required String paymentMode,
+  }) async {
     final userId = _auth.currentUser!.uid;
+    List<OrderModel> createdOrders = [];
 
-    // Create order document in firestore
-    final orderRef = _firestore.collection('orders').doc();
+    // Create a separate order for each product
+    for (var product in products) {
+      // Create order document in firestore
+      final orderRef = _firestore.collection('orders').doc();
 
-    final orderData = {
-      'id': orderRef.id,
-      'userId': userId,
-      'products': products.map((p) => p.toMap()).toList(),
-      'address': address.toMap(),
-      'totalAmount': totalAmount,
-      'paymentMode': paymentMode,
-      'orderDate': DateTime.now(),
-      'status': OrderStatus.pending.toString()
-    };
+      final orderData = {
+        'id': orderRef.id,
+        'userId': userId,
+        'products': [product.toMap()], // Only one product per order
+        'address': address.toMap(),
+        'totalAmount': product.offerPrice, // Individual product price
+        'paymentMode': paymentMode,
+        'orderDate': DateTime.now(),
+        'status': OrderStatus.pending.toString()
+      };
 
-    await orderRef.set(orderData);
+      await orderRef.set(orderData);
 
-    log('SERVICES: CREATED USER ORDER: DOC ID IS ${orderRef.id}');
+      log('SERVICES: CREATED USER ORDER: DOC ID IS ${orderRef.id} FOR PRODUCT ${product.name}');
 
-    return OrderModel(
+      final newOrder = OrderModel(
         id: orderRef.id,
-        products: products,
+        products: [product],
         address: address,
         orderDate: DateTime.now(),
-        totalAmount: totalAmount,
+        totalAmount: product.offerPrice,
         paymentMode: paymentMode,
-        status: OrderStatus.pending);
+        status: OrderStatus.pending,
+      );
+
+      createdOrders.add(newOrder);
+    }
+
+    return createdOrders;
   }
 
   //! FETCH USER ORDERS
