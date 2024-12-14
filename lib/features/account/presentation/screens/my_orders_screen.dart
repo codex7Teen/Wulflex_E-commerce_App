@@ -141,7 +141,7 @@ class ScreenMyOrders extends StatelessWidget {
   String _getOrderStatusMessage(OrderStatus status) {
     switch (status) {
       case OrderStatus.pending:
-        return "Order is pending...";
+        return "Order Recieved";
       case OrderStatus.processing:
         return "Order is processing...";
       case OrderStatus.shipped:

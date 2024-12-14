@@ -574,4 +574,19 @@ class AppTextStyles {
               ? AppColors.darkishGrey
               : AppColors.lightGreyThemeColor,
           letterSpacing: 0.4);
+
+  //! SCREEN ORDERSTATUS MINI SUB TITLES
+  static TextStyle screenOrderStatusMiniSubTitles(BuildContext context,
+          {bool isPast = true}) =>
+      GoogleFonts.robotoCondensed(
+          fontWeight: isPast ? FontWeight.bold : FontWeight.w500,
+          color: isLightTheme(context)
+              ? isPast
+                  ? AppColors.blackThemeColor
+                  : AppColors.appBarLightGreyThemeColor
+              : isPast
+                  ? AppColors.whiteThemeColor
+                  : AppColors.appBarLightGreyThemeColor,
+          fontSize: 16,
+          letterSpacing: 0.4);
 }
