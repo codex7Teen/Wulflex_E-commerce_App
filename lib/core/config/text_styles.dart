@@ -565,4 +565,8 @@ class AppTextStyles {
               : AppColors.whiteThemeColor,
           letterSpacing: 2.5,
           fontWeight: FontWeight.w600);
+
+//! MY ORDERS SCREEN MINI TEXT
+  static final TextStyle myOrdersScreenMiniText = GoogleFonts.robotoCondensed(
+      fontSize: 15, color: AppColors.darkishGrey, letterSpacing: 0.4);
 }

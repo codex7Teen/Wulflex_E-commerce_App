@@ -1,16 +1,11 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
-import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/presentation/widgets/edit_profile_screen_widgets.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
-import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/custom_textfields_widget.dart';
-import 'package:wulflex/shared/widgets/upload_progress_indicator_widget.dart';
 
 class ScreenEditProfile extends StatefulWidget {
   final String screenTitle;
