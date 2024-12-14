@@ -17,6 +17,9 @@ class ScreenOrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: isLightTheme(context)
+          ? AppColors.whiteThemeColor
+          : AppColors.blackThemeColor,
       appBar: customAppbarWithBackbutton(context, 'ORDER DETAILS', 0.09),
       body: BlocBuilder<UserProfileBloc, UserProfileState>(
         builder: (context, state) {
@@ -33,7 +36,7 @@ class ScreenOrderDetails extends StatelessWidget {
                 children: [
                   Text(
                     "Order ID - ${order.id.toUpperCase()}",
-                    style: AppTextStyles.myOrdersScreenMiniText,
+                    style: AppTextStyles.myOrdersScreenMiniText(context),
                   ),
                   SizedBox(height: 18),
                   Container(
@@ -203,8 +206,7 @@ class ScreenOrderDetails extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: Text(
                       'ORDER STATUS',
-                      style: AppTextStyles.screenSubHeadings(context,
-                          fixedBlackColor: true),
+                      style: AppTextStyles.screenSubHeadings(context),
                     ),
                   ),
                 ],
