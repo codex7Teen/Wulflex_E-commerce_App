@@ -5,6 +5,7 @@ import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/order_model.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
+import 'package:wulflex/features/account/presentation/screens/rate_product_screen.dart';
 import 'package:wulflex/features/account/presentation/widgets/timeline_tile_widget.dart';
 import 'package:wulflex/features/home/presentation/screens/view_product_details_screen.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
@@ -33,7 +34,7 @@ class ScreenOrderDetails extends StatelessWidget {
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(
-                    left: 18, right: 18, top: 18, bottom: 18),
+                    left: 18, right: 18, top: 18, bottom: 75),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,7 +281,7 @@ class ScreenOrderDetails extends StatelessWidget {
                               isPast: order.status == OrderStatus.shipped ||
                                   order.status == OrderStatus.delivered,
                               endChild: Text(
-                                'Item =0n the way',
+                                'Item on the way',
                                 style: AppTextStyles
                                     .screenOrderStatusMiniSubTitles(context,
                                         isPast: order.status ==
@@ -303,6 +304,7 @@ class ScreenOrderDetails extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Divider(color: AppColors.lightGreyThemeColor),
                     SizedBox(height: 2),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -347,6 +349,37 @@ class ScreenOrderDetails extends StatelessWidget {
                           ),
                           Spacer(),
                         ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: order.status == OrderStatus.delivered,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(color: AppColors.lightGreyThemeColor),
+                            SizedBox(height: 2),
+                            Text(
+                              'RATE THE PRODUCT',
+                              style: AppTextStyles.screenSubHeadings(context),
+                            ),
+                            SizedBox(height: 4),
+                            GestureDetector(
+                              onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenRateProduct()),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 5),
+                                decoration: BoxDecoration(
+                                    color: AppColors.greenThemeColor,
+                                    borderRadius: BorderRadius.circular(18)),
+                                child: Text('RATE HERE.',
+                                    style: AppTextStyles.selectAddressText),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],

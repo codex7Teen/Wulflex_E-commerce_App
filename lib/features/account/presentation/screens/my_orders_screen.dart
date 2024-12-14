@@ -104,11 +104,18 @@ class ScreenMyOrders extends StatelessWidget {
                                     children: [
                                       Text(
                                         _getOrderStatusMessage(order.status),
-                                        style: AppTextStyles.itemCardBrandText,
+                                        style: AppTextStyles.itemCardBrandText
+                                            .copyWith(
+                                                color: _getOrderStatusMessage(
+                                                            order.status) ==
+                                                        "Delivered successfully"
+                                                    ? AppColors.greenThemeColor
+                                                    : AppColors
+                                                        .blackThemeColor),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(height: 6),
+                                      SizedBox(height: 8),
                                       Text(
                                         "${product.brandName} ${product.name}",
                                         style: AppTextStyles.itemCardNameText,
@@ -118,6 +125,8 @@ class ScreenMyOrders extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                                Icon(Icons.arrow_forward_ios_rounded,
+                                    color: AppColors.greyThemeColor, size: 18)
                               ],
                             ),
                           ),

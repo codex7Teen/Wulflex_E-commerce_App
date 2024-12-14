@@ -335,7 +335,7 @@ class AppTextStyles {
               : isLightTheme(context)
                   ? AppColors.blackThemeColor
                   : AppColors.whiteThemeColor,
-          letterSpacing: 1,
+          letterSpacing: 1.1,
           fontWeight: FontWeight.w600);
 
   //! SCREEN SUB TITLES
