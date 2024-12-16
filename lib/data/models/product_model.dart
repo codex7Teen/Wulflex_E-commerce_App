@@ -18,7 +18,7 @@ class ProductModel {
       {required this.id,
       required this.brandName,
       required this.name,
-      required this.description,
+      required this.description, 
       required this.category,
       required this.imageUrls,
       required this.weights,

@@ -30,5 +30,5 @@ class RemoveFromCartEvent extends CartEvent {
   List<Object> get props => [productId];
 }
 
-//! CLEAR ALL CART ITEMS 
+//! CLEAR ALL CART ITEMS
 class ClearAllCartItemsEvent extends CartEvent {}

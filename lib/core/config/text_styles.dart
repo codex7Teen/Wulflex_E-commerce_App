@@ -589,4 +589,57 @@ class AppTextStyles {
                   : AppColors.appBarLightGreyThemeColor,
           fontSize: 16,
           letterSpacing: 0.4);
+
+  //! RATE SCRREEN MINI TEXT
+  static TextStyle rateScreenMiniText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 17,
+          color: isLightTheme(context)
+              ? AppColors.greyThemeColor
+              : AppColors.lightGreyThemeColor,
+          letterSpacing: 0.2);
+
+  //! RATE SUB HEADING TEXT
+  static TextStyle rateScreenSubheadingText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 17,
+          fontWeight: FontWeight.w500,
+          color: isLightTheme(context)
+              ? AppColors.blackThemeColor
+              : AppColors.lightGreyThemeColor,
+          letterSpacing: 0.2);
+
+  //! RATE SCRREEN SUPER MINI TEXT
+  static TextStyle rateScreenSupermini(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 14,
+          color: isLightTheme(context)
+              ? AppColors.greyThemeColor
+              : AppColors.darkishGrey,
+          letterSpacing: 0);
+
+  //! RATING SCREEN TEXT FIELD STYEL
+  static TextStyle ratingScreenTextFieldStyle(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              color: isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.lightGreyThemeColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              letterSpacing: 0.4));
+
+  //! RATING SCREEN TEXT FIELD HINT STYEL
+  static TextStyle ratingScreenTextFieldhintStyle(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 15.5, color: AppColors.greyThemeColor, letterSpacing: 0.2);
+
+  //! EMPTY SECTION TEXT
+  static TextStyle emptySectionText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 17.5,
+          color: isLightTheme(context)
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor,
+          letterSpacing: 0.8);
 }

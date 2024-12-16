@@ -304,7 +304,10 @@ class ScreenOrderDetails extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Divider(color: AppColors.lightGreyThemeColor),
+                    Divider(
+                        color: isLightTheme(context)
+                            ? AppColors.lightGreyThemeColor
+                            : AppColors.greyThemeColor),
                     SizedBox(height: 2),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -353,21 +356,29 @@ class ScreenOrderDetails extends StatelessWidget {
                     ),
                     Visibility(
                       visible: order.status == OrderStatus.delivered,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Divider(color: AppColors.lightGreyThemeColor),
-                            SizedBox(height: 2),
-                            Text(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Divider(
+                              color: isLightTheme(context)
+                                  ? AppColors.lightGreyThemeColor
+                                  : AppColors.greyThemeColor),
+                          SizedBox(height: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18),
+                            child: Text(
                               'RATE THE PRODUCT',
                               style: AppTextStyles.screenSubHeadings(context),
                             ),
-                            SizedBox(height: 4),
-                            GestureDetector(
-                              onTap: () => NavigationHelper.navigateToWithoutReplacement(context, ScreenRateProduct()),
+                          ),
+                          SizedBox(height: 6),
+                          GestureDetector(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context, ScreenRateProduct(productModel: product)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 18),
                               child: Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 5),
@@ -377,9 +388,9 @@ class ScreenOrderDetails extends StatelessWidget {
                                 child: Text('RATE HERE.',
                                     style: AppTextStyles.selectAddressText),
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
                     )
                   ],

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
@@ -40,6 +43,9 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
   @override
   void initState() {
     context.read<FavoriteBloc>().add(LoadFavoritesEvent());
+    context
+        .read<ReviewBloc>()
+        .add(FetchProductReviewsEvent(productId: widget.productModel.id!));
     super.initState();
   }
 
@@ -131,7 +137,48 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                           SizedBox(height: 24),
                           buildAddToCartButton(context, widget.productModel,
                               selectedWeight, selectedSize),
-                          SizedBox(height: 20)
+                          SizedBox(height: 24),
+                          Text("RATINGS & REVIEWS",
+                              style:
+                                  AppTextStyles.viewProductTitleText(context)),
+                          SizedBox(height: 6),
+                          BlocBuilder<ReviewBloc, ReviewState>(
+                              builder: (context, state) {
+                            if (state is ReviewLoading) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (state is ReviewError) {
+                              return Center(
+                                  child: Text('Failed to load reviews.'));
+                            } else if (state is ReviewsLoaded) {
+                              final reviews = state.reviews;
+                              if (reviews.isNotEmpty) {
+                                return Text(
+                                  "'review'",
+                                );
+                              } else {
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Lottie.asset(
+                                          'assets/lottie/no_reviews_lottie.json',
+                                          width: 200),
+                                      Text(
+                                        'No reviews yet. Check back later\nfor customer insights.',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.emptySectionText(
+                                            context),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                            }
+                            return Center(child: Text("Something went wrong"));
+                          }),
+                          SizedBox(height: 20),
                         ],
                       ),
                     ),
