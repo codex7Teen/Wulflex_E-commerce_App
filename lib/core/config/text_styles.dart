@@ -640,6 +640,42 @@ class AppTextStyles {
           fontSize: 17.5,
           color: isLightTheme(context)
               ? AppColors.blackThemeColor
-              : AppColors.whiteThemeColor,
+              : AppColors.lightGreyThemeColor,
           letterSpacing: 0.8);
+
+  //! VIEW RATINGS BIG RATING TEXT
+  static final TextStyle viewRatingBigRatingText = GoogleFonts.bebasNeue(
+      textStyle: TextStyle(
+          fontSize: 38,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 3,
+          color: AppColors.greenThemeColor));
+
+  //!TOTAL REVIEWS TEXT
+  static TextStyle buildTotalReviewsText(BuildContext context) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 17.5,
+          color: isLightTheme(context)
+              ? AppColors.darkishGrey
+              : AppColors.lightGreyThemeColor,
+          letterSpacing: 2.5,
+          fontWeight: FontWeight.w600);
+
+  //!LINEAR PROGESS INDICATOR LEADING TEXT
+  static final TextStyle linearProgressIndicatorLeadingText =
+      GoogleFonts.robotoCondensed(
+          fontSize: 17,
+          color: AppColors.greenThemeColor,
+          letterSpacing: 2.5,
+          fontWeight: FontWeight.w600);
+
+  //!LINEAR PROGESS INDICATOR TRAILING TEXT
+  static TextStyle linearProgressIndicatorTrailingText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          fontSize: 13.2,
+          color: isLightTheme(context)
+              ? AppColors.darkishGrey
+              : AppColors.lightGreyThemeColor,
+          letterSpacing: 0.2,
+          fontWeight: FontWeight.w500);
 }

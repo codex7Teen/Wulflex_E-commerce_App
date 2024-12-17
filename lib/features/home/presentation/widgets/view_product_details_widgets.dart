@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:like_button/like_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
@@ -186,26 +188,88 @@ Widget buildProductHeadingText(BuildContext context, ProductModel product) {
 }
 
 Widget buildRatingsContainer() {
-  return Container(
-    width: 198,
-    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9),
-    decoration: BoxDecoration(
-      border: Border.all(color: AppColors.lightGreyThemeColor),
-      borderRadius: BorderRadius.circular(25),
-    ),
-    child: Row(
-      children: [
-        Icon(Icons.star_rate, color: AppColors.greenThemeColor, size: 20),
-        Icon(Icons.star_rate, color: AppColors.greenThemeColor, size: 20),
-        Icon(Icons.star_rate, color: AppColors.greenThemeColor, size: 20),
-        Icon(Icons.star_rate, color: AppColors.greenThemeColor, size: 20),
-        Icon(Icons.star_rate, color: AppColors.lightGreyThemeColor, size: 20),
-        SizedBox(width: 8),
-        Text(
-          '4.0 Ratings',
-          style: AppTextStyles.viewProductratingsText,
-        ),
-      ],
+  return IntrinsicWidth(
+    child: Container(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.lightGreyThemeColor),
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: BlocBuilder<ReviewBloc, ReviewState>(
+        builder: (context, state) {
+          if (state is ReviewLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is ReviewError) {
+            return Center(child: Text('Review Error'));
+          } else if (state is ReviewsLoaded) {
+            final reviews = state.reviews;
+            if (reviews.isNotEmpty) {
+              //! GETTING TOTAL RATINGS
+              final double averageRating = reviews
+                      .map((review) => review.rating)
+                      .reduce((a, b) => a + b) /
+                  reviews.length;
+              // rounding off the total ratings
+              final roundedRating =
+                  double.parse(averageRating.toStringAsFixed(1));
+              return Row(
+                children: [
+                  RatingBar(
+                      itemSize: 19,
+                      allowHalfRating: true,
+                      initialRating: roundedRating,
+                      ignoreGestures: true,
+                      ratingWidget: RatingWidget(
+                          full: Icon(
+                            Icons.star_rounded,
+                            color: AppColors.greenThemeColor,
+                          ),
+                          half: Icon(
+                            Icons.star_half_rounded,
+                            color: AppColors.greenThemeColor,
+                          ),
+                          empty: Icon(Icons.star_border_rounded,
+                              color: AppColors.appBarLightGreyThemeColor)),
+                      onRatingUpdate: (value) {}),
+                  SizedBox(width: 8),
+                  Text(
+                    '4.0 Ratings',
+                    style: AppTextStyles.viewProductratingsText,
+                  ),
+                ],
+              );
+            } else {
+              return Row(
+                children: [
+                  RatingBar(
+                      itemSize: 19,
+                      allowHalfRating: true,
+                      initialRating: 0,
+                      ignoreGestures: true,
+                      ratingWidget: RatingWidget(
+                          full: Icon(
+                            Icons.star_rounded,
+                            color: AppColors.greenThemeColor,
+                          ),
+                          half: Icon(
+                            Icons.star_half_rounded,
+                            color: AppColors.greenThemeColor,
+                          ),
+                          empty: Icon(Icons.star_border_rounded,
+                              color: AppColors.greyThemeColor)),
+                      onRatingUpdate: (value) {}),
+                  SizedBox(width: 8),
+                  Text(
+                    'No Ratings yet',
+                    style: AppTextStyles.viewProductratingsText,
+                  ),
+                ],
+              );
+            }
+          }
+          return Text('Error: Try reloading the page');
+        },
+      ),
     ),
   );
 }
@@ -381,5 +445,33 @@ Widget buildAddToCartButton(BuildContext context, ProductModel product,
           width: 1,
           isLoading: state is CartLoading);
     },
+  );
+}
+
+Widget customReviewProgressPercentageIndicator(BuildContext context,
+    String leadingText, String trailingText, double progressValue) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Icon(Icons.star_rounded, color: AppColors.greenThemeColor, size: 25),
+      SizedBox(width: 3),
+      Text(leadingText,
+          style: AppTextStyles.linearProgressIndicatorLeadingText),
+      SizedBox(width: 3.5),
+      SizedBox(
+        width: 130,
+        child: LinearProgressIndicator(
+          color: AppColors.greenThemeColor,
+          backgroundColor: AppColors.appBarLightGreyThemeColor,
+          borderRadius: BorderRadius.circular(10),
+          minHeight: 10,
+          value: progressValue,
+        ),
+      ),
+      SizedBox(width: 3.5),
+      Text(trailingText,
+          style: AppTextStyles.linearProgressIndicatorTrailingText(context))
+    ],
   );
 }

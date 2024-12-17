@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
@@ -152,8 +155,160 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                             } else if (state is ReviewsLoaded) {
                               final reviews = state.reviews;
                               if (reviews.isNotEmpty) {
-                                return Text(
-                                  "'review'",
+                                //! GETTING TOTAL RATINGS
+                                final double averageRating = reviews
+                                        .map((review) => review.rating)
+                                        .reduce((a, b) => a + b) /
+                                    reviews.length;
+                                // rounding off the total ratings
+                                final roundedRating = double.parse(
+                                    averageRating.toStringAsFixed(1));
+
+                                //! GETTING THE PERCENTAGE OF STARS
+                                // Count number of ratings in each range
+                                int countOfOnestar = 0;
+                                int countOfTwostar = 0;
+                                int countOfThreestar = 0;
+                                int countOfFourstar = 0;
+                                int countOfFiveStar = 0;
+
+                                for (var review in reviews) {
+                                  if (review.rating >= 1.0 &&
+                                      review.rating <= 1.9) {
+                                    countOfOnestar++;
+                                  } else if (review.rating >= 2.0 &&
+                                      review.rating <= 2.9) {
+                                    countOfTwostar++;
+                                  } else if (review.rating >= 3.0 &&
+                                      review.rating <= 3.9) {
+                                    countOfThreestar++;
+                                  } else if (review.rating >= 4.0 &&
+                                      review.rating <= 4.9) {
+                                    countOfFourstar++;
+                                  } else if (review.rating == 5.0) {
+                                    countOfFiveStar++;
+                                  }
+                                }
+                                // Calculate the percentages
+                                final totalReviews = reviews.length;
+                                final percentageOfOnestar =
+                                    (countOfOnestar / totalReviews) * 100;
+                                final percentageOfTwostar =
+                                    (countOfTwostar / totalReviews) * 100;
+                                final percentageOfThreestar =
+                                    (countOfThreestar / totalReviews) * 100;
+                                final percentageOfFourstar =
+                                    (countOfFourstar / totalReviews) * 100;
+                                final percentageOfFivestar =
+                                    (countOfFiveStar / totalReviews) * 100;
+                                // Rounded percentages in string
+                                String roundedPercentageOfOneStar =
+                                    "${percentageOfOnestar.round().toString()}%";
+                                String roundedPercentageOfTwoStar =
+                                    "${percentageOfTwostar.round().toString()}%";
+                                String roundedPercentageOfThreeStar =
+                                    "${percentageOfThreestar.round().toString()}%";
+                                String roundedPercentageOfFourStar =
+                                    "${percentageOfFourstar.round().toString()}%";
+                                String roundedPercentageOfFiveStar =
+                                    "${percentageOfFivestar.round().toString()}%";
+
+                                //! Function to convert the percentage string to a decimal value
+                                double convertPercentageToDecimal(
+                                    String percentageString) {
+                                  // Remove the '%' sign and convert to double
+                                  double percentage = double.parse(
+                                      percentageString.replaceAll('%', ''));
+                                  // convert to a value between 0 and 1
+                                  return percentage / 100.0;
+                                }
+
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(roundedRating.toString(),
+                                              style: AppTextStyles
+                                                  .viewRatingBigRatingText),
+                                          SizedBox(height: 1.5),
+                                          RatingBar(
+                                              itemPadding: EdgeInsets.symmetric(
+                                                  horizontal: 2),
+                                              itemSize: 24,
+                                              allowHalfRating: true,
+                                              initialRating: roundedRating,
+                                              ignoreGestures: true,
+                                              ratingWidget: RatingWidget(
+                                                  full: Icon(
+                                                    Icons.star_rounded,
+                                                    color: AppColors
+                                                        .greenThemeColor,
+                                                  ),
+                                                  half: Icon(
+                                                    Icons.star_half_rounded,
+                                                    color: AppColors
+                                                        .greenThemeColor,
+                                                  ),
+                                                  empty: Icon(
+                                                      Icons.star_border_rounded,
+                                                      color: AppColors
+                                                          .appBarLightGreyThemeColor)),
+                                              onRatingUpdate: (value) {}),
+                                          SizedBox(height: 6),
+                                          Text(
+                                            '${reviews.length} REVIEWS',
+                                            style: AppTextStyles
+                                                .buildTotalReviewsText(context),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        customReviewProgressPercentageIndicator(
+                                            context,
+                                            '5',
+                                            roundedPercentageOfFiveStar,
+                                            convertPercentageToDecimal(
+                                                roundedPercentageOfFiveStar)),
+                                        customReviewProgressPercentageIndicator(
+                                            context,
+                                            '4',
+                                            roundedPercentageOfFourStar,
+                                            convertPercentageToDecimal(
+                                                roundedPercentageOfFourStar)),
+                                        customReviewProgressPercentageIndicator(
+                                            context,
+                                            '3',
+                                            roundedPercentageOfThreeStar,
+                                            convertPercentageToDecimal(
+                                                roundedPercentageOfThreeStar)),
+                                        customReviewProgressPercentageIndicator(
+                                            context,
+                                            '2',
+                                            roundedPercentageOfTwoStar,
+                                            convertPercentageToDecimal(
+                                                roundedPercentageOfTwoStar)),
+                                        customReviewProgressPercentageIndicator(
+                                            context,
+                                            '1',
+                                            roundedPercentageOfOneStar,
+                                            convertPercentageToDecimal(
+                                                roundedPercentageOfOneStar)),
+                                      ],
+                                    )
+                                  ],
                                 );
                               } else {
                                 return Center(
