@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -52,11 +53,22 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                product.brandName,
-                style: AppTextStyles.itemCardBrandText,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    product.brandName,
+                    style: AppTextStyles.itemCardBrandText,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    product.selectedSize ?? product.selectedWeight ?? '',
+                    style: AppTextStyles.selectedSizeOrWeightText,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
               Text(
                 product.name,

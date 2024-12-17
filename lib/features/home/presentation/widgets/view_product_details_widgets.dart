@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -9,14 +10,16 @@ import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart'
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/home/presentation/screens/image_viewer_screen.dart';
+import 'package:wulflex/features/home/presentation/screens/size_chart_screen.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/custom_weightandsize_selector_container_widget.dart';
+import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 PreferredSizeWidget buildAppBarWithIcons(
     BuildContext context, ProductModel product) {
-  final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
-
   return AppBar(
     backgroundColor: Colors.transparent,
     automaticallyImplyLeading: false,
@@ -34,11 +37,11 @@ PreferredSizeWidget buildAppBarWithIcons(
                   width: 55,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isLightTheme
+                      color: isLightTheme(context)
                           ? AppColors.whiteThemeColor
                           : AppColors.blackThemeColor),
                   child: Icon(Icons.arrow_back_ios_new_rounded,
-                      color: isLightTheme
+                      color: isLightTheme(context)
                           ? AppColors.blackThemeColor
                           : AppColors.whiteThemeColor),
                 ),
@@ -51,7 +54,7 @@ PreferredSizeWidget buildAppBarWithIcons(
                 width: 55,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: isLightTheme
+                    color: isLightTheme(context)
                         ? AppColors.whiteThemeColor
                         : AppColors.blackThemeColor),
                 child: Center(
@@ -80,7 +83,7 @@ PreferredSizeWidget buildAppBarWithIcons(
                                   Icons.favorite,
                                   color: isLiked
                                       ? Colors.pinkAccent
-                                      : isLightTheme
+                                      : isLightTheme(context)
                                           ? AppColors.blackThemeColor
                                           : AppColors.whiteThemeColor,
                                   size: 28,
@@ -89,22 +92,22 @@ PreferredSizeWidget buildAppBarWithIcons(
                                   Icons.favorite_border_rounded,
                                   color: isLiked
                                       ? Colors.pinkAccent
-                                      : isLightTheme
+                                      : isLightTheme(context)
                                           ? AppColors.blackThemeColor
                                           : AppColors.whiteThemeColor,
                                   size: 28,
                                 );
                         },
                         circleColor: CircleColor(
-                            start: isLightTheme
+                            start: isLightTheme(context)
                                 ? AppColors.blackThemeColor
                                 : AppColors.whiteThemeColor,
-                            end: isLightTheme
+                            end: isLightTheme(context)
                                 ? AppColors.blackThemeColor
                                 : AppColors.whiteThemeColor),
                         bubblesColor: BubblesColor(
                             dotPrimaryColor: AppColors.blueThemeColor,
-                            dotSecondaryColor: isLightTheme
+                            dotSecondaryColor: isLightTheme(context)
                                 ? AppColors.blackThemeColor
                                 : AppColors.whiteThemeColor),
                         size: 28,
@@ -124,44 +127,43 @@ PreferredSizeWidget buildAppBarWithIcons(
 Widget buildItemImageSlider(
     BuildContext context, PageController pageController, ProductModel product) {
   return SizedBox(
-      height: 300,
-      width: MediaQuery.sizeOf(context).width * 1,
-      child: PageView.builder(
-        controller: pageController,
-        itemCount: product.imageUrls.length,
-        itemBuilder: (context, index) {
-          return Center(
+    height: 300,
+    width: MediaQuery.sizeOf(context).width,
+    child: PageView.builder(
+      controller: pageController,
+      itemCount: product.imageUrls.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(context,
+              ScreenFullScreenImageViewer(imageUrls: product.imageUrls)),
+          child: Center(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: SizedBox(
                 height: 250,
                 width: 250,
-                child: ClipRRect(
-                    child: Image.network(
-                  product.imageUrls[index],
+                child: CachedNetworkImage(
+                  imageUrl: product.imageUrls[index],
                   fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) => Image.asset(
+                  progressIndicatorBuilder: (context, url, downloadProgress) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: downloadProgress.progress, // Shows the progress
+                      ),
+                    );
+                  },
+                  errorWidget: (context, url, error) => Image.asset(
                     'assets/wulflex_logo_nobg.png',
                     fit: BoxFit.contain,
                   ),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    // show image loading indicator
-                    return Center(
-                        child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null));
-                  },
-                )),
+                ),
               ),
             ),
-          );
-        },
-      ));
+          ),
+        );
+      },
+    ),
+  );
 }
 
 Widget buildPageIndicator(
@@ -202,13 +204,13 @@ Widget buildRatingsContainer() {
           } else if (state is ReviewError) {
             return Center(child: Text('Review Error'));
           } else if (state is ReviewsLoaded) {
-            final reviews = state.reviews;
-            if (reviews.isNotEmpty) {
+            final enhancedReviews = state.reviews;
+            if (enhancedReviews.isNotEmpty) {
               //! GETTING TOTAL RATINGS
-              final double averageRating = reviews
-                      .map((review) => review.rating)
+              final double averageRating = enhancedReviews
+                      .map((enhancedReview) => enhancedReview.review.rating)
                       .reduce((a, b) => a + b) /
-                  reviews.length;
+                  enhancedReviews.length;
               // rounding off the total ratings
               final roundedRating =
                   double.parse(averageRating.toStringAsFixed(1));
@@ -285,14 +287,22 @@ Widget buildSizeAndSizeChartText(
           style: AppTextStyles.viewProductTitleText(context),
         ),
         Spacer(),
-        Icon(
-          Icons.straighten_outlined,
-          color: AppColors.greenThemeColor,
-        ),
-        SizedBox(width: 6),
-        Text(
-          'Size Chart',
-          style: AppTextStyles.sizeChartText,
+        GestureDetector(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(
+              context, ScreenSizeChart()),
+          child: Row(
+            children: [
+              Icon(
+                Icons.straighten_outlined,
+                color: AppColors.greenThemeColor,
+              ),
+              SizedBox(width: 6),
+              Text(
+                'Size Chart',
+                style: AppTextStyles.sizeChartText,
+              ),
+            ],
+          ),
         ),
       ],
     ),
@@ -333,7 +343,7 @@ Widget buildWeightSelectors(String? selectedWeight, ProductModel product,
   return Visibility(
     visible: product.weights.isNotEmpty,
     child: Row(
-      children: product.weights.map((weight) {
+      children: product.weights.reversed.map((weight) {
         return Padding(
           padding: const EdgeInsets.only(right: 10),
           child: CustomWeightandsizeSelectorContainerWidget(
@@ -393,14 +403,17 @@ Widget buildDescriptionTitle(BuildContext context) {
       style: AppTextStyles.viewProductTitleText(context));
 }
 
-Widget buildDescription(
-    BuildContext context, bool isExpanded, ProductModel product) {
-  return Text(
-      textAlign: TextAlign.justify,
-      style: AppTextStyles.descriptionText(context),
-      overflow: TextOverflow.fade,
-      maxLines: isExpanded ? null : 5,
-      product.description);
+Widget buildDescription(BuildContext context, bool isExpanded,
+    ProductModel product, VoidCallback onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Text(
+        textAlign: TextAlign.justify,
+        style: AppTextStyles.descriptionText(context),
+        overflow: TextOverflow.fade,
+        maxLines: isExpanded ? null : 5,
+        product.description),
+  );
 }
 
 Widget buildReammoreAndReadlessButton(

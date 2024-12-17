@@ -1,8 +1,9 @@
-import 'dart:developer';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
@@ -130,7 +131,12 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                           buildDescriptionTitle(context),
                           SizedBox(height: 6),
                           buildDescription(
-                              context, isExpanded, widget.productModel),
+                              context,
+                              isExpanded,
+                              widget.productModel,
+                              () => setState(() {
+                                    isExpanded = !isExpanded;
+                                  })),
                           buildReammoreAndReadlessButton(
                               isExpanded,
                               () => setState(() {
@@ -153,13 +159,14 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                               return Center(
                                   child: Text('Failed to load reviews.'));
                             } else if (state is ReviewsLoaded) {
-                              final reviews = state.reviews;
-                              if (reviews.isNotEmpty) {
+                              final enhancedReviews = state.reviews;
+                              if (enhancedReviews.isNotEmpty) {
                                 //! GETTING TOTAL RATINGS
-                                final double averageRating = reviews
-                                        .map((review) => review.rating)
+                                final double averageRating = enhancedReviews
+                                        .map((enhancedReview) =>
+                                            enhancedReview.review.rating)
                                         .reduce((a, b) => a + b) /
-                                    reviews.length;
+                                    enhancedReviews.length;
                                 // rounding off the total ratings
                                 final roundedRating = double.parse(
                                     averageRating.toStringAsFixed(1));
@@ -172,25 +179,29 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                 int countOfFourstar = 0;
                                 int countOfFiveStar = 0;
 
-                                for (var review in reviews) {
-                                  if (review.rating >= 1.0 &&
-                                      review.rating <= 1.9) {
+                                for (var enhancedReview in enhancedReviews) {
+                                  if (enhancedReview.review.rating >= 1.0 &&
+                                      enhancedReview.review.rating <= 1.9) {
                                     countOfOnestar++;
-                                  } else if (review.rating >= 2.0 &&
-                                      review.rating <= 2.9) {
+                                  } else if (enhancedReview.review.rating >=
+                                          2.0 &&
+                                      enhancedReview.review.rating <= 2.9) {
                                     countOfTwostar++;
-                                  } else if (review.rating >= 3.0 &&
-                                      review.rating <= 3.9) {
+                                  } else if (enhancedReview.review.rating >=
+                                          3.0 &&
+                                      enhancedReview.review.rating <= 3.9) {
                                     countOfThreestar++;
-                                  } else if (review.rating >= 4.0 &&
-                                      review.rating <= 4.9) {
+                                  } else if (enhancedReview.review.rating >=
+                                          4.0 &&
+                                      enhancedReview.review.rating <= 4.9) {
                                     countOfFourstar++;
-                                  } else if (review.rating == 5.0) {
+                                  } else if (enhancedReview.review.rating ==
+                                      5.0) {
                                     countOfFiveStar++;
                                   }
                                 }
                                 // Calculate the percentages
-                                final totalReviews = reviews.length;
+                                final totalReviews = enhancedReviews.length;
                                 final percentageOfOnestar =
                                     (countOfOnestar / totalReviews) * 100;
                                 final percentageOfTwostar =
@@ -223,90 +234,314 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                   return percentage / 100.0;
                                 }
 
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                return Column(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 4),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(roundedRating.toString(),
-                                              style: AppTextStyles
-                                                  .viewRatingBigRatingText),
-                                          SizedBox(height: 1.5),
-                                          RatingBar(
-                                              itemPadding: EdgeInsets.symmetric(
-                                                  horizontal: 2),
-                                              itemSize: 24,
-                                              allowHalfRating: true,
-                                              initialRating: roundedRating,
-                                              ignoreGestures: true,
-                                              ratingWidget: RatingWidget(
-                                                  full: Icon(
-                                                    Icons.star_rounded,
-                                                    color: AppColors
-                                                        .greenThemeColor,
-                                                  ),
-                                                  half: Icon(
-                                                    Icons.star_half_rounded,
-                                                    color: AppColors
-                                                        .greenThemeColor,
-                                                  ),
-                                                  empty: Icon(
-                                                      Icons.star_border_rounded,
-                                                      color: AppColors
-                                                          .appBarLightGreyThemeColor)),
-                                              onRatingUpdate: (value) {}),
-                                          SizedBox(height: 6),
-                                          Text(
-                                            '${reviews.length} REVIEWS',
-                                            style: AppTextStyles
-                                                .buildTotalReviewsText(context),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
+                                    Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        customReviewProgressPercentageIndicator(
-                                            context,
-                                            '5',
-                                            roundedPercentageOfFiveStar,
-                                            convertPercentageToDecimal(
-                                                roundedPercentageOfFiveStar)),
-                                        customReviewProgressPercentageIndicator(
-                                            context,
-                                            '4',
-                                            roundedPercentageOfFourStar,
-                                            convertPercentageToDecimal(
-                                                roundedPercentageOfFourStar)),
-                                        customReviewProgressPercentageIndicator(
-                                            context,
-                                            '3',
-                                            roundedPercentageOfThreeStar,
-                                            convertPercentageToDecimal(
-                                                roundedPercentageOfThreeStar)),
-                                        customReviewProgressPercentageIndicator(
-                                            context,
-                                            '2',
-                                            roundedPercentageOfTwoStar,
-                                            convertPercentageToDecimal(
-                                                roundedPercentageOfTwoStar)),
-                                        customReviewProgressPercentageIndicator(
-                                            context,
-                                            '1',
-                                            roundedPercentageOfOneStar,
-                                            convertPercentageToDecimal(
-                                                roundedPercentageOfOneStar)),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 4),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(roundedRating.toString(),
+                                                  style: AppTextStyles
+                                                      .viewRatingBigRatingText),
+                                              SizedBox(height: 1.5),
+                                              RatingBar(
+                                                  itemPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 2),
+                                                  itemSize: 24,
+                                                  allowHalfRating: true,
+                                                  initialRating: roundedRating,
+                                                  ignoreGestures: true,
+                                                  ratingWidget: RatingWidget(
+                                                      full: Icon(
+                                                        Icons.star_rounded,
+                                                        color: AppColors
+                                                            .greenThemeColor,
+                                                      ),
+                                                      half: Icon(
+                                                        Icons.star_half_rounded,
+                                                        color: AppColors
+                                                            .greenThemeColor,
+                                                      ),
+                                                      empty: Icon(
+                                                          Icons
+                                                              .star_border_rounded,
+                                                          color: AppColors
+                                                              .appBarLightGreyThemeColor)),
+                                                  onRatingUpdate: (value) {}),
+                                              SizedBox(height: 6),
+                                              Text(
+                                                '${enhancedReviews.length} REVIEWS',
+                                                style: AppTextStyles
+                                                    .buildTotalReviewsText(
+                                                        context),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            customReviewProgressPercentageIndicator(
+                                                context,
+                                                '5',
+                                                roundedPercentageOfFiveStar,
+                                                convertPercentageToDecimal(
+                                                    roundedPercentageOfFiveStar)),
+                                            customReviewProgressPercentageIndicator(
+                                                context,
+                                                '4',
+                                                roundedPercentageOfFourStar,
+                                                convertPercentageToDecimal(
+                                                    roundedPercentageOfFourStar)),
+                                            customReviewProgressPercentageIndicator(
+                                                context,
+                                                '3',
+                                                roundedPercentageOfThreeStar,
+                                                convertPercentageToDecimal(
+                                                    roundedPercentageOfThreeStar)),
+                                            customReviewProgressPercentageIndicator(
+                                                context,
+                                                '2',
+                                                roundedPercentageOfTwoStar,
+                                                convertPercentageToDecimal(
+                                                    roundedPercentageOfTwoStar)),
+                                            customReviewProgressPercentageIndicator(
+                                                context,
+                                                '1',
+                                                roundedPercentageOfOneStar,
+                                                convertPercentageToDecimal(
+                                                    roundedPercentageOfOneStar)),
+                                          ],
+                                        )
                                       ],
+                                    ),
+                                    ListView.separated(
+                                      separatorBuilder: (context, index) {
+                                        return SizedBox(height: 8);
+                                      },
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: enhancedReviews.length,
+                                      itemBuilder: (context, index) {
+                                        final reviews = enhancedReviews[index];
+                                        return Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 12),
+                                          decoration: BoxDecoration(
+                                              color: AppColors.whiteThemeColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(18),
+                                              border: Border.all(
+                                                  color: AppColors
+                                                      .appBarLightGreyThemeColor)),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  // User image
+                                                  SizedBox(
+                                                    height: 46,
+                                                    width: 46,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: reviews
+                                                            .userImageUrl!,
+                                                        fit: BoxFit.cover,
+                                                        placeholder:
+                                                            (context, url) {
+                                                          return Image.asset(
+                                                              'assets/wulflex_logo_nobg.png');
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 8),
+                                                  Expanded(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        // Username and date
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            SizedBox(height: 2),
+                                                            Text(
+                                                                reviews
+                                                                    .userName,
+                                                                style: AppTextStyles
+                                                                    .reviewUsernameText),
+                                                            Text(
+                                                                DateFormat(
+                                                                        'MMMM d yyyy')
+                                                                    .format(reviews
+                                                                        .review
+                                                                        .createdAt),
+                                                                style: AppTextStyles
+                                                                    .reviewDateText)
+                                                          ],
+                                                        ),
+                                                        // ratings section
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              reviews
+                                                                  .review.rating
+                                                                  .round()
+                                                                  .toString(),
+                                                              style: AppTextStyles
+                                                                  .linearProgressIndicatorLeadingText,
+                                                            ),
+                                                            SizedBox(width: 3),
+                                                            RatingBar(
+                                                                itemSize: 17,
+                                                                allowHalfRating:
+                                                                    true,
+                                                                initialRating:
+                                                                    reviews
+                                                                        .review
+                                                                        .rating,
+                                                                ignoreGestures:
+                                                                    true,
+                                                                ratingWidget:
+                                                                    RatingWidget(
+                                                                        full:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .star_rounded,
+                                                                          color:
+                                                                              AppColors.greenThemeColor,
+                                                                        ),
+                                                                        half:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .star_half_rounded,
+                                                                          color:
+                                                                              AppColors.greenThemeColor,
+                                                                        ),
+                                                                        empty: Icon(
+                                                                            Icons
+                                                                                .star_border_rounded,
+                                                                            color: AppColors
+                                                                                .appBarLightGreyThemeColor)),
+                                                                onRatingUpdate:
+                                                                    (value) {}),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              Visibility(
+                                                  visible: reviews
+                                                      .review
+                                                      .selectedSizeOrWeight
+                                                      .isNotEmpty,
+                                                  child: SizedBox(height: 9)),
+                                              Visibility(
+                                                visible: reviews
+                                                    .review
+                                                    .selectedSizeOrWeight
+                                                    .isNotEmpty,
+                                                child: Text(
+                                                    reviews.review
+                                                            .selectedSizeOrWeight
+                                                            .contains('KG')
+                                                        ? 'Ordered weight: ${reviews.review.selectedSizeOrWeight}'
+                                                        : 'Ordered size: ${reviews.review.selectedSizeOrWeight}',
+                                                    style: AppTextStyles
+                                                        .reviewOrderdSizeorweightText),
+                                              ),
+                                              Visibility(
+                                                  visible: reviews
+                                                      .review.tags.isNotEmpty,
+                                                  child: SizedBox(height: 11)),
+                                              //! Display review tags
+                                              Visibility(
+                                                visible: reviews
+                                                    .review.tags.isNotEmpty,
+                                                child: Wrap(
+                                                  spacing: 8,
+                                                  runSpacing: 8,
+                                                  children: reviews.review.tags
+                                                      .map((tag) {
+                                                    return Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 6,
+                                                          horizontal: 16),
+                                                      decoration: BoxDecoration(
+                                                        color: AppColors
+                                                            .lightGreyThemeColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(18),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Icon(
+                                                              Icons
+                                                                  .sell_rounded,
+                                                              size: 13.5,
+                                                              color: AppColors
+                                                                  .darkishGrey),
+                                                          SizedBox(width: 5),
+                                                          Text(
+                                                            tag,
+                                                            style: AppTextStyles
+                                                                    .rateScreenSupermini(
+                                                                        context)
+                                                                .copyWith(
+                                                                    color: AppColors
+                                                                        .blackThemeColor),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                              Visibility(
+                                                  visible: reviews.review
+                                                      .reviewText.isNotEmpty,
+                                                  child: SizedBox(height: 12)),
+                                              Visibility(
+                                                  visible: reviews.review
+                                                      .reviewText.isNotEmpty,
+                                                  child: Text(
+                                                    " \"${reviews.review.reviewText}\" ",
+                                                    style: AppTextStyles
+                                                        .descriptionText(
+                                                            context,
+                                                            neverChangeColor:
+                                                                true),
+                                                  ))
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     )
                                   ],
                                 );

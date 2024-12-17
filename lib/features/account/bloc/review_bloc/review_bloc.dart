@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wulflex/data/models/enhanced_review_model.dart';
 import 'package:wulflex/data/models/review_model.dart';
 import 'package:wulflex/data/services/review_services.dart';
 
@@ -24,6 +25,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
             productId: event.review.productId,
             rating: event.review.rating,
             tags: event.review.tags,
+            selectedSizeOrWeight: event.review.selectedSizeOrWeight,
             reviewText: event.review.reviewText,
             createdAt: DateTime.now());
 
@@ -40,7 +42,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     on<FetchProductReviewsEvent>((event, emit) async {
       emit(ReviewLoading());
       try {
-        final reviewStream = _reviewServices.getProductReviews(event.productId);
+        final reviewStream = _reviewServices.getProductReviewsWithUserDetails(event.productId);
         log('BLOC: REVIEWS LOADED');
         await for (var reviews in reviewStream) {
           emit(ReviewsLoaded(reviews));

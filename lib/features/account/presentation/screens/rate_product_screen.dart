@@ -184,6 +184,10 @@ class _ScreenRateProductState extends State<ScreenRateProduct> {
                                 rating: _rating,
                                 tags: _selectedTags.toList(),
                                 reviewText: _ratingTextController.text.trim(),
+                                selectedSizeOrWeight:
+                                    widget.productModel.selectedSize ??
+                                        widget.productModel.selectedWeight ??
+                                        '',
                                 createdAt: DateTime.now());
 
                             // Dispatch add event event

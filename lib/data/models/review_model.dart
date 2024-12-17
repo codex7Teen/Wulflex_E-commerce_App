@@ -6,6 +6,7 @@ class ReviewModel {
   final String productId;
   final double rating;
   final List<String> tags;
+  final String selectedSizeOrWeight;
   final String reviewText;
   final DateTime createdAt;
 
@@ -15,6 +16,7 @@ class ReviewModel {
     required this.productId,
     required this.rating,
     required this.tags,
+    required this.selectedSizeOrWeight,
     required this.reviewText,
     required this.createdAt,
   });
@@ -26,6 +28,7 @@ class ReviewModel {
       productId: map['productId'] ?? '',
       rating: (map['rating'] as num?)?.toDouble() ?? 0.0,
       tags: List<String>.from(map['tags'] ?? []),
+      selectedSizeOrWeight: map['selectedSizeOrWeight'] ?? '',
       reviewText: map['reviewText'] ?? '',
       createdAt: (map['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
@@ -37,6 +40,7 @@ class ReviewModel {
       'productId': productId,
       'rating': rating,
       'tags': tags,
+      'selectedSizeOrWeight': selectedSizeOrWeight,
       'reviewText': reviewText,
       'createdAt': createdAt,
     };

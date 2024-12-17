@@ -310,11 +310,25 @@ class OrderSummaryScreenWidgets {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 5),
-                        Text(
-                          cartItem.brandName,
-                          style: AppTextStyles.itemCardBrandText,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        Row(
+                          children: [
+                            Text(
+                              cartItem.brandName,
+                              style: AppTextStyles.itemCardBrandText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.3),
+                            Text(
+                              cartItem.selectedSize ??
+                                  cartItem.selectedWeight ??
+                                  '',
+                              style: AppTextStyles.selectedSizeOrWeightText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
                         Text(
                           cartItem.name,

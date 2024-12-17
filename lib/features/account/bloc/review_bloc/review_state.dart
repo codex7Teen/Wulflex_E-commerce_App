@@ -14,7 +14,7 @@ class ReviewLoading extends ReviewState {}
 class ReviewAddedSuccess extends ReviewState {}
 
 class ReviewsLoaded extends ReviewState {
-  final List<ReviewModel> reviews;
+  final List<EnhancedReviewModel> reviews;
   const ReviewsLoaded(this.reviews);
 
   @override
