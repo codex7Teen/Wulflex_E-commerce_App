@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
@@ -37,22 +38,15 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                   child: SizedBox(
                       height: 150,
                       width: MediaQuery.sizeOf(context).width * 0.38,
-                      child: Image.network(
-                        product.imageUrls[0],
+                      child: CachedNetworkImage(
+                        imageUrl: product.imageUrls[0],
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Image.asset('assets/wulflex_logo_nobg.png'),
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                              child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null));
+                        placeholder: (context, url) {
+                          return SizedBox(
+                              width: 16,
+                              height: 16,
+                              child:
+                                  Image.asset('assets/wulflex_logo_nobg.png'));
                         },
                       )),
                 ),
@@ -77,15 +71,24 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                     ),
                     SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "₹${product.retailPrice.round()}",
-                          style: AppTextStyles.itemCardSecondSubTitleText,
+                          style:
+                              AppTextStyles.itemCardSecondSubTitleText.copyWith(
+                            decoration: TextDecoration
+                                .lineThrough, // Add strikethrough to retail price
+                            color: Colors
+                                .grey, // Optional: make retail price appear less prominent
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(width: 5), // Reduced spacing
                         Text(
                           "₹${product.offerPrice.round()}",
                           style: AppTextStyles.itemCardSubTitleText,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

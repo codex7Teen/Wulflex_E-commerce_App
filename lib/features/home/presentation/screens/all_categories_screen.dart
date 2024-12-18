@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/home/bloc/category_bloc/category_bloc.dart';
@@ -85,27 +86,18 @@ class _ScreenAllCategoriesState extends State<ScreenAllCategories> {
 
                   // Use default image for default categories, network image for custom
                   Widget imageWidget = imageUrl.isNotEmpty
-                      ? Image.network(
-                          imageUrl,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            log('Network Image Error: $error');
-                            return Icon(Icons.error);
-                          },
-                        )
+                      ? CachedNetworkImage(
+                        width: double.infinity,
+                        imageUrl: imageUrl,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) {
+                          return SizedBox(
+                              width: 22,
+                              height: 22,
+                              child:
+                                  Image.asset('assets/wulflex_logo_nobg.png'));
+                        },
+                      )
                       : Image.asset(
                           defaultCategoryImages[categoryName]!,
                           fit: BoxFit.cover,

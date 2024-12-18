@@ -59,13 +59,13 @@ class ScreenCart extends StatelessWidget {
 
               // Calculate subtotal, discount, and total for all products in the cart
               final subtotal = cartItems.fold(
-                  0.0, (sum, product) => sum + product.retailPrice);
+                  0.0, (sum, product) => sum + product.retailPrice * product.quantity);
               final discount = cartItems.fold(
                   0.0,
                   (sum, product) =>
-                      sum + (product.retailPrice - product.offerPrice));
+                      sum + ((product.retailPrice - product.offerPrice) * product.quantity));
               final total = cartItems.fold(
-                  0.0, (sum, product) => sum + product.offerPrice);
+                  0.0, (sum, product) => sum + (product.offerPrice * product.quantity));
 
               return Stack(
                 children: [

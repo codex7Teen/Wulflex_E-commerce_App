@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
+import 'package:wulflex/features/account/presentation/screens/my_orders_screen.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
@@ -64,13 +65,17 @@ class ScreenOrderSuccess extends StatelessWidget {
                         letterSpacing: 1,
                       ),
                     ),
-                    Text(
-                      'Track my order',
-                      style: GoogleFonts.robotoCondensed(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.greenThemeColor,
-                        fontSize: 14.5,
-                        letterSpacing: 1,
+                    GestureDetector(
+                      onTap: () => NavigationHelper.navigateToWithReplacement(
+                          context, ScreenMyOrders()),
+                      child: Text(
+                        'Track my order',
+                        style: GoogleFonts.robotoCondensed(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.greenThemeColor,
+                          fontSize: 14.5,
+                          letterSpacing: 1,
+                        ),
                       ),
                     ),
                   ],

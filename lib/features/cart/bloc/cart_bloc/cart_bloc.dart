@@ -60,5 +60,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         CartError(errorMessage: error.toString());
       }
     });
+
+    //! UPDATE CART ITEM QUANTITY BLOC
+    on<UpdateCartItemQuantityEvent>((event, emit) async {
+      emit(CartLoading());
+      try {
+        await _cartServices.updateCartItemQuantity(
+            event.productId, event.quantity);
+
+        final updatedCartItems = await _cartServices.fetchCartItems();
+        emit(CartLoaded(products: updatedCartItems));
+      } catch (error) {
+        emit(CartError(errorMessage: error.toString()));
+        log('BLOC: FAILED TO UPDATE CART $error');
+      }
+    });
   }
 }

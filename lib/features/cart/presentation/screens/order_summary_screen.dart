@@ -41,15 +41,21 @@ class ScreenOrderSummary extends StatelessWidget {
                 } else if (state is CartLoaded) {
                   final cartItemsList = state.products;
 
-                  // Calculate subtotal, discount, and total for all products in the cart
+                  // Calculate subtotal, discount, and total for all products in the cart based on quantity
                   final subtotal = cartItemsList.fold(
-                      0.0, (sum, product) => sum + product.retailPrice);
+                      0.0,
+                      (sum, product) =>
+                          sum + (product.retailPrice * product.quantity));
                   final discount = cartItemsList.fold(
                       0.0,
                       (sum, product) =>
-                          sum + (product.retailPrice - product.offerPrice));
+                          sum +
+                          ((product.retailPrice - product.offerPrice) *
+                              product.quantity));
                   final total = cartItemsList.fold(
-                      0.0, (sum, product) => sum + product.offerPrice);
+                      0.0,
+                      (sum, product) =>
+                          sum + (product.offerPrice * product.quantity));
                   //! user profile bloc builder
                   return BlocBuilder<UserProfileBloc, UserProfileState>(
                     builder: (context, state) {

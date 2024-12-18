@@ -14,113 +14,185 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
       color: AppColors.lightGreyThemeColor,
       borderRadius: BorderRadius.circular(18),
     ),
-    child: Row(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Product Image
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: SizedBox(
-            height: 84, // Fixed height
-            width: MediaQuery.of(context).size.width * 0.21,
-            child: Image.network(
-              product.imageUrls[0],
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) =>
-                  Image.asset('assets/wulflex_logo_nobg.png'),
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: SizedBox(
-                    width: 26,
-                    height: 26,
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  ),
-                );
-              },
+        Row(
+          children: [
+            // Product Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: SizedBox(
+                height: 84, // Fixed height
+                width: MediaQuery.of(context).size.width * 0.21,
+                child: Image.network(
+                  product.imageUrls[0],
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Image.asset('assets/wulflex_logo_nobg.png'),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: SizedBox(
+                        width: 26,
+                        height: 26,
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
-        ),
 
-        SizedBox(width: 14),
+            SizedBox(width: 14),
 
-        // Product Details
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Product Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    product.brandName,
-                    style: AppTextStyles.itemCardBrandText,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    product.selectedSize ?? product.selectedWeight ?? '',
-                    style: AppTextStyles.selectedSizeOrWeightText,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-              Text(
-                product.name,
-                style: AppTextStyles.itemCardNameText,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(height: 9),
-              Row(
-                children: [
-                  Text(
-                    "₹${product.retailPrice.round()}",
-                    style: AppTextStyles.itemCardSecondSubTitleText,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    "₹${product.offerPrice.round()}",
-                    style: AppTextStyles.itemCardSubTitleText,
-                  ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      context
-                          .read<CartBloc>()
-                          .add(RemoveFromCartEvent(productId: product.id!));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(7.5),
-                      decoration: BoxDecoration(
-                          color: AppColors.whiteThemeColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          product.brandName,
+                          style: AppTextStyles.itemCardBrandText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Row(
                         children: [
-                          Icon(
-                            Icons.delete_outline_rounded,
-                            size: 18,
-                            color: AppColors.darkishGrey,
-                          ),
-                          SizedBox(width: 3),
+                          SizedBox(width: 10),
                           Text(
-                            'Remove',
-                            style: AppTextStyles.itemCardDeleteContainerText,
-                          )
+                            product.selectedSize ??
+                                product.selectedWeight ??
+                                '',
+                            style: AppTextStyles.selectedSizeOrWeightText,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ],
                       ),
-                    ),
-                  )
+                    ],
+                  ),
+                  Text(
+                    product.name,
+                    style: AppTextStyles.itemCardNameText,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 9),
+                  Row(
+                    children: [
+                      Text(
+                        "₹${product.retailPrice.round()}",
+                        style: AppTextStyles.itemCardSecondSubTitleText,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        "₹${product.offerPrice.round()}",
+                        style: AppTextStyles.itemCardSubTitleText,
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .read<CartBloc>()
+                              .add(RemoveFromCartEvent(productId: product.id!));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(7.5),
+                          decoration: BoxDecoration(
+                              color: AppColors.whiteThemeColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.delete_outline_rounded,
+                                size: 18,
+                                color: AppColors.darkishGrey,
+                              ),
+                              SizedBox(width: 3),
+                              Text(
+                                'Remove',
+                                style:
+                                    AppTextStyles.itemCardDeleteContainerText,
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Row(
+            children: [
+              Text('Quantity: ', style: AppTextStyles.orderQuantityText),
+              SizedBox(width: 8),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                decoration: BoxDecoration(
+                    color: AppColors.whiteThemeColor,
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(
+                        width: 0.2, color: AppColors.greyThemeColor)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: product.quantity > 1
+                          ? () {
+                              // Decrement quantity
+                              context.read<CartBloc>().add(
+                                  UpdateCartItemQuantityEvent(
+                                      productId: product.id!,
+                                      quantity: product.quantity - 1));
+                            }
+                          : null,
+                      child: Icon(
+                        Icons.remove,
+                        color: AppColors.greyThemeColor,
+                        size: 16,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(product.quantity.toString(), style: AppTextStyles.orderQuantityText),
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        // Increment quantity
+                        context.read<CartBloc>().add(
+                            UpdateCartItemQuantityEvent(
+                                productId: product.id!,
+                                quantity: product.quantity + 1));
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: AppColors.greyThemeColor,
+                        size: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
-        ),
+        )
       ],
     ),
   );

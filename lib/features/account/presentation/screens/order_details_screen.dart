@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/order_model.dart';
@@ -18,8 +21,17 @@ class ScreenOrderDetails extends StatelessWidget {
   const ScreenOrderDetails(
       {super.key, required this.order, required this.product});
 
+  String formatOrderDate(String rawDate) {
+    // Parse the raw date string into a DateTime object
+    DateTime parsedDate = DateTime.parse(rawDate);
+    // Format the date and time
+    String formattedDate = DateFormat('MMMM d yyyy | HH:mm').format(parsedDate);
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
+    log(product.id.toString());
     return Scaffold(
       backgroundColor: isLightTheme(context)
           ? AppColors.whiteThemeColor
@@ -43,6 +55,14 @@ class ScreenOrderDetails extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
                         "Order ID - ${order.id.toUpperCase()}",
+                        style: AppTextStyles.myOrdersScreenMiniText(context),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        "Ordered Date - ${formatOrderDate(order.orderDate.toString())}",
                         style: AppTextStyles.myOrdersScreenMiniText(context),
                       ),
                     ),
@@ -136,86 +156,97 @@ class ScreenOrderDetails extends StatelessWidget {
                           color: AppColors.lightGreyThemeColor,
                           borderRadius: BorderRadius.circular(18),
                         ),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Product Details
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    product.brandName,
-                                    style: AppTextStyles.itemCardBrandText,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    product.name,
-                                    style: AppTextStyles.itemCardNameText,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(height: 13),
-                                  Row(
+                            Row(
+                              children: [
+                                // Product Details
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "₹${product.retailPrice.round()}",
-                                        style: AppTextStyles
-                                            .itemCardSecondSubTitleText,
+                                        product.brandName,
+                                        style: AppTextStyles.itemCardBrandText,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(width: 8),
                                       Text(
-                                        "₹${product.offerPrice.round()}",
-                                        style:
-                                            AppTextStyles.itemCardSubTitleText,
+                                        product.name,
+                                        style: AppTextStyles.itemCardNameText,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
+                                      ),
+                                      SizedBox(height: 13),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "₹${product.retailPrice.round()}",
+                                            style: AppTextStyles
+                                                .itemCardSecondSubTitleText,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text(
+                                            "₹${product.offerPrice.round()}",
+                                            style: AppTextStyles
+                                                .itemCardSubTitleText,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 14),
-                            // Product Image
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: SizedBox(
-                                height: 84, // Fixed height
-                                width: MediaQuery.of(context).size.width * 0.21,
-                                child: Image.network(
-                                  product.imageUrls[0],
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Image.asset(
-                                          'assets/wulflex_logo_nobg.png'),
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    }
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 26,
-                                        height: 26,
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      ),
-                                    );
-                                  },
                                 ),
-                              ),
+                                SizedBox(width: 14),
+                                // Product Image
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: SizedBox(
+                                    height: 84, // Fixed height
+                                    width: MediaQuery.of(context).size.width *
+                                        0.21,
+                                    child: Image.network(
+                                      product.imageUrls[0],
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error,
+                                              stackTrace) =>
+                                          Image.asset(
+                                              'assets/wulflex_logo_nobg.png'),
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 26,
+                                            height: 26,
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                            SizedBox(height: 8),
+                            Text('QUANTITY: ${product.quantity}',
+                                style: AppTextStyles.orderQuantityText),
                           ],
                         ),
                       ),
@@ -236,6 +267,7 @@ class ScreenOrderDetails extends StatelessWidget {
                         children: [
                           // Order pending
                           TimelineTileWidget(
+                            isCancelled: false,
                             isFirst: true,
                             isLast: false,
                             isPast: order.status == OrderStatus.pending ||
@@ -258,6 +290,7 @@ class ScreenOrderDetails extends StatelessWidget {
                           ),
                           // Order Processing
                           TimelineTileWidget(
+                              isCancelled: false,
                               isFirst: false,
                               isLast: false,
                               isPast: order.status == OrderStatus.processing ||
@@ -276,6 +309,7 @@ class ScreenOrderDetails extends StatelessWidget {
                               )),
                           // Order on the way
                           TimelineTileWidget(
+                              isCancelled: false,
                               isFirst: false,
                               isLast: false,
                               isPast: order.status == OrderStatus.shipped ||
@@ -291,8 +325,11 @@ class ScreenOrderDetails extends StatelessWidget {
                               )),
                           // Order delivered
                           TimelineTileWidget(
+                              isCancelled: false,
                               isFirst: false,
-                              isLast: true,
+                              isLast: order.status != OrderStatus.cancelled
+                                  ? true
+                                  : false,
                               isPast: order.status == OrderStatus.delivered,
                               endChild: Text(
                                 'Delivered Successfully',
@@ -301,6 +338,21 @@ class ScreenOrderDetails extends StatelessWidget {
                                         isPast: order.status ==
                                             OrderStatus.delivered),
                               )),
+                          // Order cancelled
+                          order.status == OrderStatus.cancelled
+                              ? TimelineTileWidget(
+                                  isCancelled: true,
+                                  isFirst: false,
+                                  isLast: true,
+                                  isPast: order.status == OrderStatus.delivered,
+                                  endChild: Text(
+                                    'Order Cancelled',
+                                    style: AppTextStyles
+                                        .screenOrderStatusMiniSubTitles(context,
+                                            isPast: order.status ==
+                                                OrderStatus.cancelled),
+                                  ))
+                              : SizedBox()
                         ],
                       ),
                     ),
@@ -376,7 +428,8 @@ class ScreenOrderDetails extends StatelessWidget {
                           GestureDetector(
                             onTap: () =>
                                 NavigationHelper.navigateToWithoutReplacement(
-                                    context, ScreenRateProduct(productModel: product)),
+                                    context,
+                                    ScreenRateProduct(productModel: product)),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 18),
                               child: Container(

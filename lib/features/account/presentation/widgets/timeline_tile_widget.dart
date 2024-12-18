@@ -6,13 +6,15 @@ class TimelineTileWidget extends StatelessWidget {
   final bool isFirst;
   final bool isLast;
   final bool isPast;
+  final bool isCancelled;
   final Widget endChild;
   const TimelineTileWidget(
       {super.key,
       required this.isFirst,
       required this.isLast,
       required this.isPast,
-      required this.endChild});
+      required this.endChild,
+      required this.isCancelled});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,11 @@ class TimelineTileWidget extends StatelessWidget {
                 : AppColors.appBarLightGreyThemeColor),
         indicatorStyle: IndicatorStyle(
             width: 18,
-            color: isPast
-                ? AppColors.greenThemeColor
-                : AppColors.appBarLightGreyThemeColor,
+            color: isCancelled
+                ? AppColors.redThemeColor
+                : isPast
+                    ? AppColors.greenThemeColor
+                    : AppColors.appBarLightGreyThemeColor,
             iconStyle: IconStyle(
                 iconData: Icons.done, color: AppColors.whiteThemeColor)),
         endChild: Padding(

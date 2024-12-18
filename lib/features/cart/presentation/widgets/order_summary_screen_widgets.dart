@@ -306,43 +306,69 @@ class OrderSummaryScreenWidgets {
                       ),
                     ),
                     SizedBox(width: 14),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 5),
-                        Row(
-                          children: [
-                            Text(
-                              cartItem.brandName,
-                              style: AppTextStyles.itemCardBrandText,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxWidth: MediaQuery.sizeOf(context).width *
+                                        0.46),
+                                child: Text(
+                                  cartItem.brandName,
+                                  style: AppTextStyles.itemCardBrandText,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    cartItem.selectedSize ??
+                                        cartItem.selectedWeight ??
+                                        '',
+                                    style:
+                                        AppTextStyles.selectedSizeOrWeightText,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(width: 10)
+                                ],
+                              ),
+                            ],
+                          ),
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.sizeOf(context).width * 0.46),
+                            child: Text(
+                              cartItem.name,
+                              style: AppTextStyles.itemCardNameText,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(
-                                width: MediaQuery.sizeOf(context).width * 0.3),
-                            Text(
-                              cartItem.selectedSize ??
-                                  cartItem.selectedWeight ??
-                                  '',
-                              style: AppTextStyles.selectedSizeOrWeightText,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                        Text(
-                          cartItem.name,
-                          style: AppTextStyles.itemCardNameText,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Spacer(),
-                        Text(
-                          "₹${cartItem.offerPrice.round()}",
-                          style: AppTextStyles.itemCardSubTitleText,
-                        ),
-                        SizedBox(width: 14),
-                      ],
+                          ),
+                          Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "₹${cartItem.offerPrice.round()}",
+                                style: AppTextStyles.itemCardSubTitleText,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Text('QTY: ${cartItem.quantity}',
+                                    style: AppTextStyles.orderQuantityText),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

@@ -14,12 +14,32 @@ class CartServices {
   //! ADD TO CART SERVICE
   Future<void> addToCart(ProductModel product) async {
     try {
-      await _firestore
+      // Create a unique cart item identifier that includes both product ID and selected size or selected weight
+      final cartItemId =
+          '${product.id}_${product.selectedSize ?? product.selectedWeight ?? 'default'}';
+
+      // Create a cart-specific version of the product that includes the cart item ID
+      final cartProduct = product.copyWithCartDetails(
+        cartItemId: cartItemId,
+      );
+
+      // Reference to the specified cart item
+      final cartRef = _firestore
           .collection('users')
           .doc(_userId)
           .collection('cart')
-          .doc(product.id)
-          .set(product.toMap());
+          .doc(cartItemId);
+
+      final docSnapshot = await cartRef.get();
+
+      if (docSnapshot.exists) {
+        // Product with this specific size or weight exists, so increment the quantity
+        await cartRef.update({'quantity': FieldValue.increment(1)});
+      } else {
+        // Create a new cart item with the unique identifier
+        // Modify the toMap method to include the custom cart item ID if needed
+        await cartRef.set(cartProduct.toMap());
+      }
     } catch (error) {
       log('Error adding cart items: $error');
     }
@@ -35,7 +55,7 @@ class CartServices {
           .get();
 
       return querySnapshot.docs.map((doc) {
-        return ProductModel.fromMap(doc.data(), documentId: doc.id);
+        return ProductModel.fromMap(doc.data());
       }).toList();
     } catch (e) {
       log('Error fetching cart items: $e');
@@ -44,12 +64,12 @@ class CartServices {
   }
 
   //! REMOVE FROM CART
-  Future<void> removeFromCart(String productId) async {
+  Future<void> removeFromCart(String cartItemId) async {
     await _firestore
         .collection('users')
         .doc(_userId)
         .collection('cart')
-        .doc(productId)
+        .doc(cartItemId)
         .delete();
   }
 
@@ -69,6 +89,20 @@ class CartServices {
       log('SERVICES: CART FULLY CLEARED');
     } catch (error) {
       log('Error clearing cart: $error');
+    }
+  }
+
+  //! UPDATE CART ITEM QUANTITY
+  Future<void> updateCartItemQuantity(String cartItemId, int quantity) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(_userId)
+          .collection('cart')
+          .doc(cartItemId)
+          .update({'quantity': quantity});
+    } catch (error) {
+      log('SERVICES: ERROR UPDATING CART ITEM QUANTITY: $error');
     }
   }
 }

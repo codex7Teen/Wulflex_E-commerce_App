@@ -709,4 +709,20 @@ class AppTextStyles {
       color: AppColors.greyThemeColor,
       fontSize: 14,
       letterSpacing: 0.5);
+
+  //! ORDER CANCELLED TEXT
+  static TextStyle orderCancelledText(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+          textStyle: TextStyle(
+              fontSize: 16,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? AppColors.redThemeColor
+                  : AppColors.lightGreyThemeColor));
+
+  //! ORDER QUANTITY TEXT
+  static final TextStyle orderQuantityText = GoogleFonts.bebasNeue(
+      fontSize: 15,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.2,
+      color: AppColors.blackThemeColor);
 }

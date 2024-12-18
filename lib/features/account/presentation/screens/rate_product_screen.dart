@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -173,6 +175,7 @@ class _ScreenRateProductState extends State<ScreenRateProduct> {
                         addIcon: true,
                         icon: Icons.check_sharp,
                         onTap: () {
+                          log(widget.productModel.id!);
                           if (_rating < 1) {
                             CustomSnackbar.showCustomSnackBar(context,
                                 'Please rate the product before submitting.',
