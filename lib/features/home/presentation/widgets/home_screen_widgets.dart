@@ -310,6 +310,7 @@ Widget buildLatestArrivalsSection(BuildContext context) {
       if (state is ProductLoading) {
         return Center(child: CircularProgressIndicator());
       } else if (state is ProductLoaded) {
+        final products = state.products;
         return GridView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
@@ -319,9 +320,9 @@ Widget buildLatestArrivalsSection(BuildContext context) {
             mainAxisSpacing: 7.5,
             childAspectRatio: 0.604,
           ),
-          itemCount: state.products.length,
+          itemCount: products.length,
           itemBuilder: (context, index) {
-            return buildItemCard(context, state.products[index]);
+            return buildItemCard(context, products[index]);
           },
         );
       } else if (state is ProductError) {

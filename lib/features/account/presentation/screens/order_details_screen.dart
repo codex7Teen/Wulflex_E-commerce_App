@@ -167,11 +167,24 @@ class ScreenOrderDetails extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        product.brandName,
-                                        style: AppTextStyles.itemCardBrandText,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            product.brandName,
+                                            style:
+                                                AppTextStyles.itemCardBrandText,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                              product.selectedSize != null
+                                                  ? 'SIZE: ${product.selectedSize}'
+                                                  : 'WEIGHT: ${product.selectedWeight}',
+                                              style: AppTextStyles
+                                                  .orderQuantityText),
+                                        ],
                                       ),
                                       Text(
                                         product.name,

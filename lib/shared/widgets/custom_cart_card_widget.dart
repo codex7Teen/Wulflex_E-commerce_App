@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -103,9 +102,8 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
-                          context
-                              .read<CartBloc>()
-                              .add(RemoveFromCartEvent(productId: product.id!));
+                          context.read<CartBloc>().add(RemoveFromCartEvent(
+                              productId: product.cartItemId!));
                         },
                         child: Container(
                           padding: EdgeInsets.all(7.5),
@@ -160,7 +158,7 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                               // Decrement quantity
                               context.read<CartBloc>().add(
                                   UpdateCartItemQuantityEvent(
-                                      productId: product.id!,
+                                      productId: product.cartItemId!,
                                       quantity: product.quantity - 1));
                             }
                           : null,
@@ -171,14 +169,15 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                       ),
                     ),
                     SizedBox(width: 10),
-                    Text(product.quantity.toString(), style: AppTextStyles.orderQuantityText),
+                    Text(product.quantity.toString(),
+                        style: AppTextStyles.orderQuantityText),
                     SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
                         // Increment quantity
                         context.read<CartBloc>().add(
                             UpdateCartItemQuantityEvent(
-                                productId: product.id!,
+                                productId: product.cartItemId!,
                                 quantity: product.quantity + 1));
                       },
                       child: Icon(

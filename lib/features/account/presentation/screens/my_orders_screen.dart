@@ -27,7 +27,9 @@ class ScreenMyOrders extends StatelessWidget {
           } else if (state is OrderLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is OrdersLoaded) {
-            final orders = state.orders;
+            // Sort orders by date in descending order (latest first)
+            final orders = List<OrderModel>.from(state.orders)
+              ..sort((a, b) => b.orderDate.compareTo(a.orderDate));
             if (orders.isNotEmpty) {
               return Padding(
                 padding: const EdgeInsets.only(

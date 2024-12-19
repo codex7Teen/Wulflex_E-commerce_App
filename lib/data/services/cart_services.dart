@@ -102,7 +102,7 @@ class CartServices {
           .doc(cartItemId)
           .update({'quantity': quantity});
     } catch (error) {
-      log('SERVICES: ERROR UPDATING CART ITEM QUANTITY: $error');
+      log('SERVICES: ERROR UPDATING CART ITEM QUANTITY: $error');  
     }
   }
 }

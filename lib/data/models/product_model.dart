@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductModel {
   final String? id;
   final int quantity;
@@ -15,6 +17,7 @@ class ProductModel {
   final String? selectedWeight;
   final String? selectedSize;
   final String? cartItemId;
+  final DateTime createdAt;
 
   ProductModel(
       {
@@ -34,7 +37,9 @@ class ProductModel {
       this.isFavorite = false,
       this.selectedWeight,
       this.selectedSize,
-      this.cartItemId});
+      this.cartItemId,
+      DateTime? createdAt,
+      }) : createdAt = createdAt ?? DateTime.now();
 
   factory ProductModel.fromMap(Map<String, dynamic> map, {String? documentId}) {
     return ProductModel(
@@ -53,7 +58,9 @@ class ProductModel {
         isFavorite: map['isFavorite'] ?? false,
         selectedWeight: map['selectedWeight'],
         selectedSize: map['selectedSize'],
-        cartItemId: map['cartItemId']);
+        cartItemId: map['cartItemId'],
+        createdAt: (map['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now()
+        );
   }
 
   // Method to convert to map for Firestore
@@ -74,7 +81,8 @@ class ProductModel {
       'isFavorite': isFavorite,
       'selectedWeight': selectedWeight,
       'selectedSize': selectedSize,
-      'cartItemId': cartItemId
+      'cartItemId': cartItemId,
+      'createdAt': Timestamp.fromDate(createdAt)
     };
   }
 
@@ -83,7 +91,9 @@ class ProductModel {
       {bool? isFavorite,
       String? selectedWeight,
       String? selectedSize,
-      int? quantity}) {
+      int? quantity,
+      DateTime? createdAt
+      }) {
     return ProductModel(
         id: id,
         brandName: brandName,
@@ -99,7 +109,9 @@ class ProductModel {
         isFavorite: isFavorite ?? this.isFavorite,
         selectedWeight: selectedWeight ?? this.selectedWeight,
         selectedSize: selectedSize ?? this.selectedSize,
-        quantity: quantity ?? this.quantity);
+        quantity: quantity ?? this.quantity,
+        createdAt: createdAt ?? this.createdAt
+        );
   }
 
   // Optional: Add a method to create a cart-specific version of the product
@@ -125,6 +137,7 @@ class ProductModel {
       selectedWeight: selectedWeight ?? this.selectedWeight,
       cartItemId: cartItemId,
       quantity: quantity ?? this.quantity,
+      createdAt: createdAt
     );
   }
 

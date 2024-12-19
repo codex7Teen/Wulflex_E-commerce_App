@@ -5,6 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/data/models/enhanced_review_model.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
@@ -158,7 +159,11 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                               return Center(
                                   child: Text('Failed to load reviews.'));
                             } else if (state is ReviewsLoaded) {
-                              final enhancedReviews = state.reviews;
+                              //! Sort reviews by date in descendin order (latest first)
+                              final enhancedReviews =
+                                  List<EnhancedReviewModel>.from(state.reviews)
+                                    ..sort((a, b) => b.review.createdAt
+                                        .compareTo(a.review.createdAt));
                               if (enhancedReviews.isNotEmpty) {
                                 //! GETTING TOTAL RATINGS
                                 final double averageRating = enhancedReviews
