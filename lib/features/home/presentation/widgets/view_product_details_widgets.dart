@@ -235,7 +235,7 @@ Widget buildRatingsContainer() {
                       onRatingUpdate: (value) {}),
                   SizedBox(width: 8),
                   Text(
-                    '4.0 Ratings',
+                    '$roundedRating Ratings',
                     style: AppTextStyles.viewProductratingsText,
                   ),
                 ],
