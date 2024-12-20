@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/core/config/app_constants.dart';
+import 'package:wulflex/data/services/chat_services.dart';
 import 'package:wulflex/data/services/order_services.dart';
 import 'package:wulflex/data/services/review_services.dart';
+import 'package:wulflex/features/account/bloc/chat_bloc/chat_bloc.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
@@ -55,6 +57,7 @@ class MyApp extends StatelessWidget {
     final orderServices = OrderServices();
     final reviewServices = ReviewServices();
     final firebaseAuth = FirebaseAuth.instance;
+    final chatServices = ChatServices();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticatonBlocBloc>(
@@ -71,6 +74,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrderBloc(orderServices)),
         BlocProvider(
             create: (context) => ReviewBloc(reviewServices, firebaseAuth)),
+        BlocProvider(create: (context) => ChatBloc(chatServices)),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {

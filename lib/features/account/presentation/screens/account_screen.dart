@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/features/account/presentation/screens/customer_support_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/my_orders_screen.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
@@ -95,7 +96,14 @@ class ScreenAccount extends StatelessWidget {
                       buildConnectHeading(context),
                       SizedBox(height: 8),
                       buildButtonCards(
-                          onTap: () async {
+                          onTap: () =>
+                              NavigationHelper.navigateToWithoutReplacement(
+                                  context, ScreenCustomerSupport()),
+                          icon: Icons.support_agent_rounded,
+                          name: "CUSTOMER SUPPORT"),
+                      SizedBox(height: 14),
+                      buildButtonCards(
+                          onTap: () {
                             // Open instagram using the link 'https://www.instagram.com/denniz_jhnsn?igsh=MWFqdmc5b2FpcHA5'
                           },
                           icon: Icons.smartphone_rounded,

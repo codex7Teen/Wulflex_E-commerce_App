@@ -31,3 +31,6 @@ final class OrderError extends OrderState {
 
   OrderError({required this.errorMessage});
 }
+
+//! ORDER STATUS UPDATE SUCCESS
+final class OrderUpdateSuccess extends OrderState {}

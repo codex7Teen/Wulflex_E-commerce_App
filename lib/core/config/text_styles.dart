@@ -725,4 +725,35 @@ class AppTextStyles {
       fontWeight: FontWeight.bold,
       letterSpacing: 1.2,
       color: AppColors.blackThemeColor);
+
+  //! CHAT HINT TEXT
+  static final TextStyle chatHintText = GoogleFonts.robotoCondensed(
+    fontSize: 18,
+    color: AppColors.greyThemeColor,
+  );
+
+  //! CHAT TEXTFIELD TEXT
+  static TextStyle chatTextfieldstyle(BuildContext context) =>
+      GoogleFonts.robotoCondensed(
+        fontSize: 18,
+        letterSpacing: 0.1,
+        fontWeight: FontWeight.w500,
+        color: isLightTheme(context)
+            ? AppColors.blackThemeColor
+            : AppColors.whiteThemeColor,
+      );
+
+  //! CHAT CHATBUBBLE TEXT
+  static TextStyle chatBubbleText(bool isMe) => GoogleFonts.robotoCondensed(
+        fontSize: 17,
+        letterSpacing: 0.6,
+        color: isMe ? Colors.white : Colors.black,
+      );
+
+  //! CHAT CHATBUBBLE DATE TIME TEXT
+  static final TextStyle chatBubbleDateTimeText = GoogleFonts.robotoCondensed(
+    fontSize: 10,
+    letterSpacing: 0.55,
+    color: AppColors.greyThemeColor,
+  );
 }

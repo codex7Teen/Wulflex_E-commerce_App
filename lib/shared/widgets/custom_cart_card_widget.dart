@@ -4,6 +4,8 @@ import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/home/presentation/screens/view_product_details_screen.dart';
+import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 
 Widget buildCustomCartCard(BuildContext context, ProductModel product) {
   return Container(
@@ -19,31 +21,35 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
         Row(
           children: [
             // Product Image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: SizedBox(
-                height: 84, // Fixed height
-                width: MediaQuery.of(context).size.width * 0.21,
-                child: Image.network(
-                  product.imageUrls[0],
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
-                      Image.asset('assets/wulflex_logo_nobg.png'),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: SizedBox(
-                        width: 26,
-                        height: 26,
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
+            GestureDetector(
+              onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                  context, ScreenViewProducts(productModel: product)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(
+                  height: 84, // Fixed height
+                  width: MediaQuery.of(context).size.width * 0.21,
+                  child: Image.network(
+                    product.imageUrls[0],
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Image.asset('assets/wulflex_logo_nobg.png'),
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: SizedBox(
+                          width: 26,
+                          height: 26,
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -55,37 +61,45 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          product.brandName,
-                          style: AppTextStyles.itemCardBrandText,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 10),
-                          Text(
-                            product.selectedSize ??
-                                product.selectedWeight ??
-                                '',
-                            style: AppTextStyles.selectedSizeOrWeightText,
+                  GestureDetector(
+                    onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                        context, ScreenViewProducts(productModel: product)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            product.brandName,
+                            style: AppTextStyles.itemCardBrandText,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: 10),
+                            Text(
+                              product.selectedSize ??
+                                  product.selectedWeight ??
+                                  '',
+                              style: AppTextStyles.selectedSizeOrWeightText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    product.name,
-                    style: AppTextStyles.itemCardNameText,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  GestureDetector(
+                    onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                        context, ScreenViewProducts(productModel: product)),
+                    child: Text(
+                      product.name,
+                      style: AppTextStyles.itemCardNameText,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   SizedBox(height: 9),
                   Row(

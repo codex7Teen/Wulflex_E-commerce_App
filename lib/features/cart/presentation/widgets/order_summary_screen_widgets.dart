@@ -10,6 +10,7 @@ import 'package:wulflex/data/models/user_model.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/cart/presentation/screens/payment_screen.dart';
 import 'package:wulflex/features/cart/presentation/screens/select_address_screen.dart';
+import 'package:wulflex/features/home/presentation/screens/view_product_details_screen.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
@@ -262,115 +263,121 @@ class OrderSummaryScreenWidgets {
             },
             itemBuilder: (context, index) {
               final cartItem = cartItemsList[index];
-              return Container(
-                height: 100,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: isLightTheme(context)
-                        ? AppColors.whiteThemeColor
-                        : AppColors.lightGreyThemeColor,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: SizedBox(
-                        height: 84, // Fixed height
-                        width: MediaQuery.of(context).size.width * 0.21,
-                        child: Image.network(
-                          cartItem.imageUrls[0],
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Image.asset('assets/wulflex_logo_nobg.png'),
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Center(
-                              child: SizedBox(
-                                width: 26,
-                                height: 26,
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
+              return GestureDetector(
+                onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                    context, ScreenViewProducts(productModel: cartItem)),
+                child: Container(
+                  height: 100,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: isLightTheme(context)
+                          ? AppColors.whiteThemeColor
+                          : AppColors.lightGreyThemeColor,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: SizedBox(
+                          height: 84, // Fixed height
+                          width: MediaQuery.of(context).size.width * 0.21,
+                          child: Image.network(
+                            cartItem.imageUrls[0],
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Image.asset('assets/wulflex_logo_nobg.png'),
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: SizedBox(
+                                  width: 26,
+                                  height: 26,
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ConstrainedBox(
-                                constraints: BoxConstraints(
-                                    maxWidth: MediaQuery.sizeOf(context).width *
-                                        0.46),
-                                child: Text(
-                                  cartItem.brandName,
-                                  style: AppTextStyles.itemCardBrandText,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    cartItem.selectedSize ??
-                                        cartItem.selectedWeight ??
-                                        '',
-                                    style:
-                                        AppTextStyles.selectedSizeOrWeightText,
+                      SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.sizeOf(context).width *
+                                              0.46),
+                                  child: Text(
+                                    cartItem.brandName,
+                                    style: AppTextStyles.itemCardBrandText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  SizedBox(width: 10)
-                                ],
-                              ),
-                            ],
-                          ),
-                          ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxWidth:
-                                    MediaQuery.sizeOf(context).width * 0.46),
-                            child: Text(
-                              cartItem.name,
-                              style: AppTextStyles.itemCardNameText,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      cartItem.selectedSize ??
+                                          cartItem.selectedWeight ??
+                                          '',
+                                      style: AppTextStyles
+                                          .selectedSizeOrWeightText,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(width: 10)
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                          Spacer(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "₹${cartItem.offerPrice.round()}",
-                                style: AppTextStyles.itemCardSubTitleText,
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.sizeOf(context).width * 0.46),
+                              child: Text(
+                                cartItem.name,
+                                style: AppTextStyles.itemCardNameText,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8),
-                                child: Text('QTY: ${cartItem.quantity}',
-                                    style: AppTextStyles.orderQuantityText),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                            ),
+                            Spacer(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "₹${cartItem.offerPrice.round()}",
+                                  style: AppTextStyles.itemCardSubTitleText,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: Text('QTY: ${cartItem.quantity}',
+                                      style: AppTextStyles.orderQuantityText),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               );
             },

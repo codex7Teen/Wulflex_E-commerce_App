@@ -71,4 +71,18 @@ class OrderServices {
 
     return userOrders;
   }
+
+  //! UPDATE ORDER STATUS
+  Future<void> updateOrderStatus(
+      {required String orderId, required OrderStatus newStatus}) async {
+    try {
+      await _firestore.collection('orders').doc(orderId).update(
+          {'status': newStatus.toString(), 'updatedAt': DateTime.now()});
+
+      log('ADMIN SERVICES: Updated order $orderId status to $newStatus');
+    } catch (error) {
+      log('ADMIN SERVICES: Error updating order status - $error');
+      rethrow;
+    }
+  }
 }

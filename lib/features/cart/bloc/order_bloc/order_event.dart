@@ -24,3 +24,14 @@ class CreateOrderEvent extends OrderEvent {
 
 //! FETCH USER ORDERS EVENT
 class FetchUserOrdersEvent extends OrderEvent {}
+
+//! UPDATE ORDERSTATUS EVENT
+class UpdateOrderStatusEvent extends OrderEvent {
+  final String orderId;
+  final OrderStatus newStatus;
+
+  UpdateOrderStatusEvent({required this.orderId, required this.newStatus});
+
+  @override
+  List<Object> get props => [orderId, newStatus];
+}

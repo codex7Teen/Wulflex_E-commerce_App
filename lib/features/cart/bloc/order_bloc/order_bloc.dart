@@ -38,5 +38,22 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         emit(OrderError(errorMessage: error.toString()));
       }
     });
+
+    //! UPDATE ORDER STATUS
+    on<UpdateOrderStatusEvent>((event, emit) async {
+      try {
+        emit(OrderLoading());
+        await orderServices.updateOrderStatus(
+            orderId: event.orderId, newStatus: event.newStatus);
+
+        // Reflect all orders to get updated list
+        final orders = await orderServices.fetchUserOrders();
+        // First emit the success state
+        emit(OrderUpdateSuccess());
+        emit(OrdersLoaded(orders: orders));
+      } catch (error) {
+        emit(OrderError(errorMessage: error.toString()));
+      }
+    });
   }
 }
