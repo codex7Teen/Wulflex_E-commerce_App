@@ -13,15 +13,15 @@ class ForgotPasswordWidgets {
     );
   }
 
-  static Widget buildForgotPassText() {
+  static Widget buildForgotPassText(BuildContext context) {
     return Text('Forgot\nPassword?',
-        style: AppTextStyles.authenticationHeadings);
+        style: AppTextStyles.authenticationHeadings(context, fixedBlackColor: false));
   }
 
-  static Widget buildDontWorryText() {
+  static Widget buildDontWorryText(BuildContext context) {
     return Text(
       "Don't worry! It happens. Please enter the address associated with your account. We will sent you a password reset link.",
-      style: AppTextStyles.forgotPasswordDescriptionText,
+      style: AppTextStyles.forgotPasswordDescriptionText(context, fixedBlackcolor: false),
     );
   }
 

@@ -15,8 +15,8 @@ class SignupWidgets {
     );
   }
 
-  static Widget buildSignUpText() {
-    return Text('SIGN UP', style: AppTextStyles.authenticationHeadings);
+  static Widget buildSignUpText(BuildContext context) {
+    return Text('SIGN UP', style: AppTextStyles.authenticationHeadings(context));
   }
 
   static Widget buildNameTextField(TextEditingController nameTextController) {

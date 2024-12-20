@@ -11,6 +11,8 @@ final class CartInitial extends CartState {}
 
 class CartLoading extends CartState {}
 
+class CartItemQuantityLoading extends CartState {}
+
 class CartSuccess extends CartState {}
 
 class CartItemDeleted extends CartState {}

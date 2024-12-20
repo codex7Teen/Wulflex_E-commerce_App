@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wulflex/features/account/presentation/screens/customer_support_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/my_orders_screen.dart';
+import 'package:wulflex/features/account/presentation/screens/relogin_screen.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/features/auth/presentation/screens/login_screen.dart';
@@ -103,8 +107,18 @@ class ScreenAccount extends StatelessWidget {
                           name: "CUSTOMER SUPPORT"),
                       SizedBox(height: 14),
                       buildButtonCards(
-                          onTap: () {
+                          onTap: () async {
                             // Open instagram using the link 'https://www.instagram.com/denniz_jhnsn?igsh=MWFqdmc5b2FpcHA5'
+                            try {
+                              await _launchInstagram();
+                            } catch (error) {
+                              if (context.mounted) {
+                                CustomSnackbar.showCustomSnackBar(
+                                    context, "Could not open Instagram",
+                                    icon: Icons.error);
+                              }
+                              log(error.toString());
+                            }
                           },
                           icon: Icons.smartphone_rounded,
                           name: "INSTAGRAM"),
@@ -121,7 +135,7 @@ class ScreenAccount extends StatelessWidget {
                       buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
-                                  context, ScreenDeleteAccount()),
+                                  context, ScreenRelogin()),
                           icon: Icons.person_off_rounded,
                           name: "DELETE ACCOUNT"),
                       SizedBox(height: 14),
@@ -152,6 +166,14 @@ class ScreenAccount extends StatelessWidget {
       return 'Good Afternoon';
     } else {
       return 'Good Evening';
+    }
+  }
+
+  Future<void> _launchInstagram() async {
+    final Uri url = Uri.parse(
+        'https://www.instagram.com/denniz_jhnsn?igsh=MWFqdmc5b2FpcHA5');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
     }
   }
 }

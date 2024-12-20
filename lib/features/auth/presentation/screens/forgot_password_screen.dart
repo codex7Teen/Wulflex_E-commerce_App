@@ -4,6 +4,7 @@ import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_blo
 import 'package:wulflex/features/auth/presentation/widgets/forgot_password_widgets.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class ScreenForgotPassword extends StatefulWidget {
   const ScreenForgotPassword({super.key});
@@ -21,9 +22,17 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.whiteThemeColor,
+          backgroundColor: AppColors.scaffoldColor(context),
+          leading: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: isLightTheme(context)
+                    ? AppColors.blackThemeColor
+                    : AppColors.whiteThemeColor,
+              )),
         ),
-        backgroundColor: AppColors.whiteThemeColor,
+        backgroundColor: AppColors.scaffoldColor(context),
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
@@ -54,10 +63,10 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                       SizedBox(height: 40),
 
                       // heading
-                      ForgotPasswordWidgets.buildForgotPassText(),
+                      ForgotPasswordWidgets.buildForgotPassText(context),
                       SizedBox(height: 14),
 
-                      ForgotPasswordWidgets.buildDontWorryText(),
+                      ForgotPasswordWidgets.buildDontWorryText(context),
                       SizedBox(height: 20),
 
                       // email textfield

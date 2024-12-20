@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wulflex/data/services/authentication/login_authorization.dart';
+import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 
 part 'delete_account_event.dart';
 part 'delete_account_state.dart';

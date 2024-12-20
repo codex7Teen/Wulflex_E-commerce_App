@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
@@ -96,7 +98,7 @@ class ScreenOrderSummary extends StatelessWidget {
                                         discount,
                                         total,
                                         cartItemsList,
-                                        selectedAddress!)
+                                        selectedAddress)
                               ],
                             ),
                           ),

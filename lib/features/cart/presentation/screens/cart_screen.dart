@@ -19,11 +19,13 @@ class ScreenCart extends StatelessWidget {
             : AppColors.blackThemeColor,
         appBar: CartWidgets.buildAppBar(context),
         body: BlocConsumer<CartBloc, CartState>(
+          buildWhen: (previous, current) {
+            return current is CartLoading || current is CartLoaded;
+          },
           listener: (context, state) {
             if (state is CartItemDeleted) {
               CustomSnackbar.showCustomSnackBar(
                   appearFromTop: true, context, 'Item removed from cart');
-              // context.read<CartBloc>().add(FetchCartEvent());
             }
           },
           builder: (context, state) {
@@ -59,13 +61,19 @@ class ScreenCart extends StatelessWidget {
 
               // Calculate subtotal, discount, and total for all products in the cart
               final subtotal = cartItems.fold(
-                  0.0, (sum, product) => sum + product.retailPrice * product.quantity);
+                  0.0,
+                  (sum, product) =>
+                      sum + product.retailPrice * product.quantity);
               final discount = cartItems.fold(
                   0.0,
                   (sum, product) =>
-                      sum + ((product.retailPrice - product.offerPrice) * product.quantity));
+                      sum +
+                      ((product.retailPrice - product.offerPrice) *
+                          product.quantity));
               final total = cartItems.fold(
-                  0.0, (sum, product) => sum + (product.offerPrice * product.quantity));
+                  0.0,
+                  (sum, product) =>
+                      sum + (product.offerPrice * product.quantity));
 
               return Stack(
                 children: [

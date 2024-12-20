@@ -30,8 +30,16 @@ class AppTextStyles {
       fontWeight: FontWeight.bold);
 
 //! AUTHENTICATION PAGES HEADINGS
-  static final TextStyle authenticationHeadings = GoogleFonts.bebasNeue(
-      fontSize: 40, color: Colors.black, letterSpacing: 1);
+  static TextStyle authenticationHeadings(BuildContext context,
+          {bool fixedBlackColor = true}) =>
+      GoogleFonts.bebasNeue(
+          fontSize: 40,
+          color: fixedBlackColor
+              ? AppColors.blackThemeColor
+              : isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor,
+          letterSpacing: 1);
 
 //! AUTHENTICATION TEXTFIELD STYLES
   static final TextStyle authenticationTextfieldStyle =
@@ -99,9 +107,9 @@ class AppTextStyles {
           fontWeight: FontWeight.bold);
 
 //! FORGOT PASSWORD DESCRIPTION TEXT
-  static final TextStyle forgotPasswordDescriptionText =
+  static TextStyle forgotPasswordDescriptionText(BuildContext context, {fixedBlackcolor = true}) =>
       GoogleFonts.robotoCondensed(
-          color: AppColors.blackThemeColor,
+          color: fixedBlackcolor ? AppColors.blackThemeColor : isLightTheme(context) ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
           fontWeight: FontWeight.bold,
           fontSize: 16,
           letterSpacing: 1);

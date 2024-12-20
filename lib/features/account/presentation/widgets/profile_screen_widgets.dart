@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:wulflex/features/account/presentation/screens/delete_account_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/edit_profile_screen.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/account/presentation/screens/relogin_screen.dart';
 import 'package:wulflex/shared/widgets/custom_black_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_grey_container_widget.dart';
@@ -116,7 +116,7 @@ class ProfileScreenWidgets {
   static Widget buildDeleteButton(BuildContext context) {
     return GestureDetector(
       onTap: () => NavigationHelper.navigateToWithoutReplacement(
-          context, ScreenDeleteAccount()),
+          context, ScreenRelogin()),
       child: CustomBlackButtonWidget(
           buttonText: "Delete Account", borderRadius: 25),
     );

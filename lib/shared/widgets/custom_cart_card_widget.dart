@@ -162,45 +162,61 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
                         width: 0.2, color: AppColors.greyThemeColor)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: product.quantity > 1
-                          ? () {
-                              // Decrement quantity
-                              context.read<CartBloc>().add(
-                                  UpdateCartItemQuantityEvent(
-                                      productId: product.cartItemId!,
-                                      quantity: product.quantity - 1));
-                            }
-                          : null,
-                      child: Icon(
-                        Icons.remove,
-                        color: AppColors.greyThemeColor,
-                        size: 16,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Text(product.quantity.toString(),
-                        style: AppTextStyles.orderQuantityText),
-                    SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () {
-                        // Increment quantity
-                        context.read<CartBloc>().add(
-                            UpdateCartItemQuantityEvent(
-                                productId: product.cartItemId!,
-                                quantity: product.quantity + 1));
-                      },
-                      child: Icon(
-                        Icons.add,
-                        color: AppColors.greyThemeColor,
-                        size: 16,
-                      ),
-                    ),
-                  ],
+                child: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    if (state is CartItemQuantityLoading) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5.5, horizontal: 23),
+                        child: Center(
+                            child: SizedBox(
+                                width: 10,
+                                height: 10,
+                                child: CircularProgressIndicator(
+                                    strokeWidth: 2.4))),
+                      );
+                    }
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: product.quantity > 1
+                              ? () {
+                                  // Decrement quantity
+                                  context.read<CartBloc>().add(
+                                      UpdateCartItemQuantityEvent(
+                                          productId: product.cartItemId!,
+                                          quantity: product.quantity - 1));
+                                }
+                              : null,
+                          child: Icon(
+                            Icons.remove,
+                            color: AppColors.greyThemeColor,
+                            size: 16,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(product.quantity.toString(),
+                            style: AppTextStyles.orderQuantityText),
+                        SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            // Increment quantity
+                            context.read<CartBloc>().add(
+                                UpdateCartItemQuantityEvent(
+                                    productId: product.cartItemId!,
+                                    quantity: product.quantity + 1));
+                          },
+                          child: Icon(
+                            Icons.add,
+                            color: AppColors.greyThemeColor,
+                            size: 16,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               )
             ],

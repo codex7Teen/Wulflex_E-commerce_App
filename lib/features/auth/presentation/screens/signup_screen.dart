@@ -83,7 +83,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 30),
 
                         // heading
-                        SignupWidgets.buildSignUpText(),
+                        SignupWidgets.buildSignUpText(context),
                         SizedBox(height: 14),
 
                         // Name textfield

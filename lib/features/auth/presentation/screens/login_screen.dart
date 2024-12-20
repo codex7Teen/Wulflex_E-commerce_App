@@ -81,7 +81,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     const SizedBox(height: 20),
                     LoginWidgets.buildLoginImage(context),
                     const SizedBox(height: 30),
-                    LoginWidgets.buildLoginHeading(),
+                    LoginWidgets.buildLoginHeading(context),
                     const SizedBox(height: 14),
                     LoginWidgets.buildEmailField(_emailTextController),
                     const SizedBox(height: 30),

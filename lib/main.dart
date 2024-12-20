@@ -8,6 +8,7 @@ import 'package:wulflex/data/services/chat_services.dart';
 import 'package:wulflex/data/services/order_services.dart';
 import 'package:wulflex/data/services/review_services.dart';
 import 'package:wulflex/features/account/bloc/chat_bloc/chat_bloc.dart';
+import 'package:wulflex/features/account/bloc/relogin/relogin_bloc.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => ReviewBloc(reviewServices, firebaseAuth)),
         BlocProvider(create: (context) => ChatBloc(chatServices)),
+        BlocProvider(create: (context) => ReloginBloc(auth)),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {

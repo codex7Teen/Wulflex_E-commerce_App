@@ -117,4 +117,65 @@ class AuthService {
       throw Exception("Failed to delete account: $e");
     }
   }
+
+  //! REAUTHENTICATE ACCOUNT BEFORE DELETION
+  Future<void> reauthenticateUser(String email, String password) async {
+    try {
+      User? user = _auth.currentUser;
+
+      if (user != null) {
+        // Create credentials
+        AuthCredential credential =
+            EmailAuthProvider.credential(email: email, password: password);
+
+        // Reauthenticate
+        await user.reauthenticateWithCredential(credential);
+        log("REAUTHENTICATION SUCCESS");
+      } else {
+        throw 'No user is currently signed in.';
+      }
+    } on FirebaseAuthException catch (e) {
+      log("REAUTHENTICATION ERROR: ${e.code}");
+      if (e.code == 'wrong-password') {
+        handleError('Incorrect password provided for reauthentication.');
+      } else if (e.code == 'user-mismatch') {
+        handleError(
+            'The credentials do not match the currently signed in user.');
+      } else if (e.code == 'user-not-found') {
+        handleError('No user found for the given email.');
+      } else {
+        handleError('Reauthentication failed: ${e.message}');
+      }
+    } catch (e) {
+      log("REAUTHENTICATION UNKNOWN ERROR: $e");
+      handleError('Error during reauthentication: $e');
+    }
+  }
+
+//! For Google Sign-In reauthentication
+  Future<void> reauthenticateWithGoogle() async {
+    try {
+      User? user = _auth.currentUser;
+
+      if (user != null) {
+        // Get Google credentials
+        final googleUser = await GoogleSignIn().signIn();
+        final googleAuth = await googleUser?.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+
+        // Reauthenticate
+        await user.reauthenticateWithCredential(credential);
+        log("GOOGLE REAUTHENTICATION SUCCESS");
+      } else {
+        throw 'No user is currently signed in.';
+      }
+    } catch (e) {
+      log("GOOGLE REAUTHENTICATION ERROR: $e");
+      handleError('Error during Google reauthentication: $e');
+    }
+  }
 }

@@ -393,7 +393,7 @@ class OrderSummaryScreenWidgets {
       double discount,
       double total,
       List<ProductModel> cartItemsList,
-      AddressModel selectedAddress) {
+      AddressModel? selectedAddress) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
@@ -493,14 +493,17 @@ class OrderSummaryScreenWidgets {
           SizedBox(height: 14),
           BlocBuilder<AddressBloc, AddressState>(
             builder: (context, state) {
-              // Check if address is loaded and contains values
-              bool selectedAddressContainsValues = state is AddressLoaded &&
-                  state.selectedAddress != null &&
-                  state.selectedAddress!.name.trim().isNotEmpty;
+              bool selectedAddressContainsValues = false;
+              if (selectedAddress != null) {
+                selectedAddressContainsValues =
+                    selectedAddress.name.trim().isNotEmpty;
+              }
+              log('SELECTED ADDRESS HAS VALUE: $selectedAddressContainsValues');
 
               return GreenButtonWidget(
                   onTap: () {
-                    if (selectedAddressContainsValues) {
+                    if (selectedAddressContainsValues &&
+                        selectedAddress != null) {
                       log('Selected address has value. So proceeding to payment...');
                       NavigationHelper.navigateToWithoutReplacement(
                           context,

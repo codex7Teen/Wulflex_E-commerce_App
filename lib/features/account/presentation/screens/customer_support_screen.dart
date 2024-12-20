@@ -9,10 +9,49 @@ import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_blo
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
-class ScreenCustomerSupport extends StatelessWidget {
+class ScreenCustomerSupport extends StatefulWidget {
   ScreenCustomerSupport({super.key});
 
+  @override
+  State<ScreenCustomerSupport> createState() => _ScreenCustomerSupportState();
+}
+
+class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
   final TextEditingController _messageController = TextEditingController();
+
+  // scroll controller
+  final ScrollController _scrollController = ScrollController();
+
+  // focus node
+  FocusNode myFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // add a listener to focusnode
+    myFocusNode.addListener(() {
+      if (myFocusNode.hasFocus) {
+        // cause a delay so the keyboard has time to show up
+        // then the amount of remaining space will be calculated
+        // then scroll down
+        Future.delayed(Duration(milliseconds: 400), () => scrollDown());
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+// Function to scroll down to maximum extent
+  void scrollDown() {
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+        duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +119,14 @@ class ScreenCustomerSupport extends StatelessWidget {
                                 ),
                               );
                             }
+                            // Scroll down when new data arrives
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              Future.delayed(Duration(milliseconds: 400), () {
+                                scrollDown();
+                              });
+                            });
                             return ListView(
+                              controller: _scrollController,
                               children: snapshot.data!.docs.map(
                                 (doc) {
                                   final data =
@@ -123,6 +169,7 @@ class ScreenCustomerSupport extends StatelessWidget {
                                 const SizedBox(width: 16),
                                 Expanded(
                                   child: TextField(
+                                    focusNode: myFocusNode,
                                     style: AppTextStyles.chatTextfieldstyle(
                                         context),
                                     controller: _messageController,
