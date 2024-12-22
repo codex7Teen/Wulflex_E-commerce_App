@@ -12,12 +12,13 @@ class ScreenEditProfile extends StatefulWidget {
   final String name;
   final String phoneNumber;
   final String dob;
+  final String networkImageUrl;
   const ScreenEditProfile(
       {super.key,
       required this.screenTitle,
       required this.name,
       required this.phoneNumber,
-      required this.dob});
+      required this.dob,required this.networkImageUrl});
 
   @override
   State<ScreenEditProfile> createState() => _ScreenEditProfileState();
@@ -67,7 +68,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                 children: [
                   EditProfileScreenWidgets.buildUploadImageText(context),
                   SizedBox(height: 15),
-                  EditProfileScreenWidgets.buildUploadImageIcon(context),
+                  EditProfileScreenWidgets.buildUploadImageIcon(context, widget.networkImageUrl!),
                   SizedBox(height: 25),
                   EditProfileScreenWidgets.buildNameText(context),
                   SizedBox(height: 8),

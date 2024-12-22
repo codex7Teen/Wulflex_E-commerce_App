@@ -94,7 +94,7 @@ class ProfileScreenWidgets {
   }
 
   static Widget buildEditButton(
-      BuildContext context, String name, String phoneNumber, String dob) {
+      BuildContext context, String name, String phoneNumber, String dob, String networkImageUrl) {
     return GestureDetector(
         onTap: () => NavigationHelper.navigateToWithoutReplacement(
             context,
@@ -103,6 +103,7 @@ class ProfileScreenWidgets {
               name: name,
               phoneNumber: phoneNumber,
               dob: dob,
+              networkImageUrl: networkImageUrl,
             )),
         child: GreenButtonWidget(
           buttonText: 'Edit Profile',

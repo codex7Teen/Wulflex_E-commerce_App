@@ -16,7 +16,8 @@ class EditProfileScreenWidgets {
         style: AppTextStyles.editScreenSubHeadings(context));
   }
 
-  static Widget buildUploadImageIcon(BuildContext context) {
+  static Widget buildUploadImageIcon(
+      BuildContext context, String networkImageUrl) {
     return Center(
       child: GestureDetector(
         onTap: () => context.read<UserProfileBloc>().add(PickImageEvent()),
@@ -38,13 +39,15 @@ class EditProfileScreenWidgets {
                     borderRadius: BorderRadius.circular(100),
                     child: selectedImage != null
                         ? Image.file(selectedImage, fit: BoxFit.cover)
-                        : Image.asset(
-                            'assets/add_profile.png',
-                            fit: BoxFit.cover,
-                            color: isLightTheme(context)
-                                ? AppColors.blackThemeColor
-                                : AppColors.whiteThemeColor,
-                          ),
+                        : networkImageUrl.isNotEmpty
+                            ? Image.network(networkImageUrl, fit: BoxFit.cover)
+                            : Image.asset(
+                                'assets/add_profile.png',
+                                fit: BoxFit.cover,
+                                color: isLightTheme(context)
+                                    ? AppColors.blackThemeColor
+                                    : AppColors.whiteThemeColor,
+                              ),
                   ),
                 ),
                 if (state is ImageUploadProgress)

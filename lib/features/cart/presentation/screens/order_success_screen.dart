@@ -67,7 +67,10 @@ class ScreenOrderSuccess extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () => NavigationHelper.navigateToWithReplacement(
-                          context, ScreenMyOrders()),
+                          context,
+                          ScreenMyOrders(
+                            isBackButtonVisible: false,
+                          )),
                       child: Text(
                         'Track my order',
                         style: GoogleFonts.robotoCondensed(
@@ -81,7 +84,7 @@ class ScreenOrderSuccess extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 24),
-                //! continue button
+                //! Continue button
                 GreenButtonWidget(
                     onTap: () {
                       currentIndex = 0;

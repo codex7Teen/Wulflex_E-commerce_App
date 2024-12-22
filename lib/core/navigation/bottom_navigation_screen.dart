@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/account/presentation/screens/account_screen.dart';
+import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/cart/presentation/screens/cart_screen.dart';
 import 'package:wulflex/features/favorite/presentation/screens/favorite_screen.dart';
 import 'package:wulflex/features/home/presentation/screens/home_screen.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -41,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
+    context.read<CartBloc>().add(FetchCartEvent());
     double displayWidth = MediaQuery.sizeOf(context).width;
 
     return AnimatedSwitcher(
@@ -67,7 +70,8 @@ class _MainScreenState extends State<MainScreen> {
         );
       },
       child: Scaffold(
-        key: ValueKey(isLightTheme), // Key based on theme to trigger animation
+        key: ValueKey(
+            isLightTheme(context)), // Key based on theme to trigger animation
         body: screens[currentIndex],
         backgroundColor: AppColors.scaffoldColor(context),
         bottomNavigationBar: Container(
@@ -75,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
               vertical: displayWidth * 0.044, horizontal: displayWidth * 0.04),
           height: displayWidth * .15,
           decoration: BoxDecoration(
-              color: isLightTheme
+              color: isLightTheme(context)
                   ? AppColors.appBarLightGreyThemeColor
                   : AppColors.whiteThemeColor,
               boxShadow: [
@@ -116,7 +120,7 @@ class _MainScreenState extends State<MainScreen> {
                                 index == currentIndex ? displayWidth * .32 : 0,
                             decoration: BoxDecoration(
                                 color: index == currentIndex
-                                    ? isLightTheme
+                                    ? isLightTheme(context)
                                         ? AppColors.whiteThemeColor
                                         : AppColors.blackThemeColor
                                     : Colors.transparent,
@@ -154,21 +158,81 @@ class _MainScreenState extends State<MainScreen> {
                                 )
                               ],
                             ),
-                            Row(
+                            Stack(
+                              clipBehavior: Clip.none,
                               children: [
-                                AnimatedContainer(
-                                  duration: const Duration(seconds: 1),
-                                  curve: Curves.fastLinearToSlowEaseIn,
-                                  width: index == currentIndex
-                                      ? displayWidth * .03
-                                      : 20,
-                                ),
-                                Icon(
-                                  listOfIcons[index],
-                                  size: displayWidth * .076,
-                                  color: index == currentIndex
-                                      ? AppColors.greenThemeColor
-                                      : AppColors.blackThemeColor,
+                                Row(
+                                  children: [
+                                    AnimatedContainer(
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                      width: index == currentIndex
+                                          ? displayWidth * .03
+                                          : 20,
+                                    ),
+                                    Stack(
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        Icon(
+                                          listOfIcons[index],
+                                          size: displayWidth * .076,
+                                          color: index == currentIndex
+                                              ? AppColors.greenThemeColor
+                                              : AppColors.blackThemeColor,
+                                        ),
+                                        if (index == 2)
+                                          Positioned(
+                                              top: -8,
+                                              right: -8,
+                                              child: BlocBuilder<CartBloc,
+                                                  CartState>(
+                                                builder: (context, state) {
+                                                  int itemCount = 0;
+                                                  if (state is CartLoaded) {
+                                                     itemCount = state.products.fold(
+                                0,
+                                (sum, product) => sum + (product.quantity),
+                              );
+                                                  }
+                                                  return itemCount > 0
+                                                      ? Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(4),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: currentIndex == 2 && !isLightTheme(context) ? AppColors
+                                                                .whiteThemeColor : AppColors.greenThemeColor,
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
+                                                          constraints:
+                                                              const BoxConstraints(
+                                                            minWidth: 16,
+                                                            minHeight: 16,
+                                                          ),
+                                                          child: Text(
+                                                            itemCount
+                                                                .toString(),
+                                                            style:
+                                                                 TextStyle(
+                                                              color: currentIndex == 2 && !isLightTheme(context) ?
+                                                                  AppColors.blackThemeColor : AppColors.whiteThemeColor ,
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        )
+                                                      : SizedBox.shrink();
+                                                },
+                                              ))
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ],
                             )

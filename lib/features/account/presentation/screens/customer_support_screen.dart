@@ -8,6 +8,7 @@ import 'package:wulflex/features/account/bloc/chat_bloc/chat_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
+import 'package:animate_do/animate_do.dart';
 
 class ScreenCustomerSupport extends StatefulWidget {
   ScreenCustomerSupport({super.key});
@@ -131,11 +132,13 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
                                 (doc) {
                                   final data =
                                       doc.data() as Map<String, dynamic>;
-                                  return MessageBubble(
-                                      message: data['message'],
-                                      isMe: data['senderID'] == user.uid,
-                                      userImage: user.userImage ?? '',
-                                      timeStamp: data['timestamp']);
+                                  return SlideInRight(
+                                    child: MessageBubble(
+                                        message: data['message'],
+                                        isMe: data['senderID'] == user.uid,
+                                        userImage: user.userImage ?? '',
+                                        timeStamp: data['timestamp']),
+                                  );
                                 },
                               ).toList(),
                             );

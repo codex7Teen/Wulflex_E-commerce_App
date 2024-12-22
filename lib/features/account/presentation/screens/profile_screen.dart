@@ -47,7 +47,7 @@ class ScreenProfile extends StatelessWidget {
                       ProfileScreenWidgets.buildDob(user.dob ?? ''),
                       SizedBox(height: 28),
                       ProfileScreenWidgets.buildEditButton(context, user.name,
-                          user.phoneNumber ?? '', user.dob ?? ''),
+                          user.phoneNumber ?? '', user.dob ?? '', user.userImage ?? ''),
                       SizedBox(height: 20),
                       ProfileScreenWidgets.buildDeleteButton(context)
                     ],
