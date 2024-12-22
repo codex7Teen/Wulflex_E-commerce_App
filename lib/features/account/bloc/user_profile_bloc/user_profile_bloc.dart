@@ -26,6 +26,13 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       }
     });
 
+      //! RESET SELECTED IMAGE
+    on<ResetProfileStateEvent>((event, emit) {
+      selectedImage = null;
+      emit(UserProfileInitial());
+      log('PROFILE STATE RESET');
+    });
+
     //! FETCH USER PROFILE BLOC
     on<FetchUserProfileEvent>((event, emit) async {
       emit(UserProfileLoading());
@@ -67,6 +74,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         // Fetch the updated user profile
         final updatedUser = await userProfileService.fetchUserProfile();
         if (updatedUser != null) {
+           // Clear the selected image after successful update
+          selectedImage = null;
           emit(UserProfileLoaded(updatedUser));
           log('UPDATE USER PROFILE SUCCESS');
         } else {

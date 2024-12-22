@@ -31,3 +31,6 @@ class UpdateUserProfileEvent extends UserProfileEvent {
 
 //! PICK USER IMAGE EVENT
 class PickImageEvent extends UserProfileEvent {}
+
+//! RESET PROFILE STATE EVENT
+class ResetProfileStateEvent extends UserProfileEvent{}

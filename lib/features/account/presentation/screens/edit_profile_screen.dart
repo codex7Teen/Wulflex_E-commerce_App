@@ -18,7 +18,8 @@ class ScreenEditProfile extends StatefulWidget {
       required this.screenTitle,
       required this.name,
       required this.phoneNumber,
-      required this.dob,required this.networkImageUrl});
+      required this.dob,
+      required this.networkImageUrl});
 
   @override
   State<ScreenEditProfile> createState() => _ScreenEditProfileState();
@@ -36,6 +37,16 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
     _nameController.text = widget.name;
     _phoneNumberController.text = widget.phoneNumber;
     _dateofbirthController.text = widget.dob;
+  }
+
+  @override
+  void dispose() {
+    // Reset the bloc state when leaving the screen
+    context.read<UserProfileBloc>().add(ResetProfileStateEvent());
+    _nameController.dispose();
+    _phoneNumberController.dispose();
+    _dateofbirthController.dispose();
+    super.dispose();
   }
 
   @override
@@ -68,7 +79,8 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                 children: [
                   EditProfileScreenWidgets.buildUploadImageText(context),
                   SizedBox(height: 15),
-                  EditProfileScreenWidgets.buildUploadImageIcon(context, widget.networkImageUrl!),
+                  EditProfileScreenWidgets.buildUploadImageIcon(
+                      context, widget.networkImageUrl!),
                   SizedBox(height: 25),
                   EditProfileScreenWidgets.buildNameText(context),
                   SizedBox(height: 8),
