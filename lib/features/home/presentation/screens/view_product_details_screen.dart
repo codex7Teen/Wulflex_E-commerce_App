@@ -12,6 +12,7 @@ import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart'
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/features/home/presentation/widgets/view_product_details_widgets.dart';
 import 'package:wulflex/core/config/app_colors.dart';
+import 'package:wulflex/shared/widgets/animated_price_details_container.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 
 class ScreenViewProducts extends StatefulWidget {
@@ -125,8 +126,7 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                               widget.productModel,
                               (weight) => updateSelectedWeight(weight)),
                           SizedBox(height: 24),
-                          buildPriceDetailsContainer(
-                              context, widget.productModel),
+                          AnimatedPriceContainer(product: widget.productModel),
                           SizedBox(height: 24),
                           buildDescriptionTitle(context),
                           SizedBox(height: 6),
@@ -355,26 +355,42 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                             children: [
                                               Row(
                                                 children: [
-                                                  // User image
-                                                  SizedBox(
-                                                    height: 46,
-                                                    width: 46,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl: reviews
-                                                            .userImageUrl!,
-                                                        fit: BoxFit.cover,
-                                                        placeholder:
-                                                            (context, url) {
-                                                          return Image.asset(
-                                                              'assets/wulflex_logo_nobg.png');
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  reviews.userImageUrl != null
+                                                      ?
+                                                      // User image
+                                                      SizedBox(
+                                                          height: 46,
+                                                          width: 46,
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50),
+                                                            child:
+                                                                CachedNetworkImage(
+                                                              imageUrl: reviews
+                                                                  .userImageUrl!,
+                                                              fit: BoxFit.cover,
+                                                              placeholder:
+                                                                  (context,
+                                                                      url) {
+                                                                return Image.asset(
+                                                                    'assets/wulflex_logo_nobg.png');
+                                                              },
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : SizedBox(
+                                                          height: 28,
+                                                          width: 28,
+                                                          child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50),
+                                                              child: Image.asset(
+                                                                  'assets/wulflex_logo_nobg.png')),
+                                                        ),
                                                   SizedBox(width: 8),
                                                   Expanded(
                                                     child: Row(

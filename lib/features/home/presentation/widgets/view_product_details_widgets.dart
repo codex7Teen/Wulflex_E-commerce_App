@@ -357,59 +357,6 @@ Widget buildWeightSelectors(String? selectedWeight, ProductModel product,
   );
 }
 
-Widget buildPriceDetailsContainer(BuildContext context, ProductModel product) {
-  final isLightTheme = Theme.of(context).brightness == Brightness.light;
-
-  // Calculating discount percentage
-  final discountPercentage =
-      ((product.retailPrice - product.offerPrice) / product.retailPrice) * 100;
-
-  return Container(
-    width: double.infinity,
-    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      color: isLightTheme
-          ? AppColors.lightGreyThemeColor
-          : AppColors.whiteThemeColor,
-    ),
-    child: Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Text(
-            "₹ ${product.offerPrice}",
-            style: AppTextStyles.offerPriceHeadingText,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        SizedBox(
-            width:
-                5), // Minimal spacing specifically between offer and retail price
-        Expanded(
-          flex: 3,
-          child: Text(
-            "₹ ${product.retailPrice}",
-            style: AppTextStyles.originalPriceText,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        SizedBox(
-            width: 16), // Maintaining original spacing for subsequent elements
-        Text(
-          "${discountPercentage.toStringAsFixed(0)}% OFF",
-          style: AppTextStyles.offerPercentageText,
-        ),
-        Spacer(), // Pushes the info icon to the far right
-        Icon(
-          Icons.info,
-          color: AppColors.darkishGrey,
-        )
-      ],
-    ),
-  );
-}
-
 Widget buildDescriptionTitle(BuildContext context) {
   return Text("DESCRIPTION",
       style: AppTextStyles.viewProductTitleText(context));
