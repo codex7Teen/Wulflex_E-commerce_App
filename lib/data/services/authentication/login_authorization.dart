@@ -1,9 +1,14 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wulflex/core/config/app_constants.dart';
 
 class AuthService {
   final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+  final _storage = FirebaseStorage.instanceFor(bucket: bucket);
 
   // For handling errors without the "Exception:" prefix
   void handleError(String errorMessage) {
@@ -102,22 +107,6 @@ class AuthService {
     return null;
   }
 
-  //! DELETE USER ACCOUNT
-  Future<void> deleteUser() async {
-    try {
-      User? user = _auth.currentUser;
-
-      if (user != null) {
-        await user.delete();
-        log("ACCOUNT DELETE SUCCESS");
-      }
-    } catch (e) {
-      log("ERROR DELETING ACCOUNT: $e");
-      // Rethrow the error to be caught by the caller
-      throw Exception("Failed to delete account: $e");
-    }
-  }
-
   //! REAUTHENTICATE ACCOUNT BEFORE DELETION
   Future<void> reauthenticateUser(String email, String password) async {
     try {
@@ -176,6 +165,114 @@ class AuthService {
     } catch (e) {
       log("GOOGLE REAUTHENTICATION ERROR: $e");
       handleError('Error during Google reauthentication: $e');
+    }
+  }
+
+  //! DELETE USER ACCOUNT
+  Future<void> deleteUser() async {
+    try {
+      User? user = _auth.currentUser;
+
+      if (user != null) {
+        await user.delete();
+        log("ACCOUNT DELETE SUCCESS");
+      }
+    } catch (e) {
+      log("ERROR DELETING ACCOUNT: $e");
+      // Rethrow the error to be caught by the caller
+      throw Exception("Failed to delete account: $e");
+    }
+  }
+
+  //! DELETING USER DETAILS FROM FIRESTORE AND STORAGE
+  Future<void> deleteAllUserDetails() async {
+    try {
+      // Get current user ID
+      final userId = _auth.currentUser!.uid;
+      const String adminID = 'administratorIDofwulflex189';
+
+      // First fetch the user document to check for image URL
+      final userDoc = await _firestore.collection('users').doc(userId).get();
+      final userData = userDoc.data();
+      final userImage = userData?['userImage'] as String?;
+
+      // If user has a profile image, delete it from storage
+      if (userImage != null && userImage.isNotEmpty) {
+        try {
+          // Extract the storage path from the URL
+          final ref = _storage.refFromURL(userImage);
+          await ref.delete();
+          log('SERVICES: USER PROFILE IMAGE DELETED SUCCESS');
+        } catch (storageError) {
+          log('SERVICES: ERROR DELETING PROFILE IMAGE: $storageError');
+        }
+      }
+
+      // Delete chat room
+      try {
+        // Construct chat room ID the same way as in ChatServices
+        List<String> ids = [adminID, userId];
+        ids.sort();
+        String chatRoomID = ids.join('_');
+
+        // Get all messages in the chat room
+        final messagesSnapshot = await _firestore
+            .collection('chat_rooms')
+            .doc(chatRoomID)
+            .collection('messages')
+            .get();
+
+        // Delete all messages
+        final batch = _firestore.batch();
+        for (var doc in messagesSnapshot.docs) {
+          batch.delete(doc.reference);
+        }
+        await batch.commit();
+
+        // Delete the chat room document itself
+        await _firestore.collection('chat_rooms').doc(chatRoomID).delete();
+
+        log('SERVICES: CHAT ROOM DELETED SUCCESS');
+      } catch (chatError) {
+        log('SERVICES: ERROR DELETING CHAT ROOM: $chatError');
+        // Continue with other deletions even if chat room deletion fails
+      }
+
+      // Delete subcollections using helper
+      await _deleteSubcollections('users', userId);
+
+      // Delete the user document from Firestore
+      await _firestore.collection('users').doc(userId).delete();
+      log('SERVICES: USER DETAILS DELETED SUCCESS');
+    } catch (error) {
+      log('SERVICES: ERROR DELETING USER DETAILS: $error');
+      throw Exception('Failed to delete user details: $error');
+    }
+  }
+
+  //! Helper function to delete all documents in a subcollection
+  Future<void> _deleteSubcollections(String collection, String docId) async {
+    try {
+      // List of known subcollections
+      final subcollections = ['favorites', 'address', 'cart'];
+
+      for (String subcollection in subcollections) {
+        final subcollectionRef = _firestore
+            .collection(collection)
+            .doc(docId)
+            .collection(subcollection);
+
+        // Get all documents in the subcollection
+        final querySnapshot = await subcollectionRef.get();
+        for (var doc in querySnapshot.docs) {
+          await subcollectionRef.doc(doc.id).delete();
+        }
+
+        log('SERVICES: $subcollection DELETED SUCCESS');
+      }
+    } catch (e) {
+      log('SERVICES: ERROR DELETING SUBCOLLECTIONS: $e');
+      throw Exception('Failed to delete subcollections: $e');
     }
   }
 }

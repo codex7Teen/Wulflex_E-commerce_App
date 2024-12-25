@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
@@ -161,7 +162,21 @@ class ScreenMyOrders extends StatelessWidget {
                   );
                 } else {
                   return Center(
-                      child: Text('No orders placed. show lottie here'));
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Lottie.asset('assets/lottie/no_orders_lottie.json',
+                            width: 190, repeat: false),
+                        Text(
+                          'Oops! No orders here yet. 🛒\nLet’s fix that—shop your favorites today!',
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.emptyScreenText(context),
+                        ),
+                        SizedBox(height: 90)
+                      ],
+                    ),
+                  );
                 }
               }
               return Text('sorry');

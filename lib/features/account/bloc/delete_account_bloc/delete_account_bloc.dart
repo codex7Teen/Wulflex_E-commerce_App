@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wulflex/data/services/authentication/login_authorization.dart';
-import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
-
 part 'delete_account_event.dart';
 part 'delete_account_state.dart';
 
@@ -28,8 +26,14 @@ class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
         final currentStates = (state as DeleteAccountInitial).checkBoxStates;
         emit(DeleteAccountLoading());
         try {
+          // First delete user details (image and Firestore document)
+          await authService.deleteAllUserDetails();
+          log("USER DETAILS DELETED SUCCESS");
+
+          // Then delete the actual user account
           await authService.deleteUser();
           log("ACCOUNT DELETED SUCCESS");
+
           emit(DeleteAccountSuccess());
           // Reset to initial state for further attempts
           emit(DeleteAccountInitial(currentStates));
