@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/app_constants.dart';
@@ -152,7 +153,7 @@ class ScreenPaymentState extends State<ScreenPayment> {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        '₹ ${widget.totalAmount.toString()}',
+                        '₹ ${NumberFormat('#,##,###.##').format(widget.totalAmount)}',
                         style: AppTextStyles.paymentPageTotalAmountText,
                       )
                     ],

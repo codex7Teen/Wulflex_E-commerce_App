@@ -218,7 +218,7 @@ class ScreenOrderDetails extends StatelessWidget {
                                           Row(
                                             children: [
                                               Text(
-                                                "₹${product.retailPrice.round()}",
+                                                "₹${NumberFormat('#,##,###.##').format(product.retailPrice)}",
                                                 style: AppTextStyles
                                                     .itemCardSecondSubTitleText,
                                                 maxLines: 1,
@@ -226,7 +226,7 @@ class ScreenOrderDetails extends StatelessWidget {
                                               ),
                                               SizedBox(width: 8),
                                               Text(
-                                                "₹${product.offerPrice.round()}",
+                                                "₹${NumberFormat('#,##,###.##').format(product.offerPrice)}",
                                                 style: AppTextStyles
                                                     .itemCardSubTitleText,
                                                 maxLines: 1,

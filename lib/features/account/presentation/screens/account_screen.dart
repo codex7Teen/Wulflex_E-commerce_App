@@ -11,7 +11,6 @@ import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_blo
 import 'package:wulflex/features/auth/presentation/screens/login_screen.dart';
 import 'package:wulflex/features/account/presentation/widgets/account_screen_widgets.dart';
 import 'package:wulflex/features/account/presentation/screens/address_manage_screen.dart';
-import 'package:wulflex/features/account/presentation/screens/delete_account_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/profile_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/settings_screen.dart';
 import 'package:wulflex/features/account/presentation/widgets/signout_alert_widget.dart';

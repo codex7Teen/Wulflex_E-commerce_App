@@ -107,9 +107,14 @@ class AppTextStyles {
           fontWeight: FontWeight.bold);
 
 //! FORGOT PASSWORD DESCRIPTION TEXT
-  static TextStyle forgotPasswordDescriptionText(BuildContext context, {fixedBlackcolor = true}) =>
+  static TextStyle forgotPasswordDescriptionText(BuildContext context,
+          {fixedBlackcolor = true}) =>
       GoogleFonts.robotoCondensed(
-          color: fixedBlackcolor ? AppColors.blackThemeColor : isLightTheme(context) ? AppColors.blackThemeColor : AppColors.whiteThemeColor,
+          color: fixedBlackcolor
+              ? AppColors.blackThemeColor
+              : isLightTheme(context)
+                  ? AppColors.blackThemeColor
+                  : AppColors.whiteThemeColor,
           fontWeight: FontWeight.bold,
           fontSize: 16,
           letterSpacing: 1);
@@ -168,7 +173,7 @@ class AppTextStyles {
       fontWeight: FontWeight.bold,
       color: AppColors.blackThemeColor,
       fontSize: 17.5,
-      letterSpacing: 1);
+      letterSpacing: 0.8);
 
   //! ITEM-CARD PRODUCT NAME TEXT (ITEM NAME)
   static final TextStyle itemCardNameText = GoogleFonts.robotoCondensed(
@@ -209,7 +214,7 @@ class AppTextStyles {
       GoogleFonts.robotoCondensed(
           fontWeight: FontWeight.bold,
           color: AppColors.greyThemeColor,
-          fontSize: 14,
+          fontSize: 12,
           letterSpacing: 0.2,
           decoration: TextDecoration.lineThrough,
           decorationColor: AppColors.greyThemeColor,

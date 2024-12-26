@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/address_model.dart';
@@ -363,7 +364,7 @@ class OrderSummaryScreenWidgets {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "₹${cartItem.offerPrice.round()}",
+                                  "₹${NumberFormat('#,##,###.##').format(cartItem.offerPrice)}",
                                   style: AppTextStyles.itemCardSubTitleText,
                                 ),
                                 Padding(
@@ -431,7 +432,7 @@ class OrderSummaryScreenWidgets {
               ),
               Spacer(),
               Text(
-                '₹ ${subtotal.toString()}',
+                '₹ ${NumberFormat('#,##,###.##').format(subtotal)}',
                 style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
               )
             ],
@@ -445,7 +446,7 @@ class OrderSummaryScreenWidgets {
               ),
               Spacer(),
               Text(
-                '₹ –${discount.toString()}',
+                '₹ –${NumberFormat('#,##,###.##').format(discount)}',
                 style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
               )
             ],
@@ -485,7 +486,7 @@ class OrderSummaryScreenWidgets {
               ),
               Spacer(),
               Text(
-                '₹ ${total.toString()}',
+                '₹ ${NumberFormat('#,##,###.##').format(total)}',
                 style: AppTextStyles.cartTotalAmountText,
               )
             ],

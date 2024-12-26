@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -105,12 +106,12 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                   Row(
                     children: [
                       Text(
-                        "₹${product.retailPrice.round()}",
+                        "₹${NumberFormat('#,##,###.##').format(product.retailPrice)}",
                         style: AppTextStyles.itemCardSecondSubTitleText,
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "₹${product.offerPrice.round()}",
+                        "₹${NumberFormat('#,##,###.##').format(product.offerPrice)}",
                         style: AppTextStyles.itemCardSubTitleText,
                       ),
                       Spacer(),

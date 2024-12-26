@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/product_model.dart';
@@ -83,7 +84,7 @@ class CartWidgets {
                   ),
                   Spacer(),
                   Text(
-                    '₹ ${subtotal.toString()}',
+                    '₹ ${NumberFormat('#,##,###.##').format(subtotal)}',
                     style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
                   )
                 ],
@@ -97,7 +98,7 @@ class CartWidgets {
                   ),
                   Spacer(),
                   Text(
-                    '₹ –${discount.toString()}',
+                    '₹ –${NumberFormat('#,##,###.##').format(discount)}',
                     style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
                   )
                 ],
@@ -113,7 +114,7 @@ class CartWidgets {
                   ),
                   Spacer(),
                   Text(
-                    '₹ ${total.toString()}',
+                    '₹ ${NumberFormat('#,##,###.##').format(total)}',
                     style: AppTextStyles.cartTotalAmountText,
                   )
                 ],

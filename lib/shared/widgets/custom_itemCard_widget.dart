@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
@@ -73,22 +74,28 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "₹${product.retailPrice.round()}",
-                          style:
-                              AppTextStyles.itemCardSecondSubTitleText.copyWith(
-                            decoration: TextDecoration
-                                .lineThrough, // Add strikethrough to retail price
-                            color: Colors
-                                .grey, // Optional: make retail price appear less prominent
+                        Flexible(
+                          child: Text(
+                            "₹${NumberFormat('#,##,###.##').format(product.retailPrice)}",
+                            style: AppTextStyles.itemCardSecondSubTitleText
+                                .copyWith(
+                              decoration: TextDecoration
+                                  .lineThrough, // Add strikethrough to retail price
+                              color: Colors
+                                  .grey, // Optional: make retail price appear less prominent
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(width: 5), // Reduced spacing
-                        Text(
-                          "₹${product.offerPrice.round()}",
-                          style: AppTextStyles.itemCardSubTitleText,
-                          overflow: TextOverflow.ellipsis,
+                        Flexible(
+                          child: Text(
+                            "₹${NumberFormat('#,##,###.##').format(product.offerPrice)}",
+                            style: AppTextStyles.itemCardSubTitleText,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

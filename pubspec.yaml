@@ -32,6 +32,7 @@ dependencies:
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
   cloud_firestore: ^5.5.0
+  connectivity_plus: ^6.1.1
   cupertino_icons: ^1.0.8
   equatable: ^2.0.5
   firebase_auth: ^5.3.1
