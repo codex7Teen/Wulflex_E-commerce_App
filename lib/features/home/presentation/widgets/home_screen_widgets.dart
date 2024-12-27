@@ -216,7 +216,7 @@ Widget buildcarouselView(
             options: CarouselOptions(
                 height: 185,
                 viewportFraction: 1.0,
-                // autoPlay: true,
+                autoPlay: true,
                 onPageChanged: onPageChanged,
                 autoPlayInterval: Duration(seconds: 3)),
             items: [buildSaleBanner(), buildEquipmentsBanner()]),
