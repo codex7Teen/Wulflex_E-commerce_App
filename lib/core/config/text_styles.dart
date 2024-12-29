@@ -411,7 +411,7 @@ class AppTextStyles {
   static TextStyle customBlackButtonText(BuildContext context) =>
       GoogleFonts.robotoCondensed(
           fontSize: 18,
-          color: Theme.of(context).brightness == Brightness.light
+          color: isLightTheme(context)
               ? AppColors.whiteThemeColor
               : AppColors.blackThemeColor,
           letterSpacing: 1,

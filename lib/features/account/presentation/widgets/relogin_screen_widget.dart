@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wulflex/features/account/bloc/relogin/relogin_bloc.dart';
+import 'package:wulflex/features/account/bloc/relogin_bloc/relogin_bloc.dart';
 import 'package:wulflex/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/shared/widgets/custom_authentication_tetxfield_widget.dart';
