@@ -41,6 +41,8 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
+  await NotificationServices().requestPermission();
+  await NotificationServices().init();
   runApp(const MyApp());
 }
 

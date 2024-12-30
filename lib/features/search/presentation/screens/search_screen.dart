@@ -248,7 +248,7 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                               'assets/lottie/search_empty_lottie_white.json',
                               width: 190,
                               repeat: false),
-                              SizedBox(height: 18),
+                          SizedBox(height: 18),
                           Text(
                             'We couldn’t find what you’re looking for. Please refine your search.',
                             textAlign: TextAlign.center,
@@ -264,7 +264,7 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              crossAxisSpacing: 18,
+                              crossAxisSpacing: 15,
                               mainAxisSpacing: 7.5,
                               childAspectRatio: 0.604),
                       itemCount: _filteredProducts.length,

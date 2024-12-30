@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/data/services/notification_services.dart';
 import 'package:wulflex/features/account/presentation/screens/account_screen.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/cart/presentation/screens/cart_screen.dart';
@@ -41,6 +45,20 @@ class _MainScreenState extends State<MainScreen> {
     Icons.shopping_cart_rounded,
     Icons.manage_accounts_sharp
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    notificationHandler();
+  }
+
+  // Method which handles notification
+  void notificationHandler() {
+    FirebaseMessaging.onMessage.listen((event) async {
+      log(event.notification!.title.toString());
+      NotificationServices().showNotification(event);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -189,10 +207,13 @@ class _MainScreenState extends State<MainScreen> {
                                                 builder: (context, state) {
                                                   int itemCount = 0;
                                                   if (state is CartLoaded) {
-                                                     itemCount = state.products.fold(
-                                0,
-                                (sum, product) => sum + (product.quantity),
-                              );
+                                                    itemCount =
+                                                        state.products.fold(
+                                                      0,
+                                                      (sum, product) =>
+                                                          sum +
+                                                          (product.quantity),
+                                                    );
                                                   }
                                                   return itemCount > 0
                                                       ? Container(
@@ -201,8 +222,14 @@ class _MainScreenState extends State<MainScreen> {
                                                                   .all(4),
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: currentIndex == 2 && !isLightTheme(context) ? AppColors
-                                                                .whiteThemeColor : AppColors.greenThemeColor,
+                                                            color: currentIndex ==
+                                                                        2 &&
+                                                                    !isLightTheme(
+                                                                        context)
+                                                                ? AppColors
+                                                                    .whiteThemeColor
+                                                                : AppColors
+                                                                    .greenThemeColor,
                                                             shape:
                                                                 BoxShape.circle,
                                                           ),
@@ -214,10 +241,15 @@ class _MainScreenState extends State<MainScreen> {
                                                           child: Text(
                                                             itemCount
                                                                 .toString(),
-                                                            style:
-                                                                 TextStyle(
-                                                              color: currentIndex == 2 && !isLightTheme(context) ?
-                                                                  AppColors.blackThemeColor : AppColors.whiteThemeColor ,
+                                                            style: TextStyle(
+                                                              color: currentIndex ==
+                                                                          2 &&
+                                                                      !isLightTheme(
+                                                                          context)
+                                                                  ? AppColors
+                                                                      .blackThemeColor
+                                                                  : AppColors
+                                                                      .whiteThemeColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight

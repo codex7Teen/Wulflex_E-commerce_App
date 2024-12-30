@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wulflex/data/services/notification_services.dart';
 import 'package:wulflex/features/onboarding/presentation/screens/main_intro_screen.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
 import 'package:wulflex/features/onboarding/presentation/screens/splash_screen_1.dart';
@@ -24,6 +25,8 @@ class MainWrapperWidget extends StatelessWidget {
               // Show splash and navigate to intro screen
               return ScreenSplash1(screen: ScreenMainIntro());
             } else {
+              // Upload the FCM token to firebase firestore
+              NotificationServices().uploadFcmToken();
               return ScreenSplash1(screen: MainScreen());
             }
           }

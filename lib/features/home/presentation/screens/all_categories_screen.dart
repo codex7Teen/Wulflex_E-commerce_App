@@ -27,7 +27,6 @@ class _ScreenAllCategoriesState extends State<ScreenAllCategories> {
 
   @override
   Widget build(BuildContext context) {
-    // Default images for default categories
     final Map<String, String> defaultCategoryImages = {
       'Equipments': 'assets/equipments.jpg',
       'Supplements': 'assets/suppliments.jpg',
@@ -64,43 +63,41 @@ class _ScreenAllCategoriesState extends State<ScreenAllCategories> {
           } else if (state is CategoryDetailsLoaded) {
             final categories = state.categoryDetails;
 
-            log('Total Categories: ${categories.length}');
-            for (var category in categories) {
-              log('Category Name: ${category['name']}');
-              log('Image URL: ${category['image_url']}');
-            }
-
             return Padding(
               padding: const EdgeInsets.only(top: 14, left: 18, right: 18),
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 18,
-                    mainAxisSpacing: 18,
-                    childAspectRatio: 0.88),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 18,
+                  mainAxisSpacing: 18,
+                  // Increased aspect ratio to give more vertical space
+                  childAspectRatio: 0.75,
+                ),
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
                   final category = categories[index];
                   final categoryName = category['name'];
                   final imageUrl = category['image_url'] ?? '';
 
-                  // Use default image for default categories, network image for custom
                   Widget imageWidget = imageUrl.isNotEmpty
                       ? CachedNetworkImage(
-                        width: double.infinity,
-                        imageUrl: imageUrl,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) {
-                          return SizedBox(
+                          width: double.infinity,
+                          height: 100,
+                          imageUrl: imageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) {
+                            return SizedBox(
                               width: 22,
                               height: 22,
                               child:
-                                  Image.asset('assets/wulflex_logo_nobg.png'));
-                        },
-                      )
+                                  Image.asset('assets/wulflex_logo_nobg.png'),
+                            );
+                          },
+                        )
                       : Image.asset(
                           defaultCategoryImages[categoryName]!,
                           fit: BoxFit.cover,
+                          height: 100,
                         );
 
                   return GestureDetector(
@@ -112,22 +109,31 @@ class _ScreenAllCategoriesState extends State<ScreenAllCategories> {
                         ),
                       );
                     },
-                    child: GridTile(
+                    child: Container(
+                      // Added container with fixed height
+                      constraints: const BoxConstraints(maxHeight: 150),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min, // Add this
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: SizedBox(
-                              height: 100,
+                          Flexible(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
                               child: imageWidget,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          Text(
-                            categoryName,
-                            style: AppTextStyles.allCategoriesPageCategoryText(context),
-                            textAlign: TextAlign.center,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Text(
+                              categoryName,
+                              style:
+                                  AppTextStyles.allCategoriesPageCategoryText(
+                                      context),
+                              textAlign: TextAlign.center,
+                              maxLines: 2, // Limit text to 2 lines
+                              overflow:
+                                  TextOverflow.ellipsis, // Handle text overflow
+                            ),
                           ),
                         ],
                       ),
