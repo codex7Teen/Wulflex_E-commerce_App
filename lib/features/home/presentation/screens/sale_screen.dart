@@ -60,11 +60,12 @@ class _ScreenSaleScreenState extends State<ScreenSaleScreen> {
                     // Show product card
                     return Expanded(
                       child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 18,
-                            mainAxisSpacing: 7.5,
-                            childAspectRatio: 0.604),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 7.5,
+                                childAspectRatio: 0.604),
                         itemCount: _filteredProducts.length,
                         itemBuilder: (context, index) {
                           return buildItemCard(

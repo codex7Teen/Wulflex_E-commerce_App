@@ -146,7 +146,7 @@ Widget buildEquipmentsBanner() {
     children: [
       ClipRRect(
         borderRadius: BorderRadius.circular(18),
-        child: Image.asset('assets/ambitious-studio.jpg',
+        child: Image.asset('assets/sales_banner_2.jpg',
             fit: BoxFit.cover, height: 185, width: double.infinity),
       ),
       Positioned(

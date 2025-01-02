@@ -32,7 +32,7 @@ class _ScreenHomeState extends State<ScreenHome> {
       if (mounted) {
         // pre-caching images to make them fully loaded
         precacheImage(AssetImage('assets/sale_cover_image.jpeg'), context);
-        precacheImage(AssetImage('assets/ambitious-studio.jpg'), context);
+        precacheImage(AssetImage('assets/sales_banner_2.jpg'), context);
       }
     });
   }
