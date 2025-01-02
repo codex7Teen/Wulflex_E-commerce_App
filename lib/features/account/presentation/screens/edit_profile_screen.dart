@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
+import 'package:wulflex/features/account/presentation/widgets/custom_date_picker_widget.dart';
 import 'package:wulflex/features/account/presentation/widgets/edit_profile_screen_widgets.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
@@ -41,12 +42,19 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
 
   @override
   void dispose() {
-    // Reset the bloc state when leaving the screen
-    context.read<UserProfileBloc>().add(ResetProfileStateEvent());
     _nameController.dispose();
     _phoneNumberController.dispose();
     _dateofbirthController.dispose();
     super.dispose();
+
+    // Move the BLoC event to didChangeDependencies or initState
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Add reset event when dependencies change
+    context.read<UserProfileBloc>().add(ResetProfileStateEvent());
   }
 
   @override
@@ -80,7 +88,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                   EditProfileScreenWidgets.buildUploadImageText(context),
                   SizedBox(height: 15),
                   EditProfileScreenWidgets.buildUploadImageIcon(
-                      context, widget.networkImageUrl!),
+                      context, widget.networkImageUrl),
                   SizedBox(height: 25),
                   EditProfileScreenWidgets.buildNameText(context),
                   SizedBox(height: 8),
@@ -112,17 +120,15 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                   SizedBox(height: 25),
                   EditProfileScreenWidgets.buildDateofbirthText(context),
                   SizedBox(height: 8),
-                  CustomTextfieldsWidget(
+                  CustomDatePickerField(
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Please enter your phone number';
+                        return 'Please select your date of birth';
                       }
                       return null;
                     },
                     controller: _dateofbirthController,
-                    textInputType: TextInputType.number,
-                    maxCharacterLength: 10,
-                    hintText: 'Please enter your date of birth',
+                    hintText: 'Select your date of birth',
                   ),
                   SizedBox(height: 39),
                   BlocBuilder<UserProfileBloc, UserProfileState>(

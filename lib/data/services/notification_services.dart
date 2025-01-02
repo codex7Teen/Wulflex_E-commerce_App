@@ -28,14 +28,14 @@ class NotificationServices {
         await _firebaseFirestore
             .collection('users')
             .doc(userID)
-            .set({'notification_token': token});
+            .update({'notification_token': token});
       });
       _firebaseMessaging.onTokenRefresh.listen((token) async {
         log('Get Token :: $token');
         await _firebaseFirestore
             .collection('users')
             .doc(userID)
-            .set({'notification_token': token});
+            .update({'notification_token': token});
       });
     } catch (error) {
       log('SERVICES: ERROR ${error.toString()}');
