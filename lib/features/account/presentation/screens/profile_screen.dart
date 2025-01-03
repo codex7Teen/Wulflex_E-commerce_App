@@ -20,10 +20,15 @@ class ScreenProfile extends StatelessWidget {
             lightTheme ? AppColors.whiteThemeColor : AppColors.blackThemeColor,
         appBar: customAppbarWithBackbutton(context, 'PROFILE'),
         body: BlocBuilder<UserProfileBloc, UserProfileState>(
+          buildWhen: (previous, current) {
+            return current is UserProfileLoading ||
+                current is UserProfileError ||
+                current is UserProfileLoaded;
+          },
           builder: (context, state) {
             if (state is UserProfileLoading) {
               return Center(child: CircularProgressIndicator());
-            } else if (state is UserProfileError) {
+            } else if (state is UserProfileError) { 
               // display error
             } else if (state is UserProfileLoaded) {
               final user = state.user;
@@ -46,8 +51,12 @@ class ScreenProfile extends StatelessWidget {
                       SizedBox(height: 15),
                       ProfileScreenWidgets.buildDob(user.dob ?? ''),
                       SizedBox(height: 28),
-                      ProfileScreenWidgets.buildEditButton(context, user.name,
-                          user.phoneNumber ?? '', user.dob ?? '', user.userImage ?? ''),
+                      ProfileScreenWidgets.buildEditButton(
+                          context,
+                          user.name,
+                          user.phoneNumber ?? '',
+                          user.dob ?? '',
+                          user.userImage ?? ''),
                       SizedBox(height: 20),
                       ProfileScreenWidgets.buildDeleteButton(context)
                     ],

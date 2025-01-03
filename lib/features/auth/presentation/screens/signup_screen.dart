@@ -117,8 +117,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         SizedBox(height: 25),
 
                         // Terms and conditions
-                        SignupWidgets.buildTermsAndConditonsText(),
-                        SignupWidgets.buildPrivacyPolicyText(),
+                        SignupWidgets.buildTermsAndConditonsText(context),
+                        SignupWidgets.buildPrivacyPolicyText(context),
                         SizedBox(height: 22),
 
                         // ! S I G N U P - B U T T O N

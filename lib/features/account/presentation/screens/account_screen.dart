@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wulflex/features/account/presentation/screens/customer_support_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/my_orders_screen.dart';
+import 'package:wulflex/features/account/presentation/screens/privacy_policy_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/relogin_screen.dart';
+import 'package:wulflex/features/account/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/features/auth/presentation/screens/login_screen.dart';
@@ -139,9 +141,11 @@ class ScreenAccount extends StatelessWidget {
                           name: "DELETE ACCOUNT"),
                       SizedBox(height: 14),
                       buildButtonCards(
+                        onTap: () => NavigationHelper.navigateToWithoutReplacement(context, PrivacyPolicyScreen()),
                           icon: Icons.security, name: "PRIVACY POLICY"),
                       SizedBox(height: 14),
                       buildButtonCards(
+                         onTap: () => NavigationHelper.navigateToWithoutReplacement(context, TermsAndConditionsScreen()),
                           icon: Icons.assignment, name: "TERMS & CONDITIONS"),
                     ],
                   ),

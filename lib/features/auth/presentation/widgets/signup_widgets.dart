@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/features/account/presentation/screens/privacy_policy_screen.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/auth/presentation/screens/login_screen.dart';
 import 'package:wulflex/core/config/text_styles.dart';
@@ -16,7 +17,8 @@ class SignupWidgets {
   }
 
   static Widget buildSignUpText(BuildContext context) {
-    return Text('SIGN UP', style: AppTextStyles.authenticationHeadings(context));
+    return Text('SIGN UP',
+        style: AppTextStyles.authenticationHeadings(context));
   }
 
   static Widget buildNameTextField(TextEditingController nameTextController) {
@@ -113,7 +115,7 @@ class SignupWidgets {
         toggleVisibility: toggleVisibility);
   }
 
-  static Widget buildTermsAndConditonsText() {
+  static Widget buildTermsAndConditonsText(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -124,13 +126,16 @@ class SignupWidgets {
           ),
         ),
         SizedBox(width: 5),
-        Text("Terms & Conditions",
-            style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText),
+        GestureDetector(
+           onTap: () => NavigationHelper.navigateToWithoutReplacement(context, PrivacyPolicyScreen()),
+          child: Text("Terms & Conditions",
+              style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText),
+        ),
       ],
     );
   }
 
-  static Widget buildPrivacyPolicyText() {
+  static Widget buildPrivacyPolicyText(BuildContext context) {
     return Row(
       children: [
         SizedBox(width: 15),
@@ -139,9 +144,13 @@ class SignupWidgets {
           style: AppTextStyles.termsAndConditionAndPrivacyPolicyBaseText,
         ),
         SizedBox(width: 5),
-        Text(
-          "Privacy Policy",
-          style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText,
+        GestureDetector(
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(
+              context, PrivacyPolicyScreen()),
+          child: Text(
+            "Privacy Policy",
+            style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText,
+          ),
         ),
       ],
     );
