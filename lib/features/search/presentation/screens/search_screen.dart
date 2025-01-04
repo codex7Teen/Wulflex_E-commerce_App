@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/search/presentation/widgets/search_screen_widgets.dart';
 import 'package:wulflex/shared/widgets/custom_itemCard_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
@@ -82,68 +82,20 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
           automaticallyImplyLeading: false,
           flexibleSpace: Padding(
             padding: const EdgeInsets.only(left: 18, right: 18, top: 47),
-            child: Row(
-              children: [
-                // Back Button
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: isLightTheme(context)
-                        ? AppColors.blackThemeColor
-                        : AppColors.whiteThemeColor,
-                  ),
-                ),
-                const SizedBox(width: 15),
-                // Search Bar
-                Expanded(
-                  child: Container(
-                    height: 50,
-                    width: screenWidth * 0.92,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? AppColors.lightGreyThemeColor
-                          : AppColors.whiteThemeColor,
-                    ),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 16),
-                        Image.asset('assets/Search.png',
-                            scale: 28, color: AppColors.darkishGrey),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextField(
-                            focusNode: _focusNode,
-                            onChanged: (value) {
-                              // Handle search logic here
-                              setState(() {
-                                _searchQuery = value;
-                              });
-                              // Get current products from bloc state and filter
-                              if (context.read<ProductBloc>().state
-                                  is ProductLoaded) {
-                                final products = (context
-                                        .read<ProductBloc>()
-                                        .state as ProductLoaded)
-                                    .products;
-                                _filterAndSortProducts(products);
-                              }
-                            },
-                            style: AppTextStyles.searchBarTextStyle,
-                            decoration: InputDecoration(
-                              hintText: 'Search by product or category',
-                              hintStyle: AppTextStyles.searchBarHintText,
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            child: SearchScreenWidgets.buildSearchbarWithBackbutton(
+                context, screenWidth, _focusNode, onChanged: (value) {
+              // Handle search logic here
+              setState(() {
+                _searchQuery = value;
+              });
+              // Get current products from bloc state and filter
+              if (context.read<ProductBloc>().state is ProductLoaded) {
+                final products =
+                    (context.read<ProductBloc>().state as ProductLoaded)
+                        .products;
+                _filterAndSortProducts(products);
+              }
+            }),
           ),
         ),
       ),
@@ -153,77 +105,20 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
           children: [
             const SizedBox(height: 9),
             // Filter Dropdown
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Text(
-                //   'Filters:',
-                //   style: AppTextStyles.searchFilterHeading,
-                // ),
-                DropdownButton<String>(
-                  dropdownColor: isLightTheme(context)
-                      ? AppColors.whiteThemeColor
-                      : AppColors.darkishGrey,
-                  value: _selectedFilter,
-                  borderRadius: BorderRadius.circular(18),
-                  items: [
-                    'Featured',
-                    'Price: Low to High',
-                    'Price: High to Low',
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
-                          style: AppTextStyles.searchFilterHeading(context)),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _selectedFilter = value;
-                      });
-                      if (context.read<ProductBloc>().state is ProductLoaded) {
-                        final products =
-                            (context.read<ProductBloc>().state as ProductLoaded)
-                                .products;
-                        _filterAndSortProducts(products);
-                      }
-                    }
-                  },
-                ),
-                DropdownButton<String>(
-                  dropdownColor: isLightTheme(context)
-                      ? AppColors.whiteThemeColor
-                      : AppColors.darkishGrey,
-                  value: _selectedFilter,
-                  borderRadius: BorderRadius.circular(18),
-                  items: [
-                    'Featured',
-                    'Price: Low to High',
-                    'Price: High to Low',
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value,
-                          style: AppTextStyles.searchFilterHeading(context)),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _selectedFilter = value;
-                      });
-                      if (context.read<ProductBloc>().state is ProductLoaded) {
-                        final products =
-                            (context.read<ProductBloc>().state as ProductLoaded)
-                                .products;
-                        _filterAndSortProducts(products);
-                      }
-                    }
-                  },
-                ),
-              ],
-            ),
+            SearchScreenWidgets.buildFilterDropdown(context, _selectedFilter,
+                onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _selectedFilter = value;
+                });
+                if (context.read<ProductBloc>().state is ProductLoaded) {
+                  final products =
+                      (context.read<ProductBloc>().state as ProductLoaded)
+                          .products;
+                  _filterAndSortProducts(products);
+                }
+              }
+            }),
             const SizedBox(height: 8),
             // Build products
             BlocBuilder<ProductBloc, ProductState>(
@@ -238,25 +133,8 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                   }
 
                   if (_filteredProducts.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 130),
-                          Lottie.asset(
-                              'assets/lottie/search_empty_lottie_white.json',
-                              width: 190,
-                              repeat: false),
-                          SizedBox(height: 18),
-                          Text(
-                            'We couldn’t find what you’re looking for. Please refine your search.',
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.emptyScreenText(context),
-                          ),
-                        ],
-                      ),
-                    );
+                    return SearchScreenWidgets
+                        .buildSearchedProductNotFoundDisplay(context);
                   }
                   // Show product card
                   return Expanded(
