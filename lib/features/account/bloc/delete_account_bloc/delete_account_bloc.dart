@@ -1,7 +1,6 @@
 import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/data/services/authentication/login_authorization.dart';
 part 'delete_account_event.dart';
 part 'delete_account_state.dart';
@@ -9,7 +8,7 @@ part 'delete_account_state.dart';
 class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
   final AuthService authService;
   DeleteAccountBloc({required this.authService})
-      : super(DeleteAccountInitial([false, false, false, false])) {
+      : super(const DeleteAccountInitial([false, false, false, false])) {
     //! Checkbox checked
     on<ToggleCheckboxEvent>((event, emit) {
       if (state is DeleteAccountInitial) {
@@ -52,7 +51,7 @@ class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
 
     //! Reset checkboxes after account deleted
     on<ResetCheckboxStatesEvent>((event, emit) {
-      emit(DeleteAccountInitial([false, false, false, false]));
+      emit(const DeleteAccountInitial([false, false, false, false]));
     });
   }
 }

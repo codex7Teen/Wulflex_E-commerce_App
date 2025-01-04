@@ -1,8 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wulflex/data/models/user_model.dart';
 import 'package:wulflex/data/services/user_profile_services.dart';

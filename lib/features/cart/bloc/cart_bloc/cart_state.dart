@@ -20,7 +20,7 @@ class CartItemDeleted extends CartState {}
 class CartError extends CartState {
   final String errorMessage;
 
-  CartError({required this.errorMessage});
+  const CartError({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];
@@ -29,7 +29,7 @@ class CartError extends CartState {
 class CartLoaded extends CartState {
   final List<ProductModel> products;
 
-  CartLoaded({required this.products});
+  const CartLoaded({required this.products});
 
   @override
   List<Object> get props => [products];

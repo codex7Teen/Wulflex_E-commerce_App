@@ -12,7 +12,7 @@ class ReloginUsingEmailAndPasswordEvent extends ReloginEvent {
   final String email;
   final String password;
 
-  ReloginUsingEmailAndPasswordEvent(
+  const ReloginUsingEmailAndPasswordEvent(
       {required this.email, required this.password});
 
   @override

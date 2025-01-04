@@ -17,7 +17,7 @@ class SignUpSuccess extends AuthenticatonBlocState {
   final String userId;
   final String emailId;
 
-  SignUpSuccess({required this.userId, required this.emailId});
+  const SignUpSuccess({required this.userId, required this.emailId});
 
   @override
   List<Object> get props => [userId, emailId];
@@ -25,7 +25,7 @@ class SignUpSuccess extends AuthenticatonBlocState {
 
 class SignUpFailture extends AuthenticatonBlocState {
   final String error;
-  SignUpFailture({required this.error});
+  const SignUpFailture({required this.error});
 
   @override
   List<Object> get props => [error];
@@ -38,7 +38,7 @@ class LoginSuccess extends AuthenticatonBlocState {
   final String userId;
   final String emailId;
 
-  LoginSuccess({required this.userId, required this.emailId});
+  const LoginSuccess({required this.userId, required this.emailId});
 
   @override
   List<Object> get props => [userId, emailId];
@@ -46,7 +46,7 @@ class LoginSuccess extends AuthenticatonBlocState {
 
 class LoginFailture extends AuthenticatonBlocState {
   final String error;
-  LoginFailture({required this.error});
+  const LoginFailture({required this.error});
 
   @override
   List<Object> get props => [error];
@@ -59,7 +59,7 @@ class PasswordResetSuccess extends AuthenticatonBlocState {}
 
 class PasswordResetFailture extends AuthenticatonBlocState {
   final String error;
-  PasswordResetFailture({required this.error});
+  const PasswordResetFailture({required this.error});
 
   @override
   List<Object> get props => [error];
@@ -72,7 +72,7 @@ class LogOutSuccess extends AuthenticatonBlocState {}
 
 class LogOutFailture extends AuthenticatonBlocState {
   final String error;
-  LogOutFailture({required this.error});
+  const LogOutFailture({required this.error});
 
   @override
   List<Object> get props => [error];
@@ -85,7 +85,7 @@ class GoogleFirstLoginSuccess extends AuthenticatonBlocState {
   final String userId;
   final String name;
   final String emailId;
-  GoogleFirstLoginSuccess(
+  const GoogleFirstLoginSuccess(
       {required this.userId, required this.name, required this.emailId});
 
   @override
@@ -96,7 +96,7 @@ class GoogleLogInSuccess extends AuthenticatonBlocState {}
 
 class GoogleLogInFailture extends AuthenticatonBlocState {
   final String error;
-  GoogleLogInFailture({required this.error});
+  const GoogleLogInFailture({required this.error});
 
   @override
   List<Object> get props => [error];

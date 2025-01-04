@@ -26,7 +26,7 @@ class DeleteAccountLoading extends DeleteAccountState {}
 //! State when account deletion fails
 class DeleteAccountFailure extends DeleteAccountState {
   final String errorMessage;
-  DeleteAccountFailure({required this.errorMessage});
+  const DeleteAccountFailure({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

@@ -14,7 +14,7 @@ final class CategoryLoading extends CategoryState {}
 final class CategoryError extends CategoryState {
   final String errorMessage;
 
-  CategoryError({required this.errorMessage});
+  const CategoryError({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

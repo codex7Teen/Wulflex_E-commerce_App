@@ -18,7 +18,7 @@ final class AddressDeletedSuccess extends AddressState {}
 final class AddressFailed extends AddressState {
   final String errorMessage;
 
-  AddressFailed({required this.errorMessage});
+  const AddressFailed({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];
@@ -29,7 +29,7 @@ final class AddressLoaded extends AddressState {
   final List<AddressModel> address;
   final AddressModel? selectedAddress;
 
-  AddressLoaded({required this.address, this.selectedAddress});
+  const AddressLoaded({required this.address, this.selectedAddress});
 
   @override
   List<Object> get props => [address, selectedAddress ?? ''];

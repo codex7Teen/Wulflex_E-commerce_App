@@ -22,7 +22,7 @@ class GoogleLoading extends ReloginState {}
 class ReloginError extends ReloginState {
   final String errorMessage;
 
-  ReloginError({required this.errorMessage});
+  const ReloginError({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

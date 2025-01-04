@@ -12,7 +12,7 @@ class SignUpButtonPressed extends AuthenticatonBlocEvent {
   final String email;
   final String password;
 
-  SignUpButtonPressed({required this.email, required this.password});
+  const SignUpButtonPressed({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];
@@ -23,7 +23,7 @@ class LoginButtonPressed extends AuthenticatonBlocEvent {
   final String email;
   final String password;
 
-  LoginButtonPressed({required this.email, required this.password});
+  const LoginButtonPressed({required this.email, required this.password});
 
   @override
   List<Object> get props => [email, password];
@@ -33,7 +33,7 @@ class LoginButtonPressed extends AuthenticatonBlocEvent {
 class PasswordResetButtonPressed extends AuthenticatonBlocEvent {
   final String email;
   
-  PasswordResetButtonPressed({required this.email});
+  const PasswordResetButtonPressed({required this.email});
 
   @override
   List<Object> get props => [email];

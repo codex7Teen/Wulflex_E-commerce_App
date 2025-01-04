@@ -14,7 +14,7 @@ final class UserProfileLoading extends UserProfileState {}
 final class UserProfileLoaded extends UserProfileState {
   final UserModel user;
 
-  UserProfileLoaded(this.user);
+  const UserProfileLoaded(this.user);
 
   @override
   List<Object> get props => [user];
@@ -23,7 +23,7 @@ final class UserProfileLoaded extends UserProfileState {
 class UserProfileError extends UserProfileState {
   final String error;
 
-  UserProfileError(this.error);
+  const UserProfileError(this.error);
 
   @override
   List<Object> get props => [error];
@@ -31,7 +31,7 @@ class UserProfileError extends UserProfileState {
 
 class ImagePickerLoaded extends UserProfileState {
   final File selectedImage;
-  ImagePickerLoaded(this.selectedImage);
+  const ImagePickerLoaded(this.selectedImage);
 
   @override
   List<Object> get props => [selectedImage];
@@ -44,7 +44,7 @@ class ImageUploadProgress extends UserProfileState {
   final double progress;
   final File selectedImage;
 
-  ImageUploadProgress({required this.progress, required this.selectedImage});
+  const ImageUploadProgress({required this.progress, required this.selectedImage});
 
   @override
   List<Object> get props => [progress, selectedImage];

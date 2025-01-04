@@ -13,7 +13,7 @@ class CreateOrderEvent extends OrderEvent {
   final String paymentMode;
   final AddressModel address;
 
-  CreateOrderEvent(
+  const CreateOrderEvent(
       {required this.products,
       required this.paymentMode,
       required this.address});
@@ -30,7 +30,7 @@ class UpdateOrderStatusEvent extends OrderEvent {
   final String orderId;
   final OrderStatus newStatus;
 
-  UpdateOrderStatusEvent({required this.orderId, required this.newStatus});
+  const UpdateOrderStatusEvent({required this.orderId, required this.newStatus});
 
   @override
   List<Object> get props => [orderId, newStatus];

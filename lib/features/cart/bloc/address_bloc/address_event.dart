@@ -17,7 +17,7 @@ class AddAddressEvent extends AddressEvent {
   final String houseName;
   final String areaName;
 
-  AddAddressEvent(
+  const AddAddressEvent(
       {required this.name,
       required this.phoneNumber,
       required this.pincode,
@@ -42,7 +42,7 @@ class EditAddressEvent extends AddressEvent {
   final String houseName;
   final String areaName;
 
-  EditAddressEvent(
+  const EditAddressEvent(
       {required this.addressId,
       required this.name,
       required this.phoneNumber,

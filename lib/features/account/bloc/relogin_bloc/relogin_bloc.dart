@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/data/services/authentication/login_authorization.dart';
-
 part 'relogin_event.dart';
 part 'relogin_state.dart';
 

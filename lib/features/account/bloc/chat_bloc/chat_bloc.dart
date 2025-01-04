@@ -1,8 +1,7 @@
 import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/data/services/chat_services.dart';
 
 part 'chat_event.dart';

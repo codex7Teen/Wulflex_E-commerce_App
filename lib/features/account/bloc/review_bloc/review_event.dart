@@ -10,7 +10,7 @@ abstract class ReviewEvent extends Equatable {
 class AddReviewEvent extends ReviewEvent {
   final ReviewModel review;
 
-  AddReviewEvent({required this.review});
+  const AddReviewEvent({required this.review});
 
   @override
   List<Object> get props => [review];
@@ -19,7 +19,7 @@ class AddReviewEvent extends ReviewEvent {
 class FetchProductReviewsEvent extends ReviewEvent {
   final String productId;
 
-  FetchProductReviewsEvent({required this.productId});
+  const FetchProductReviewsEvent({required this.productId});
 
   @override
   List<Object> get props => [productId];

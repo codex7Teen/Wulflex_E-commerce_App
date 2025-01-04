@@ -10,7 +10,7 @@ abstract class UserProfileEvent extends Equatable {
 //! CREATE USER PROFILE EVENT
 class CreateUserProfileEvent extends UserProfileEvent {
   final UserModel user;
-  CreateUserProfileEvent(this.user);
+  const CreateUserProfileEvent(this.user);
 
   @override
   List<Object> get props => [user];
@@ -23,7 +23,7 @@ class FetchUserProfileEvent extends UserProfileEvent {}
 class UpdateUserProfileEvent extends UserProfileEvent {
   final Map<String, dynamic> updates;
 
-  UpdateUserProfileEvent(this.updates);
+  const UpdateUserProfileEvent(this.updates);
 
   @override
   List<Object> get props => [updates];

@@ -14,7 +14,7 @@ final class OrderLoading extends OrderState {}
 final class OrdersLoaded extends OrderState {
   final List<OrderModel> orders;
 
-  OrdersLoaded({required this.orders});
+  const OrdersLoaded({required this.orders});
 
   @override
   List<Object> get props => [orders];
@@ -23,13 +23,13 @@ final class OrdersLoaded extends OrderState {
 final class OrderCreated extends OrderState {
   final List<OrderModel> orders;
 
-  OrderCreated({required this.orders});
+  const OrderCreated({required this.orders});
 }
 
 final class OrderError extends OrderState {
   final String errorMessage;
 
-  OrderError({required this.errorMessage});
+  const OrderError({required this.errorMessage});
 }
 
 //! ORDER STATUS UPDATE SUCCESS
