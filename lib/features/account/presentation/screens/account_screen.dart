@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:wulflex/features/account/presentation/screens/customer_support_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/my_orders_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/privacy_policy_screen.dart';
@@ -64,33 +63,34 @@ class ScreenAccount extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildUserProfileImage(imageUrl),
-                      buildUserGreetingText(user, getGreeting, context),
+                      AccountScreenWidgets.buildUserProfileImage(imageUrl),
+                      AccountScreenWidgets.buildUserGreetingText(
+                          user, AccountScreenWidgets.getGreeting, context),
                       SizedBox(height: 28),
-                      buildAccountHeading(context),
+                      AccountScreenWidgets.buildAccountHeading(context),
                       SizedBox(height: 8),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
                                   context, ScreenMyOrders()),
                           icon: Icons.shopping_bag_rounded,
                           name: "MY ORDERS"),
                       SizedBox(height: 14),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
                                   context, ScreenProfile()),
                           icon: Icons.person,
                           name: "MY PROFILE"),
                       SizedBox(height: 14),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
                                   context, ScreenManageAddress()),
                           icon: Icons.my_library_books,
                           name: "ADDRESS BOOK"),
                       SizedBox(height: 14),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () {
                             NavigationHelper.navigateToWithoutReplacement(
                                 context, ScreenSettings());
@@ -98,20 +98,19 @@ class ScreenAccount extends StatelessWidget {
                           icon: Icons.settings,
                           name: "SETTINGS"),
                       SizedBox(height: 28),
-                      buildConnectHeading(context),
+                      AccountScreenWidgets.buildConnectHeading(context),
                       SizedBox(height: 8),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
                                   context, ScreenCustomerSupport()),
                           icon: Icons.support_agent_rounded,
                           name: "CUSTOMER SUPPORT"),
                       SizedBox(height: 14),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () async {
-                            // Open instagram using the link 'https://www.instagram.com/denniz_jhnsn?igsh=MWFqdmc5b2FpcHA5'
                             try {
-                              await _launchInstagram();
+                              await AccountScreenWidgets.launchInstagram();
                             } catch (error) {
                               if (context.mounted) {
                                 CustomSnackbar.showCustomSnackBar(
@@ -124,29 +123,35 @@ class ScreenAccount extends StatelessWidget {
                           icon: Icons.smartphone_rounded,
                           name: "INSTAGRAM"),
                       SizedBox(height: 28),
-                      buildAppHeading(context),
+                      AccountScreenWidgets.buildAppHeading(context),
                       SizedBox(height: 8),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () {
                             showCustomSignoutWarningAlertBox(context);
                           },
                           icon: Icons.logout_rounded,
                           name: "SIGN OUT"),
                       SizedBox(height: 14),
-                      buildButtonCards(
+                      AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
                                   context, ScreenRelogin()),
                           icon: Icons.person_off_rounded,
                           name: "DELETE ACCOUNT"),
                       SizedBox(height: 14),
-                      buildButtonCards(
-                        onTap: () => NavigationHelper.navigateToWithoutReplacement(context, PrivacyPolicyScreen()),
-                          icon: Icons.security, name: "PRIVACY POLICY"),
+                      AccountScreenWidgets.buildButtonCards(
+                          onTap: () =>
+                              NavigationHelper.navigateToWithoutReplacement(
+                                  context, PrivacyPolicyScreen()),
+                          icon: Icons.security,
+                          name: "PRIVACY POLICY"),
                       SizedBox(height: 14),
-                      buildButtonCards(
-                         onTap: () => NavigationHelper.navigateToWithoutReplacement(context, TermsAndConditionsScreen()),
-                          icon: Icons.assignment, name: "TERMS & CONDITIONS"),
+                      AccountScreenWidgets.buildButtonCards(
+                          onTap: () =>
+                              NavigationHelper.navigateToWithoutReplacement(
+                                  context, TermsAndConditionsScreen()),
+                          icon: Icons.assignment,
+                          name: "TERMS & CONDITIONS"),
                     ],
                   ),
                 ),
@@ -158,25 +163,5 @@ class ScreenAccount extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // Helper method to determine greeting
-  String getGreeting() {
-    final hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'Good Morning';
-    } else if (hour < 17) {
-      return 'Good Afternoon';
-    } else {
-      return 'Good Evening';
-    }
-  }
-
-  Future<void> _launchInstagram() async {
-    final Uri url = Uri.parse(
-        'https://www.instagram.com/denniz_jhnsn?igsh=MWFqdmc5b2FpcHA5');
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
   }
 }

@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/data/services/cart_services.dart';
-
 part 'cart_event.dart';
 part 'cart_state.dart';
 
