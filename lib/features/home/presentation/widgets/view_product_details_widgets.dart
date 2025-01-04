@@ -2,8 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/data/models/enhanced_review_model.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
@@ -449,6 +452,279 @@ class ViewProductDetailsWidgets {
         Text(trailingText,
             style: AppTextStyles.linearProgressIndicatorTrailingText(context))
       ],
+    );
+  }
+
+  static Widget buildRatingAndReviewsHeading(BuildContext context) {
+    return Text("RATINGS & REVIEWS",
+        style: AppTextStyles.viewProductTitleText(context));
+  }
+
+  static Widget buildReviewMetrics(
+      BuildContext context,
+      double roundedRating,
+      List<EnhancedReviewModel> enhancedReviews,
+      String roundedPercentageOfFiveStar,
+      String roundedPercentageOfFourStar,
+      String roundedPercentageOfThreeStar,
+      String roundedPercentageOfTwoStar,
+      String roundedPercentageOfOneStar) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(roundedRating.toString(),
+                  style: AppTextStyles.viewRatingBigRatingText),
+              SizedBox(height: 1.5),
+              RatingBar(
+                  itemPadding: EdgeInsets.symmetric(horizontal: 2),
+                  itemSize: 24,
+                  allowHalfRating: true,
+                  initialRating: roundedRating,
+                  ignoreGestures: true,
+                  ratingWidget: RatingWidget(
+                      full: Icon(
+                        Icons.star_rounded,
+                        color: AppColors.greenThemeColor,
+                      ),
+                      half: Icon(
+                        Icons.star_half_rounded,
+                        color: AppColors.greenThemeColor,
+                      ),
+                      empty: Icon(Icons.star_border_rounded,
+                          color: AppColors.appBarLightGreyThemeColor)),
+                  onRatingUpdate: (value) {}),
+              SizedBox(height: 6),
+              Text(
+                '${enhancedReviews.length} REVIEWS',
+                style: AppTextStyles.buildTotalReviewsText(context),
+              )
+            ],
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ViewProductDetailsWidgets.customReviewProgressPercentageIndicator(
+                context,
+                '5',
+                roundedPercentageOfFiveStar,
+                convertPercentageToDecimal(roundedPercentageOfFiveStar)),
+            ViewProductDetailsWidgets.customReviewProgressPercentageIndicator(
+                context,
+                '4',
+                roundedPercentageOfFourStar,
+                convertPercentageToDecimal(roundedPercentageOfFourStar)),
+            ViewProductDetailsWidgets.customReviewProgressPercentageIndicator(
+                context,
+                '3',
+                roundedPercentageOfThreeStar,
+                convertPercentageToDecimal(roundedPercentageOfThreeStar)),
+            ViewProductDetailsWidgets.customReviewProgressPercentageIndicator(
+                context,
+                '2',
+                roundedPercentageOfTwoStar,
+                convertPercentageToDecimal(roundedPercentageOfTwoStar)),
+            ViewProductDetailsWidgets.customReviewProgressPercentageIndicator(
+                context,
+                '1',
+                roundedPercentageOfOneStar,
+                convertPercentageToDecimal(roundedPercentageOfOneStar)),
+          ],
+        )
+      ],
+    );
+  }
+
+  //! Function to convert the percentage string to a decimal value
+  static double convertPercentageToDecimal(String percentageString) {
+    // Remove the '%' sign and convert to double
+    double percentage = double.parse(percentageString.replaceAll('%', ''));
+    // convert to a value between 0 and 1
+    return percentage / 100.0;
+  }
+
+  static Widget buildEmptyReviewsDisplay(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Lottie.asset('assets/lottie/no_reviews_lottie.json', width: 200),
+          Text(
+            'No reviews yet. Check back later\nfor customer insights.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.emptySectionText(context),
+          )
+        ],
+      ),
+    );
+  }
+
+  static Widget buildCustomerReviews(
+      BuildContext context, List<EnhancedReviewModel> enhancedReviews) {
+    return ListView.separated(
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 8);
+      },
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: enhancedReviews.length,
+      itemBuilder: (context, index) {
+        final reviews = enhancedReviews[index];
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          decoration: BoxDecoration(
+              color: AppColors.whiteThemeColor,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: AppColors.appBarLightGreyThemeColor)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  reviews.userImageUrl != null
+                      ?
+                      // User image
+                      SizedBox(
+                          height: 46,
+                          width: 46,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: CachedNetworkImage(
+                              imageUrl: reviews.userImageUrl!,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) {
+                                return Image.asset(
+                                    'assets/wulflex_logo_nobg.png');
+                              },
+                            ),
+                          ),
+                        )
+                      : SizedBox(
+                          height: 28,
+                          width: 28,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child:
+                                  Image.asset('assets/wulflex_logo_nobg.png')),
+                        ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Username and date
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 2),
+                            Text(reviews.userName,
+                                style: AppTextStyles.reviewUsernameText),
+                            Text(
+                                DateFormat('MMMM d yyyy')
+                                    .format(reviews.review.createdAt),
+                                style: AppTextStyles.reviewDateText)
+                          ],
+                        ),
+                        // ratings section
+                        Row(
+                          children: [
+                            Text(
+                              reviews.review.rating.round().toString(),
+                              style: AppTextStyles
+                                  .linearProgressIndicatorLeadingText,
+                            ),
+                            SizedBox(width: 3),
+                            RatingBar(
+                                itemSize: 17,
+                                allowHalfRating: true,
+                                initialRating: reviews.review.rating,
+                                ignoreGestures: true,
+                                ratingWidget: RatingWidget(
+                                    full: Icon(
+                                      Icons.star_rounded,
+                                      color: AppColors.greenThemeColor,
+                                    ),
+                                    half: Icon(
+                                      Icons.star_half_rounded,
+                                      color: AppColors.greenThemeColor,
+                                    ),
+                                    empty: Icon(Icons.star_border_rounded,
+                                        color: AppColors
+                                            .appBarLightGreyThemeColor)),
+                                onRatingUpdate: (value) {}),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Visibility(
+                  visible: reviews.review.selectedSizeOrWeight.isNotEmpty,
+                  child: SizedBox(height: 9)),
+              Visibility(
+                visible: reviews.review.selectedSizeOrWeight.isNotEmpty,
+                child: Text(
+                    reviews.review.selectedSizeOrWeight.contains('KG')
+                        ? 'Ordered weight: ${reviews.review.selectedSizeOrWeight}'
+                        : 'Ordered size: ${reviews.review.selectedSizeOrWeight}',
+                    style: AppTextStyles.reviewOrderdSizeorweightText),
+              ),
+              Visibility(
+                  visible: reviews.review.tags.isNotEmpty,
+                  child: SizedBox(height: 11)),
+              //! Display review tags
+              Visibility(
+                visible: reviews.review.tags.isNotEmpty,
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: reviews.review.tags.map((tag) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: AppColors.lightGreyThemeColor,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.sell_rounded,
+                              size: 13.5, color: AppColors.darkishGrey),
+                          SizedBox(width: 5),
+                          Text(
+                            tag,
+                            style: AppTextStyles.rateScreenSupermini(context)
+                                .copyWith(color: AppColors.blackThemeColor),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+              Visibility(
+                  visible: reviews.review.reviewText.isNotEmpty,
+                  child: SizedBox(height: 12)),
+              Visibility(
+                  visible: reviews.review.reviewText.isNotEmpty,
+                  child: Text(
+                    " \"${reviews.review.reviewText}\" ",
+                    style: AppTextStyles.descriptionText(context,
+                        neverChangeColor: true),
+                  ))
+            ],
+          ),
+        );
+      },
     );
   }
 }
