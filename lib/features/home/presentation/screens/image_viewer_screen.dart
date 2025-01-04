@@ -1,9 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/core/config/app_colors.dart';
+import 'package:wulflex/features/home/presentation/widgets/image_viewer_screen_widgets.dart';
 
 class ScreenFullScreenImageViewer extends StatefulWidget {
   final List<String> imageUrls;
@@ -45,65 +42,19 @@ class ScreenFullScreenImageViewerState
       body: Stack(
         children: [
           // Full Screen Image Gallery with Zoom
-          PhotoViewGallery.builder(
-            scrollPhysics: const BouncingScrollPhysics(),
-            builder: (BuildContext context, int index) {
-              return PhotoViewGalleryPageOptions(
-                imageProvider: CachedNetworkImageProvider(
-                  widget.imageUrls[index],
-                ),
-                initialScale: PhotoViewComputedScale.contained,
-                minScale: PhotoViewComputedScale.contained * 0.8,
-                maxScale: PhotoViewComputedScale.covered * 2,
-                heroAttributes:
-                    PhotoViewHeroAttributes(tag: widget.imageUrls[index]),
-              );
-            },
-            itemCount: widget.imageUrls.length,
-            pageController: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            loadingBuilder: (context, event) => Center(
-              child: CircularProgressIndicator(
-                value: event == null
-                    ? 0
-                    : event.cumulativeBytesLoaded /
-                        (event.expectedTotalBytes ?? 1),
-              ),
-            ),
-          ),
+          ImageViewerScreenWidgets.buildFullsizeImage(
+              context, widget.imageUrls, _pageController, (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          }),
 
           // Close Button
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 10,
-            left: 10,
-            child: IconButton(
-              icon: Icon(Icons.close, color: Colors.white, size: 30),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
+          ImageViewerScreenWidgets.buildCloseButton(context),
 
           // Page Indicator
-          Positioned(
-            bottom: 40,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: SmoothPageIndicator(
-                controller: _pageController,
-                count: widget.imageUrls.length,
-                effect: ExpandingDotsEffect(
-                  activeDotColor: AppColors.greenThemeColor,
-                  dotColor: Colors.white.withOpacity(0.4),
-                  dotHeight: 8,
-                  dotWidth: 8,
-                ),
-              ),
-            ),
-          ),
+          ImageViewerScreenWidgets.buildDottedPageIndicator(
+              _pageController, widget.imageUrls),
         ],
       ),
     );

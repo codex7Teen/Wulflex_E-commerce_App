@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/features/home/presentation/widgets/categorized_product_screen_widgets.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/shared/widgets/custom_itemCard_widget.dart';
 
@@ -79,50 +79,18 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
           child: Column(
             children: [
               // Search Bar
-              Container(
-                height: 50,
-                width: screenWidth * 0.92,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
-                  color: isLightTheme
-                      ? AppColors.lightGreyThemeColor
-                      : AppColors.whiteThemeColor,
-                ),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 16),
-                    Image.asset(
-                      'assets/Search.png',
-                      scale: 28,
-                      color: AppColors.darkishGrey,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            _searchQuery = value;
-                          });
-                          if (context.read<ProductBloc>().state
-                              is ProductLoaded) {
-                            final products = (context.read<ProductBloc>().state
-                                    as ProductLoaded)
-                                .products;
-                            _filterAndSortProducts(products);
-                          }
-                        },
-                        style: AppTextStyles.searchBarTextStyle,
-                        decoration: InputDecoration(
-                          hintText:
-                              'Search for any ${widget.categoryName.toLowerCase()}...',
-                          hintStyle: AppTextStyles.searchBarHintText,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              CategorizedProductScreenWidgets.buildSearchBar(
+                  context, screenWidth, (value) {
+                setState(() {
+                  _searchQuery = value;
+                });
+                if (context.read<ProductBloc>().state is ProductLoaded) {
+                  final products =
+                      (context.read<ProductBloc>().state as ProductLoaded)
+                          .products;
+                  _filterAndSortProducts(products);
+                }
+              }, widget.categoryName),
               const SizedBox(height: 9),
               // Filter Dropdown
               Row(
@@ -184,25 +152,8 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                     }
 
                     if (_filteredProducts.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(height: 130),
-                            Lottie.asset(
-                                'assets/lottie/search_empty_lottie_white.json',
-                                width: 190,
-                                repeat: false),
-                            SizedBox(height: 18),
-                            Text(
-                              'We couldn’t find what you’re looking for. Please refine your search.',
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.emptyScreenText(context),
-                            ),
-                          ],
-                        ),
-                      );
+                      return CategorizedProductScreenWidgets
+                          .buildEmptyProductDisplay(context);
                     }
                     return Expanded(
                       child: GridView.builder(
@@ -222,7 +173,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                   }
                   return Center(
                       child: Text(
-                    'Start searching for products...',
+                    'Something went wrong.. Please retry.',
                     style: AppTextStyles.emptyProductsMessageText(context),
                   ));
                 },

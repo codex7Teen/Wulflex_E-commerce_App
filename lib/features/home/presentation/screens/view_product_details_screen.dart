@@ -26,7 +26,6 @@ class ScreenViewProducts extends StatefulWidget {
 class _ScreenViewProductsState extends State<ScreenViewProducts> {
   // Track selected size (only one can be selected)
   String? selectedSize;
-
   // Track selected weight (only one can be selected)
   String? selectedWeight;
 
@@ -78,17 +77,18 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
               pinned: false,
               expandedHeight: 50.0,
               flexibleSpace: FlexibleSpaceBar(
-                background: buildAppBarWithIcons(context, widget.productModel),
+                background: ViewProductDetailsWidgets.buildAppBarWithIcons(
+                    context, widget.productModel),
               ),
             ),
             SliverToBoxAdapter(
               child: Column(
                 children: [
                   //! ITEM IMAGE WITH SLIDER (PAGEVIEW)
-                  buildItemImageSlider(
+                  ViewProductDetailsWidgets.buildItemImageSlider(
                       context, pageController, widget.productModel),
                   SizedBox(height: 4),
-                  buildPageIndicator(
+                  ViewProductDetailsWidgets.buildPageIndicator(
                       pageController, context, widget.productModel),
                   SizedBox(height: 20),
                   Container(
@@ -106,46 +106,55 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 10),
-                          buildProductHeadingText(context, widget.productModel),
+                          ViewProductDetailsWidgets.buildProductHeadingText(
+                              context, widget.productModel),
                           SizedBox(height: 14),
-                          buildRatingsContainer(),
+                          ViewProductDetailsWidgets.buildRatingsContainer(),
                           SizedBox(height: 20),
-                          buildSizeAndSizeChartText(
+                          ViewProductDetailsWidgets.buildSizeAndSizeChartText(
                               widget.productModel, context),
                           Visibility(
                               visible: widget.productModel.sizes.isNotEmpty,
                               child: SizedBox(height: 8)),
-                          buildSizeSelectors(selectedSize, widget.productModel,
+                          ViewProductDetailsWidgets.buildSizeSelectors(
+                              selectedSize,
+                              widget.productModel,
                               (size) => updateSelectedSize(size)),
-                          buildiWeightText(widget.productModel, context),
+                          ViewProductDetailsWidgets.buildiWeightText(
+                              widget.productModel, context),
                           Visibility(
                               visible: widget.productModel.weights.isNotEmpty,
                               child: SizedBox(height: 8)),
-                          buildWeightSelectors(
+                          ViewProductDetailsWidgets.buildWeightSelectors(
                               selectedWeight,
                               widget.productModel,
                               (weight) => updateSelectedWeight(weight)),
                           SizedBox(height: 24),
                           AnimatedPriceContainer(product: widget.productModel),
                           SizedBox(height: 24),
-                          buildDescriptionTitle(context),
+                          ViewProductDetailsWidgets.buildDescriptionTitle(
+                              context),
                           SizedBox(height: 6),
-                          buildDescription(
+                          ViewProductDetailsWidgets.buildDescription(
                               context,
                               isExpanded,
                               widget.productModel,
                               () => setState(() {
                                     isExpanded = !isExpanded;
                                   })),
-                          buildReammoreAndReadlessButton(
-                              isExpanded,
-                              () => setState(() {
-                                    isExpanded = !isExpanded;
-                                  }),
-                              context),
+                          ViewProductDetailsWidgets
+                              .buildReammoreAndReadlessButton(
+                                  isExpanded,
+                                  () => setState(() {
+                                        isExpanded = !isExpanded;
+                                      }),
+                                  context),
                           SizedBox(height: 24),
-                          buildAddToCartButton(context, widget.productModel,
-                              selectedWeight, selectedSize),
+                          ViewProductDetailsWidgets.buildAddToCartButton(
+                              context,
+                              widget.productModel,
+                              selectedWeight,
+                              selectedSize),
                           SizedBox(height: 24),
                           Text("RATINGS & REVIEWS",
                               style:
@@ -296,36 +305,41 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            customReviewProgressPercentageIndicator(
-                                                context,
-                                                '5',
-                                                roundedPercentageOfFiveStar,
-                                                convertPercentageToDecimal(
-                                                    roundedPercentageOfFiveStar)),
-                                            customReviewProgressPercentageIndicator(
-                                                context,
-                                                '4',
-                                                roundedPercentageOfFourStar,
-                                                convertPercentageToDecimal(
-                                                    roundedPercentageOfFourStar)),
-                                            customReviewProgressPercentageIndicator(
-                                                context,
-                                                '3',
-                                                roundedPercentageOfThreeStar,
-                                                convertPercentageToDecimal(
-                                                    roundedPercentageOfThreeStar)),
-                                            customReviewProgressPercentageIndicator(
-                                                context,
-                                                '2',
-                                                roundedPercentageOfTwoStar,
-                                                convertPercentageToDecimal(
-                                                    roundedPercentageOfTwoStar)),
-                                            customReviewProgressPercentageIndicator(
-                                                context,
-                                                '1',
-                                                roundedPercentageOfOneStar,
-                                                convertPercentageToDecimal(
-                                                    roundedPercentageOfOneStar)),
+                                            ViewProductDetailsWidgets
+                                                .customReviewProgressPercentageIndicator(
+                                                    context,
+                                                    '5',
+                                                    roundedPercentageOfFiveStar,
+                                                    convertPercentageToDecimal(
+                                                        roundedPercentageOfFiveStar)),
+                                            ViewProductDetailsWidgets
+                                                .customReviewProgressPercentageIndicator(
+                                                    context,
+                                                    '4',
+                                                    roundedPercentageOfFourStar,
+                                                    convertPercentageToDecimal(
+                                                        roundedPercentageOfFourStar)),
+                                            ViewProductDetailsWidgets
+                                                .customReviewProgressPercentageIndicator(
+                                                    context,
+                                                    '3',
+                                                    roundedPercentageOfThreeStar,
+                                                    convertPercentageToDecimal(
+                                                        roundedPercentageOfThreeStar)),
+                                            ViewProductDetailsWidgets
+                                                .customReviewProgressPercentageIndicator(
+                                                    context,
+                                                    '2',
+                                                    roundedPercentageOfTwoStar,
+                                                    convertPercentageToDecimal(
+                                                        roundedPercentageOfTwoStar)),
+                                            ViewProductDetailsWidgets
+                                                .customReviewProgressPercentageIndicator(
+                                                    context,
+                                                    '1',
+                                                    roundedPercentageOfOneStar,
+                                                    convertPercentageToDecimal(
+                                                        roundedPercentageOfOneStar)),
                                           ],
                                         )
                                       ],

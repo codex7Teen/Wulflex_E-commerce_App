@@ -76,7 +76,7 @@ class _ScreenSaleScreenState extends State<ScreenSaleScreen> {
                   }
                   return Center(
                       child: Text(
-                    'Start searching for products...',
+                    'Something went wrong. Please retry...',
                     style: AppTextStyles.emptyProductsMessageText(context),
                   ));
                 },
