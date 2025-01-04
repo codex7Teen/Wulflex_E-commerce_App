@@ -17,7 +17,7 @@ class MyOrdersScreenWidgets {
               onTap: () => NavigationHelper.navigateToWithoutReplacement(
                   context, ScreenOrderDetails(product: product, order: order)),
               child: Container(
-                padding: EdgeInsets.all(13),
+                padding: const EdgeInsets.all(13),
                 width: MediaQuery.of(context).size.width, // Full width
                 decoration: BoxDecoration(
                   color: AppColors.lightGreyThemeColor,
@@ -58,7 +58,7 @@ class MyOrdersScreenWidgets {
                       ),
                     ),
 
-                    SizedBox(width: 14),
+                    const SizedBox(width: 14),
 
                     // Product Details
                     Expanded(
@@ -79,7 +79,7 @@ class MyOrdersScreenWidgets {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             "${product.brandName} ${product.name}",
                             style: AppTextStyles.itemCardNameText,
@@ -89,7 +89,7 @@ class MyOrdersScreenWidgets {
                         ],
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios_rounded,
+                    const Icon(Icons.arrow_forward_ios_rounded,
                         color: AppColors.greyThemeColor, size: 18)
                   ],
                 ),
@@ -97,7 +97,7 @@ class MyOrdersScreenWidgets {
             );
           },
           separatorBuilder: (context, index) {
-            return SizedBox(height: 15);
+            return const SizedBox(height: 15);
           },
           itemCount: orders.length),
     );

@@ -23,13 +23,13 @@ class ScreenAddress extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SelectAddressScreenWidgets.buildAddAddressButton(context),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             SelectAddressScreenWidgets.buildSelectAddressText(context),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             BlocBuilder<AddressBloc, AddressState>(
               builder: (context, state) {
                 if (state is AddressLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is AddressLoaded) {
                   final addressList = state.address;
                   // Show addres if list contains any address otherwise show a lottie for not address
@@ -41,7 +41,7 @@ class ScreenAddress extends StatelessWidget {
                         context);
                   }
                 }
-                return Center(
+                return const Center(
                     child: Text('Something went wrong. Please retry.'));
               },
             ),

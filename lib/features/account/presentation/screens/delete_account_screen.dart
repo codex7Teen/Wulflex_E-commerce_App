@@ -30,7 +30,7 @@ class ScreenDeleteAccount extends StatelessWidget {
               CustomSnackbar.showCustomSnackBar(
                   context, "Account deleted successfully...  🎉🎉🎉");
               NavigationHelper.navigateToWithReplacement(
-                  context, ScreenLogin());
+                  context, const ScreenLogin());
               // Reset the checkboxes when account delete gets success
               context.read<DeleteAccountBloc>().add(ResetCheckboxStatesEvent());
             }
@@ -38,20 +38,20 @@ class ScreenDeleteAccount extends StatelessWidget {
           child: BlocBuilder<DeleteAccountBloc, DeleteAccountState>(
             builder: (context, state) {
               if (state is DeleteAccountLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Warning Message
+                    //! WARNING MESSAGE
                     DeleteAccountScreenWidgets
                         .buildDeleteAccountWarmingContainer(),
-                    SizedBox(height: 28),
+                    const SizedBox(height: 28),
 
-                    // Confirmation Checkboxes
+                    //! CONFIRMATION CHECKBOXES
                     DeleteAccountScreenWidgets.buildDeleteAccountWarningText(
                         context),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     BlocBuilder<DeleteAccountBloc, DeleteAccountState>(
                       builder: (context, state) {
@@ -63,15 +63,15 @@ class ScreenDeleteAccount extends StatelessWidget {
                       },
                     ),
 
-                    // Final Confirmation Text
+                    //! FINAL CONFIRMATION TEXT
                     DeleteAccountScreenWidgets
                         .buildSecondDeleteAccountWarningText(),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                    // Your Custom Delete Button
+                    //! CUSTOM DELETE BUTTON
                     DeleteAccountScreenWidgets.buildDeleteAccountButton(
                         context),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                   ],
                 );
               }

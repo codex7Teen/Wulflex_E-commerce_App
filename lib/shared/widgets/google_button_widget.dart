@@ -14,14 +14,14 @@ class GoogleButtonWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: AppColors.lightGreyThemeColor),
-                  child: isLoading ? Center(child: SizedBox(
+                  child: isLoading ? const Center(child: SizedBox(
                     height: 20,
                     width: 20,
                     child: CircularProgressIndicator(color: AppColors.blackThemeColor,))) : Row(
                     children: [
-                       SizedBox(width: 50),
+                       const SizedBox(width: 50),
                       Image.asset('assets/google_logo.png', width: 32),
-                      SizedBox(width: 37),
+                      const SizedBox(width: 37),
                       Text(
                         'Login with Google',
                         style: AppTextStyles.googleButtonStyle,

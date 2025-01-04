@@ -24,14 +24,14 @@ class _ScreenSplash1State extends State<ScreenSplash1> {
     super.initState();
 
     // Delay for 1.5 second before triggering the animations
-    Future.delayed(Duration(milliseconds: 1500), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (mounted) {
         setState(() {
           _animateLogo = true;
         });
 
         // After triggering the logo animation, delay for the text logo animation
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
           if (mounted) {
             setState(() {
               _animateTextLogo = true;
@@ -45,7 +45,7 @@ class _ScreenSplash1State extends State<ScreenSplash1> {
     context.read<ThemeBloc>().add(LoadSavedTheme());
 
     // Navigate to intro-screen or Main screen based on argument
-    Future.delayed(Duration(milliseconds: 3000), () {
+    Future.delayed(const Duration(milliseconds: 3000), () {
       if (mounted) {
         NavigationHelper.navigateToWithReplacement(context, widget.screen,
             milliseconds: 800);
@@ -66,10 +66,10 @@ class _ScreenSplash1State extends State<ScreenSplash1> {
               children: [
                 // Wulflex text that moves from right to center (background) with opacity animation
                 AnimatedPositioned(
-                  duration: Duration(milliseconds: 800),
+                  duration: const Duration(milliseconds: 800),
                   left: _animateTextLogo ? 80 : 0,
                   child: AnimatedOpacity(
-                    duration: Duration(milliseconds: 800),
+                    duration: const Duration(milliseconds: 800),
                     opacity: _animateTextLogo ? 1.0 : 0.0,
                     child: Image.asset(
                       'assets/wulflex_text_nobg.png',
@@ -79,11 +79,11 @@ class _ScreenSplash1State extends State<ScreenSplash1> {
                 ),
                 // Logo that stays centered initially, then moves slightly left (foreground)
                 AnimatedPositioned(
-                  duration: Duration(milliseconds: 800),
+                  duration: const Duration(milliseconds: 800),
                   left: _animateLogo ? -77 : 0,
                   child: Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                           width: 75,
                           height: 75,
                           child: ColoredBox(color: AppColors.whiteThemeColor)),

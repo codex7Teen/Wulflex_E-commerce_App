@@ -28,7 +28,7 @@ class CustomCategoriesContainerWidget extends StatelessWidget {
                     : AppColors.whiteThemeColor),
             child: Center(child: Image.asset(iconImagePath, scale: 21)),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(categoryTitleText,
               style: AppTextStyles.allMiniCircledCategoriesText(context))
         ],

@@ -32,7 +32,7 @@ class ScreenMyOrders extends StatelessWidget {
               if (state is OrderError) {
                 return Text(state.errorMessage);
               } else if (state is OrderLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is OrdersLoaded) {
                 // Sort orders by date in descending order (latest first)
                 final orders = List<OrderModel>.from(state.orders)
@@ -59,13 +59,13 @@ class ScreenMyOrders extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: AppTextStyles.emptyScreenText(context),
                         ),
-                        SizedBox(height: 90)
+                        const SizedBox(height: 90)
                       ],
                     ),
                   );
                 }
               }
-              return Text('sorry');
+              return const Text('sorry');
             },
           ),
           Visibility(
@@ -79,7 +79,7 @@ class ScreenMyOrders extends StatelessWidget {
                     borderRadius: 25,
                     width: 1,
                     onTap: () => NavigationHelper.navigateToWithReplacement(
-                        context, MainScreen()))),
+                        context, const MainScreen()))),
           )
         ],
       ),

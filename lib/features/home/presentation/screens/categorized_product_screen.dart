@@ -78,7 +78,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
           padding: const EdgeInsets.only(left: 18, right: 18, top: 15),
           child: Column(
             children: [
-              // Search Bar
+              //! SEARCH BAR
               CategorizedProductScreenWidgets.buildSearchBar(
                   context, screenWidth, (value) {
                 setState(() {
@@ -92,7 +92,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                 }
               }, widget.categoryName),
               const SizedBox(height: 9),
-              // Filter Dropdown
+              //! SEARCH FILTER DROPDOWN
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -135,7 +135,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                 ],
               ),
               const SizedBox(height: 8),
-              // Build products
+              //! PRODUCTS
               BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) {
                   if (state is ProductLoading) {

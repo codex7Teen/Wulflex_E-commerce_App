@@ -63,7 +63,7 @@ class SearchScreenWidgets {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Spacer(),
+        const Spacer(),
         DropdownButton<String>(
           dropdownColor: isLightTheme(context)
               ? AppColors.whiteThemeColor
@@ -93,10 +93,10 @@ class SearchScreenWidgets {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 130),
+          const SizedBox(height: 130),
           Lottie.asset('assets/lottie/search_empty_lottie_white.json',
               width: 190, repeat: false),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           Text(
             'We couldn’t find what you’re looking for. Please refine your search.',
             textAlign: TextAlign.center,

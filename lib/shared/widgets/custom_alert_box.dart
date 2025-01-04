@@ -63,7 +63,7 @@ class CustomAlertBox {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(icon, size: 20),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     buttonConfirmText,
                     style: GoogleFonts.robotoCondensed(

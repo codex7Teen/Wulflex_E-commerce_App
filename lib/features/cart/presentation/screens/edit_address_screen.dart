@@ -16,7 +16,7 @@ class ScreenEditAddress extends StatefulWidget {
   final String city;
   final String houseName;
   final String areaName;
-  ScreenEditAddress(
+  const ScreenEditAddress(
       {super.key,
       required this.addressId,
       required this.name,

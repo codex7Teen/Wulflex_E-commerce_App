@@ -28,8 +28,8 @@ class PaymentScreenWidgets {
                     fixedBlackColor: true),
               ),
               const SizedBox(width: 6),
-              Column(
-                children: const [
+              const Column(
+                children: [
                   Icon(Icons.wallet,
                       color: AppColors.blackThemeColor, size: 22),
                   SizedBox(height: 2)
@@ -68,8 +68,8 @@ class PaymentScreenWidgets {
                     fixedBlackColor: true),
               ),
               const SizedBox(width: 6),
-              Column(
-                children: const [
+              const Column(
+                children: [
                   Icon(Icons.wallet,
                       color: AppColors.blackThemeColor, size: 22),
                   SizedBox(height: 2)

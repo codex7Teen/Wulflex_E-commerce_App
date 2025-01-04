@@ -50,7 +50,7 @@ class CustomDatePickerField extends StatelessWidget {
             border: InputBorder.none,
             hintText: hintText,
             hintStyle: AppTextStyles.editScreenHinttextStyles(context),
-            suffixIcon: Icon(Icons.calendar_today, size: 20),
+            suffixIcon: const Icon(Icons.calendar_today, size: 20),
           ),
         ),
       ),

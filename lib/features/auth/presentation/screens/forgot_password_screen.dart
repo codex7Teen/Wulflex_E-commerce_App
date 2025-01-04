@@ -56,28 +56,28 @@ class _ScreenForgotPasswordState extends State<ScreenForgotPassword> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
 
                       // image
                       ForgotPasswordWidgets.buildForgotPassImage(context),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
 
                       // heading
                       ForgotPasswordWidgets.buildForgotPassText(context),
-                      SizedBox(height: 14),
+                      const SizedBox(height: 14),
 
                       ForgotPasswordWidgets.buildDontWorryText(context),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       // email textfield
                       ForgotPasswordWidgets.buildEmailTextField(
                           _forgotPasswordEmailTextController),
-                      SizedBox(height: 35),
+                      const SizedBox(height: 35),
 
                       //! P A S S W O R D - R E S E T - B U T T O N
                       ForgotPasswordWidgets.buildResetButton(_formKey,
                           _forgotPasswordEmailTextController, context),
-                      SizedBox(height: 22),
+                      const SizedBox(height: 22),
                     ],
                   ),
                 ),

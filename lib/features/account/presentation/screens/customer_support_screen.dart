@@ -30,7 +30,7 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
         // cause a delay so the keyboard has time to show up
         // then the amount of remaining space will be calculated
         // then scroll down
-        Future.delayed(Duration(milliseconds: 400),
+        Future.delayed(const Duration(milliseconds: 400),
             () => CustomerSupportScreenWidgets.scrollDown(_scrollController));
       }
     });
@@ -54,19 +54,19 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (context, state) {
             if (state is UserProfileLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is UserProfileError) {
-              return Center(child: Text('Fetch user details error'));
+              return const Center(child: Text('Fetch user details error'));
             } else if (state is UserProfileLoaded) {
               final user = state.user;
               return BlocBuilder<ChatBloc, ChatState>(
                 builder: (context, state) {
                   if (state is ChatError) {
-                    return Center(child: Text('Chat fetch error'));
+                    return const Center(child: Text('Chat fetch error'));
                   } else if (state is MessagesLoaded) {
                     return Column(
                       children: [
-                        // Messages List
+                        //! Messages List
                         Expanded(
                             child: StreamBuilder(
                           stream: state.messages,
@@ -81,12 +81,14 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
                             }
                             if (snapshot.hasData &&
                                 snapshot.data!.docs.isEmpty) {
+                              //! EMPTY MESSAGES
                               return CustomerSupportScreenWidgets
                                   .buildNoMessagesWidget(context);
                             }
                             // Scroll down when new data arrives
                             WidgetsBinding.instance.addPostFrameCallback((_) {
-                              Future.delayed(Duration(milliseconds: 400), () {
+                              Future.delayed(const Duration(milliseconds: 400),
+                                  () {
                                 CustomerSupportScreenWidgets.scrollDown(
                                     _scrollController);
                               });
@@ -97,6 +99,7 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
                                 (doc) {
                                   final data =
                                       doc.data() as Map<String, dynamic>;
+                                  //! MESSAGE BUBBLES
                                   return SlideInRight(
                                     child: MessageBubble(
                                         message: data['message'],
@@ -111,18 +114,18 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
                         )),
                         CustomerSupportScreenWidgets
                             .buildMessageInputFieldDivider(context),
-                        //! Message input
+                        //! MESSAGE INPUT FIELD
                         CustomerSupportScreenWidgets.buildMessageInputField(
                             context, myFocusNode, _messageController)
                       ],
                     );
                   }
-                  return Center(
+                  return const Center(
                       child: Text('Something went wrong, USER CHAT ERROR'));
                 },
               );
             }
-            return Center(
+            return const Center(
                 child: Text('Something went wrong, USER PROFILE ERROR'));
           },
         ),

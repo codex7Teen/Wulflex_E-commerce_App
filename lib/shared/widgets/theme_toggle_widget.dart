@@ -41,15 +41,15 @@ class ThemeToggleSwitchWidget extends StatelessWidget {
                   );
                 },
                 child: isLightTheme
-                    ? Icon(
+                    ? const Icon(
                         Icons.brightness_medium_outlined,
-                        key: const ValueKey('sun'),
+                        key: ValueKey('sun'),
                         color: AppColors.blackThemeColor,
                         size: 20,
                       )
-                    : Icon(
+                    : const Icon(
                         Icons.dark_mode_sharp,
-                        key: const ValueKey('moon'),
+                        key: ValueKey('moon'),
                         color: AppColors.blackThemeColor,
                         size: 20,
                       ),

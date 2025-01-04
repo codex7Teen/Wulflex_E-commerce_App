@@ -32,11 +32,11 @@ class CartWidgets {
                 return buildCustomCartCard(context, product);
               },
               separatorBuilder: (context, index) {
-                return SizedBox(height: 15);
+                return const SizedBox(height: 15);
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 245,
             width: double.infinity,
           ),
@@ -51,7 +51,7 @@ class CartWidgets {
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 239,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: AppColors.lightGreyThemeColor,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25), topRight: Radius.circular(25))),
@@ -67,8 +67,8 @@ class CartWidgets {
                     style: AppTextStyles.screenSubHeadings(context,
                         fixedBlackColor: true),
                   ),
-                  SizedBox(width: 6),
-                  Column(
+                  const SizedBox(width: 6),
+                  const Column(
                     children: [
                       Icon(Icons.wallet,
                           color: AppColors.blackThemeColor, size: 22),
@@ -77,55 +77,55 @@ class CartWidgets {
                   )
                 ],
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   Text(
                     'Subtotal',
                     style: AppTextStyles.cartSubtotalAndDiscountText,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     '₹ ${NumberFormat('#,##,###.##').format(subtotal)}',
                     style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
                   )
                 ],
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   Text(
                     'Discount',
                     style: AppTextStyles.cartSubtotalAndDiscountText,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     '₹ –${NumberFormat('#,##,###.##').format(discount)}',
                     style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
                   )
                 ],
               ),
-              SizedBox(height: 5),
-              Divider(color: AppColors.hardLightGeryThemeColor, thickness: 0.3),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
+              const Divider(color: AppColors.hardLightGeryThemeColor, thickness: 0.3),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   Text(
                     'Total Amount',
                     style: AppTextStyles.cartTotalText,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     '₹ ${NumberFormat('#,##,###.##').format(total)}',
                     style: AppTextStyles.cartTotalAmountText,
                   )
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               GreenButtonWidget(
                 onTap: () {
                   NavigationHelper.navigateToWithoutReplacement(
-                      context, ScreenOrderSummary());
+                      context, const ScreenOrderSummary());
                 },
                 addIcon: true,
                 icon: Icons.shopping_cart_checkout_rounded,
@@ -156,7 +156,7 @@ class CartWidgets {
             textAlign: TextAlign.center,
             style: AppTextStyles.emptyScreenText(context),
           ),
-          SizedBox(height: 90)
+          const SizedBox(height: 90)
         ],
       ),
     );

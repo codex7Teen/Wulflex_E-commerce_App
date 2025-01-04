@@ -31,7 +31,7 @@ class ScreenFavorite extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is FavoriteLoading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state is FavoriteError) {
@@ -54,7 +54,7 @@ class ScreenFavorite extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: AppTextStyles.emptyScreenText(context),
                         ),
-                        SizedBox(height: 90)
+                        const SizedBox(height: 90)
                       ],
                     ),
                   );

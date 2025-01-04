@@ -31,8 +31,8 @@ class _ScreenHomeState extends State<ScreenHome> {
     Future.delayed(Duration.zero, () {
       if (mounted) {
         // pre-caching images to make them fully loaded
-        precacheImage(AssetImage('assets/sale_cover_image.jpeg'), context);
-        precacheImage(AssetImage('assets/sales_banner_2.jpg'), context);
+        precacheImage(const AssetImage('assets/sale_cover_image.jpeg'), context);
+        precacheImage(const AssetImage('assets/sales_banner_2.jpg'), context);
       }
     });
   }
@@ -53,16 +53,16 @@ class _ScreenHomeState extends State<ScreenHome> {
                 FadeInDown(
                   child: buildExploreTextAndLogo(context),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 //! SEARCH BAR
                 FadeInDown(
-                  delay: Duration(milliseconds: 150),
+                  delay: const Duration(milliseconds: 150),
                   child: buildSearchBar(screenWidth, context),
                 ),
-                SizedBox(height: 18),
+                const SizedBox(height: 18),
                 //! CAROUSEL VIEW
                 FadeInDown(
-                  delay: Duration(milliseconds: 250),
+                  delay: const Duration(milliseconds: 250),
                   child: buildcarouselView(
                       _carouselController,
                       _currentSlide,
@@ -70,29 +70,30 @@ class _ScreenHomeState extends State<ScreenHome> {
                             _currentSlide = index;
                           }),
                       () => NavigationHelper.navigateToWithoutReplacement(
-                          context, ScreenSaleScreen(screenName: 'Sale'))),
+                          context, const ScreenSaleScreen(screenName: 'Sale'))),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 //! CATEGORIES TEXT
                 FadeInDown(
-                  delay: Duration(milliseconds: 550),
+                  delay: const Duration(milliseconds: 550),
                   child: buildCategoriesText(context),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 //! ALL CATEGORIES
                 FadeInDown(
-                  delay: Duration(milliseconds: 750),
+                  delay: const Duration(milliseconds: 750),
                   child: buildAllCategories(context),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 //! LATEST ARRIVALS TEXT
                 FadeInDown(
-                  delay: Duration(milliseconds: 950),
+                  delay: const Duration(milliseconds: 950),
                   child: buildLastestArrivalsText(context),
                 ),
-                SizedBox(height: 14),
+                const SizedBox(height: 14),
+                //! LATEST ARRIVALS SECTION CARDS
                 FadeInUp(
-                  delay: Duration(milliseconds: 1150),
+                  delay: const Duration(milliseconds: 1150),
                   child: buildLatestArrivalsSection(context),
                 ),
               ],

@@ -34,7 +34,7 @@ class GreenButtonWidget extends StatelessWidget {
           child: Center(
             // show loading indication when some state is loading
             child: isLoading
-                ? SizedBox(
+                ? const SizedBox(
                     height: 20,
                     width: 20,
                     child: CircularProgressIndicator(
@@ -46,7 +46,7 @@ class GreenButtonWidget extends StatelessWidget {
                         children: [
                           Icon(icon,
                               size: 24, color: AppColors.whiteThemeColor),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(
                             buttonText,
                             style: AppTextStyles.customGreenButtonText,

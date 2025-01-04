@@ -26,7 +26,7 @@ Widget buildExploreTextAndLogo(BuildContext context) {
           style: AppTextStyles.exploreTextStyle(context),
         ),
       ),
-      SizedBox(width: 14),
+      const SizedBox(width: 14),
       Image.asset(
         'assets/wulflex_logo_nobg.png',
         width: 30,
@@ -34,7 +34,7 @@ Widget buildExploreTextAndLogo(BuildContext context) {
             ? AppColors.blackThemeColor
             : AppColors.whiteThemeColor,
       ),
-      Spacer(),
+      const Spacer(),
       // Theme toggle switch widget
       ThemeToggleSwitchWidget(isLightTheme: isLightTheme),
       IconButton(
@@ -45,7 +45,7 @@ Widget buildExploreTextAndLogo(BuildContext context) {
             size: 30),
         onPressed: () {
           NavigationHelper.navigateToWithoutReplacement(
-              context, ScreenProfile());
+              context, const ScreenProfile());
         },
       )
     ],
@@ -55,7 +55,7 @@ Widget buildExploreTextAndLogo(BuildContext context) {
 Widget buildSearchBar(double screenWidth, BuildContext context) {
   return GestureDetector(
     onTap: () => NavigationHelper.navigateToWithoutReplacement(
-        context, ScreenSearchScreen()),
+        context, const ScreenSearchScreen()),
     child: Container(
       height: 48,
       width: screenWidth * 0.92,
@@ -66,10 +66,10 @@ Widget buildSearchBar(double screenWidth, BuildContext context) {
               : AppColors.whiteThemeColor),
       child: Row(
         children: [
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           Image.asset('assets/Search.png',
               scale: 24, color: AppColors.darkishGrey),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Text(
             'What are you looking for today?',
             style: AppTextStyles.searchBarHintText,
@@ -218,7 +218,7 @@ Widget buildcarouselView(
                 viewportFraction: 1.0,
                 autoPlay: true,
                 onPageChanged: onPageChanged,
-                autoPlayInterval: Duration(seconds: 3)),
+                autoPlayInterval: const Duration(seconds: 3)),
             items: [buildSaleBanner(), buildEquipmentsBanner()]),
         Positioned(
             left: 170,
@@ -226,7 +226,7 @@ Widget buildcarouselView(
             child: SmoothPageIndicator(
               controller: PageController(initialPage: currentSlide),
               count: 2,
-              effect: WormEffect(
+              effect: const WormEffect(
                   activeDotColor: AppColors.greenThemeColor,
                   dotColor: AppColors.whiteThemeColor,
                   dotHeight: 7,
@@ -255,35 +255,35 @@ Widget buildAllCategories(BuildContext context) {
       children: [
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'EQUIPMENTS'),
+                context, const ScreenCategorizedProduct(categoryName: 'EQUIPMENTS'),
                 transitionDuration: 300),
             iconImagePath: 'assets/dumbell.png',
             categoryTitleText: 'EQUIPMENTS'),
-        SizedBox(width: 14),
+        const SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'SUPPLEMENTS'),
+                context, const ScreenCategorizedProduct(categoryName: 'SUPPLEMENTS'),
                 transitionDuration: 300),
             iconImagePath: 'assets/suppliments.png',
             categoryTitleText: 'SUPPLEMENTS'),
-        SizedBox(width: 14),
+        const SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'APPARELS'),
+                context, const ScreenCategorizedProduct(categoryName: 'APPARELS'),
                 transitionDuration: 300),
             iconImagePath: 'assets/apparels.png',
             categoryTitleText: 'APPARELS'),
-        SizedBox(width: 14),
+        const SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenCategorizedProduct(categoryName: 'ACCESSORIES'),
+                context, const ScreenCategorizedProduct(categoryName: 'ACCESSORIES'),
                 transitionDuration: 300),
             iconImagePath: 'assets/watch.png',
             categoryTitleText: 'ACCESSORIES'),
-        SizedBox(width: 14),
+        const SizedBox(width: 14),
         CustomCategoriesContainerWidget(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenAllCategories(screenTitle: 'ALL CATEGORIES'),
+                context, const ScreenAllCategories(screenTitle: 'ALL CATEGORIES'),
                 transitionDuration: 300),
             iconImagePath: 'assets/more_categories_image.png',
             categoryTitleText: '  MORE >>'),
@@ -308,13 +308,13 @@ Widget buildLatestArrivalsSection(BuildContext context) {
   return BlocBuilder<ProductBloc, ProductState>(
     builder: (context, state) {
       if (state is ProductLoading) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else if (state is ProductLoaded) {
         final products = state.products;
         return GridView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 15,
             mainAxisSpacing: 7.5,
@@ -328,7 +328,7 @@ Widget buildLatestArrivalsSection(BuildContext context) {
       } else if (state is ProductError) {
         return Center(child: Text('Error: ${state.message}'));
       }
-      return SizedBox();
+      return const SizedBox();
     },
   );
 }

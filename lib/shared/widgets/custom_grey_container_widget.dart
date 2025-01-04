@@ -12,7 +12,7 @@ class CustomGreyContainerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme
@@ -28,17 +28,17 @@ class CustomGreyContainerWidget extends StatelessWidget {
                 titleText,
                 style: AppTextStyles.screenSubHeadings(context, fixedBlackColor: true),
               ),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Column(
                 children: [
                   Icon(icon,
                       color: AppColors.blackThemeColor, size: 22),
-                  SizedBox(height: 2)
+                  const SizedBox(height: 2)
                 ],
               )
             ],
           ),
-          SizedBox(height: 2),
+          const SizedBox(height: 2),
           Text(
             subtitleText,
             style: AppTextStyles.screenSubTitles,

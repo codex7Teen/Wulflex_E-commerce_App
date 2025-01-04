@@ -198,7 +198,7 @@ class ViewProductDetailsWidgets {
   static Widget buildRatingsContainer() {
     return IntrinsicWidth(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.lightGreyThemeColor),
           borderRadius: BorderRadius.circular(25),
@@ -206,9 +206,9 @@ class ViewProductDetailsWidgets {
         child: BlocBuilder<ReviewBloc, ReviewState>(
           builder: (context, state) {
             if (state is ReviewLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is ReviewError) {
-              return Center(child: Text('Review Error'));
+              return const Center(child: Text('Review Error'));
             } else if (state is ReviewsLoaded) {
               final enhancedReviews = state.reviews;
               if (enhancedReviews.isNotEmpty) {
@@ -228,18 +228,18 @@ class ViewProductDetailsWidgets {
                         initialRating: roundedRating,
                         ignoreGestures: true,
                         ratingWidget: RatingWidget(
-                            full: Icon(
+                            full: const Icon(
                               Icons.star_rounded,
                               color: AppColors.greenThemeColor,
                             ),
-                            half: Icon(
+                            half: const Icon(
                               Icons.star_half_rounded,
                               color: AppColors.greenThemeColor,
                             ),
-                            empty: Icon(Icons.star_border_rounded,
+                            empty: const Icon(Icons.star_border_rounded,
                                 color: AppColors.appBarLightGreyThemeColor)),
                         onRatingUpdate: (value) {}),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       '$roundedRating Ratings',
                       style: AppTextStyles.viewProductratingsText,
@@ -255,18 +255,18 @@ class ViewProductDetailsWidgets {
                         initialRating: 0,
                         ignoreGestures: true,
                         ratingWidget: RatingWidget(
-                            full: Icon(
+                            full: const Icon(
                               Icons.star_rounded,
                               color: AppColors.greenThemeColor,
                             ),
-                            half: Icon(
+                            half: const Icon(
                               Icons.star_half_rounded,
                               color: AppColors.greenThemeColor,
                             ),
-                            empty: Icon(Icons.star_border_rounded,
+                            empty: const Icon(Icons.star_border_rounded,
                                 color: AppColors.greyThemeColor)),
                         onRatingUpdate: (value) {}),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       'No Ratings yet',
                       style: AppTextStyles.viewProductratingsText,
@@ -275,7 +275,7 @@ class ViewProductDetailsWidgets {
                 );
               }
             }
-            return Text('Error: Try reloading the page');
+            return const Text('Error: Try reloading the page');
           },
         ),
       ),
@@ -292,17 +292,17 @@ class ViewProductDetailsWidgets {
             'SIZE',
             style: AppTextStyles.viewProductTitleText(context),
           ),
-          Spacer(),
+          const Spacer(),
           GestureDetector(
             onTap: () => NavigationHelper.navigateToWithoutReplacement(
-                context, ScreenSizeChart()),
+                context, const ScreenSizeChart()),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.straighten_outlined,
                   color: AppColors.greenThemeColor,
                 ),
-                SizedBox(width: 6),
+                const SizedBox(width: 6),
                 Text(
                   'Size Chart',
                   style: AppTextStyles.sizeChartText,
@@ -433,11 +433,11 @@ class ViewProductDetailsWidgets {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(Icons.star_rounded, color: AppColors.greenThemeColor, size: 25),
-        SizedBox(width: 3),
+        const Icon(Icons.star_rounded, color: AppColors.greenThemeColor, size: 25),
+        const SizedBox(width: 3),
         Text(leadingText,
             style: AppTextStyles.linearProgressIndicatorLeadingText),
-        SizedBox(width: 3.5),
+        const SizedBox(width: 3.5),
         SizedBox(
           width: 130,
           child: LinearProgressIndicator(
@@ -448,7 +448,7 @@ class ViewProductDetailsWidgets {
             value: progressValue,
           ),
         ),
-        SizedBox(width: 3.5),
+        const SizedBox(width: 3.5),
         Text(trailingText,
             style: AppTextStyles.linearProgressIndicatorTrailingText(context))
       ],
@@ -479,26 +479,26 @@ class ViewProductDetailsWidgets {
             children: [
               Text(roundedRating.toString(),
                   style: AppTextStyles.viewRatingBigRatingText),
-              SizedBox(height: 1.5),
+              const SizedBox(height: 1.5),
               RatingBar(
-                  itemPadding: EdgeInsets.symmetric(horizontal: 2),
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 2),
                   itemSize: 24,
                   allowHalfRating: true,
                   initialRating: roundedRating,
                   ignoreGestures: true,
                   ratingWidget: RatingWidget(
-                      full: Icon(
+                      full: const Icon(
                         Icons.star_rounded,
                         color: AppColors.greenThemeColor,
                       ),
-                      half: Icon(
+                      half: const Icon(
                         Icons.star_half_rounded,
                         color: AppColors.greenThemeColor,
                       ),
-                      empty: Icon(Icons.star_border_rounded,
+                      empty: const Icon(Icons.star_border_rounded,
                           color: AppColors.appBarLightGreyThemeColor)),
                   onRatingUpdate: (value) {}),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               Text(
                 '${enhancedReviews.length} REVIEWS',
                 style: AppTextStyles.buildTotalReviewsText(context),
@@ -570,15 +570,15 @@ class ViewProductDetailsWidgets {
       BuildContext context, List<EnhancedReviewModel> enhancedReviews) {
     return ListView.separated(
       separatorBuilder: (context, index) {
-        return SizedBox(height: 8);
+        return const SizedBox(height: 8);
       },
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: enhancedReviews.length,
       itemBuilder: (context, index) {
         final reviews = enhancedReviews[index];
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: BoxDecoration(
               color: AppColors.whiteThemeColor,
               borderRadius: BorderRadius.circular(18),
@@ -614,7 +614,7 @@ class ViewProductDetailsWidgets {
                               child:
                                   Image.asset('assets/wulflex_logo_nobg.png')),
                         ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -623,7 +623,7 @@ class ViewProductDetailsWidgets {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(reviews.userName,
                                 style: AppTextStyles.reviewUsernameText),
                             Text(
@@ -640,22 +640,22 @@ class ViewProductDetailsWidgets {
                               style: AppTextStyles
                                   .linearProgressIndicatorLeadingText,
                             ),
-                            SizedBox(width: 3),
+                            const SizedBox(width: 3),
                             RatingBar(
                                 itemSize: 17,
                                 allowHalfRating: true,
                                 initialRating: reviews.review.rating,
                                 ignoreGestures: true,
                                 ratingWidget: RatingWidget(
-                                    full: Icon(
+                                    full: const Icon(
                                       Icons.star_rounded,
                                       color: AppColors.greenThemeColor,
                                     ),
-                                    half: Icon(
+                                    half: const Icon(
                                       Icons.star_half_rounded,
                                       color: AppColors.greenThemeColor,
                                     ),
-                                    empty: Icon(Icons.star_border_rounded,
+                                    empty: const Icon(Icons.star_border_rounded,
                                         color: AppColors
                                             .appBarLightGreyThemeColor)),
                                 onRatingUpdate: (value) {}),
@@ -668,7 +668,7 @@ class ViewProductDetailsWidgets {
               ),
               Visibility(
                   visible: reviews.review.selectedSizeOrWeight.isNotEmpty,
-                  child: SizedBox(height: 9)),
+                  child: const SizedBox(height: 9)),
               Visibility(
                 visible: reviews.review.selectedSizeOrWeight.isNotEmpty,
                 child: Text(
@@ -679,7 +679,7 @@ class ViewProductDetailsWidgets {
               ),
               Visibility(
                   visible: reviews.review.tags.isNotEmpty,
-                  child: SizedBox(height: 11)),
+                  child: const SizedBox(height: 11)),
               //! Display review tags
               Visibility(
                 visible: reviews.review.tags.isNotEmpty,
@@ -697,9 +697,9 @@ class ViewProductDetailsWidgets {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.sell_rounded,
+                          const Icon(Icons.sell_rounded,
                               size: 13.5, color: AppColors.darkishGrey),
-                          SizedBox(width: 5),
+                          const SizedBox(width: 5),
                           Text(
                             tag,
                             style: AppTextStyles.rateScreenSupermini(context)
@@ -713,7 +713,7 @@ class ViewProductDetailsWidgets {
               ),
               Visibility(
                   visible: reviews.review.reviewText.isNotEmpty,
-                  child: SizedBox(height: 12)),
+                  child: const SizedBox(height: 12)),
               Visibility(
                   visible: reviews.review.reviewText.isNotEmpty,
                   child: Text(

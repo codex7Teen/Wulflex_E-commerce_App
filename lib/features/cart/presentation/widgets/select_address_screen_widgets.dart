@@ -18,7 +18,7 @@ class SelectAddressScreenWidgets {
         NavigationHelper.navigateToWithoutReplacement(
             context, ScreenAddAddress());
       },
-      child: GreenButtonWidget(
+      child: const GreenButtonWidget(
           width: 1,
           buttonText: 'Add a new address',
           borderRadius: 25,
@@ -40,7 +40,7 @@ class SelectAddressScreenWidgets {
       child: ListView.separated(
         itemCount: addressList.length,
         separatorBuilder: (context, index) {
-          return SizedBox(height: 14);
+          return const SizedBox(height: 14);
         },
         itemBuilder: (context, index) {
           final address = addressList[index];
@@ -55,7 +55,7 @@ class SelectAddressScreenWidgets {
                   .add(SelectAddressEvent(address: address));
             },
             child: Container(
-              padding: EdgeInsets.all(18),
+              padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   border: Border.all(
@@ -90,7 +90,7 @@ class SelectAddressScreenWidgets {
                       ),
                     ),
                   ]),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -98,19 +98,19 @@ class SelectAddressScreenWidgets {
                         address.name,
                         style: AppTextStyles.addressNameText(context),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(address.houseName,
                           style: AppTextStyles.addressListItemsText(context)),
                       Text("${address.areaName}, ${address.cityName}",
                           style: AppTextStyles.addressListItemsText(context)),
                       Text("${address.stateName}, ${address.pincode}",
                           style: AppTextStyles.addressListItemsText(context)),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text("Phone: ${address.phoneNumber}",
                           style: AppTextStyles.addressListItemsText(context)),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {
                       NavigationHelper.navigateToWithoutReplacement(
@@ -126,8 +126,8 @@ class SelectAddressScreenWidgets {
                               areaName: address.areaName));
                     },
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 13, vertical: 4),
                       decoration: BoxDecoration(
                           color: AppColors.greenThemeColor,
                           borderRadius: BorderRadius.circular(18)),
@@ -150,7 +150,7 @@ class SelectAddressScreenWidgets {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 90),
+          const SizedBox(height: 90),
           isLightTheme(context)
               ? Lottie.asset('assets/lottie/empty_address_black.json',
                   width: 190, repeat: true)
@@ -161,7 +161,7 @@ class SelectAddressScreenWidgets {
             textAlign: TextAlign.center,
             style: AppTextStyles.emptyScreenText(context),
           ),
-          SizedBox(height: 90)
+          const SizedBox(height: 90)
         ],
       ),
     );

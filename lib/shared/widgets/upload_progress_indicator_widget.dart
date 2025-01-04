@@ -7,7 +7,7 @@ Widget showUploadProgressIndicator(dynamic state) {
     height: 140,
     width: 140,
     decoration: BoxDecoration(
-      color: Colors.black.withOpacity(0.5),
+      color: Colors.black.withValues(alpha: 0.5),
       borderRadius: BorderRadius.circular(100),
     ),
     child: Column(
@@ -17,7 +17,7 @@ Widget showUploadProgressIndicator(dynamic state) {
           value: state.progress,
           color: AppColors.greenThemeColor,
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text('${(state.progress * 100).toInt()}%',
             style: GoogleFonts.bebasNeue(
                 color: AppColors.whiteThemeColor,

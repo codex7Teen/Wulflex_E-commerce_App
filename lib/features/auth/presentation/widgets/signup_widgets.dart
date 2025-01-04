@@ -125,9 +125,9 @@ class SignupWidgets {
             style: AppTextStyles.termsAndConditionAndPrivacyPolicyBaseText,
           ),
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         GestureDetector(
-           onTap: () => NavigationHelper.navigateToWithoutReplacement(context, PrivacyPolicyScreen()),
+           onTap: () => NavigationHelper.navigateToWithoutReplacement(context, const PrivacyPolicyScreen()),
           child: Text("Terms & Conditions",
               style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText),
         ),
@@ -138,15 +138,15 @@ class SignupWidgets {
   static Widget buildPrivacyPolicyText(BuildContext context) {
     return Row(
       children: [
-        SizedBox(width: 15),
+        const SizedBox(width: 15),
         Text(
           "and",
           style: AppTextStyles.termsAndConditionAndPrivacyPolicyBaseText,
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         GestureDetector(
           onTap: () => NavigationHelper.navigateToWithoutReplacement(
-              context, PrivacyPolicyScreen()),
+              context, const PrivacyPolicyScreen()),
           child: Text(
             "Privacy Policy",
             style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText,
@@ -187,10 +187,10 @@ class SignupWidgets {
           'Already have an account?',
           style: AppTextStyles.newToWulflexOrAlreadyHaveAccountText,
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         GestureDetector(
           onTap: () => NavigationHelper.navigateToWithReplacement(
-              context, ScreenLogin()),
+              context, const ScreenLogin()),
           child: Text(
             'Login',
             style: AppTextStyles.signUpAndLoginGreenText,

@@ -105,11 +105,11 @@ class _SnackbarContentState extends State<_SnackbarContent>
                   ? AppColors.blackThemeColor
                   : AppColors.whiteThemeColor,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 5,
-                  offset: const Offset(0, 2),
+                  offset: Offset(0, 2),
                 ),
               ],
             ),

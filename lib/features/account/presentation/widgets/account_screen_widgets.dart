@@ -11,7 +11,7 @@ class AccountScreenWidgets {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.only(left: 18, right: 18),
+        padding: const EdgeInsets.only(left: 18, right: 18),
         height: 60,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -27,10 +27,10 @@ class AccountScreenWidgets {
                   size: 24,
                   color: AppColors.blackThemeColor,
                 ),
-                SizedBox(height: 3)
+                const SizedBox(height: 3)
               ],
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               name,
               style: AppTextStyles.buttonCardsText,

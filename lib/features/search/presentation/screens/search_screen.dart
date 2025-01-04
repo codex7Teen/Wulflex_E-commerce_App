@@ -74,7 +74,7 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
           ? AppColors.whiteThemeColor
           : AppColors.blackThemeColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: isLightTheme(context)
               ? AppColors.whiteThemeColor

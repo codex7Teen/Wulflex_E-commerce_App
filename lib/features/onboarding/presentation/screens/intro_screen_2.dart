@@ -1,8 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 
 class ScreenIntro2 extends StatefulWidget {
@@ -26,7 +24,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
         // Background image with fade
         AnimatedOpacity(
           opacity: _imageLoaded ? 1.0 : 0.0,
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           child: SizedBox.expand(
             child: Image.asset(
               'assets/intro_image_2.jpg',
@@ -34,7 +32,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
               frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                 if (frame != null) {
                   // Image has loaded
-                  Future.delayed(Duration(milliseconds: 100), () {
+                  Future.delayed(const Duration(milliseconds: 100), () {
                     if (mounted) {
                       setState(() {
                         _imageLoaded = true;
@@ -66,7 +64,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
                   textAlign: TextAlign.center,
                   'Gear Up\n for Peak Performance',
                   style: AppTextStyles.introScreenHeading),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
                 //! S U B - H E A D I N G
@@ -76,7 +74,7 @@ class _ScreenIntro2State extends State<ScreenIntro2> {
                     style: AppTextStyles.introScreenSubheading),
               ),
 
-              SizedBox(height: 120)
+              const SizedBox(height: 120)
             ],
           ),
         )

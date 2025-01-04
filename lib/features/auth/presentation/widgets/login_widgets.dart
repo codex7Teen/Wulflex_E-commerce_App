@@ -70,7 +70,7 @@ class LoginWidgets {
       child: GestureDetector(
         onTap: () {
           NavigationHelper.navigateToWithoutReplacement(
-              context, ScreenForgotPassword());
+              context, const ScreenForgotPassword());
         },
         child: Text(
           'Forgot Password?',
@@ -129,7 +129,7 @@ class LoginWidgets {
         const SizedBox(width: 5),
         GestureDetector(
           onTap: () {
-            NavigationHelper.navigateToWithReplacement(context, ScreenSignUp());
+            NavigationHelper.navigateToWithReplacement(context, const ScreenSignUp());
           },
           child: Text(
             'Sign up',
@@ -143,7 +143,7 @@ class LoginWidgets {
   static Widget buildOrDivider() {
     return Row(
       children: [
-        Expanded(
+        const Expanded(
             child: Divider(color: AppColors.greyThemeColor, thickness: 0.4)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -152,7 +152,7 @@ class LoginWidgets {
             style: AppTextStyles.orDividerText,
           ),
         ),
-        Expanded(
+        const Expanded(
             child: Divider(color: AppColors.greyThemeColor, thickness: 0.4))
       ],
     );

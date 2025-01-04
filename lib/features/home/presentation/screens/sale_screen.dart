@@ -42,7 +42,7 @@ class _ScreenSaleScreenState extends State<ScreenSaleScreen> {
               BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) {
                   if (state is ProductLoading) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state is ProductError) {
                     return Center(child: Text('Error: ${state.message}'));
                   } else if (state is ProductLoaded) {
@@ -57,7 +57,7 @@ class _ScreenSaleScreenState extends State<ScreenSaleScreen> {
                               style: AppTextStyles.emptyProductsMessageText(
                                   context)));
                     }
-                    // Show product card
+                    //! Show product card
                     return Expanded(
                       child: GridView.builder(
                         gridDelegate:

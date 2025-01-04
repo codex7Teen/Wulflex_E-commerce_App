@@ -41,7 +41,7 @@ class ScreenFullScreenImageViewerState
       backgroundColor: AppColors.scaffoldColor(context),
       body: Stack(
         children: [
-          // Full Screen Image Gallery with Zoom
+          //! Full Screen Image Gallery with Zoom
           ImageViewerScreenWidgets.buildFullsizeImage(
               context, widget.imageUrls, _pageController, (index) {
             setState(() {
@@ -49,10 +49,10 @@ class ScreenFullScreenImageViewerState
             });
           }),
 
-          // Close Button
+          //! Close Button
           ImageViewerScreenWidgets.buildCloseButton(context),
 
-          // Page Indicator
+          //! Page Indicator
           ImageViewerScreenWidgets.buildDottedPageIndicator(
               _pageController, widget.imageUrls),
         ],

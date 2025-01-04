@@ -86,12 +86,12 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   EditProfileScreenWidgets.buildUploadImageText(context),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   EditProfileScreenWidgets.buildUploadImageIcon(
                       context, widget.networkImageUrl),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   EditProfileScreenWidgets.buildNameText(context),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   CustomTextfieldsWidget(
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
@@ -102,9 +102,9 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     controller: _nameController,
                     hintText: 'Please enter your name',
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   EditProfileScreenWidgets.buildPhoneNumberText(context),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   CustomTextfieldsWidget(
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
@@ -117,9 +117,9 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     maxCharacterLength: 13,
                     hintText: 'Please enter your number',
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   EditProfileScreenWidgets.buildDateofbirthText(context),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   CustomDatePickerField(
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
@@ -130,7 +130,7 @@ class _ScreenEditProfileState extends State<ScreenEditProfile> {
                     controller: _dateofbirthController,
                     hintText: 'Select your date of birth',
                   ),
-                  SizedBox(height: 39),
+                  const SizedBox(height: 39),
                   BlocBuilder<UserProfileBloc, UserProfileState>(
                     builder: (context, state) {
                       return EditProfileScreenWidgets.buildSaveButton(

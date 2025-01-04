@@ -22,7 +22,7 @@ class CustomAddAddressFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: textFieldWidth,
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 1),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.greyThemeColor, width: 0.8),

@@ -10,7 +10,7 @@ class CustomerSupportScreenWidgets {
   // Function to scroll down to maximum extent
   static void scrollDown(ScrollController scrollController) {
     scrollController.animateTo(scrollController.position.maxScrollExtent,
-        duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+        duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
   }
 
   static Widget buildNoMessagesWidget(BuildContext context) {
@@ -34,7 +34,7 @@ class CustomerSupportScreenWidgets {
               textAlign: TextAlign.center,
               style: AppTextStyles.emptyScreenText(context),
             ),
-            SizedBox(height: 90)
+            const SizedBox(height: 90)
           ],
         ),
       ),
@@ -95,7 +95,7 @@ class CustomerSupportScreenWidgets {
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.send,
                   color: Colors.white,
                   size: 20,

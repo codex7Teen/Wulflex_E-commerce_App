@@ -27,7 +27,7 @@ class CustomBlackButtonWidget extends StatelessWidget {
         child: Center(
           // show loading indication when some state is loading
           child: isLoading
-              ? SizedBox(
+              ? const SizedBox(
                   height: 20,
                   width: 20,
                   child: CircularProgressIndicator(
@@ -43,7 +43,7 @@ class CustomBlackButtonWidget extends StatelessWidget {
                           ? AppColors.whiteThemeColor
                           : AppColors.blackThemeColor,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       buttonText,
                       style: AppTextStyles.customBlackButtonText(context),

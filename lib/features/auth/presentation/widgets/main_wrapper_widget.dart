@@ -16,18 +16,18 @@ class MainWrapperWidget extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // show circular progress indicator
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             // show error
-            return Center(child: Text("Error"));
+            return const Center(child: Text("Error"));
           } else {
             if (snapshot.data == null) {
               // Show splash and navigate to intro screen
-              return ScreenSplash1(screen: ScreenMainIntro());
+              return const ScreenSplash1(screen: ScreenMainIntro());
             } else {
               // Upload the FCM token to firebase firestore
               NotificationServices().uploadFcmToken();
-              return ScreenSplash1(screen: MainScreen());
+              return const ScreenSplash1(screen: MainScreen());
             }
           }
         },

@@ -39,9 +39,9 @@ class _ScreenReloginState extends State<ScreenRelogin> {
             if (state is ReloginSuccess) {
               CustomSnackbar.showCustomSnackBar(context, 'Re-login success');
               Future.delayed(
-                  Duration(seconds: 1),
+                  const Duration(seconds: 1),
                   () => NavigationHelper.navigateToWithoutReplacement(
-                      context, ScreenDeleteAccount()));
+                      context, const ScreenDeleteAccount()));
             } else if (state is ReloginError) {
               CustomSnackbar.showCustomSnackBar(context, state.errorMessage,
                   icon: Icons.error);

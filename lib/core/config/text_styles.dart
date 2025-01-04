@@ -270,7 +270,7 @@ class AppTextStyles {
 
   //! SIZE CHART TEXT
   static final TextStyle sizeChartText = GoogleFonts.robotoCondensed(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
           color: AppColors.greenThemeColor));
@@ -374,7 +374,7 @@ class AppTextStyles {
   //! EDIT SCREEN TEXT FIELD STYLES
   static TextStyle editScreenTextfieldStyles(BuildContext context) =>
       GoogleFonts.robotoCondensed(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               color: AppColors.blackThemeColor,
               fontWeight: FontWeight.bold,
               fontSize: 20));
@@ -393,7 +393,7 @@ class AppTextStyles {
   //! ADDRESS SCREEN TEXT FIELD HINT STYLES
   static TextStyle addressScreenTextfieldHintStyles(BuildContext context) =>
       GoogleFonts.robotoCondensed(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               color: AppColors.greyThemeColor,
               fontWeight: FontWeight.w500,
               letterSpacing: 0.4,
@@ -402,7 +402,7 @@ class AppTextStyles {
   //! EDIT SCREEN HINT TEXT STYLE
   static TextStyle editScreenHinttextStyles(BuildContext context) =>
       GoogleFonts.robotoCondensed(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               color: AppColors.greyThemeColor,
               fontWeight: FontWeight.w500,
               fontSize: 15));
@@ -446,7 +446,7 @@ class AppTextStyles {
 
   //! DELETE ACCOUNT ACNOWLEDGET TEXT GREY COLO
   static TextStyle deleteAccountAcknowledgeText = GoogleFonts.robotoCondensed(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           color: AppColors.greyThemeColor, fontSize: 15, letterSpacing: 0.4));
 
   //! SEARCHBAR TEXT STYLE
@@ -517,7 +517,7 @@ class AppTextStyles {
 
   //! BUTTON CARDS TEXT
   static final TextStyle buttonCardsText = GoogleFonts.robotoCondensed(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 17.5,
           letterSpacing: 0.8,
@@ -661,7 +661,7 @@ class AppTextStyles {
 
   //! VIEW RATINGS BIG RATING TEXT
   static final TextStyle viewRatingBigRatingText = GoogleFonts.bebasNeue(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 38,
           fontWeight: FontWeight.bold,
           letterSpacing: 3,

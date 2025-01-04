@@ -65,7 +65,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                             context, "Sign-Up success...  🎉🎉🎉");
                         // Navigate to Home
                         NavigationHelper.navigateToWithReplacement(
-                            context, MainScreen());
+                            context, const MainScreen());
                       } else if (state is SignUpFailture) {
                         // show-snacbar
                         CustomSnackbar.showCustomSnackBar(context, state.error,
@@ -76,23 +76,23 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         // image
                         SignupWidgets.buildSignUpImage(context),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
 
                         // heading
                         SignupWidgets.buildSignUpText(context),
-                        SizedBox(height: 14),
+                        const SizedBox(height: 14),
 
                         // Name textfield
                         SignupWidgets.buildNameTextField(_nameTextController),
-                        SizedBox(height: 22),
+                        const SizedBox(height: 22),
 
                         // email textfield
                         SignupWidgets.buildEmaiTextField(_emailTextController),
-                        SizedBox(height: 22),
+                        const SizedBox(height: 22),
 
                         // create password field
                         SignupWidgets.buildCreatePasswordTextField(
@@ -103,7 +103,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       !_isCreatePasswordVisible;
                                 }),
                             _isCreatePasswordVisible),
-                        SizedBox(height: 22),
+                        const SizedBox(height: 22),
 
                         // confirm password field
                         SignupWidgets.buildConfirmPasswordTextField(
@@ -114,12 +114,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       !_isConfirmPasswordVisible;
                                 }),
                             _isConfirmPasswordVisible),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
 
                         // Terms and conditions
                         SignupWidgets.buildTermsAndConditonsText(context),
                         SignupWidgets.buildPrivacyPolicyText(context),
-                        SizedBox(height: 22),
+                        const SizedBox(height: 22),
 
                         // ! S I G N U P - B U T T O N
                         SignupWidgets.buildSignUpButton(
@@ -127,7 +127,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                             context,
                             _emailTextController,
                             _confirmPasswordTextController),
-                        SizedBox(height: 22),
+                        const SizedBox(height: 22),
 
                         // Already signed up? login
                         SignupWidgets.buildAlreadySignedUpAndLoginText(context),

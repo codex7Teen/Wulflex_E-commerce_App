@@ -93,8 +93,8 @@ class ProfileScreenWidgets {
         titleText: 'D O B', subtitleText: dob, icon: Icons.cake_rounded);
   }
 
-  static Widget buildEditButton(
-      BuildContext context, String name, String phoneNumber, String dob, String networkImageUrl) {
+  static Widget buildEditButton(BuildContext context, String name,
+      String phoneNumber, String dob, String networkImageUrl) {
     return GestureDetector(
         onTap: () => NavigationHelper.navigateToWithoutReplacement(
             context,
@@ -105,7 +105,7 @@ class ProfileScreenWidgets {
               dob: dob,
               networkImageUrl: networkImageUrl,
             )),
-        child: GreenButtonWidget(
+        child: const GreenButtonWidget(
           buttonText: 'Edit Profile',
           borderRadius: 25,
           width: 1,
@@ -117,8 +117,8 @@ class ProfileScreenWidgets {
   static Widget buildDeleteButton(BuildContext context) {
     return GestureDetector(
       onTap: () => NavigationHelper.navigateToWithoutReplacement(
-          context, ScreenRelogin()),
-      child: CustomBlackButtonWidget(
+          context, const ScreenRelogin()),
+      child: const CustomBlackButtonWidget(
           buttonText: "Delete Account", borderRadius: 25),
     );
   }

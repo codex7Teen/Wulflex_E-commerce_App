@@ -167,7 +167,7 @@ class EditAddressScreenWidgets {
               },
               controller: stateNameController),
         ),
-        SizedBox(width: 15),
+        const SizedBox(width: 15),
         Expanded(
           child: CustomAddAddressFieldWidget(
               textFieldWidth: MediaQuery.sizeOf(context).width * 0.5,

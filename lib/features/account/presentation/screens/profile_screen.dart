@@ -27,8 +27,8 @@ class ScreenProfile extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is UserProfileLoading) {
-              return Center(child: CircularProgressIndicator());
-            } else if (state is UserProfileError) { 
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is UserProfileError) {
               // display error
             } else if (state is UserProfileLoaded) {
               final user = state.user;
@@ -41,23 +41,23 @@ class ScreenProfile extends StatelessWidget {
                       ProfileScreenWidgets.buildProfilePicture(
                           context, user.userImage ?? ''),
                       ProfileScreenWidgets.buildWelcomeText(context, user.name),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       ProfileScreenWidgets.buildName(user.name),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       ProfileScreenWidgets.buildAccountInfo(user.email),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       ProfileScreenWidgets.buildPhoneNumber(
                           user.phoneNumber ?? ''),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       ProfileScreenWidgets.buildDob(user.dob ?? ''),
-                      SizedBox(height: 28),
+                      const SizedBox(height: 28),
                       ProfileScreenWidgets.buildEditButton(
                           context,
                           user.name,
                           user.phoneNumber ?? '',
                           user.dob ?? '',
                           user.userImage ?? ''),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       ProfileScreenWidgets.buildDeleteButton(context)
                     ],
                   ),

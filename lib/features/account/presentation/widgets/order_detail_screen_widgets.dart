@@ -37,7 +37,7 @@ class OrderDetailScreenWidgets {
 
   static Widget buildAccountInformation(BuildContext context, UserModel user) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme(context)
@@ -54,8 +54,8 @@ class OrderDetailScreenWidgets {
                 style: AppTextStyles.screenSubHeadings(context,
                     fixedBlackColor: true),
               ),
-              SizedBox(width: 6),
-              Column(
+              const SizedBox(width: 6),
+              const Column(
                 children: [
                   Icon(Icons.person,
                       color: AppColors.blackThemeColor, size: 22),
@@ -64,7 +64,7 @@ class OrderDetailScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           Text(
             user.name,
             style: AppTextStyles.screenSubTitles,
@@ -76,7 +76,7 @@ class OrderDetailScreenWidgets {
 
   static Widget buildPaymentMode(BuildContext context, OrderModel order) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme(context)
@@ -93,8 +93,8 @@ class OrderDetailScreenWidgets {
                 style: AppTextStyles.screenSubHeadings(context,
                     fixedBlackColor: true),
               ),
-              SizedBox(width: 6),
-              Column(
+              const SizedBox(width: 6),
+              const Column(
                 children: [
                   Icon(Icons.wallet,
                       color: AppColors.blackThemeColor, size: 22),
@@ -103,7 +103,7 @@ class OrderDetailScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           Text(
             order.paymentMode,
             style: AppTextStyles.screenSubTitles,
@@ -118,7 +118,7 @@ class OrderDetailScreenWidgets {
       onTap: () => NavigationHelper.navigateToWithoutReplacement(
           context, ScreenViewProducts(productModel: product)),
       child: Container(
-        padding: EdgeInsets.all(13),
+        padding: const EdgeInsets.all(13),
         width: MediaQuery.of(context).size.width, // Full width
         decoration: BoxDecoration(
           color: AppColors.lightGreyThemeColor,
@@ -156,7 +156,7 @@ class OrderDetailScreenWidgets {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(height: 13),
+                      const SizedBox(height: 13),
                       Row(
                         children: [
                           Text(
@@ -165,7 +165,7 @@ class OrderDetailScreenWidgets {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(
                             "₹${NumberFormat('#,##,###.##').format(product.offerPrice)}",
                             style: AppTextStyles.itemCardSubTitleText,
@@ -177,7 +177,7 @@ class OrderDetailScreenWidgets {
                     ],
                   ),
                 ),
-                SizedBox(width: 14),
+                const SizedBox(width: 14),
                 // Product Image
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -211,7 +211,7 @@ class OrderDetailScreenWidgets {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text('QUANTITY: ${product.quantity}',
                 style: AppTextStyles.orderQuantityText),
           ],
@@ -236,7 +236,7 @@ class OrderDetailScreenWidgets {
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: ListView(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           // Order pending
           TimelineTileWidget(
@@ -307,7 +307,7 @@ class OrderDetailScreenWidgets {
                     style: AppTextStyles.screenOrderStatusMiniSubTitles(context,
                         isPast: order.status == OrderStatus.cancelled),
                   ))
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     );
@@ -330,7 +330,7 @@ class OrderDetailScreenWidgets {
         child: Padding(
           padding: const EdgeInsets.only(left: 18),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
             decoration: BoxDecoration(
                 color: AppColors.greenThemeColor,
                 borderRadius: BorderRadius.circular(18)),
@@ -351,99 +351,87 @@ class OrderDetailScreenWidgets {
 
   static Widget buildDeliveryAddressText(BuildContext context) {
     return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Text(
-                            'DELIVERY ADDRESS',
-                            style: AppTextStyles.screenSubHeadings(context),
-                          ),
-                        );
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Text(
+        'DELIVERY ADDRESS',
+        style: AppTextStyles.screenSubHeadings(context),
+      ),
+    );
   }
 
   static Widget buildAddressSection(BuildContext context, OrderModel order) {
     return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    order.address.name,
-                                    style:
-                                        AppTextStyles.addressNameText(context),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(order.address.houseName,
-                                      style: AppTextStyles.addressListItemsText(
-                                          context)),
-                                  Text(
-                                      "${order.address.areaName}, ${order.address.cityName}",
-                                      style: AppTextStyles.addressListItemsText(
-                                          context)),
-                                  Text(
-                                      "${order.address.stateName}, ${order.address.pincode}",
-                                      style: AppTextStyles.addressListItemsText(
-                                          context)),
-                                  SizedBox(height: 10),
-                                  Text("Phone: ${order.address.phoneNumber}",
-                                      style: AppTextStyles.addressListItemsText(
-                                          context)),
-                                ],
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        );
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                order.address.name,
+                style: AppTextStyles.addressNameText(context),
+              ),
+              const SizedBox(height: 10),
+              Text(order.address.houseName,
+                  style: AppTextStyles.addressListItemsText(context)),
+              Text("${order.address.areaName}, ${order.address.cityName}",
+                  style: AppTextStyles.addressListItemsText(context)),
+              Text("${order.address.stateName}, ${order.address.pincode}",
+                  style: AppTextStyles.addressListItemsText(context)),
+              const SizedBox(height: 10),
+              Text("Phone: ${order.address.phoneNumber}",
+                  style: AppTextStyles.addressListItemsText(context)),
+            ],
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
   }
 
-  static Widget buildRateButton(BuildContext context, OrderModel order, ProductModel product) {
+  static Widget buildRateButton(
+      BuildContext context, OrderModel order, ProductModel product) {
     return Visibility(
-                          visible: order.status == OrderStatus.delivered,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Divider(
-                                  color: isLightTheme(context)
-                                      ? AppColors.lightGreyThemeColor
-                                      : AppColors.greyThemeColor),
-                              SizedBox(height: 2),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 18),
-                                child: Text(
-                                  'RATE THE PRODUCT',
-                                  style:
-                                      AppTextStyles.screenSubHeadings(context),
-                                ),
-                              ),
-                              SizedBox(height: 6),
-                              GestureDetector(
-                                onTap: () => NavigationHelper
-                                    .navigateToWithoutReplacement(
-                                        context,
-                                        ScreenRateProduct(
-                                            productModel: product)),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 18),
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        color: AppColors.greenThemeColor,
-                                        borderRadius:
-                                            BorderRadius.circular(18)),
-                                    child: Text('RATE HERE.',
-                                        style: AppTextStyles.selectAddressText),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
+      visible: order.status == OrderStatus.delivered,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(
+              color: isLightTheme(context)
+                  ? AppColors.lightGreyThemeColor
+                  : AppColors.greyThemeColor),
+          const SizedBox(height: 2),
+          Padding(
+            padding: const EdgeInsets.only(left: 18),
+            child: Text(
+              'RATE THE PRODUCT',
+              style: AppTextStyles.screenSubHeadings(context),
+            ),
+          ),
+          const SizedBox(height: 6),
+          GestureDetector(
+            onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                context, ScreenRateProduct(productModel: product)),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                decoration: BoxDecoration(
+                    color: AppColors.greenThemeColor,
+                    borderRadius: BorderRadius.circular(18)),
+                child:
+                    Text('RATE HERE.', style: AppTextStyles.selectAddressText),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   // Format Order Date

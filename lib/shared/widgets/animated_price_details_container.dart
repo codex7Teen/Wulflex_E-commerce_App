@@ -138,7 +138,7 @@ class _AnimatedPriceContainerState extends State<AnimatedPriceContainer>
             ),
           ),
           // Discount Percentage
-          Spacer(),
+          const Spacer(),
           FadeTransition(
             opacity: _opacityAnimation,
             child: Text(

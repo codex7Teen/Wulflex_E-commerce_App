@@ -82,14 +82,14 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                   //! ITEM IMAGE WITH SLIDER (PAGEVIEW)
                   ViewProductDetailsWidgets.buildItemImageSlider(
                       context, pageController, widget.productModel),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   ViewProductDetailsWidgets.buildPageIndicator(
                       pageController, context, widget.productModel),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(25),
                             topRight: Radius.circular(25)),
                         color: isLightTheme
@@ -100,36 +100,45 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
+                          //! PRODUCT NAME HEADING
                           ViewProductDetailsWidgets.buildProductHeadingText(
                               context, widget.productModel),
-                          SizedBox(height: 14),
+                          const SizedBox(height: 14),
+                          //! RATINGS STARS
                           ViewProductDetailsWidgets.buildRatingsContainer(),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
+                          //! SIZECHART TEXT
                           ViewProductDetailsWidgets.buildSizeAndSizeChartText(
                               widget.productModel, context),
                           Visibility(
                               visible: widget.productModel.sizes.isNotEmpty,
-                              child: SizedBox(height: 8)),
+                              child: const SizedBox(height: 8)),
+                          //! SIZE SELECTORS
                           ViewProductDetailsWidgets.buildSizeSelectors(
                               selectedSize,
                               widget.productModel,
                               (size) => updateSelectedSize(size)),
+                          //! WEIGHT TEXT
                           ViewProductDetailsWidgets.buildiWeightText(
                               widget.productModel, context),
                           Visibility(
                               visible: widget.productModel.weights.isNotEmpty,
-                              child: SizedBox(height: 8)),
+                              child: const SizedBox(height: 8)),
+                          //! WEIGHT SELECTORS
                           ViewProductDetailsWidgets.buildWeightSelectors(
                               selectedWeight,
                               widget.productModel,
                               (weight) => updateSelectedWeight(weight)),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
+                          //! PRICE CONTAINER
                           AnimatedPriceContainer(product: widget.productModel),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
+                          //! PRODUCT DESCRIPTION TITLE
                           ViewProductDetailsWidgets.buildDescriptionTitle(
                               context),
-                          SizedBox(height: 6),
+                          const SizedBox(height: 6),
+                          //! PRODUCT DESCRIPTION
                           ViewProductDetailsWidgets.buildDescription(
                               context,
                               isExpanded,
@@ -144,22 +153,24 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                         isExpanded = !isExpanded;
                                       }),
                                   context),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
+                          //! ADD TO CART BUTTON
                           ViewProductDetailsWidgets.buildAddToCartButton(
                               context,
                               widget.productModel,
                               selectedWeight,
                               selectedSize),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
+                          //! RATINGS & REVIEW HEADING
                           ViewProductDetailsWidgets
                               .buildRatingAndReviewsHeading(context),
-                          SizedBox(height: 6),
+                          const SizedBox(height: 6),
                           BlocBuilder<ReviewBloc, ReviewState>(
                               builder: (context, state) {
                             if (state is ReviewLoading) {
-                              return Center(child: CircularProgressIndicator());
+                              return const Center(child: CircularProgressIndicator());
                             } else if (state is ReviewError) {
-                              return Center(
+                              return const Center(
                                   child: Text('Failed to load reviews.'));
                             } else if (state is ReviewsLoaded) {
                               //! Sort reviews by date in descendin order (latest first)
@@ -233,6 +244,7 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
 
                                 return Column(
                                   children: [
+                                    //! REVIEW METRICS
                                     ViewProductDetailsWidgets
                                         .buildReviewMetrics(
                                             context,
@@ -243,19 +255,21 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                             roundedPercentageOfThreeStar,
                                             roundedPercentageOfTwoStar,
                                             roundedPercentageOfOneStar),
+                                    //! ALL CUSTOMER REVIEWS
                                     ViewProductDetailsWidgets
                                         .buildCustomerReviews(
                                             context, enhancedReviews)
                                   ],
                                 );
                               } else {
+                                //! EMPTY REVIEWS DISPLAY
                                 return ViewProductDetailsWidgets
                                     .buildEmptyReviewsDisplay(context);
                               }
                             }
-                            return Center(child: Text("Something went wrong"));
+                            return const Center(child: Text("Something went wrong"));
                           }),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                         ],
                       ),
                     ),

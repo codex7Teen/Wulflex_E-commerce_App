@@ -10,7 +10,15 @@ class CustomAuthenticationTetxfieldWidget extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final VoidCallback? toggleVisibility;
   final bool isPasswordVisible;
-  const CustomAuthenticationTetxfieldWidget({super.key, required this.controller, required this.hintText, required this.icon, this.obscureText = false, this.validator, this.toggleVisibility, this.isPasswordVisible = false});
+  const CustomAuthenticationTetxfieldWidget(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      required this.icon,
+      this.obscureText = false,
+      this.validator,
+      this.toggleVisibility,
+      this.isPasswordVisible = false});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class CustomAuthenticationTetxfieldWidget extends StatelessWidget {
             color: AppColors.greyThemeColor,
           ),
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Expanded(
           child: TextFormField(
             style: AppTextStyles.authenticationTextfieldStyle,
@@ -33,8 +41,8 @@ class CustomAuthenticationTetxfieldWidget extends StatelessWidget {
             validator: validator,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle:AppTextStyles.authenticationHintTextStyle,
-              enabledBorder: UnderlineInputBorder(
+              hintStyle: AppTextStyles.authenticationHintTextStyle,
+              enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: AppColors.greyThemeColor,
                   width: 0.4,

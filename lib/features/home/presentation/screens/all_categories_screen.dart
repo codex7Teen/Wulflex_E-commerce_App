@@ -58,7 +58,7 @@ class _ScreenAllCategoriesState extends State<ScreenAllCategories> {
             );
           } else if (state is CategoryDetailsLoaded) {
             final categories = state.categoryDetails;
-
+            //! CATEGORIES GRID VIEW
             return AllCategoryScreenWidgets.buildCategoriesGridView(
                 categories, defaultCategoryImages);
           }

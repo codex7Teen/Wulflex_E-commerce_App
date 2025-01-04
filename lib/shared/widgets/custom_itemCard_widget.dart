@@ -22,8 +22,8 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
     child: Stack(
       children: [
         Container(
-          padding: EdgeInsets.all(13),
-          margin: EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.all(13),
+          margin: const EdgeInsets.only(bottom: 10),
           width: MediaQuery.sizeOf(context).width * 0.43,
           decoration: BoxDecoration(
             color: AppColors.lightGreyThemeColor,
@@ -52,7 +52,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                       )),
                 ),
               ),
-              SizedBox(height: 9),
+              const SizedBox(height: 9),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Column(
@@ -70,7 +70,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -88,7 +88,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        SizedBox(width: 5), // Reduced spacing
+                        const SizedBox(width: 5), // Reduced spacing
                         Flexible(
                           child: Text(
                             "₹${NumberFormat('#,##,###.##').format(product.offerPrice)}",
@@ -99,7 +99,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 9, vertical: 3),
@@ -123,8 +123,8 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
           top: 0,
           right: 3.95,
           child: Container(
-            padding: EdgeInsets.only(left: 7, right: 5, top: 11, bottom: 11),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.only(left: 7, right: 5, top: 11, bottom: 11),
+            decoration: const BoxDecoration(
                 color: AppColors.greenThemeColor,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(18),
@@ -151,21 +151,21 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                     },
                     likeBuilder: (isLiked) {
                       return isLiked
-                          ? Icon(
+                          ? const Icon(
                               Icons.favorite_rounded,
                               color: Colors.pinkAccent,
                               size: 21.6,
                             )
-                          : Icon(
+                          : const Icon(
                               Icons.favorite_border_rounded,
                               color: AppColors.whiteThemeColor,
                               size: 21.6,
                             );
                     },
-                    circleColor: CircleColor(
+                    circleColor: const CircleColor(
                         start: AppColors.blackThemeColor,
                         end: AppColors.blackThemeColor),
-                    bubblesColor: BubblesColor(
+                    bubblesColor: const BubblesColor(
                         dotPrimaryColor: AppColors.blueThemeColor,
                         dotSecondaryColor: AppColors.blackThemeColor),
                     size: 21.6,

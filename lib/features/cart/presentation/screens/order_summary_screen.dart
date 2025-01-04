@@ -26,7 +26,7 @@ class ScreenOrderSummary extends StatelessWidget {
       body: BlocBuilder<AddressBloc, AddressState>(
         builder: (context, state) {
           if (state is AddressLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is AddressLoaded) {
@@ -35,9 +35,9 @@ class ScreenOrderSummary extends StatelessWidget {
             return BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 if (state is CartLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is CartError) {
-                  return Center(child: Text('Failed to load data'));
+                  return const Center(child: Text('Failed to load data'));
                 } else if (state is CartLoaded) {
                   final cartItemsList = state.products;
 
@@ -60,10 +60,10 @@ class ScreenOrderSummary extends StatelessWidget {
                   return BlocBuilder<UserProfileBloc, UserProfileState>(
                     builder: (context, state) {
                       if (state is UserProfileLoading) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       } else if (state is UserProfileError) {
                         // display error
-                        Center(child: Text('User Profile error'));
+                        const Center(child: Text('User Profile error'));
                       } else if (state is UserProfileLoaded) {
                         final user = state.user;
                         return SingleChildScrollView(
@@ -75,20 +75,20 @@ class ScreenOrderSummary extends StatelessWidget {
                                 OrderSummaryScreenWidgets
                                     .buildAccountInformationContainer(
                                         context, user),
-                                SizedBox(height: 18),
+                                const SizedBox(height: 18),
                                 OrderSummaryScreenWidgets
                                     .buildDeliveryAddressContainer(context),
-                                SizedBox(height: 18),
+                                const SizedBox(height: 18),
                                 OrderSummaryScreenWidgets.buildItemsContainer(
                                     context, cartItemsList),
-                                SizedBox(height: 18),
+                                const SizedBox(height: 18),
                                 // Just showing a sizedbox the strcture the ui.
                                 cartItemsList.length == 1
                                     ? SizedBox(
                                         height:
                                             MediaQuery.sizeOf(context).height *
                                                 0.08)
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 OrderSummaryScreenWidgets
                                     .buildPricedetailsAndProceedButton(
                                         context,

@@ -38,8 +38,8 @@ class _ScreenRateProductState extends State<ScreenRateProduct> {
             if (state is ReviewAddedSuccess) {
               CustomSnackbar.showCustomSnackBar(
                   context, 'Review added success... 🎉🎉🎉');
-              Future.delayed(
-                  Duration(milliseconds: 500), () => Navigator.pop(context));
+              Future.delayed(const Duration(milliseconds: 500),
+                  () => Navigator.pop(context));
             }
           },
           builder: (context, state) {
@@ -75,7 +75,7 @@ class _ScreenRateProductState extends State<ScreenRateProduct> {
                   const SizedBox(height: 18),
                   RateProductScreenWidgets.buildReviewInputField(
                       context, _ratingTextController),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   RateProductScreenWidgets.buildSaveReviewButton(
                       context,
                       widget.productModel,

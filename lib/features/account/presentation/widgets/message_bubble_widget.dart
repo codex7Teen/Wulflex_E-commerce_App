@@ -78,7 +78,7 @@ class MessageBubble extends StatelessWidget {
               child: Stack(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 16,
                       right: 16,
                       top: 12,
@@ -123,7 +123,7 @@ class MessageBubble extends StatelessWidget {
                                     radius: 10,
                                     backgroundImage: NetworkImage(userImage),
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.account_circle_rounded,
                                     size: 20,
                                     color: AppColors.whiteThemeColor,

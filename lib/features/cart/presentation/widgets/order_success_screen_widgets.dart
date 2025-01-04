@@ -62,7 +62,7 @@ class OrderSuccessScreenWidgets {
         GestureDetector(
           onTap: () => NavigationHelper.navigateToWithReplacement(
               context,
-              ScreenMyOrders(
+              const ScreenMyOrders(
                 isBackButtonVisible: false,
               )),
           child: Text(
@@ -83,7 +83,7 @@ class OrderSuccessScreenWidgets {
     return GreenButtonWidget(
         onTap: () {
           currentIndex = 0;
-          NavigationHelper.navigateToWithReplacement(context, MainScreen());
+          NavigationHelper.navigateToWithReplacement(context, const MainScreen());
         },
         buttonText: 'Continue Shopping',
         borderRadius: 25,

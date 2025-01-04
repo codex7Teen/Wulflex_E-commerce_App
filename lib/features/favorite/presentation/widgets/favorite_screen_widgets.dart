@@ -24,7 +24,7 @@ class FavoriteScreenWidgets {
 
   static Widget buildItemCards(BuildContext context, FavoriteLoaded state) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 15,
           mainAxisSpacing: 7.5,

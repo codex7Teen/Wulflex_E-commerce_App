@@ -19,7 +19,7 @@ class ScreenSizeChart extends StatelessWidget {
               child: Text("FIND YOUR PERFECT FIT",
                   style: AppTextStyles.screenSubTitles.copyWith(fontSize: 17)),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -31,14 +31,14 @@ class ScreenSizeChart extends StatelessWidget {
                       ['UK', '5-6', '7-8', '9-10', '11-12'],
                       ['EU', '39-40', '41-42', '43-44', '45-46'],
                     ]),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     _buildSizeChartTable(context, 'Apparel', [
                       ['Size', 'S', 'M', 'L', 'XL'],
                       ['Chest (in)', '36-38', '39-41', '42-44', '45-47'],
                       ['Waist (in)', '28-30', '31-33', '34-36', '37-39'],
                     ]),
-                    SizedBox(height: 20),
-                    Divider(color: AppColors.greenThemeColor),
+                    const SizedBox(height: 20),
+                    const Divider(color: AppColors.greenThemeColor),
                     Center(
                       child: Text(
                         "Measure before you buy!",
@@ -62,7 +62,7 @@ class ScreenSizeChart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: AppTextStyles.viewProductTitleText(context)),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Table(
           columnWidths: const {
             0: FlexColumnWidth(2),

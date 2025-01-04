@@ -10,7 +10,7 @@ import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 
 Widget buildCustomCartCard(BuildContext context, ProductModel product) {
   return Container(
-    padding: EdgeInsets.all(13),
+    padding: const EdgeInsets.all(13),
     width: MediaQuery.of(context).size.width, // Full width
     decoration: BoxDecoration(
       color: AppColors.lightGreyThemeColor,
@@ -55,7 +55,7 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
               ),
             ),
 
-            SizedBox(width: 14),
+            const SizedBox(width: 14),
 
             // Product Details
             Expanded(
@@ -78,7 +78,7 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                         ),
                         Row(
                           children: [
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
                               product.selectedSize ??
                                   product.selectedWeight ??
@@ -102,37 +102,37 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(height: 9),
+                  const SizedBox(height: 9),
                   Row(
                     children: [
                       Text(
                         "₹${NumberFormat('#,##,###.##').format(product.retailPrice)}",
                         style: AppTextStyles.itemCardSecondSubTitleText,
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         "₹${NumberFormat('#,##,###.##').format(product.offerPrice)}",
                         style: AppTextStyles.itemCardSubTitleText,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           context.read<CartBloc>().add(RemoveFromCartEvent(
                               productId: product.cartItemId!));
                         },
                         child: Container(
-                          padding: EdgeInsets.all(7.5),
+                          padding: const EdgeInsets.all(7.5),
                           decoration: BoxDecoration(
                               color: AppColors.whiteThemeColor,
                               borderRadius: BorderRadius.circular(10)),
                           child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.delete_outline_rounded,
                                 size: 18,
                                 color: AppColors.darkishGrey,
                               ),
-                              SizedBox(width: 3),
+                              const SizedBox(width: 3),
                               Text(
                                 'Remove',
                                 style:
@@ -149,15 +149,15 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
             ),
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.only(left: 4),
           child: Row(
             children: [
               Text('Quantity: ', style: AppTextStyles.orderQuantityText),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                 decoration: BoxDecoration(
                     color: AppColors.whiteThemeColor,
                     borderRadius: BorderRadius.circular(25),
@@ -166,8 +166,8 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                 child: BlocBuilder<CartBloc, CartState>(
                   builder: (context, state) {
                     if (state is CartItemQuantityLoading) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(
                             vertical: 5.5, horizontal: 23),
                         child: Center(
                             child: SizedBox(
@@ -191,16 +191,16 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                                           quantity: product.quantity - 1));
                                 }
                               : null,
-                          child: Icon(
+                          child: const Icon(
                             Icons.remove,
                             color: AppColors.greyThemeColor,
                             size: 16,
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(product.quantity.toString(),
                             style: AppTextStyles.orderQuantityText),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             // Increment quantity
@@ -209,7 +209,7 @@ Widget buildCustomCartCard(BuildContext context, ProductModel product) {
                                     productId: product.cartItemId!,
                                     quantity: product.quantity + 1));
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.add,
                             color: AppColors.greyThemeColor,
                             size: 16,

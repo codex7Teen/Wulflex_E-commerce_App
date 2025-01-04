@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
@@ -31,9 +30,9 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
     Future.delayed(Duration.zero, () {
       if (mounted) {
         // pre-caching images to make them fully loaded
-        precacheImage(AssetImage('assets/intro_image_1.jpg'), context);
-        precacheImage(AssetImage('assets/intro_image_2.jpg'), context);
-        precacheImage(AssetImage('assets/intro_image_3.png'), context);
+        precacheImage(const AssetImage('assets/intro_image_1.jpg'), context);
+        precacheImage(const AssetImage('assets/intro_image_2.jpg'), context);
+        precacheImage(const AssetImage('assets/intro_image_3.png'), context);
       }
     });
   }
@@ -51,14 +50,14 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
               });
             },
             controller: _pageController,
-            children: [ScreenIntro1(), ScreenIntro2(), ScreenIntro3()],
+            children: const [ScreenIntro1(), ScreenIntro2(), ScreenIntro3()],
           ),
 
           //! D O T - I N D I C A T O R
           Container(
-            alignment: Alignment(0, 0.34),
+            alignment: const Alignment(0, 0.34),
             child: SmoothPageIndicator(
-                effect: WormEffect(
+                effect: const WormEffect(
                     activeDotColor: AppColors.greenThemeColor,
                     dotHeight: 8,
                     dotWidth: 19),
@@ -75,9 +74,9 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
                   child: GestureDetector(
                       onTap: () {
                         onLastpage
-                            ? NavigationHelper.navigateToWithReplacement(context, ScreenLogin(), milliseconds: 600)
+                            ? NavigationHelper.navigateToWithReplacement(context, const ScreenLogin(), milliseconds: 600)
                             : _pageController.nextPage(
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.ease);
                       },
                       child: GreenButtonWidget(
@@ -85,7 +84,7 @@ class _ScreenMainIntroState extends State<ScreenMainIntro> {
 
           //! S K I P - B U T T O N
           onLastpage
-              ? SizedBox.shrink()
+              ? const SizedBox.shrink()
               : Positioned(
                   top: MediaQuery.sizeOf(context).height * 0.880,
                   left: 0,

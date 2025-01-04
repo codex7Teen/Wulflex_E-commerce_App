@@ -28,7 +28,7 @@ class ScreenCart extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is CartLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is CartLoaded) {
               if (state.products.isEmpty) {
                 return CartWidgets.buildCartEmptyDisplay(context);
@@ -59,7 +59,7 @@ class ScreenCart extends StatelessWidget {
                 ],
               );
             }
-            return Center(child: SizedBox.shrink());
+            return const Center(child: SizedBox.shrink());
           },
         ));
   }

@@ -85,27 +85,27 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
                   AddAddressScreenWidgets.buildNameText(context),
                   AddAddressScreenWidgets.buildNameTextfield(
                       context, _nameController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   AddAddressScreenWidgets.buildPhoneNumberText(context),
                   AddAddressScreenWidgets.buildPhoneNumberTextfield(
                       context, _phoneNumberController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   AddAddressScreenWidgets.buildPincodeText(context),
                   AddAddressScreenWidgets.buildPincodeTextfield(
                       context, _pincodeController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   AddAddressScreenWidgets.buildStateandcityText(context),
                   AddAddressScreenWidgets.buildStateAndCityTextfield(
                       context, _stateNameController, _cityNameController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   AddAddressScreenWidgets.buildHouseNameText(context),
                   AddAddressScreenWidgets.buildHouseNameTextfield(
                       context, _houseNameController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   AddAddressScreenWidgets.buildAreaNameText(context),
                   AddAddressScreenWidgets.buildAreaNameTextfield(
                       context, _areaNameController),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   BlocBuilder<AddressBloc, AddressState>(
                     builder: (context, state) {
                       return AddAddressScreenWidgets.buildSaveButton(

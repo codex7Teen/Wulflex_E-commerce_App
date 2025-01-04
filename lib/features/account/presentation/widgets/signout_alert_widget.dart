@@ -17,23 +17,23 @@ void showCustomSignoutWarningAlertBox(BuildContext context) {
         textAlign: TextAlign.center,
         'Are you sure you want to Sign-out? 💔\n',
         style: GoogleFonts.robotoCondensed(
-            textStyle: TextStyle(
+            textStyle: const TextStyle(
                 fontSize: 16.5,
                 fontWeight: FontWeight.w500,
                 color: AppColors.blackThemeColor))),
     cancelBtnTextStyle: GoogleFonts.robotoCondensed(
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: AppColors.blackThemeColor)),
     confirmBtnTextStyle: GoogleFonts.robotoCondensed(
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: AppColors.redThemeColor)),
     confirmBtnColor: AppColors.blackThemeColor,
     customAsset: 'assets/warning.jpg',
-    autoCloseDuration: Duration(seconds: 3),
+    autoCloseDuration: const Duration(seconds: 3),
     width: 120,
     onConfirmBtnTap: () {
       context.read<AuthenticatonBlocBloc>().add(LogOutButtonPressed());

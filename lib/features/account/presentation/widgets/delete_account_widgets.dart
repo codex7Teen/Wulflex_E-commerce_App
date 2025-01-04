@@ -20,23 +20,23 @@ class DeleteAccountScreenWidgets {
           textAlign: TextAlign.center,
           'Are you sure you want to erase your \naccount forever? 💔\n',
           style: GoogleFonts.robotoCondensed(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   fontSize: 16.5,
                   fontWeight: FontWeight.w500,
                   color: AppColors.blackThemeColor))),
       cancelBtnTextStyle: GoogleFonts.robotoCondensed(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.blackThemeColor)),
       confirmBtnTextStyle: GoogleFonts.robotoCondensed(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.redThemeColor)),
       confirmBtnColor: AppColors.blackThemeColor,
       customAsset: 'assets/warning.jpg',
-      autoCloseDuration: Duration(seconds: 3),
+      autoCloseDuration: const Duration(seconds: 3),
       width: 120,
       onConfirmBtnTap: () {
         context.read<DeleteAccountBloc>().add(DeleteAccountButtonPressed());
@@ -47,15 +47,15 @@ class DeleteAccountScreenWidgets {
 
   static Widget buildDeleteAccountWarmingContainer() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.red.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          Icon(Icons.warning_rounded, color: Colors.red),
-          SizedBox(width: 12),
+          const Icon(Icons.warning_rounded, color: Colors.red),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               "Your Wulflex account will be permanently deleted. This action cannot be undone.",
@@ -118,7 +118,7 @@ class DeleteAccountScreenWidgets {
               icon: Icons.warning_rounded);
         }
       },
-      child: Center(
+      child: const Center(
         child: CustomBlackButtonWidget(
           buttonText: "Delete Account Permanently",
           borderRadius: 25,

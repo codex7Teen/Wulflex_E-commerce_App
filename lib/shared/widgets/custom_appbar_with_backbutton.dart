@@ -30,7 +30,7 @@ PreferredSizeWidget customAppbarWithBackbutton(
                         color: isLightTheme
                             ? AppColors.lightGreyThemeColor
                             : AppColors.whiteThemeColor),
-                    child: Icon(Icons.arrow_back_ios_new_rounded,
+                    child: const Icon(Icons.arrow_back_ios_new_rounded,
                         size: 24, color: AppColors.blackThemeColor),
                   ),
                 ),
@@ -42,7 +42,7 @@ PreferredSizeWidget customAppbarWithBackbutton(
                     width: MediaQuery.sizeOf(context).width * spacingWidth)),
             Column(
               children: [
-                SizedBox(height: 6.5),
+                const SizedBox(height: 6.5),
                 Text(appbarTitle, style: AppTextStyles.appbarTextBig(context)),
               ],
             ),

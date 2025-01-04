@@ -7,7 +7,7 @@ import 'package:wulflex/shared/widgets/theme_toggle_widget.dart';
 class SettingsScreenWidgets {
   static Widget buildAppthemeToggler(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 18, right: 18),
+      padding: const EdgeInsets.only(left: 18, right: 18),
       height: 60,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -15,7 +15,7 @@ class SettingsScreenWidgets {
           borderRadius: BorderRadius.circular(18)),
       child: Row(
         children: [
-          Column(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
@@ -26,14 +26,14 @@ class SettingsScreenWidgets {
               SizedBox(height: 3)
             ],
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(
             'APP THEME',
             style: AppTextStyles.buttonCardsText,
           ),
-          Spacer(),
+          const Spacer(),
           Container(
-              padding: EdgeInsets.all(1),
+              padding: const EdgeInsets.all(1),
               decoration: BoxDecoration(
                   color: AppColors.greenThemeColor,
                   borderRadius: BorderRadius.circular(18)),

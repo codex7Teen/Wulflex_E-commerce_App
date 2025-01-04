@@ -30,7 +30,7 @@ class ScreenOrderDetails extends StatelessWidget {
           if (state is OrderUpdateSuccess) {
             CustomSnackbar.showCustomSnackBar(context, "Order cancelled!",
                 appearFromTop: true);
-            Future.delayed(Duration(milliseconds: 500), () {
+            Future.delayed(const Duration(milliseconds: 500), () {
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
             });
@@ -40,7 +40,7 @@ class ScreenOrderDetails extends StatelessWidget {
           return BlocBuilder<UserProfileBloc, UserProfileState>(
             builder: (context, state) {
               if (state is UserProfileLoading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state is UserProfileLoaded) {
                 final user = state.user;
                 return SingleChildScrollView(
@@ -52,18 +52,18 @@ class ScreenOrderDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         OrderDetailScreenWidgets.buildOrderId(context, order),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         OrderDetailScreenWidgets.buildOrderDate(context, order),
-                        SizedBox(height: 18),
+                        const SizedBox(height: 18),
                         OrderDetailScreenWidgets.buildAccountInformation(
                             context, user),
-                        SizedBox(height: 18),
+                        const SizedBox(height: 18),
                         OrderDetailScreenWidgets.buildPaymentMode(
                             context, order),
-                        SizedBox(height: 18),
+                        const SizedBox(height: 18),
                         OrderDetailScreenWidgets.buildProductCard(
                             context, product),
-                        SizedBox(height: 18),
+                        const SizedBox(height: 18),
                         OrderDetailScreenWidgets.buildOrderStatusText(context),
                         OrderDetailScreenWidgets.buildOrderStatusTimeline(
                             context, order),
@@ -71,19 +71,19 @@ class ScreenOrderDetails extends StatelessWidget {
                             visible: order.status == OrderStatus.pending ||
                                 order.status == OrderStatus.processing ||
                                 order.status == OrderStatus.shipped,
-                            child: SizedBox(height: 3)),
+                            child: const SizedBox(height: 3)),
                         OrderDetailScreenWidgets.buildCancelButton(
                             context, order),
                         Visibility(
                             visible: order.status == OrderStatus.pending ||
                                 order.status == OrderStatus.processing ||
                                 order.status == OrderStatus.shipped,
-                            child: SizedBox(height: 6)),
+                            child: const SizedBox(height: 6)),
                         OrderDetailScreenWidgets.buildDivider(context),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                         OrderDetailScreenWidgets.buildDeliveryAddressText(
                             context),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                         OrderDetailScreenWidgets.buildAddressSection(
                             context, order),
                         OrderDetailScreenWidgets.buildRateButton(
@@ -93,7 +93,7 @@ class ScreenOrderDetails extends StatelessWidget {
                   ),
                 );
               }
-              return Center(
+              return const Center(
                   child:
                       Text('Something went wrong. Check network connection!'));
             },

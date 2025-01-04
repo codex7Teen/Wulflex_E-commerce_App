@@ -21,7 +21,7 @@ class OrderSummaryScreenWidgets {
   static Widget buildAccountInformationContainer(
       BuildContext context, UserModel user) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme(context)
@@ -38,8 +38,8 @@ class OrderSummaryScreenWidgets {
                 style: AppTextStyles.screenSubHeadings(context,
                     fixedBlackColor: true),
               ),
-              SizedBox(width: 6),
-              Column(
+              const SizedBox(width: 6),
+              const Column(
                 children: [
                   Icon(Icons.person,
                       color: AppColors.blackThemeColor, size: 22),
@@ -48,7 +48,7 @@ class OrderSummaryScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           Text(
             user.name,
             style: AppTextStyles.screenSubTitles,
@@ -60,7 +60,7 @@ class OrderSummaryScreenWidgets {
 
   static Widget buildDeliveryAddressContainer(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme(context)
@@ -77,8 +77,8 @@ class OrderSummaryScreenWidgets {
                 style: AppTextStyles.screenSubHeadings(context,
                     fixedBlackColor: true),
               ),
-              SizedBox(width: 6),
-              Column(
+              const SizedBox(width: 6),
+              const Column(
                 children: [
                   Icon(Icons.home, color: AppColors.blackThemeColor, size: 22),
                   SizedBox(height: 2)
@@ -86,11 +86,11 @@ class OrderSummaryScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 5.5),
+          const SizedBox(height: 5.5),
           BlocBuilder<AddressBloc, AddressState>(
             builder: (context, state) {
               if (state is AddressLoading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state is AddressLoaded) {
@@ -103,11 +103,11 @@ class OrderSummaryScreenWidgets {
                     child: GestureDetector(
                       onTap: () {
                         NavigationHelper.navigateToWithoutReplacement(
-                            context, ScreenAddress());
+                            context, const ScreenAddress());
                       },
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+                            const EdgeInsets.symmetric(horizontal: 13, vertical: 4),
                         decoration: BoxDecoration(
                             color: AppColors.greenThemeColor,
                             borderRadius: BorderRadius.circular(18)),
@@ -129,11 +129,11 @@ class OrderSummaryScreenWidgets {
                       child: GestureDetector(
                         onTap: () {
                           NavigationHelper.navigateToWithoutReplacement(
-                              context, ScreenAddress());
+                              context, const ScreenAddress());
                         },
                         child: Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+                              const EdgeInsets.symmetric(horizontal: 13, vertical: 4),
                           decoration: BoxDecoration(
                               color: AppColors.greenThemeColor,
                               borderRadius: BorderRadius.circular(18)),
@@ -169,7 +169,7 @@ class OrderSummaryScreenWidgets {
                     ),
                     Visibility(
                         visible: selectedAddressContainsValues,
-                        child: SizedBox(width: 8)),
+                        child: const SizedBox(width: 8)),
                     Visibility(
                       visible: selectedAddressContainsValues,
                       child: Expanded(
@@ -213,7 +213,7 @@ class OrderSummaryScreenWidgets {
                   ],
                 );
               }
-              return Center(
+              return const Center(
                 child: Text('something went wrong'),
               );
             },
@@ -226,7 +226,7 @@ class OrderSummaryScreenWidgets {
   static Widget buildItemsContainer(
       BuildContext context, List<ProductModel> cartItemsList) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme(context)
@@ -243,8 +243,8 @@ class OrderSummaryScreenWidgets {
                 style: AppTextStyles.screenSubHeadings(context,
                     fixedBlackColor: true),
               ),
-              SizedBox(width: 6),
-              Column(
+              const SizedBox(width: 6),
+              const Column(
                 children: [
                   Icon(Icons.shopping_bag_rounded,
                       color: AppColors.blackThemeColor, size: 22),
@@ -253,14 +253,14 @@ class OrderSummaryScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           // ITEMS
           ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: cartItemsList.length,
             separatorBuilder: (context, index) {
-              return SizedBox(height: 8);
+              return const SizedBox(height: 8);
             },
             itemBuilder: (context, index) {
               final cartItem = cartItemsList[index];
@@ -269,7 +269,7 @@ class OrderSummaryScreenWidgets {
                     context, ScreenViewProducts(productModel: cartItem)),
                 child: Container(
                   height: 100,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: isLightTheme(context)
                           ? AppColors.whiteThemeColor
@@ -311,12 +311,12 @@ class OrderSummaryScreenWidgets {
                           ),
                         ),
                       ),
-                      SizedBox(width: 14),
+                      const SizedBox(width: 14),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -343,7 +343,7 @@ class OrderSummaryScreenWidgets {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                    SizedBox(width: 10)
+                                    const SizedBox(width: 10)
                                   ],
                                 ),
                               ],
@@ -359,7 +359,7 @@ class OrderSummaryScreenWidgets {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -396,7 +396,7 @@ class OrderSummaryScreenWidgets {
       List<ProductModel> cartItemsList,
       AddressModel? selectedAddress) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
       width: double.infinity,
       decoration: BoxDecoration(
           color: isLightTheme(context)
@@ -413,8 +413,8 @@ class OrderSummaryScreenWidgets {
                 style: AppTextStyles.screenSubHeadings(context,
                     fixedBlackColor: true),
               ),
-              SizedBox(width: 6),
-              Column(
+              const SizedBox(width: 6),
+              const Column(
                 children: [
                   Icon(Icons.wallet,
                       color: AppColors.blackThemeColor, size: 22),
@@ -423,42 +423,42 @@ class OrderSummaryScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Row(
             children: [
               Text(
                 'Subtotal',
                 style: AppTextStyles.cartSubtotalAndDiscountText,
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 '₹ ${NumberFormat('#,##,###.##').format(subtotal)}',
                 style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
               )
             ],
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           Row(
             children: [
               Text(
                 'Discount',
                 style: AppTextStyles.cartSubtotalAndDiscountText,
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 '₹ –${NumberFormat('#,##,###.##').format(discount)}',
                 style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
               )
             ],
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           Row(
             children: [
               Text(
                 'Delivery Charges',
                 style: AppTextStyles.cartSubtotalAndDiscountText,
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
                   Text('₹ 100',
@@ -475,23 +475,23 @@ class OrderSummaryScreenWidgets {
               )
             ],
           ),
-          SizedBox(height: 3),
-          Divider(color: AppColors.hardLightGeryThemeColor, thickness: 0.3),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
+          const Divider(color: AppColors.hardLightGeryThemeColor, thickness: 0.3),
+          const SizedBox(height: 3),
           Row(
             children: [
               Text(
                 'Total Amount',
                 style: AppTextStyles.cartTotalText,
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 '₹ ${NumberFormat('#,##,###.##').format(total)}',
                 style: AppTextStyles.cartTotalAmountText,
               )
             ],
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           BlocBuilder<AddressBloc, AddressState>(
             builder: (context, state) {
               bool selectedAddressContainsValues = false;
@@ -526,7 +526,7 @@ class OrderSummaryScreenWidgets {
                   width: 1);
             },
           ),
-          SizedBox(height: 8)
+          const SizedBox(height: 8)
         ],
       ),
     );

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
-import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/presentation/widgets/address_manage_screen_widgets.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -24,50 +22,34 @@ class ScreenManageAddress extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildaddNewAddressButton(context),
-            SizedBox(height: 20),
-            buildManageAddressText(context),
-            SizedBox(height: 10),
+            //! ADD NEW ADDRESS BUTTON
+            AddressManageScreenWidgets.buildaddNewAddressButton(context),
+            const SizedBox(height: 20),
+            //! MANADE ADDRESS TEXT HEADING
+            AddressManageScreenWidgets.buildManageAddressText(context),
+            const SizedBox(height: 10),
             BlocBuilder<AddressBloc, AddressState>(
               builder: (context, state) {
                 if (state is AddressLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is AddressLoaded) {
                   final addressList = state.address;
                   // Show addresses only if addlist is not empty and show a lottie while empty
                   if (addressList.isNotEmpty) {
-                    return buildAddressCard(addressList);
+                    //! ADDRESS CARDS
+                    return AddressManageScreenWidgets.buildAddressCard(
+                        addressList);
                   } else {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 90),
-                          isLightTheme(context)
-                              ? Lottie.asset(
-                                  'assets/lottie/empty_address_black.json',
-                                  width: 190,
-                                  repeat: true)
-                              : Lottie.asset(
-                                  'assets/lottie/empty_address_white.json',
-                                  width: 190,
-                                  repeat: true),
-                          Text(
-                            'Save your address for a better shopping\nexperience!',
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.emptyScreenText(context),
-                          ),
-                          SizedBox(height: 90)
-                        ],
-                      ),
-                    );
+                    //! EMPTY ADDRESS DISPLAY
+                    return AddressManageScreenWidgets.buildEmptyAddressDisplay(
+                        context);
                   }
                 }
-                return Center(child: Text('Something went wrong'));
+                //! UNKNOWN ERROR
+                return const Center(child: Text('Something went wrong'));
               },
             ),
-            SizedBox(height: 20)
+            const SizedBox(height: 20)
           ],
         ),
       ),

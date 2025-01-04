@@ -68,7 +68,7 @@ class ReloginScreenWidget {
       child: GestureDetector(
         onTap: () {
           NavigationHelper.navigateToWithoutReplacement(
-              context, ScreenForgotPassword());
+              context, const ScreenForgotPassword());
         },
         child: Text(
           'Forgot Password?',

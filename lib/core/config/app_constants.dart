@@ -14,7 +14,7 @@ class FirebaseConfig {
   static const String messagingSenderId = "57079492115";
   static const String appId = "1:57079492115:web:4366c95936974dda3fd9e6";
 
-  static FirebaseOptions get firebaseOptions => FirebaseOptions(
+  static FirebaseOptions get firebaseOptions => const FirebaseOptions(
         apiKey: apiKey,
         authDomain: authDomain,
         projectId: projectId,

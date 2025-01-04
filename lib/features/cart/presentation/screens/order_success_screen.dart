@@ -24,10 +24,10 @@ class ScreenOrderSuccess extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 OrderSuccessScreenWidgets.buildOrderConfirmedText(context),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 OrderSuccessScreenWidgets.buildOrderPlacedSuccessText(context),
                 OrderSuccessScreenWidgets.buildTrackOrderRowWithText(context),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 //! Continue button
                 OrderSuccessScreenWidgets.buildContinueButton(context)
               ],
