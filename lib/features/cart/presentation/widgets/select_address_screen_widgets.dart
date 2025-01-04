@@ -16,7 +16,7 @@ class SelectAddressScreenWidgets {
     return GestureDetector(
       onTap: () {
         NavigationHelper.navigateToWithoutReplacement(
-            context, ScreenAddAddress());
+            context, const ScreenAddAddress());
       },
       child: const GreenButtonWidget(
           width: 1,

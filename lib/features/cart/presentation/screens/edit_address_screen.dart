@@ -113,27 +113,27 @@ class _ScreenEditAddressState extends State<ScreenEditAddress> {
                 children: [
                   EditAddressScreenWidgets.buildNameText(context),
                   EditAddressScreenWidgets.buildNameField(_nameController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   EditAddressScreenWidgets.buildPhoneNumberText(context),
                   EditAddressScreenWidgets.buildPhoneNumberField(
                       _phoneNumberController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   EditAddressScreenWidgets.buildPincodeText(context),
                   EditAddressScreenWidgets.buildPincodeField(
                       _pincodeController, context),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   EditAddressScreenWidgets.buildStateAndCityText(context),
                   EditAddressScreenWidgets.buildStateandCityField(
                       _stateNameController, _cityNameController, context),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   EditAddressScreenWidgets.buildHouseNameText(context),
                   EditAddressScreenWidgets.buildHouseNameField(
                       _houseNameController),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   EditAddressScreenWidgets.buildAreanameText(context),
                   EditAddressScreenWidgets.buildAreanameField(
                       _areaNameController),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   BlocBuilder<AddressBloc, AddressState>(
                     builder: (context, state) {
                       return EditAddressScreenWidgets.buildSaveButton(

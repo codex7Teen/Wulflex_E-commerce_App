@@ -102,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                   : AppColors.whiteThemeColor,
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black.withOpacity(.1),
+                    color: Colors.black.withValues(alpha: .1),
                     blurRadius: 30,
                     offset: const Offset(0, 10))
               ],
@@ -259,7 +259,7 @@ class _MainScreenState extends State<MainScreen> {
                                                                 .center,
                                                           ),
                                                         )
-                                                      : SizedBox.shrink();
+                                                      : const SizedBox.shrink();
                                                 },
                                               ))
                                       ],

@@ -1,7 +1,7 @@
 import 'dart:developer';
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 
@@ -26,12 +26,12 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
         themeData: ThemeData(
             brightness: Brightness.light,
             primaryColor: AppColors.greenThemeColor,
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: AppColors.greenThemeColor,
               secondary: AppColors.blueThemeColor,
               primaryContainer: AppColors.greenThemeColor,
               secondaryContainer: AppColors.blueThemeColor,
-              surface: const Color.fromRGBO(255, 255, 255, 1),
+              surface: Color.fromRGBO(255, 255, 255, 1),
               error: AppColors.redThemeColor,
               onPrimary: AppColors.whiteThemeColor,
               onSecondary: AppColors.whiteThemeColor,
@@ -41,9 +41,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
             checkboxTheme: CheckboxThemeData(
                 side: WidgetStateBorderSide.resolveWith((states) {
               if (!states.contains(WidgetState.selected)) {
-                return BorderSide(color: AppColors.greenThemeColor);
+                return const BorderSide(color: AppColors.greenThemeColor);
               }
-              return BorderSide(color: AppColors.greenThemeColor);
+              return const BorderSide(color: AppColors.greenThemeColor);
             }))));
   }
 
@@ -78,9 +78,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
           checkboxTheme: CheckboxThemeData(
               side: WidgetStateBorderSide.resolveWith((states) {
             if (!states.contains(WidgetState.selected)) {
-              return BorderSide(color: AppColors.greenThemeColor);
+              return const BorderSide(color: AppColors.greenThemeColor);
             }
-            return BorderSide(color: AppColors.greenThemeColor);
+            return const BorderSide(color: AppColors.greenThemeColor);
           }))),
     ));
 
@@ -115,9 +115,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
           checkboxTheme: CheckboxThemeData(
               side: WidgetStateBorderSide.resolveWith((states) {
             if (!states.contains(WidgetState.selected)) {
-              return BorderSide(color: AppColors.greenThemeColor);
+              return const BorderSide(color: AppColors.greenThemeColor);
             }
-            return BorderSide(color: AppColors.greenThemeColor);
+            return const BorderSide(color: AppColors.greenThemeColor);
           }))),
     ));
 

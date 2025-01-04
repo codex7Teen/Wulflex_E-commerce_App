@@ -123,7 +123,8 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
           top: 0,
           right: 3.95,
           child: Container(
-            padding: const EdgeInsets.only(left: 7, right: 5, top: 11, bottom: 11),
+            padding:
+                const EdgeInsets.only(left: 7, right: 5, top: 11, bottom: 11),
             decoration: const BoxDecoration(
                 color: AppColors.greenThemeColor,
                 borderRadius: BorderRadius.only(

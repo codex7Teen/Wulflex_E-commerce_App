@@ -41,7 +41,7 @@ class ProfileScreenWidgets {
                               height: 180 * 0.6,
                               width: 180 * 0.6,
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.4),
+                                color: Colors.black.withValues(alpha: 0.4),
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: CircularProgressIndicator(

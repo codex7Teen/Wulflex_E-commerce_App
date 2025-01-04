@@ -9,7 +9,7 @@ import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:animate_do/animate_do.dart';
 
 class ScreenCustomerSupport extends StatefulWidget {
-  ScreenCustomerSupport({super.key});
+  const ScreenCustomerSupport({super.key});
 
   @override
   State<ScreenCustomerSupport> createState() => _ScreenCustomerSupportState();

@@ -39,7 +39,7 @@ class ImageViewerScreenWidgets {
       top: MediaQuery.of(context).padding.top + 10,
       left: 10,
       child: IconButton(
-        icon: Icon(Icons.close, color: Colors.white, size: 30),
+        icon: const Icon(Icons.close, color: Colors.white, size: 30),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );

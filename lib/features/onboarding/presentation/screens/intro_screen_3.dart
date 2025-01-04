@@ -51,7 +51,7 @@ class _ScreenIntro3State extends State<ScreenIntro3> {
             child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
           child: Container(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
           ),
         )),
 

@@ -40,7 +40,7 @@ class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
           // Log the error and stack trace for debugging
           log("ACCOUNT DELETED FAILED: $error", stackTrace: stackTrace);
           // Emit the failture state with error message
-          emit(DeleteAccountFailure(
+          emit(const DeleteAccountFailure(
               errorMessage: "Failed to delete account: Unknown error"));
         } finally {
           // Reset to initial state for further attempts

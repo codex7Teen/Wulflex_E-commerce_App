@@ -108,7 +108,7 @@ class ScreenAccount extends StatelessWidget {
                       AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
-                                  context, ScreenCustomerSupport()),
+                                  context, const ScreenCustomerSupport()),
                           icon: Icons.support_agent_rounded,
                           name: "CUSTOMER SUPPORT"),
                       const SizedBox(height: 14),

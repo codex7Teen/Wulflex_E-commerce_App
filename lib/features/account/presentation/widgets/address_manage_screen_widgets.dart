@@ -19,7 +19,7 @@ class AddressManageScreenWidgets {
     return GreenButtonWidget(
         onTap: () {
           NavigationHelper.navigateToWithoutReplacement(
-              context, ScreenAddAddress());
+              context, const ScreenAddAddress());
         },
         width: 1,
         buttonText: 'Add a new address',

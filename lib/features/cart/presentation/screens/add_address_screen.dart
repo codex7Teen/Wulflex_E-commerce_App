@@ -8,7 +8,7 @@ import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class ScreenAddAddress extends StatefulWidget {
-  ScreenAddAddress({super.key});
+  const ScreenAddAddress({super.key});
 
   @override
   State<ScreenAddAddress> createState() => _ScreenAddAddressState();
