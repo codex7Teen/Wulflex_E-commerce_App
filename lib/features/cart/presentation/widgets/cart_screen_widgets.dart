@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/product_model.dart';
@@ -7,6 +8,7 @@ import 'package:wulflex/features/cart/presentation/screens/order_summary_screen.
 import 'package:wulflex/shared/widgets/custom_cart_card_widget.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class CartWidgets {
   static PreferredSizeWidget buildAppBar(BuildContext context) {
@@ -134,6 +136,28 @@ class CartWidgets {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  static Widget buildCartEmptyDisplay(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          isLightTheme(context)
+              ? Lottie.asset('assets/lottie/cart_empty_lottie_black.json',
+                  width: 190, repeat: false)
+              : Lottie.asset('assets/lottie/cart_empty_lottie_white.json',
+                  width: 190, repeat: false),
+          Text(
+            'Your cart is empty.\nStart adding your items!',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.emptyScreenText(context),
+          ),
+          SizedBox(height: 90)
+        ],
       ),
     );
   }

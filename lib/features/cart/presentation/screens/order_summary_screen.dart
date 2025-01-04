@@ -103,16 +103,19 @@ class ScreenOrderSummary extends StatelessWidget {
                         );
                       }
                       return const Center(
-                          child: Text('Some Unknown error have occured.'));
+                          child: Text(
+                              'Some Unknown error have occured. Please retry.'));
                     },
                   );
                 }
                 return const Center(
-                    child: Text('Some Unknown error have occured.'));
+                    child:
+                        Text('Some Unknown error have occured. Please retry.'));
               },
             );
           }
-          return const Center(child: Text('Some Unknown error have occured.'));
+          return const Center(
+              child: Text('Some Unknown error have occured. Please retry.'));
         },
       ),
     );

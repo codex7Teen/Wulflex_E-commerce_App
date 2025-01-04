@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/address_model.dart';
@@ -8,6 +9,7 @@ import 'package:wulflex/features/cart/presentation/screens/add_address_screen.da
 import 'package:wulflex/features/cart/presentation/screens/edit_address_screen.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class SelectAddressScreenWidgets {
   static Widget buildAddAddressButton(BuildContext context) {
@@ -138,6 +140,29 @@ class SelectAddressScreenWidgets {
             ),
           );
         },
+      ),
+    );
+  }
+
+  static Widget buildEmptyAddressDisplay(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 90),
+          isLightTheme(context)
+              ? Lottie.asset('assets/lottie/empty_address_black.json',
+                  width: 190, repeat: true)
+              : Lottie.asset('assets/lottie/empty_address_white.json',
+                  width: 190, repeat: true),
+          Text(
+            'No address added yet.\nAdd one to proceed! ',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.emptyScreenText(context),
+          ),
+          SizedBox(height: 90)
+        ],
       ),
     );
   }
