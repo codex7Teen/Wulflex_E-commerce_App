@@ -19,27 +19,26 @@ class ProductModel {
   final String? cartItemId;
   final DateTime createdAt;
 
-  ProductModel(
-      {
-      // default product quantity to 1
-      this.quantity = 1,
-      required this.id,
-      required this.brandName,
-      required this.name,
-      required this.description,
-      required this.category,
-      required this.imageUrls,
-      required this.weights,
-      required this.sizes,
-      required this.retailPrice,
-      required this.offerPrice,
-      required this.isOnSale,
-      this.isFavorite = false,
-      this.selectedWeight,
-      this.selectedSize,
-      this.cartItemId,
-      DateTime? createdAt,
-      }) : createdAt = createdAt ?? DateTime.now();
+  ProductModel({
+    // default product quantity to 1
+    this.quantity = 1,
+    required this.id,
+    required this.brandName,
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.imageUrls,
+    required this.weights,
+    required this.sizes,
+    required this.retailPrice,
+    required this.offerPrice,
+    required this.isOnSale,
+    this.isFavorite = false,
+    this.selectedWeight,
+    this.selectedSize,
+    this.cartItemId,
+    DateTime? createdAt,
+  }) : createdAt = createdAt ?? DateTime.now();
 
   factory ProductModel.fromMap(Map<String, dynamic> map, {String? documentId}) {
     return ProductModel(
@@ -59,8 +58,8 @@ class ProductModel {
         selectedWeight: map['selectedWeight'],
         selectedSize: map['selectedSize'],
         cartItemId: map['cartItemId'],
-        createdAt: (map['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now()
-        );
+        createdAt:
+            (map['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now());
   }
 
   // Method to convert to map for Firestore
@@ -92,8 +91,7 @@ class ProductModel {
       String? selectedWeight,
       String? selectedSize,
       int? quantity,
-      DateTime? createdAt
-      }) {
+      DateTime? createdAt}) {
     return ProductModel(
         id: id,
         brandName: brandName,
@@ -110,8 +108,7 @@ class ProductModel {
         selectedWeight: selectedWeight ?? this.selectedWeight,
         selectedSize: selectedSize ?? this.selectedSize,
         quantity: quantity ?? this.quantity,
-        createdAt: createdAt ?? this.createdAt
-        );
+        createdAt: createdAt ?? this.createdAt);
   }
 
   // Optional: Add a method to create a cart-specific version of the product
@@ -122,23 +119,22 @@ class ProductModel {
     int? quantity,
   }) {
     return ProductModel(
-      id: id,
-      brandName: brandName,
-      name: name,
-      description: description,
-      category: category,
-      imageUrls: imageUrls,
-      weights: weights,
-      sizes: sizes,
-      retailPrice: retailPrice,
-      offerPrice: offerPrice,
-      isOnSale: isOnSale,
-      selectedSize: selectedSize ?? this.selectedSize,
-      selectedWeight: selectedWeight ?? this.selectedWeight,
-      cartItemId: cartItemId,
-      quantity: quantity ?? this.quantity,
-      createdAt: createdAt
-    );
+        id: id,
+        brandName: brandName,
+        name: name,
+        description: description,
+        category: category,
+        imageUrls: imageUrls,
+        weights: weights,
+        sizes: sizes,
+        retailPrice: retailPrice,
+        offerPrice: offerPrice,
+        isOnSale: isOnSale,
+        selectedSize: selectedSize ?? this.selectedSize,
+        selectedWeight: selectedWeight ?? this.selectedWeight,
+        cartItemId: cartItemId,
+        quantity: quantity ?? this.quantity,
+        createdAt: createdAt);
   }
 
   bool checkIsFavorite(List<ProductModel> favorites) {

@@ -31,7 +31,8 @@ class _ScreenHomeState extends State<ScreenHome> {
     Future.delayed(Duration.zero, () {
       if (mounted) {
         // pre-caching images to make them fully loaded
-        precacheImage(const AssetImage('assets/sale_cover_image.jpeg'), context);
+        precacheImage(
+            const AssetImage('assets/sale_cover_image.jpeg'), context);
         precacheImage(const AssetImage('assets/sales_banner_2.jpg'), context);
       }
     });
@@ -63,14 +64,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                 //! CAROUSEL VIEW
                 FadeInDown(
                   delay: const Duration(milliseconds: 250),
-                  child: buildcarouselView(
-                      _carouselController,
-                      _currentSlide,
-                      (index, reason) => setState(() {
-                            _currentSlide = index;
-                          }),
-                      () => NavigationHelper.navigateToWithoutReplacement(
-                          context, const ScreenSaleScreen(screenName: 'Sale'))),
+                  child: const EnhancedCarousel(),
                 ),
                 const SizedBox(height: 24),
                 //! CATEGORIES TEXT
