@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -39,9 +40,11 @@ class TimelineTileWidget extends StatelessWidget {
                     : AppColors.appBarLightGreyThemeColor,
             iconStyle: IconStyle(
                 iconData: Icons.done, color: AppColors.whiteThemeColor)),
-        endChild: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: endChild,
+        endChild: FadeInLeft(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: endChild,
+          ),
         ),
       ),
     );

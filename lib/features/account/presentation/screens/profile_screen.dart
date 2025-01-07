@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
@@ -38,9 +39,11 @@ class ScreenProfile extends StatelessWidget {
                       top: 10, left: 18, right: 18, bottom: 18),
                   child: Column(
                     children: [
-                      ProfileScreenWidgets.buildProfilePicture(
-                          context, user.userImage ?? ''),
-                      ProfileScreenWidgets.buildWelcomeText(context, user.name),
+                      ZoomIn(
+                        child: ProfileScreenWidgets.buildProfilePicture(
+                            context, user.userImage ?? ''),
+                      ),
+                      FadeInLeft(child: ProfileScreenWidgets.buildWelcomeText(context, user.name)),
                       const SizedBox(height: 15),
                       ProfileScreenWidgets.buildName(user.name),
                       const SizedBox(height: 15),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/account/presentation/screens/customer_support_screen.dart';
@@ -45,6 +46,11 @@ class ScreenAccount extends StatelessWidget {
           }
         },
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
+          buildWhen: (previous, current) {
+            return current is UserProfileLoading ||
+                current is UserProfileError ||
+                current is UserProfileLoaded;
+          },
           builder: (context, state) {
             if (state is UserProfileLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -61,10 +67,14 @@ class ScreenAccount extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //! USER PROFILE IMAGE
-                      AccountScreenWidgets.buildUserProfileImage(imageUrl),
+                      ZoomIn(
+                          child: AccountScreenWidgets.buildUserProfileImage(
+                              imageUrl)),
                       //! GREETING TEXT
-                      AccountScreenWidgets.buildUserGreetingText(
-                          user, AccountScreenWidgets.getGreeting, context),
+                      FadeInLeft(
+                        child: AccountScreenWidgets.buildUserGreetingText(
+                            user, AccountScreenWidgets.getGreeting, context),
+                      ),
                       const SizedBox(height: 28),
                       //! ACCOUNT HEADING
                       AccountScreenWidgets.buildAccountHeading(context),

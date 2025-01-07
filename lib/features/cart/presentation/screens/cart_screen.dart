@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
@@ -54,8 +55,10 @@ class ScreenCart extends StatelessWidget {
               return Stack(
                 children: [
                   CartWidgets.buildCartItemsCard(cartItems),
-                  CartWidgets.buildBottomPricedetailAndCheckoutContainer(
-                      context, subtotal, discount, total)
+                  SlideInUp(
+                    child: AnimatedCartItemsPriceDetailsContainer(
+                        subtotal: subtotal, discount: discount, total: total),
+                  )
                 ],
               );
             }

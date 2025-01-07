@@ -115,8 +115,11 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
                         CustomerSupportScreenWidgets
                             .buildMessageInputFieldDivider(context),
                         //! MESSAGE INPUT FIELD
-                        CustomerSupportScreenWidgets.buildMessageInputField(
-                            context, myFocusNode, _messageController)
+                        FadeInUp(
+                          child: CustomerSupportScreenWidgets
+                              .buildMessageInputField(
+                                  context, myFocusNode, _messageController),
+                        )
                       ],
                     );
                   }

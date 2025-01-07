@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/app_colors.dart';
-import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
 import 'package:wulflex/data/models/order_model.dart';
 import 'package:wulflex/features/account/presentation/widgets/my_orders_screen_widgets.dart';
@@ -40,29 +38,15 @@ class ScreenMyOrders extends StatelessWidget {
                 if (orders.isNotEmpty) {
                   return Padding(
                     padding: const EdgeInsets.only(
-                        left: 18, right: 18, top: 18, bottom: 18),
+                        left: 6, right: 6, top: 18, bottom: 18),
                     child: Column(children: [
                       MyOrdersScreenWidgets.buildOrdersContainerWidget(
                           context, orders)
                     ]),
                   );
                 } else {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Lottie.asset('assets/lottie/no_orders_lottie.json',
-                            width: 190, repeat: false),
-                        Text(
-                          'Oops! No orders here yet. 🛒\nLet’s fix that—shop your favorites today!',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.emptyScreenText(context),
-                        ),
-                        const SizedBox(height: 90)
-                      ],
-                    ),
-                  );
+                  return MyOrdersScreenWidgets.buildNoOrdersPlacedDisplay(
+                      context);
                 }
               }
               return const Text('sorry');

@@ -51,8 +51,24 @@ class EditProfileScreenWidgets {
                   ),
                 ),
                 if (state is ImageUploadProgress)
-                  // show upload progress indicator
-                  showUploadProgressIndicator(state)
+                  showUploadProgressIndicator(state),
+                // Add edit icon overlay
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
               ],
             );
           },

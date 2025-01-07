@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,54 +68,56 @@ class ViewProductDetailsWidgets {
                         final isFavorite = state is FavoriteLoaded
                             ? product.checkIsFavorite(state.favorites)
                             : false;
-                        return LikeButton(
-                          isLiked: isFavorite,
-                          onTap: (isLiked) async {
-                            if (isLiked) {
-                              context.read<FavoriteBloc>().add(
-                                  RemoveFromFavoritesEvent(
-                                      product.id!, product.brandName));
-                            } else {
-                              context
-                                  .read<FavoriteBloc>()
-                                  .add(AddToFavoritesEvent(product));
-                            }
-                            return !isLiked;
-                          },
-                          likeBuilder: (isLiked) {
-                            return isLiked
-                                ? Icon(
-                                    Icons.favorite,
-                                    color: isLiked
-                                        ? Colors.pinkAccent
-                                        : isLightTheme(context)
-                                            ? AppColors.blackThemeColor
-                                            : AppColors.whiteThemeColor,
-                                    size: 28,
-                                  )
-                                : Icon(
-                                    Icons.favorite_border_rounded,
-                                    color: isLiked
-                                        ? Colors.pinkAccent
-                                        : isLightTheme(context)
-                                            ? AppColors.blackThemeColor
-                                            : AppColors.whiteThemeColor,
-                                    size: 28,
-                                  );
-                          },
-                          circleColor: CircleColor(
-                              start: isLightTheme(context)
-                                  ? AppColors.blackThemeColor
-                                  : AppColors.whiteThemeColor,
-                              end: isLightTheme(context)
-                                  ? AppColors.blackThemeColor
-                                  : AppColors.whiteThemeColor),
-                          bubblesColor: BubblesColor(
-                              dotPrimaryColor: AppColors.blueThemeColor,
-                              dotSecondaryColor: isLightTheme(context)
-                                  ? AppColors.blackThemeColor
-                                  : AppColors.whiteThemeColor),
-                          size: 28,
+                        return SlideInDown(
+                          child: LikeButton(
+                            isLiked: isFavorite,
+                            onTap: (isLiked) async {
+                              if (isLiked) {
+                                context.read<FavoriteBloc>().add(
+                                    RemoveFromFavoritesEvent(
+                                        product.id!, product.brandName));
+                              } else {
+                                context
+                                    .read<FavoriteBloc>()
+                                    .add(AddToFavoritesEvent(product));
+                              }
+                              return !isLiked;
+                            },
+                            likeBuilder: (isLiked) {
+                              return isLiked
+                                  ? Icon(
+                                      Icons.favorite,
+                                      color: isLiked
+                                          ? Colors.pinkAccent
+                                          : isLightTheme(context)
+                                              ? AppColors.blackThemeColor
+                                              : AppColors.whiteThemeColor,
+                                      size: 28,
+                                    )
+                                  : Icon(
+                                      Icons.favorite_border_rounded,
+                                      color: isLiked
+                                          ? Colors.pinkAccent
+                                          : isLightTheme(context)
+                                              ? AppColors.blackThemeColor
+                                              : AppColors.whiteThemeColor,
+                                      size: 28,
+                                    );
+                            },
+                            circleColor: CircleColor(
+                                start: isLightTheme(context)
+                                    ? AppColors.blackThemeColor
+                                    : AppColors.whiteThemeColor,
+                                end: isLightTheme(context)
+                                    ? AppColors.blackThemeColor
+                                    : AppColors.whiteThemeColor),
+                            bubblesColor: BubblesColor(
+                                dotPrimaryColor: AppColors.blueThemeColor,
+                                dotSecondaryColor: isLightTheme(context)
+                                    ? AppColors.blackThemeColor
+                                    : AppColors.whiteThemeColor),
+                            size: 28,
+                          ),
                         );
                       },
                     ),
@@ -206,7 +209,11 @@ class ViewProductDetailsWidgets {
         child: BlocBuilder<ReviewBloc, ReviewState>(
           builder: (context, state) {
             if (state is ReviewLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: CircularProgressIndicator()));
             } else if (state is ReviewError) {
               return const Center(child: Text('Review Error'));
             } else if (state is ReviewsLoaded) {
@@ -433,7 +440,8 @@ class ViewProductDetailsWidgets {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Icon(Icons.star_rounded, color: AppColors.greenThemeColor, size: 25),
+        const Icon(Icons.star_rounded,
+            color: AppColors.greenThemeColor, size: 25),
         const SizedBox(width: 3),
         Text(leadingText,
             style: AppTextStyles.linearProgressIndicatorLeadingText),

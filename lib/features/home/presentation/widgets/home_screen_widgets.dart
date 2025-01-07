@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -336,7 +334,7 @@ class _EnhancedCarouselState extends State<EnhancedCarousel> {
         final nextPage = (_currentPage + 1) % 2;
         _pageController.animateToPage(
           nextPage.toInt(),
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 400),
           curve: Curves.easeInOut,
         );
       }
@@ -368,7 +366,7 @@ class _EnhancedCarouselState extends State<EnhancedCarousel> {
         return Transform.scale(
           scale: value,
           child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 150),
             opacity: index == _currentPage.round() ? 1.0 : opacity,
             child: banner,
           ),

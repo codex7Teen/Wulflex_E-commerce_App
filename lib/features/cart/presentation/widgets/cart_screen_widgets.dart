@@ -45,16 +45,133 @@ class CartWidgets {
     );
   }
 
-  static Widget buildBottomPricedetailAndCheckoutContainer(
-      BuildContext context, double subtotal, double discount, double total) {
+  static Widget buildCartEmptyDisplay(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          isLightTheme(context)
+              ? Lottie.asset('assets/lottie/cart_empty_lottie_black.json',
+                  width: 190, repeat: false)
+              : Lottie.asset('assets/lottie/cart_empty_lottie_white.json',
+                  width: 190, repeat: false),
+          Text(
+            'Your cart is empty.\nStart adding your items!',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.emptyScreenText(context),
+          ),
+          const SizedBox(height: 90)
+        ],
+      ),
+    );
+  }
+}
+
+class AnimatedCartItemsPriceDetailsContainer extends StatefulWidget {
+  final double subtotal;
+  final double discount;
+  final double total;
+
+  const AnimatedCartItemsPriceDetailsContainer({
+    super.key,
+    required this.subtotal,
+    required this.discount,
+    required this.total,
+  });
+
+  @override
+  State<AnimatedCartItemsPriceDetailsContainer> createState() =>
+      _AnimatedCartItemsPriceDetailsContainerState();
+}
+
+class _AnimatedCartItemsPriceDetailsContainerState
+    extends State<AnimatedCartItemsPriceDetailsContainer>
+    with TickerProviderStateMixin {
+  late AnimationController _priceController;
+  late AnimationController _scaleController;
+
+  late Animation<double> _totalAnimation;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> opacityAnimation;
+
+  final NumberFormat _numberFormat = NumberFormat('#,##,###.##');
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Setup price animation controller
+    _priceController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    );
+
+    // Setup scale animation controller
+    _scaleController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _totalAnimation = Tween<double>(
+      begin: 0,
+      end: widget.total,
+    ).animate(CurvedAnimation(
+      parent: _priceController,
+      curve: Curves.easeOutCubic,
+    ));
+
+    // Scale animation for the "bang" effect
+    _scaleAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 1.0, end: 1.15),
+        weight: 30.0,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 1.15, end: 1.0),
+        weight: 70.0,
+      ),
+    ]).animate(CurvedAnimation(
+      parent: _scaleController,
+      curve: Curves.easeInOut,
+    ));
+
+    // Opacity animation
+    opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _priceController,
+      curve: const Interval(0.6, 1.0, curve: Curves.easeIn),
+    ));
+
+    // Start animations
+    Future.delayed(const Duration(milliseconds: 300), () async {
+      await _priceController.forward();
+      _scaleController.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _priceController.dispose();
+    _scaleController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 239,
         decoration: const BoxDecoration(
-            color: AppColors.lightGreyThemeColor,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+          color: AppColors.lightGreyThemeColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
           child: Column(
@@ -78,54 +195,95 @@ class CartWidgets {
                 ],
               ),
               const SizedBox(height: 5),
-              Row(
-                children: [
-                  Text(
-                    'Subtotal',
-                    style: AppTextStyles.cartSubtotalAndDiscountText,
-                  ),
-                  const Spacer(),
-                  Text(
-                    '₹ ${NumberFormat('#,##,###.##').format(subtotal)}',
-                    style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
-                  )
-                ],
+              // Subtotal Row
+              AnimatedBuilder(
+                animation:
+                    Listenable.merge([_priceController, _scaleController]),
+                builder: (context, child) {
+                  return Row(
+                    children: [
+                      Text(
+                        'Subtotal',
+                        style: AppTextStyles.cartSubtotalAndDiscountText,
+                      ),
+                      const Spacer(),
+                      Transform.scale(
+                        scale: _scaleAnimation.value,
+                        child: Text(
+                          '₹ ${_numberFormat.format(widget.subtotal)}',
+                          style:
+                              AppTextStyles.cartSubtotalAndDiscountAmountStyle,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 5),
-              Row(
-                children: [
-                  Text(
-                    'Discount',
-                    style: AppTextStyles.cartSubtotalAndDiscountText,
-                  ),
-                  const Spacer(),
-                  Text(
-                    '₹ –${NumberFormat('#,##,###.##').format(discount)}',
-                    style: AppTextStyles.cartSubtotalAndDiscountAmountStyle,
-                  )
-                ],
+              // Discount Row
+              AnimatedBuilder(
+                animation:
+                    Listenable.merge([_priceController, _scaleController]),
+                builder: (context, child) {
+                  return Row(
+                    children: [
+                      Text(
+                        'Discount',
+                        style: AppTextStyles.cartSubtotalAndDiscountText,
+                      ),
+                      const Spacer(),
+                      Transform.scale(
+                        scale: _scaleAnimation.value,
+                        child: Text(
+                          '₹ –${_numberFormat.format(widget.discount)}',
+                          style:
+                              AppTextStyles.cartSubtotalAndDiscountAmountStyle,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 5),
-              const Divider(color: AppColors.hardLightGeryThemeColor, thickness: 0.3),
+              const Divider(
+                color: AppColors.hardLightGeryThemeColor,
+                thickness: 0.3,
+              ),
               const SizedBox(height: 5),
-              Row(
-                children: [
-                  Text(
-                    'Total Amount',
-                    style: AppTextStyles.cartTotalText,
-                  ),
-                  const Spacer(),
-                  Text(
-                    '₹ ${NumberFormat('#,##,###.##').format(total)}',
-                    style: AppTextStyles.cartTotalAmountText,
-                  )
-                ],
+              // Total Row
+              AnimatedBuilder(
+                animation:
+                    Listenable.merge([_priceController, _scaleController]),
+                builder: (context, child) {
+                  return Row(
+                    children: [
+                      Text(
+                        'Total Amount',
+                        style: AppTextStyles.cartTotalText,
+                      ),
+                      const Spacer(),
+                      Transform.scale(
+                        scale: _scaleAnimation.value,
+                        child: Text(
+                          '₹ ${_numberFormat.format(_totalAnimation.value)}',
+                          style: AppTextStyles.cartTotalAmountText.copyWith(
+                            color: _priceController.value > 0.8
+                                ? AppColors.blueThemeColor
+                                : AppColors.blackThemeColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 10),
               GreenButtonWidget(
                 onTap: () {
                   NavigationHelper.navigateToWithoutReplacement(
-                      context, const ScreenOrderSummary());
+                    context,
+                    const ScreenOrderSummary(),
+                  );
                 },
                 addIcon: true,
                 icon: Icons.shopping_cart_checkout_rounded,
@@ -136,28 +294,6 @@ class CartWidgets {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  static Widget buildCartEmptyDisplay(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          isLightTheme(context)
-              ? Lottie.asset('assets/lottie/cart_empty_lottie_black.json',
-                  width: 190, repeat: false)
-              : Lottie.asset('assets/lottie/cart_empty_lottie_white.json',
-                  width: 190, repeat: false),
-          Text(
-            'Your cart is empty.\nStart adding your items!',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.emptyScreenText(context),
-          ),
-          const SizedBox(height: 90)
-        ],
       ),
     );
   }

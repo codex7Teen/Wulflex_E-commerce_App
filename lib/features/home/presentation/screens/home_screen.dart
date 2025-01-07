@@ -5,10 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
-import 'package:wulflex/features/home/presentation/screens/sale_screen.dart';
 import 'package:wulflex/features/home/presentation/widgets/home_screen_widgets.dart';
 import 'package:wulflex/core/config/app_colors.dart';
-import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
@@ -18,10 +16,6 @@ class ScreenHome extends StatefulWidget {
 }
 
 class _ScreenHomeState extends State<ScreenHome> {
-  final CarouselSliderController _carouselController =
-      CarouselSliderController();
-  int _currentSlide = 0;
-
   @override
   void initState() {
     super.initState();

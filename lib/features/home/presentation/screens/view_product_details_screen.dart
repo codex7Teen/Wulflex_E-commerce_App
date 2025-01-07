@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/data/models/enhanced_review_model.dart';
@@ -80,8 +81,10 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
               child: Column(
                 children: [
                   //! ITEM IMAGE WITH SLIDER (PAGEVIEW)
-                  ViewProductDetailsWidgets.buildItemImageSlider(
-                      context, pageController, widget.productModel),
+                  ZoomIn(
+                    child: ViewProductDetailsWidgets.buildItemImageSlider(
+                        context, pageController, widget.productModel),
+                  ),
                   const SizedBox(height: 4),
                   ViewProductDetailsWidgets.buildPageIndicator(
                       pageController, context, widget.productModel),
@@ -102,8 +105,11 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                         children: [
                           const SizedBox(height: 10),
                           //! PRODUCT NAME HEADING
-                          ViewProductDetailsWidgets.buildProductHeadingText(
-                              context, widget.productModel),
+                          FadeInLeft(
+                            child: ViewProductDetailsWidgets
+                                .buildProductHeadingText(
+                                    context, widget.productModel),
+                          ),
                           const SizedBox(height: 14),
                           //! RATINGS STARS
                           ViewProductDetailsWidgets.buildRatingsContainer(),
@@ -168,7 +174,8 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                           BlocBuilder<ReviewBloc, ReviewState>(
                               builder: (context, state) {
                             if (state is ReviewLoading) {
-                              return const Center(child: CircularProgressIndicator());
+                              return const Center(
+                                  child: CircularProgressIndicator());
                             } else if (state is ReviewError) {
                               return const Center(
                                   child: Text('Failed to load reviews.'));
@@ -267,7 +274,8 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                                     .buildEmptyReviewsDisplay(context);
                               }
                             }
-                            return const Center(child: Text("Something went wrong"));
+                            return const Center(
+                                child: Text("Something went wrong"));
                           }),
                           const SizedBox(height: 20),
                         ],
