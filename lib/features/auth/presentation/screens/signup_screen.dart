@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/data/services/notification_services.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/data/models/user_model.dart';
@@ -60,6 +61,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         context
                             .read<UserProfileBloc>()
                             .add(CreateUserProfileEvent(user));
+                        // Upload the FCM token to firebase firestore
+                        NotificationServices().uploadFcmToken();
                         // Show successnacbar
                         CustomSnackbar.showCustomSnackBar(
                             context, "Sign-Up success...  🎉🎉🎉");

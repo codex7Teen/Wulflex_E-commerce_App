@@ -18,41 +18,41 @@ class ThemeToggleSwitchWidget extends StatelessWidget {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: 55,
-        height: 28,
+        width: 60, // Adjusted width for proper design
+        height: 30, // Adjusted height for proportions
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
-          color: isLightTheme ? AppColors.lightGreyThemeColor : Colors.white,
+          color: isLightTheme
+              ? AppColors.lightGreyThemeColor // Background for light mode
+              : AppColors.greenThemeColor, // Background for dark mode
         ),
         child: Stack(
           children: [
-            AnimatedPositioned( // Replace Positioned with AnimatedPositioned
+            AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut, // Add smooth easing curve
-              left: isLightTheme ? 5.0 : 30.0,
-              top: 4.0, // Center vertically
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  // Add fade transition for icon change
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
-                },
-                child: isLightTheme
-                    ? const Icon(
-                        Icons.brightness_medium_outlined,
-                        key: ValueKey('sun'),
-                        color: AppColors.blackThemeColor,
-                        size: 20,
-                      )
-                    : const Icon(
-                        Icons.dark_mode_sharp,
-                        key: ValueKey('moon'),
-                        color: AppColors.blackThemeColor,
-                        size: 20,
-                      ),
+              curve: Curves.easeInOut,
+              left: isLightTheme ? 2.0 : 32.0, // Adjusted positions for thumb
+              top: 2.0,
+              child: Container(
+                width: 26, // Thumb size
+                height: 26,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isLightTheme
+                      ? AppColors.blackThemeColor // Thumb color for light mode
+                      : AppColors
+                          .lightGreyThemeColor, // Thumb color for dark mode
+                ),
+                child: Icon(
+                  isLightTheme
+                      ? Icons
+                          .brightness_medium_outlined // Sun icon for light mode
+                      : Icons.dark_mode_sharp, // Moon icon for dark mode
+                  color: isLightTheme
+                      ? AppColors.lightGreyThemeColor
+                      : AppColors.blackThemeColor,
+                  size: 16,
+                ),
               ),
             ),
           ],

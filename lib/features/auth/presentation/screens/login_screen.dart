@@ -1,6 +1,7 @@
 // screen_login.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/data/services/notification_services.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/data/models/user_model.dart';
@@ -54,6 +55,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
                               name: state.name,
                               email: state.emailId)));
                     }
+                    // Upload the FCM token to firebase firestore
+                    NotificationServices().uploadFcmToken();
                     // Show success snacbar
                     CustomSnackbar.showCustomSnackBar(
                         context, "Login success... 🎉🎉🎉");

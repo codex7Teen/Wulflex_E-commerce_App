@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:app_settings/app_settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,29 +7,51 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class NotificationServices {
-  Future<void> requestPermission() async {
-    // Request permission to show notification
-    PermissionStatus status = await Permission.notification.request();
-    if (status != PermissionStatus.granted) {
-      throw Exception('Permission not granted');
-    }
-  }
-
   final _firebaseFirestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   final _firebaseMessaging = FirebaseMessaging.instance;
+  bool _hasPermission = false;
+
+  // Check if we have notification permission
+  bool get hasPermission => _hasPermission;
+
+  Future<bool> requestPermission() async {
+    try {
+      // Request permission to show notification
+      PermissionStatus status = await Permission.notification.request();
+      _hasPermission = status == PermissionStatus.granted;
+      return _hasPermission;
+    } catch (error) {
+      log('Permission request error: ${error.toString()}');
+      _hasPermission = false;
+      return false;
+    }
+  }
+
+    // Check current permission status
+  Future<bool> checkPermissionStatus() async {
+    final settings = await _firebaseMessaging.getNotificationSettings();
+    return settings.authorizationStatus == AuthorizationStatus.authorized;
+  }
+
+  // Open system settings instead of requesting permission again
+  Future<void> openSettings() async {
+    await AppSettings.openAppSettings();
+  }
 
   // Upload fcm token to firebase
   Future<void> uploadFcmToken() async {
     try {
       final userID = _auth.currentUser!.uid;
       await _firebaseMessaging.getToken().then((token) async {
-        log('Get Token :: $token');
+        if (token == null) return;
+        log('GET TOKEN :: $token');
         await _firebaseFirestore
             .collection('users')
             .doc(userID)
             .update({'notification_token': token});
       });
+
       _firebaseMessaging.onTokenRefresh.listen((token) async {
         log('Get Token :: $token');
         await _firebaseFirestore
@@ -46,35 +68,47 @@ class NotificationServices {
       FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
-    // Initialize native android notification
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    if (!_hasPermission) return; // Don't initialize if no permission
 
-    const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
+    try {
+      const AndroidInitializationSettings initializationSettingsAndroid =
+          AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+      const InitializationSettings initializationSettings =
+          InitializationSettings(android: initializationSettingsAndroid);
+
+      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    } catch (error) {
+      log('Notification init error: ${error.toString()}');
+    }
   }
 
-  // Show notification
-  showNotification(RemoteMessage message) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel_id', 'Channel Name',
-            channelDescription: 'Channel Description',
-            importance: Importance.high,
-            priority: Priority.high,
-            ticker: 'ticker');
+  Future<void> showNotification(RemoteMessage message) async {
+    if (!_hasPermission) return; // Don't show notification if no permission
 
-    int notificationID = 1;
+    try {
+      const AndroidNotificationDetails androidNotificationDetails =
+          AndroidNotificationDetails(
+        'channel_id',
+        'Channel Name',
+        channelDescription: 'Channel Description',
+        importance: Importance.high,
+        priority: Priority.high,
+        ticker: 'ticker',
+      );
 
-    const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
+      const NotificationDetails notificationDetails =
+          NotificationDetails(android: androidNotificationDetails);
 
-    await flutterLocalNotificationsPlugin.show(
-        notificationID,
-        message.notification!.title,
-        message.notification!.body,
+      await flutterLocalNotificationsPlugin.show(
+        1, // notification ID
+        message.notification?.title,
+        message.notification?.body,
         notificationDetails,
-        payload: 'Not present');
+        payload: 'Not present',
+      );
+    } catch (error) {
+      log('Show notification error: ${error.toString()}');
+    }
   }
 }

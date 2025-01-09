@@ -8,12 +8,14 @@ import 'package:wulflex/data/services/cart_services.dart';
 import 'package:wulflex/data/services/category_services.dart';
 import 'package:wulflex/data/services/chat_services.dart';
 import 'package:wulflex/data/services/favorite_services.dart';
+import 'package:wulflex/data/services/notification_services.dart';
 import 'package:wulflex/data/services/order_services.dart';
 import 'package:wulflex/data/services/product_services.dart';
 import 'package:wulflex/data/services/review_services.dart';
 import 'package:wulflex/data/services/user_profile_services.dart';
 import 'package:wulflex/features/account/bloc/chat_bloc/chat_bloc.dart';
 import 'package:wulflex/features/account/bloc/delete_account_bloc/delete_account_bloc.dart';
+import 'package:wulflex/features/account/bloc/notification_bloc/notification_bloc_bloc.dart';
 import 'package:wulflex/features/account/bloc/relogin_bloc/relogin_bloc.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
@@ -131,5 +133,8 @@ class AppBlocProviders {
         ChatServices(),
       ),
     ),
+    BlocProvider<NotificationBlocBloc>(
+      create: (context) => NotificationBlocBloc(NotificationServices()),
+    )
   ];
 }

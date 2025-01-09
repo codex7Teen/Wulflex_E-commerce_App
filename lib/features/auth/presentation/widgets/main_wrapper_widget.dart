@@ -25,8 +25,6 @@ class MainWrapperWidget extends StatelessWidget {
               // Show splash and navigate to intro screen
               return const ScreenSplash1(screen: ScreenMainIntro());
             } else {
-              // Upload the FCM token to firebase firestore
-              NotificationServices().uploadFcmToken();
               return const ScreenSplash1(screen: MainScreen());
             }
           }

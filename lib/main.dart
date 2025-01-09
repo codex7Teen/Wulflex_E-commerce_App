@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/core/config/app_constants.dart';
 import 'package:wulflex/data/services/notification_services.dart';
@@ -11,14 +12,21 @@ void main() async {
   // Ensures the bindings with native platform has done properly
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Lock orientation to portrait only
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   // Initialize firebase
   if (kIsWeb) {
     await Firebase.initializeApp(options: FirebaseConfig.firebaseOptions);
   } else {
     await Firebase.initializeApp();
   }
+
+  // Request notification permission
   await NotificationServices().requestPermission();
   await NotificationServices().init();
+
   runApp(const MyApp());
 }
 
