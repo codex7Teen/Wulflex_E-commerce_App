@@ -10,6 +10,7 @@ import 'package:wulflex/data/services/chat_services.dart';
 import 'package:wulflex/data/services/favorite_services.dart';
 import 'package:wulflex/data/services/notification_services.dart';
 import 'package:wulflex/data/services/order_services.dart';
+import 'package:wulflex/data/services/place_api_services.dart';
 import 'package:wulflex/data/services/product_services.dart';
 import 'package:wulflex/data/services/review_services.dart';
 import 'package:wulflex/data/services/user_profile_services.dart';
@@ -24,6 +25,7 @@ import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/cart/bloc/order_bloc/order_bloc.dart';
 import 'package:wulflex/features/cart/bloc/payment_bloc/payment_bloc.dart';
+import 'package:wulflex/features/cart/bloc/place_suggestion_bloc/place_suggestion_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/features/home/bloc/category_bloc/category_bloc.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
@@ -135,6 +137,9 @@ class AppBlocProviders {
     ),
     BlocProvider<NotificationBlocBloc>(
       create: (context) => NotificationBlocBloc(NotificationServices()),
+    ),
+     BlocProvider<PlaceSuggestionBloc>(
+      create: (context) => PlaceSuggestionBloc(PlaceApiServices()),
     )
   ];
 }

@@ -100,9 +100,10 @@ class AddAddressScreenWidgets {
     );
   }
 
-  static Widget buildNameTextfield(
-      BuildContext context, TextEditingController nameController) {
+  static Widget buildNameTextfield(BuildContext context,
+      TextEditingController nameController, FocusNode focusNode) {
     return CustomAddAddressFieldWidget(
+        focusNode: focusNode,
         hintText: 'Full Name (Required)*',
         textInputType: TextInputType.text,
         maxLength: 16,
@@ -115,9 +116,10 @@ class AddAddressScreenWidgets {
         controller: nameController);
   }
 
-  static Widget buildPhoneNumberTextfield(
-      BuildContext context, TextEditingController phoneNumberController) {
+  static Widget buildPhoneNumberTextfield(BuildContext context,
+      TextEditingController phoneNumberController, FocusNode focusNode) {
     return CustomAddAddressFieldWidget(
+        focusNode: focusNode,
         hintText: 'Phone number (Required)*',
         textInputType: TextInputType.number,
         maxLength: 12,
@@ -130,9 +132,10 @@ class AddAddressScreenWidgets {
         controller: phoneNumberController);
   }
 
-  static Widget buildPincodeTextfield(
-      BuildContext context, TextEditingController pincodeController) {
+  static Widget buildPincodeTextfield(BuildContext context,
+      TextEditingController pincodeController, FocusNode focusNode) {
     return CustomAddAddressFieldWidget(
+        focusNode: focusNode,
         textFieldWidth: MediaQuery.sizeOf(context).width * 0.5,
         hintText: 'Pincode (Required)*',
         textInputType: TextInputType.number,
@@ -149,11 +152,14 @@ class AddAddressScreenWidgets {
   static Widget buildStateAndCityTextfield(
       BuildContext context,
       TextEditingController stateNameController,
-      TextEditingController cityNameController) {
+      TextEditingController cityNameController,
+      FocusNode cityFocusNode,
+      FocusNode stateFocuNode) {
     return Row(
       children: [
         Expanded(
           child: CustomAddAddressFieldWidget(
+              focusNode: stateFocuNode,
               textFieldWidth: MediaQuery.sizeOf(context).width * 0.5,
               hintText: 'State (Required)*',
               textInputType: TextInputType.text,
@@ -169,6 +175,7 @@ class AddAddressScreenWidgets {
         const SizedBox(width: 15),
         Expanded(
           child: CustomAddAddressFieldWidget(
+              focusNode: cityFocusNode,
               textFieldWidth: MediaQuery.sizeOf(context).width * 0.5,
               hintText: 'City (Required)*',
               textInputType: TextInputType.text,
@@ -185,9 +192,10 @@ class AddAddressScreenWidgets {
     );
   }
 
-  static Widget buildHouseNameTextfield(
-      BuildContext context, TextEditingController houseNameController) {
+  static Widget buildHouseNameTextfield(BuildContext context,
+      TextEditingController houseNameController, FocusNode focusNode) {
     return CustomAddAddressFieldWidget(
+        focusNode: focusNode,
         hintText: 'House No, Building name (Required)*',
         textInputType: TextInputType.text,
         maxLength: 30,
@@ -200,9 +208,12 @@ class AddAddressScreenWidgets {
         controller: houseNameController);
   }
 
-  static Widget buildAreaNameTextfield(
-      BuildContext context, TextEditingController areaNameController) {
+  static Widget buildAreaNameTextfield(BuildContext context,
+      TextEditingController areaNameController, FocusNode focusNode,
+      {void Function(String)? onChanged}) {
     return CustomAddAddressFieldWidget(
+        focusNode: focusNode,
+        onChanged: onChanged,
         hintText: 'Road name, Area, Colony (Required)*',
         textInputType: TextInputType.text,
         maxLength: 30,
