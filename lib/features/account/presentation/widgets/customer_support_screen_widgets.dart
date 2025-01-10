@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/bloc/chat_bloc/chat_bloc.dart';
@@ -113,6 +114,89 @@ class CustomerSupportScreenWidgets {
           ],
         ),
       ),
+    );
+  }
+
+  static Widget buildCustomerSupportScreenShimmer(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: Shimmer.fromColors(
+            baseColor:
+                isLightTheme(context) ? Colors.grey[300]! : Colors.grey[800]!,
+            highlightColor:
+                isLightTheme(context) ? Colors.grey[100]! : Colors.grey[700]!,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: 10, // Show 6 shimmer message bubbles
+              itemBuilder: (context, index) {
+                final isLeft = index % 2 == 0; // Alternate message alignment
+
+                return Align(
+                  alignment:
+                      isLeft ? Alignment.centerLeft : Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (isLeft) ...[
+                          // Avatar for left messages
+                          Container(
+                            width: 32,
+                            height: 32,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                        // Message bubble
+                        Container(
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.7,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Message content
+                              Container(
+                                width: index % 3 == 0
+                                    ? 150
+                                    : index % 3 == 1
+                                        ? 200
+                                        : 100,
+                                height: 16,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(height: 4),
+                              // Timestamp
+                              Container(
+                                width: 50,
+                                height: 10,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

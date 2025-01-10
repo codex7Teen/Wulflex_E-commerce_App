@@ -27,16 +27,14 @@ class ScreenOrderSummary extends StatelessWidget {
       body: BlocBuilder<AddressBloc, AddressState>(
         builder: (context, state) {
           if (state is AddressLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const OrderSummaryShimmer();
           } else if (state is AddressLoaded) {
             final selectedAddress = state.selectedAddress;
             //! cart bloc builder
             return BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 if (state is CartLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const OrderSummaryShimmer();
                 } else if (state is CartError) {
                   return const Center(child: Text('Failed to load data'));
                 } else if (state is CartLoaded) {
@@ -61,7 +59,7 @@ class ScreenOrderSummary extends StatelessWidget {
                   return BlocBuilder<UserProfileBloc, UserProfileState>(
                     builder: (context, state) {
                       if (state is UserProfileLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const OrderSummaryShimmer();
                       } else if (state is UserProfileError) {
                         // display error
                         const Center(child: Text('User Profile error'));

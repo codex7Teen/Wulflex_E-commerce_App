@@ -54,7 +54,9 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (context, state) {
             if (state is UserProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
+              //! Show shimmer
+              return CustomerSupportScreenWidgets
+                  .buildCustomerSupportScreenShimmer(context);
             } else if (state is UserProfileError) {
               return const Center(child: Text('Fetch user details error'));
             } else if (state is UserProfileLoaded) {
@@ -76,8 +78,9 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
                             }
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                              //! Show shimmer
+                              return CustomerSupportScreenWidgets
+                                  .buildCustomerSupportScreenShimmer(context);
                             }
                             if (snapshot.hasData &&
                                 snapshot.data!.docs.isEmpty) {

@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/features/account/presentation/widgets/profile_screen_widgets.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -28,7 +29,7 @@ class ScreenProfile extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is UserProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return ProfileScreenWidgets.buildProfileScreenShimmer(context);
             } else if (state is UserProfileError) {
               // display error
             } else if (state is UserProfileLoaded) {
@@ -43,7 +44,9 @@ class ScreenProfile extends StatelessWidget {
                         child: ProfileScreenWidgets.buildProfilePicture(
                             context, user.userImage ?? ''),
                       ),
-                      FadeInLeft(child: ProfileScreenWidgets.buildWelcomeText(context, user.name)),
+                      FadeInLeft(
+                          child: ProfileScreenWidgets.buildWelcomeText(
+                              context, user.name)),
                       const SizedBox(height: 15),
                       ProfileScreenWidgets.buildName(user.name),
                       const SizedBox(height: 15),

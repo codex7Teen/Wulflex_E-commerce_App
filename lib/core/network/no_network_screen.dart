@@ -13,6 +13,7 @@ class _NoNetworkScreenState extends State<NoNetworkScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -31,6 +32,18 @@ class _NoNetworkScreenState extends State<NoNetworkScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _onRetry() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await Future.delayed(const Duration(seconds: 8));
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -84,31 +97,54 @@ class _NoNetworkScreenState extends State<NoNetworkScreen>
               ),
               const SizedBox(height: 48),
 
-              // Retry button
-              ElevatedButton(
-                onPressed: () {
-                  // Add retry logic here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.greenThemeColor,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  'Try Again',
-                  style: AppTextStyles.allMiniCircledCategoriesText(context)
-                      .copyWith(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+              // Retry button or loading indicator
+              _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation(AppColors.greenThemeColor),
+                      ),
+                    )
+                  : GestureDetector(
+                      onTapDown: (_) {
+                        setState(() {});
+                      },
+                      onTapUp: (_) {
+                        _onRetry();
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        decoration: BoxDecoration(
+                          color: AppColors.greenThemeColor,
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.greenThemeColor
+                                  .withValues(alpha: 0.4),
+                              offset: const Offset(0, 6),
+                              blurRadius: 10,
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 13,
+                        ),
+                        child: Text(
+                          'Try Again',
+                          style: AppTextStyles.allMiniCircledCategoriesText(
+                                  context)
+                              .copyWith(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),

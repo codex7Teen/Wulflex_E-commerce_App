@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:wulflex/features/account/presentation/screens/edit_profile_screen.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/presentation/screens/relogin_screen.dart';
@@ -7,6 +8,7 @@ import 'package:wulflex/shared/widgets/custom_black_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_green_button_widget.dart';
 import 'package:wulflex/shared/widgets/custom_grey_container_widget.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class ProfileScreenWidgets {
   static Widget buildProfilePicture(BuildContext context, String imageUrl) {
@@ -120,6 +122,78 @@ class ProfileScreenWidgets {
           context, const ScreenRelogin()),
       child: const CustomBlackButtonWidget(
           buttonText: "Delete Account", borderRadius: 25),
+    );
+  }
+
+  static Widget buildProfileScreenShimmer(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 18, right: 18, bottom: 18),
+      child: Shimmer.fromColors(
+        baseColor:
+            isLightTheme(context) ? Colors.grey[300]! : Colors.grey[800]!,
+        highlightColor:
+            isLightTheme(context) ? Colors.grey[100]! : Colors.grey[700]!,
+        child: Column(
+          children: [
+            // Profile Picture Shimmer
+            Center(
+              child: Container(
+                height: 120,
+                width: 120,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Welcome Text Shimmer
+            Container(
+              width: 200,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            const SizedBox(height: 15),
+
+            // Info Containers Shimmer
+            for (int i = 0; i < 4; i++) ...[
+              Container(
+                width: double.infinity,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              const SizedBox(height: 15),
+            ],
+
+            // Button Shimmers
+            const SizedBox(height: 13),
+            Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

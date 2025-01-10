@@ -20,11 +20,12 @@ class ScreenPayment extends StatefulWidget {
   final List<ProductModel> cartProducts;
   final AddressModel selectedAddress;
   final double totalAmount;
-  const ScreenPayment(
-      {super.key,
-      required this.totalAmount,
-      required this.cartProducts,
-      required this.selectedAddress});
+  const ScreenPayment({
+    super.key,
+    required this.totalAmount,
+    required this.cartProducts,
+    required this.selectedAddress,
+  });
 
   @override
   ScreenPaymentState createState() => ScreenPaymentState();
@@ -32,6 +33,7 @@ class ScreenPayment extends StatefulWidget {
 
 class ScreenPaymentState extends State<ScreenPayment> {
   late Razorpay _razorpay;
+  bool _isInitialLoading = true;
 
   @override
   void initState() {
@@ -40,6 +42,16 @@ class ScreenPaymentState extends State<ScreenPayment> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
+    // Add initial loading delay
+    _initialLoad();
+  }
+
+  Future<void> _initialLoad() async {
+    await Future.delayed(const Duration(seconds: 2));
+    if (mounted) {
+      setState(() => _isInitialLoading = false);
+    }
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
@@ -112,52 +124,56 @@ class ScreenPaymentState extends State<ScreenPayment> {
           ? AppColors.whiteThemeColor
           : AppColors.blackThemeColor,
       appBar: customAppbarWithBackbutton(context, "Payment"),
-      body: BlocBuilder<PaymentBloc, PaymentState>(
-        builder: (context, state) {
-          return Padding(
-            padding:
-                const EdgeInsets.only(top: 18, left: 18, right: 18, bottom: 24),
-            child: Column(
-              children: [
-                PaymentScreenWidgets.buildTotalamountContainer(
-                    context, widget.totalAmount),
-                const SizedBox(height: 18),
-                PaymentScreenWidgets.buildPaymentOptionsContainer(
-                    context, state),
-                const Spacer(),
-                GreenButtonWidget(
-                  onTap: () {
-                    if (state.isCashOnDeliverySelected == false &&
-                        state.isRazorpaySelected == false) {
-                      CustomSnackbar.showCustomSnackBar(
-                          context, 'Please select a payment method!',
-                          icon: Icons.error);
-                    } else if (state.isRazorpaySelected) {
-                      // Call Razorpay payment method
-                      _startRazorpayPayment();
-                    } else {
-                      // Clear all cart items
-                      context.read<CartBloc>().add(ClearAllCartItemsEvent());
-                      // Create order
-                      context.read<OrderBloc>().add(CreateOrderEvent(
-                          products: widget.cartProducts,
-                          address: widget.selectedAddress,
-                          paymentMode: 'Cash on delivery'));
-                      NavigationHelper.navigateToWithReplacement(
-                          context, const ScreenOrderSuccess());
-                    }
-                  },
-                  buttonText: 'Place Order',
-                  borderRadius: 25,
-                  width: 1,
-                  addIcon: true,
-                  icon: Icons.check_circle_outline_rounded,
-                )
-              ],
+      body: _isInitialLoading
+          ? const PaymentScreenShimmer()
+          : BlocBuilder<PaymentBloc, PaymentState>(
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: 18, left: 18, right: 18, bottom: 24),
+                  child: Column(
+                    children: [
+                      PaymentScreenWidgets.buildTotalamountContainer(
+                          context, widget.totalAmount),
+                      const SizedBox(height: 18),
+                      PaymentScreenWidgets.buildPaymentOptionsContainer(
+                          context, state),
+                      const Spacer(),
+                      GreenButtonWidget(
+                        onTap: () {
+                          if (state.isCashOnDeliverySelected == false &&
+                              state.isRazorpaySelected == false) {
+                            CustomSnackbar.showCustomSnackBar(
+                                context, 'Please select a payment method!',
+                                icon: Icons.error);
+                          } else if (state.isRazorpaySelected) {
+                            // Call Razorpay payment method
+                            _startRazorpayPayment();
+                          } else {
+                            // Clear all cart items
+                            context
+                                .read<CartBloc>()
+                                .add(ClearAllCartItemsEvent());
+                            // Create order
+                            context.read<OrderBloc>().add(CreateOrderEvent(
+                                products: widget.cartProducts,
+                                address: widget.selectedAddress,
+                                paymentMode: 'Cash on delivery'));
+                            NavigationHelper.navigateToWithReplacement(
+                                context, const ScreenOrderSuccess());
+                          }
+                        },
+                        buttonText: 'Place Order',
+                        borderRadius: 25,
+                        width: 1,
+                        addIcon: true,
+                        icon: Icons.check_circle_outline_rounded,
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

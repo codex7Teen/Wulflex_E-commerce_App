@@ -8,6 +8,7 @@ import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/order_model.dart';
 import 'package:wulflex/features/account/presentation/screens/order_details_screen.dart';
 import 'package:wulflex/shared/widgets/navigation_helper_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class MyOrdersScreenWidgets {
   static Widget buildOrdersContainerWidget(
@@ -193,7 +194,9 @@ class MyOrdersScreenWidgets {
                   margin: const EdgeInsets.symmetric(horizontal: 12),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isLightTheme(context)
+                        ? AppColors.whiteThemeColor
+                        : AppColors.blackThemeColor,
                     borderRadius: BorderRadius.circular(18),
                     boxShadow: [
                       BoxShadow(
@@ -205,8 +208,12 @@ class MyOrdersScreenWidgets {
                     ],
                   ),
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
+                    baseColor: isLightTheme(context)
+                        ? Colors.grey[300]!
+                        : Colors.grey[800]!,
+                    highlightColor: isLightTheme(context)
+                        ? Colors.grey[100]!
+                        : Colors.grey[700]!,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -215,7 +222,7 @@ class MyOrdersScreenWidgets {
                           width: 200,
                           height: 13,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.whiteThemeColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -228,7 +235,7 @@ class MyOrdersScreenWidgets {
                               child: Container(
                                 height: 84,
                                 width: MediaQuery.of(context).size.width * 0.21,
-                                color: Colors.white,
+                                color: AppColors.whiteThemeColor,
                               ),
                             ),
                             const SizedBox(width: 14),
@@ -243,7 +250,7 @@ class MyOrdersScreenWidgets {
                                     width: 140,
                                     height: 14,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: AppColors.whiteThemeColor,
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                   ),
@@ -253,7 +260,7 @@ class MyOrdersScreenWidgets {
                                     width: 180,
                                     height: 14,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: AppColors.whiteThemeColor,
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                   ),
@@ -265,7 +272,7 @@ class MyOrdersScreenWidgets {
                                         width: 80,
                                         height: 12,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: AppColors.whiteThemeColor,
                                           borderRadius:
                                               BorderRadius.circular(4),
                                         ),
@@ -275,7 +282,7 @@ class MyOrdersScreenWidgets {
                                         width: 60,
                                         height: 12,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: AppColors.whiteThemeColor,
                                           borderRadius:
                                               BorderRadius.circular(4),
                                         ),
@@ -290,7 +297,7 @@ class MyOrdersScreenWidgets {
                               width: 18,
                               height: 18,
                               decoration: const BoxDecoration(
-                                color: Colors.white,
+                                color: AppColors.whiteThemeColor,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -305,7 +312,7 @@ class MyOrdersScreenWidgets {
                               width: 100,
                               height: 12,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: AppColors.whiteThemeColor,
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
@@ -313,7 +320,7 @@ class MyOrdersScreenWidgets {
                               width: 120,
                               height: 12,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: AppColors.whiteThemeColor,
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
