@@ -140,6 +140,6 @@ class AppBlocProviders {
     ),
      BlocProvider<PlaceSuggestionBloc>(
       create: (context) => PlaceSuggestionBloc(PlaceApiServices()),
-    )
+    ),
   ];
 }

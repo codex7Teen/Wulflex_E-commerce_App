@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 
+// ignore: must_be_immutable
 class CustomAddAddressFieldWidget extends StatelessWidget {
   final String? hintText;
   final TextInputType? textInputType;
@@ -11,7 +12,7 @@ class CustomAddAddressFieldWidget extends StatelessWidget {
   final double? textFieldWidth;
   void Function(String)? onChanged;
   FocusNode? focusNode;
-   CustomAddAddressFieldWidget(
+  CustomAddAddressFieldWidget(
       {super.key,
       this.hintText,
       this.textInputType = TextInputType.text,
@@ -20,8 +21,7 @@ class CustomAddAddressFieldWidget extends StatelessWidget {
       this.textFieldWidth,
       required this.controller,
       this.onChanged,
-      this.focusNode
-      });
+      this.focusNode});
 
   @override
   Widget build(BuildContext context) {

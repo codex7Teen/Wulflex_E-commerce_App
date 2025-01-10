@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wulflex/data/services/notification_services.dart';
+import 'package:wulflex/core/network/internet_connection_wrapper.dart';
 import 'package:wulflex/features/onboarding/presentation/screens/main_intro_screen.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
 import 'package:wulflex/features/onboarding/presentation/screens/splash_screen_1.dart';
@@ -23,9 +23,11 @@ class MainWrapperWidget extends StatelessWidget {
           } else {
             if (snapshot.data == null) {
               // Show splash and navigate to intro screen
-              return const ScreenSplash1(screen: ScreenMainIntro());
+              return const ScreenSplash1(
+                  screen: InternetConnectionWrapper(child: ScreenMainIntro()));
             } else {
-              return const ScreenSplash1(screen: MainScreen());
+              return const ScreenSplash1(
+                  screen: InternetConnectionWrapper(child: MainScreen()));
             }
           }
         },

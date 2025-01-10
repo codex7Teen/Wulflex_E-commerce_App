@@ -8,7 +8,6 @@ import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
 import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
-// ignore: depend_on_referenced_packages
 
 class ScreenAddAddress extends StatefulWidget {
   const ScreenAddAddress({super.key});
@@ -33,18 +32,17 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
   final FocusNode _cityFocusNode = FocusNode();
   final FocusNode _houseFocusNode = FocusNode();
   final FocusNode _areaFocusNode = FocusNode();
-  // Generate new token for each session
-  final String token = const Uuid().v4();
-  var uuid = const Uuid();
-  // List<dynamic> listOfLocation = [];
-  // bool _isLocationSelected = false;
-  // String _lastSearchText = '';
+
+  // Generate new tokens for each field that needs place suggestions
+  final String areaToken = const Uuid().v4();
+  final String cityToken = const Uuid().v4();
+  final String stateToken = const Uuid().v4();
 
   @override
   void initState() {
     super.initState();
     _setupFocusListeners();
-    _setupTextControllerListener();
+    _setupTextControllersListeners();
   }
 
   void _setupFocusListeners() {
@@ -52,8 +50,6 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
       _nameFocusNode,
       _phoneFocusNode,
       _pincodeFocusNode,
-      _stateFocusNode,
-      _cityFocusNode,
       _houseFocusNode,
     ];
 
@@ -66,7 +62,8 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
     }
   }
 
-  void _setupTextControllerListener() {
+  void _setupTextControllersListeners() {
+    // Area name listener
     _areaNameController.addListener(() {
       final bloc = context.read<PlaceSuggestionBloc>();
       final currentState = bloc.state;
@@ -75,7 +72,35 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
           _areaFocusNode.hasFocus &&
           !currentState.isSelected) {
         bloc.add(FetchPlaceSuggestionsEvent(
-            query: _areaNameController.text, sessionToken: token));
+            query: _areaNameController.text, sessionToken: areaToken));
+      }
+    });
+
+    // City name listener
+    _cityNameController.addListener(() {
+      final bloc = context.read<PlaceSuggestionBloc>();
+      final currentState = bloc.state;
+
+      if (_cityNameController.text.isNotEmpty &&
+          _cityFocusNode.hasFocus &&
+          !currentState.isSelected) {
+        bloc.add(FetchPlaceSuggestionsEvent(
+            query: "${_cityNameController.text} city",
+            sessionToken: cityToken));
+      }
+    });
+
+    // State name listener
+    _stateNameController.addListener(() {
+      final bloc = context.read<PlaceSuggestionBloc>();
+      final currentState = bloc.state;
+
+      if (_stateNameController.text.isNotEmpty &&
+          _stateFocusNode.hasFocus &&
+          !currentState.isSelected) {
+        bloc.add(FetchPlaceSuggestionsEvent(
+            query: "${_stateNameController.text} state",
+            sessionToken: stateToken));
       }
     });
   }
@@ -160,6 +185,48 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
                       _cityNameController,
                       _cityFocusNode,
                       _stateFocusNode),
+                  BlocBuilder<PlaceSuggestionBloc, PlaceSuggestionState>(
+                    builder: (context, state) {
+                      if (state is PlaceSuggestionLoaded &&
+                          state.suggestions.isNotEmpty) {
+                        // Show state suggestions
+                        if (_stateFocusNode.hasFocus && !state.isSelected) {
+                          return _buildSuggestionsList(
+                            state.suggestions,
+                            (location) {
+                              setState(() {
+                                _stateNameController.text =
+                                    _extractStateName(location['description']);
+                              });
+                              context.read<PlaceSuggestionBloc>().add(
+                                    SelectSuggestedPlaceEvent(
+                                        _stateNameController.text),
+                                  );
+                              FocusScope.of(context).unfocus();
+                            },
+                          );
+                        }
+                        // Show city suggestions
+                        else if (_cityFocusNode.hasFocus && !state.isSelected) {
+                          return _buildSuggestionsList(
+                            state.suggestions,
+                            (location) {
+                              setState(() {
+                                _cityNameController.text =
+                                    _extractCityName(location['description']);
+                              });
+                              context.read<PlaceSuggestionBloc>().add(
+                                    SelectSuggestedPlaceEvent(
+                                        _cityNameController.text),
+                                  );
+                              FocusScope.of(context).unfocus();
+                            },
+                          );
+                        }
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
                   const SizedBox(height: 16),
                   AddAddressScreenWidgets.buildHouseNameText(context),
                   AddAddressScreenWidgets.buildHouseNameTextfield(
@@ -173,16 +240,24 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
                   ),
                   BlocBuilder<PlaceSuggestionBloc, PlaceSuggestionState>(
                     builder: (context, state) {
-                      // Only show suggestions if:
-                      // 1. State is PlaceSuggestionLoaded
-                      // 2. There are suggestions
-                      // 3. The area field has focus
-                      // 4. No place has been selected
                       if (state is PlaceSuggestionLoaded &&
                           state.suggestions.isNotEmpty &&
                           _areaFocusNode.hasFocus &&
                           !state.isSelected) {
-                        return _buildSuggestionsList(state.suggestions);
+                        return _buildSuggestionsList(
+                          state.suggestions,
+                          (location) {
+                            setState(() {
+                              _areaNameController.text =
+                                  _trimAddress(location['description']);
+                            });
+                            context.read<PlaceSuggestionBloc>().add(
+                                  SelectSuggestedPlaceEvent(
+                                      _areaNameController.text),
+                                );
+                            FocusScope.of(context).unfocus();
+                          },
+                        );
                       }
                       return const SizedBox.shrink();
                     },
@@ -213,7 +288,10 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
     );
   }
 
-  Widget _buildSuggestionsList(List<Map<String, dynamic>> suggestions) {
+  Widget _buildSuggestionsList(
+    List<Map<String, dynamic>> suggestions,
+    Function(Map<String, dynamic>) onTap,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -227,29 +305,22 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
         itemBuilder: (context, index) {
           final location = suggestions[index];
           return _buildSuggestionItem(
-              location, index == suggestions.length - 1);
+            location,
+            index == suggestions.length - 1,
+            onTap,
+          );
         },
       ),
     );
   }
 
-  Widget _buildSuggestionItem(Map<String, dynamic> location, bool isLastItem) {
+  Widget _buildSuggestionItem(
+    Map<String, dynamic> location,
+    bool isLastItem,
+    Function(Map<String, dynamic>) onTap,
+  ) {
     return InkWell(
-      onTap: () {
-        final trimmedAddress = _trimAddress(location['description']);
-
-        setState(() {
-          _areaNameController.text = trimmedAddress;
-        });
-
-        // First select the place
-        context.read<PlaceSuggestionBloc>().add(
-              SelectSuggestedPlaceEvent(trimmedAddress),
-            );
-
-        // Hide keyboard
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => onTap(location),
       child: Container(
         decoration: BoxDecoration(
           border: !isLastItem
@@ -298,5 +369,25 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
 
   String _trimAddress(String address) {
     return address.length > 40 ? '${address.substring(0, 37)}...' : address;
+  }
+
+  String _extractStateName(String fullAddress) {
+    // Extract state name from the full address
+    // This is a simple implementation - you might want to enhance it based on your needs
+    final parts = fullAddress.split(',');
+    if (parts.length >= 2) {
+      return parts[parts.length - 2].trim().replaceAll(' State', '');
+    }
+    return fullAddress;
+  }
+
+  String _extractCityName(String fullAddress) {
+    // Extract city name from the full address
+    // This is a simple implementation - you might want to enhance it based on your needs
+    final parts = fullAddress.split(',');
+    if (parts.isNotEmpty) {
+      return parts[0].trim().replaceAll(' City', '');
+    }
+    return fullAddress;
   }
 }

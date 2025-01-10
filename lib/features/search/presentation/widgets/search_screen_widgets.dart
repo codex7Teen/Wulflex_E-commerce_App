@@ -63,7 +63,6 @@ class SearchScreenWidgets {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Spacer(),
         DropdownButton<String>(
           dropdownColor: isLightTheme(context)
               ? AppColors.whiteThemeColor

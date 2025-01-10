@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/core/network/internet_connection_wrapper.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/features/cart/presentation/screens/order_summary_screen.dart';
 import 'package:wulflex/shared/widgets/custom_cart_card_widget.dart';
@@ -282,7 +283,7 @@ class _AnimatedCartItemsPriceDetailsContainerState
                 onTap: () {
                   NavigationHelper.navigateToWithoutReplacement(
                     context,
-                    const ScreenOrderSummary(),
+                    const InternetConnectionWrapper(child: ScreenOrderSummary()),
                   );
                 },
                 addIcon: true,

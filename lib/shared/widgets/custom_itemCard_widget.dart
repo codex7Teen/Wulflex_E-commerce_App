@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
+import 'package:wulflex/core/network/internet_connection_wrapper.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/features/home/presentation/screens/view_product_details_screen.dart';
@@ -18,7 +19,9 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
 
   return GestureDetector(
     onTap: () => NavigationHelper.navigateToWithoutReplacement(
-        context, ScreenViewProducts(productModel: product)),
+        context,
+        InternetConnectionWrapper(
+            child: ScreenViewProducts(productModel: product))),
     child: Stack(
       children: [
         Container(

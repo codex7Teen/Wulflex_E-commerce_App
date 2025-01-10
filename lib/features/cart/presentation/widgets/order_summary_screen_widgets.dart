@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
+import 'package:wulflex/core/network/internet_connection_wrapper.dart';
 import 'package:wulflex/data/models/address_model.dart';
 import 'package:wulflex/data/models/product_model.dart';
 import 'package:wulflex/data/models/user_model.dart';
@@ -106,8 +107,8 @@ class OrderSummaryScreenWidgets {
                             context, const ScreenAddress());
                       },
                       child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 13, vertical: 4),
                         decoration: BoxDecoration(
                             color: AppColors.greenThemeColor,
                             borderRadius: BorderRadius.circular(18)),
@@ -132,8 +133,8 @@ class OrderSummaryScreenWidgets {
                               context, const ScreenAddress());
                         },
                         child: Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 13, vertical: 4),
                           decoration: BoxDecoration(
                               color: AppColors.greenThemeColor,
                               borderRadius: BorderRadius.circular(18)),
@@ -476,7 +477,8 @@ class OrderSummaryScreenWidgets {
             ],
           ),
           const SizedBox(height: 3),
-          const Divider(color: AppColors.hardLightGeryThemeColor, thickness: 0.3),
+          const Divider(
+              color: AppColors.hardLightGeryThemeColor, thickness: 0.3),
           const SizedBox(height: 3),
           Row(
             children: [
@@ -508,10 +510,12 @@ class OrderSummaryScreenWidgets {
                       log('Selected address has value. So proceeding to payment...');
                       NavigationHelper.navigateToWithoutReplacement(
                           context,
-                          ScreenPayment(
-                            totalAmount: total,
-                            cartProducts: cartItemsList,
-                            selectedAddress: selectedAddress,
+                          InternetConnectionWrapper(
+                            child: ScreenPayment(
+                              totalAmount: total,
+                              cartProducts: cartItemsList,
+                              selectedAddress: selectedAddress,
+                            ),
                           ));
                     } else {
                       CustomSnackbar.showCustomSnackBar(

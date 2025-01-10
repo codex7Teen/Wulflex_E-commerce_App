@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^3.3.4
+  animated_text_kit: ^4.2.2
   app_settings: ^5.1.1
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
@@ -48,6 +49,7 @@ dependencies:
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
   image_picker: ^1.1.2
+  internet_connection_checker_plus: ^2.7.0
   intl: ^0.20.1
   like_button: ^2.0.5
   lottie: ^3.1.3

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -61,20 +62,34 @@ Widget buildSearchBar(double screenWidth, BuildContext context) {
       height: 48,
       width: screenWidth * 0.92,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: Theme.of(context).brightness == Brightness.light
-              ? AppColors.lightGreyThemeColor
-              : AppColors.whiteThemeColor),
+        borderRadius: BorderRadius.circular(18),
+        color: Theme.of(context).brightness == Brightness.light
+            ? AppColors.lightGreyThemeColor
+            : AppColors.whiteThemeColor,
+      ),
       child: Row(
         children: [
           const SizedBox(width: 20),
-          Image.asset('assets/Search.png',
-              scale: 24, color: AppColors.darkishGrey),
+          Image.asset(
+            'assets/Search.png',
+            scale: 24,
+            color: AppColors.darkishGrey,
+          ),
           const SizedBox(width: 16),
-          Text(
-            'What are you looking for today?',
+          DefaultTextStyle(
             style: AppTextStyles.searchBarHintText,
-          )
+            child: AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  'What are you looking for today?',
+                  speed: const Duration(milliseconds: 80),
+                  cursor: '',
+                ),
+              ],
+              isRepeatingAnimation: false,
+              displayFullTextOnTap: true,
+            ),
+          ),
         ],
       ),
     ),

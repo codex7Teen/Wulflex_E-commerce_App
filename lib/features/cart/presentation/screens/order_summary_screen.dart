@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/cart/bloc/address_bloc/address_bloc.dart';
@@ -89,14 +90,16 @@ class ScreenOrderSummary extends StatelessWidget {
                                             MediaQuery.sizeOf(context).height *
                                                 0.08)
                                     : const SizedBox(),
-                                OrderSummaryScreenWidgets
-                                    .buildPricedetailsAndProceedButton(
-                                        context,
-                                        subtotal,
-                                        discount,
-                                        total,
-                                        cartItemsList,
-                                        selectedAddress)
+                                SlideInUp(
+                                  child: OrderSummaryScreenWidgets
+                                      .buildPricedetailsAndProceedButton(
+                                          context,
+                                          subtotal,
+                                          discount,
+                                          total,
+                                          cartItemsList,
+                                          selectedAddress),
+                                )
                               ],
                             ),
                           ),

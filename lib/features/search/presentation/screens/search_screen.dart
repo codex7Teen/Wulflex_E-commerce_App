@@ -105,20 +105,29 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
           children: [
             const SizedBox(height: 9),
             // Filter Dropdown
-            SearchScreenWidgets.buildFilterDropdown(context, _selectedFilter,
-                onChanged: (value) {
-              if (value != null) {
-                setState(() {
-                  _selectedFilter = value;
-                });
-                if (context.read<ProductBloc>().state is ProductLoaded) {
-                  final products =
-                      (context.read<ProductBloc>().state as ProductLoaded)
-                          .products;
-                  _filterAndSortProducts(products);
-                }
-              }
-            }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Sort by:',
+                  style: AppTextStyles.searchFilterHeading(context),
+                ),
+                SearchScreenWidgets.buildFilterDropdown(
+                    context, _selectedFilter, onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      _selectedFilter = value;
+                    });
+                    if (context.read<ProductBloc>().state is ProductLoaded) {
+                      final products =
+                          (context.read<ProductBloc>().state as ProductLoaded)
+                              .products;
+                      _filterAndSortProducts(products);
+                    }
+                  }
+                }),
+              ],
+            ),
             const SizedBox(height: 8),
             // Build products
             BlocBuilder<ProductBloc, ProductState>(
