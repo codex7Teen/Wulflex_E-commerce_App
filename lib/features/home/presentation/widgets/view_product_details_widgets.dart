@@ -6,6 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wulflex/data/models/enhanced_review_model.dart';
 import 'package:wulflex/features/account/bloc/review_bloc/review_bloc.dart';
@@ -209,11 +210,7 @@ class ViewProductDetailsWidgets {
         child: BlocBuilder<ReviewBloc, ReviewState>(
           builder: (context, state) {
             if (state is ReviewLoading) {
-              return const Center(
-                  child: SizedBox(
-                      height: 18,
-                      width: 18,
-                      child: CircularProgressIndicator()));
+              return ViewProductDetailsWidgets.buildRatingsShimmer(context);
             } else if (state is ReviewError) {
               return const Center(child: Text('Review Error'));
             } else if (state is ReviewsLoaded) {
@@ -733,6 +730,309 @@ class ViewProductDetailsWidgets {
           ),
         );
       },
+    );
+  }
+
+  static Widget buildRatingsShimmer(BuildContext context) {
+    return IntrinsicWidth(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.lightGreyThemeColor),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Shimmer.fromColors(
+          baseColor:
+              isLightTheme(context) ? Colors.grey[300]! : Colors.grey[800]!,
+          highlightColor:
+              isLightTheme(context) ? Colors.grey[100]! : Colors.grey[700]!,
+          child: Row(
+            children: [
+              // Shimmer for rating stars
+              Row(
+                children: List.generate(
+                  5,
+                  (index) => Padding(
+                    padding: const EdgeInsets.only(right: 2),
+                    child: Container(
+                      width: 19,
+                      height: 19,
+                      decoration: BoxDecoration(
+                        color: isLightTheme(context)
+                            ? Colors.white
+                            : Colors.grey[600],
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              // Shimmer for rating text
+              Container(
+                width: 80,
+                height: 16,
+                decoration: BoxDecoration(
+                  color:
+                      isLightTheme(context) ? Colors.white : Colors.grey[600],
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget buildReviewMetricsShimmer(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: isLightTheme(context) ? Colors.grey[300]! : Colors.grey[800]!,
+      highlightColor:
+          isLightTheme(context) ? Colors.grey[100]! : Colors.grey[700]!,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Left side - Rating and stars
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Rating number
+                Container(
+                  width: 60,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color:
+                        isLightTheme(context) ? Colors.white : Colors.grey[600],
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                const SizedBox(height: 1.5),
+                // Stars
+                Row(
+                  children: List.generate(
+                    5,
+                    (index) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 2),
+                      child: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: isLightTheme(context)
+                              ? Colors.white
+                              : Colors.grey[600],
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                // Review count
+                Container(
+                  width: 80,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    color:
+                        isLightTheme(context) ? Colors.white : Colors.grey[600],
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Right side - Progress bars
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              5,
+              (index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  children: [
+                    // Star number
+                    Container(
+                      width: 15,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        color: isLightTheme(context)
+                            ? Colors.white
+                            : Colors.grey[600],
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    // Progress bar
+                    Container(
+                      width: 120,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: isLightTheme(context)
+                            ? Colors.white
+                            : Colors.grey[600],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    // Percentage
+                    Container(
+                      width: 40,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        color: isLightTheme(context)
+                            ? Colors.white
+                            : Colors.grey[600],
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget buildCustomerReviewsShimmer(BuildContext context) {
+    return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 3, // Show 3 shimmer review cards
+      separatorBuilder: (context, index) => const SizedBox(height: 8),
+      itemBuilder: (context, index) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        decoration: BoxDecoration(
+          color: AppColors.whiteThemeColor,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: AppColors.appBarLightGreyThemeColor),
+        ),
+        child: Shimmer.fromColors(
+          baseColor:
+              isLightTheme(context) ? Colors.grey[300]! : Colors.grey[800]!,
+          highlightColor:
+              isLightTheme(context) ? Colors.grey[100]! : Colors.grey[700]!,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  // User image
+                  Container(
+                    width: 46,
+                    height: 46,
+                    decoration: BoxDecoration(
+                      color: isLightTheme(context)
+                          ? Colors.white
+                          : Colors.grey[600],
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Username and date
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                color: isLightTheme(context)
+                                    ? Colors.white
+                                    : Colors.grey[600],
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Container(
+                              width: 80,
+                              height: 14,
+                              decoration: BoxDecoration(
+                                color: isLightTheme(context)
+                                    ? Colors.white
+                                    : Colors.grey[600],
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Rating
+                        Row(
+                          children: List.generate(
+                            5,
+                            (index) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2),
+                              child: Container(
+                                width: 17,
+                                height: 17,
+                                decoration: BoxDecoration(
+                                  color: isLightTheme(context)
+                                      ? Colors.white
+                                      : Colors.grey[600],
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              // Size/Weight info
+              Container(
+                width: 150,
+                height: 14,
+                decoration: BoxDecoration(
+                  color:
+                      isLightTheme(context) ? Colors.white : Colors.grey[600],
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(height: 12),
+              // Tags
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: List.generate(
+                  3,
+                  (index) => Container(
+                    width: 80,
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: isLightTheme(context)
+                          ? Colors.white
+                          : Colors.grey[600],
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              // Review text
+              Container(
+                width: double.infinity,
+                height: 60,
+                decoration: BoxDecoration(
+                  color:
+                      isLightTheme(context) ? Colors.white : Colors.grey[600],
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

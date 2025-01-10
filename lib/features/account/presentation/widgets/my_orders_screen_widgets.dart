@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/order_model.dart';
@@ -173,6 +174,158 @@ class MyOrdersScreenWidgets {
             style: AppTextStyles.emptyScreenText(context),
           ),
           const SizedBox(height: 90)
+        ],
+      ),
+    );
+  }
+
+  static Widget buildOrdersShimmer() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 6, right: 6, top: 18, bottom: 18),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.separated(
+              itemCount: 4, // Show 4 shimmer cards
+              separatorBuilder: (context, index) => const SizedBox(height: 15),
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withValues(alpha: 0.2),
+                        spreadRadius: 2,
+                        blurRadius: 6,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Order Date shimmer
+                        Container(
+                          width: 200,
+                          height: 13,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            // Product Image shimmer
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                height: 84,
+                                width: MediaQuery.of(context).size.width * 0.21,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 14),
+                            // Product Details shimmer
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Status shimmer
+                                  Container(
+                                    width: 140,
+                                    height: 14,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  // Product name shimmer
+                                  Container(
+                                    width: 180,
+                                    height: 14,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  // Additional details like price
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 80,
+                                        height: 12,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Container(
+                                        width: 60,
+                                        height: 12,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Arrow icon shimmer
+                            Container(
+                              width: 18,
+                              height: 18,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        // Additional order details at bottom
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            Container(
+                              width: 120,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

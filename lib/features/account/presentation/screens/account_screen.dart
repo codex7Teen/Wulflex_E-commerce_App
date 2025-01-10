@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/core/network/internet_connection_wrapper.dart';
 import 'package:wulflex/features/account/presentation/screens/customer_support_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/my_orders_screen.dart';
 import 'package:wulflex/features/account/presentation/screens/privacy_policy_screen.dart';
@@ -83,7 +84,9 @@ class ScreenAccount extends StatelessWidget {
                       AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
-                                  context, const ScreenMyOrders()),
+                                  context,
+                                  const InternetConnectionWrapper(
+                                      child: ScreenMyOrders())),
                           icon: Icons.shopping_bag_rounded,
                           name: "MY ORDERS"),
                       const SizedBox(height: 14),
@@ -91,7 +94,9 @@ class ScreenAccount extends StatelessWidget {
                       AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
-                                  context, const ScreenProfile()),
+                                  context,
+                                  const InternetConnectionWrapper(
+                                      child: ScreenProfile())),
                           icon: Icons.person,
                           name: "MY PROFILE"),
                       const SizedBox(height: 14),
@@ -99,7 +104,9 @@ class ScreenAccount extends StatelessWidget {
                       AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
-                                  context, const ScreenManageAddress()),
+                                  context,
+                                  const InternetConnectionWrapper(
+                                      child: ScreenManageAddress())),
                           icon: Icons.my_library_books,
                           name: "ADDRESS BOOK"),
                       const SizedBox(height: 14),
@@ -107,7 +114,9 @@ class ScreenAccount extends StatelessWidget {
                       AccountScreenWidgets.buildButtonCards(
                           onTap: () {
                             NavigationHelper.navigateToWithoutReplacement(
-                                context, const ScreenSettings());
+                                context,
+                                const InternetConnectionWrapper(
+                                    child: ScreenSettings()));
                           },
                           icon: Icons.settings,
                           name: "SETTINGS"),
@@ -118,7 +127,9 @@ class ScreenAccount extends StatelessWidget {
                       AccountScreenWidgets.buildButtonCards(
                           onTap: () =>
                               NavigationHelper.navigateToWithoutReplacement(
-                                  context, const ScreenCustomerSupport()),
+                                  context,
+                                  const InternetConnectionWrapper(
+                                      child: ScreenCustomerSupport())),
                           icon: Icons.support_agent_rounded,
                           name: "CUSTOMER SUPPORT"),
                       const SizedBox(height: 14),

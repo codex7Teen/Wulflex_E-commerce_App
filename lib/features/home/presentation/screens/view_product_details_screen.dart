@@ -10,6 +10,7 @@ import 'package:wulflex/features/home/presentation/widgets/view_product_details_
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/shared/widgets/animated_price_details_container.dart';
 import 'package:wulflex/shared/widgets/custom_snacbar_widget.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class ScreenViewProducts extends StatefulWidget {
   final ProductModel productModel;
@@ -53,10 +54,10 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
   Widget build(BuildContext context) {
     PageController pageController = PageController();
 
-    final isLightTheme = Theme.of(context).brightness == Brightness.light;
-
     return Scaffold(
-      backgroundColor: AppColors.lightGreyThemeColor,
+      backgroundColor: isLightTheme(context)
+          ? AppColors.lightGreyThemeColor
+          : AppColors.whiteThemeColor,
       body: BlocListener<CartBloc, CartState>(
         listener: (context, state) {
           if (state is CartSuccess) {
@@ -95,7 +96,7 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                         borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(25),
                             topRight: Radius.circular(25)),
-                        color: isLightTheme
+                        color: isLightTheme(context)
                             ? AppColors.whiteThemeColor
                             : AppColors.blackThemeColor),
                     child: Padding(
@@ -174,8 +175,14 @@ class _ScreenViewProductsState extends State<ScreenViewProducts> {
                           BlocBuilder<ReviewBloc, ReviewState>(
                               builder: (context, state) {
                             if (state is ReviewLoading) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                              return Column(
+                                children: [
+                                  ViewProductDetailsWidgets
+                                      .buildReviewMetricsShimmer(context),
+                                  ViewProductDetailsWidgets
+                                      .buildCustomerReviewsShimmer(context)
+                                ],
+                              );
                             } else if (state is ReviewError) {
                               return const Center(
                                   child: Text('Failed to load reviews.'));

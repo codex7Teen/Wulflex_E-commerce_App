@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
 import 'package:wulflex/data/models/order_model.dart';
@@ -30,7 +31,7 @@ class ScreenMyOrders extends StatelessWidget {
               if (state is OrderError) {
                 return Text(state.errorMessage);
               } else if (state is OrderLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return MyOrdersScreenWidgets.buildOrdersShimmer();
               } else if (state is OrdersLoaded) {
                 // Sort orders by date in descending order (latest first)
                 final orders = List<OrderModel>.from(state.orders)

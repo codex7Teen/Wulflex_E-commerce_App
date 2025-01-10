@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/address_model.dart';
@@ -186,6 +187,100 @@ class SelectAddressScreenWidgets {
           ),
           const SizedBox(height: 90)
         ],
+      ),
+    );
+  }
+
+  static Widget buildSelectAddressShimmer() {
+    return Expanded(
+      child: ListView.separated(
+        itemCount: 4, // Show 3 shimmer cards
+        separatorBuilder: (context, index) => const SizedBox(height: 14),
+        itemBuilder: (context, index) {
+          return Shimmer.fromColors(
+            baseColor:
+                isLightTheme(context) ? Colors.grey[300]! : Colors.grey[800]!,
+            highlightColor:
+                isLightTheme(context) ? Colors.grey[100]! : Colors.grey[700]!,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(color: AppColors.greyThemeColor, width: 0.5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Name shimmer
+                      Container(
+                        width: 120,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // House name shimmer
+                      Container(
+                        width: 200,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      // Area and city shimmer
+                      Container(
+                        width: 180,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      // State and pincode shimmer
+                      Container(
+                        width: 160,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Phone number shimmer
+                      Container(
+                        width: 140,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  // Menu icon shimmer
+                  Container(
+                    width: 44,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

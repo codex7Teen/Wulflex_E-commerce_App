@@ -29,7 +29,7 @@ class ScreenAddress extends StatelessWidget {
             BlocBuilder<AddressBloc, AddressState>(
               builder: (context, state) {
                 if (state is AddressLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return SelectAddressScreenWidgets.buildSelectAddressShimmer();
                 } else if (state is AddressLoaded) {
                   final addressList = state.address;
                   // Show addres if list contains any address otherwise show a lottie for not address
