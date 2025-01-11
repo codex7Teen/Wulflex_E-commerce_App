@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
@@ -112,20 +113,22 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                   'Sort by:',
                   style: AppTextStyles.searchFilterHeading(context),
                 ),
-                SearchScreenWidgets.buildFilterDropdown(
-                    context, _selectedFilter, onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      _selectedFilter = value;
-                    });
-                    if (context.read<ProductBloc>().state is ProductLoaded) {
-                      final products =
-                          (context.read<ProductBloc>().state as ProductLoaded)
-                              .products;
-                      _filterAndSortProducts(products);
+                FadeInRight(
+                  child: SearchScreenWidgets.buildFilterDropdown(
+                      context, _selectedFilter, onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _selectedFilter = value;
+                      });
+                      if (context.read<ProductBloc>().state is ProductLoaded) {
+                        final products =
+                            (context.read<ProductBloc>().state as ProductLoaded)
+                                .products;
+                        _filterAndSortProducts(products);
+                      }
                     }
-                  }
-                }),
+                  }),
+                ),
               ],
             ),
             const SizedBox(height: 8),
@@ -153,7 +156,7 @@ class _ScreenSearchScreenState extends State<ScreenSearchScreen> {
                               crossAxisCount: 2,
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 7.5,
-                              childAspectRatio: 0.604),
+                              childAspectRatio: 0.545),
                       itemCount: _filteredProducts.length,
                       itemBuilder: (context, index) {
                         return buildItemCard(context, _filteredProducts[index]);

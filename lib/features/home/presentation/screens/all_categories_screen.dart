@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/home/bloc/category_bloc/category_bloc.dart';
@@ -59,8 +60,11 @@ class _ScreenAllCategoriesState extends State<ScreenAllCategories> {
           } else if (state is CategoryDetailsLoaded) {
             final categories = state.categoryDetails;
             //! CATEGORIES GRID VIEW
-            return AllCategoryScreenWidgets.buildCategoriesGridView(
-                categories, defaultCategoryImages);
+            return FadeIn(
+              duration: const Duration(milliseconds: 1000),
+              child: AllCategoryScreenWidgets.buildCategoriesGridView(
+                  categories, defaultCategoryImages),
+            );
           }
           return Center(
             child: Text(

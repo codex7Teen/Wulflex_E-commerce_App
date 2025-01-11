@@ -7,6 +7,7 @@ import 'package:wulflex/features/account/presentation/widgets/customer_support_s
 import 'package:wulflex/features/account/presentation/widgets/message_bubble_widget.dart';
 import 'package:wulflex/shared/widgets/custom_appbar_with_backbutton.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ScreenCustomerSupport extends StatefulWidget {
   const ScreenCustomerSupport({super.key});
@@ -24,12 +25,8 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
   void initState() {
     super.initState();
 
-    // add a listener to focusnode
     myFocusNode.addListener(() {
       if (myFocusNode.hasFocus) {
-        // cause a delay so the keyboard has time to show up
-        // then the amount of remaining space will be calculated
-        // then scroll down
         Future.delayed(const Duration(milliseconds: 400),
             () => CustomerSupportScreenWidgets.scrollDown(_scrollController));
       }
@@ -54,7 +51,6 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (context, state) {
             if (state is UserProfileLoading) {
-              //! Show shimmer
               return CustomerSupportScreenWidgets
                   .buildCustomerSupportScreenShimmer(context);
             } else if (state is UserProfileError) {
@@ -68,57 +64,82 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
                   } else if (state is MessagesLoaded) {
                     return Column(
                       children: [
-                        //! Messages List
                         Expanded(
-                            child: StreamBuilder(
-                          stream: state.messages,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return const Text('Something went wrong');
-                            }
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              //! Show shimmer
-                              return CustomerSupportScreenWidgets
-                                  .buildCustomerSupportScreenShimmer(context);
-                            }
-                            if (snapshot.hasData &&
-                                snapshot.data!.docs.isEmpty) {
-                              //! EMPTY MESSAGES
-                              return CustomerSupportScreenWidgets
-                                  .buildNoMessagesWidget(context);
-                            }
-                            // Scroll down when new data arrives
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              Future.delayed(const Duration(milliseconds: 400),
-                                  () {
-                                CustomerSupportScreenWidgets.scrollDown(
-                                    _scrollController);
+                          child: StreamBuilder(
+                            stream: state.messages,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return const Text('Something went wrong');
+                              }
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                //! SHIMMER
+                                return CustomerSupportScreenWidgets
+                                    .buildCustomerSupportScreenShimmer(context);
+                              }
+                              if (snapshot.hasData &&
+                                  snapshot.data!.docs.isEmpty) {
+                                //! NO MESSAGES DISPLAY
+                                return CustomerSupportScreenWidgets
+                                    .buildNoMessagesWidget(context);
+                              }
+
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                Future.delayed(
+                                    const Duration(milliseconds: 400), () {
+                                  CustomerSupportScreenWidgets.scrollDown(
+                                      _scrollController);
+                                });
                               });
-                            });
-                            return ListView(
-                              controller: _scrollController,
-                              children: snapshot.data!.docs.map(
-                                (doc) {
-                                  final data =
-                                      doc.data() as Map<String, dynamic>;
-                                  //! MESSAGE BUBBLES
-                                  return SlideInRight(
-                                    child: MessageBubble(
-                                        message: data['message'],
-                                        isMe: data['senderID'] == user.uid,
-                                        userImage: user.userImage ?? '',
-                                        timeStamp: data['timestamp']),
+
+                              //! FROUPING MESSAGES BY DATE
+                              final groupedMessages = <String, List<dynamic>>{};
+                              for (var doc in snapshot.data!.docs) {
+                                final data = doc.data() as Map<String, dynamic>;
+                                final date = _formatMessageDate(
+                                    data['timestamp'] as Timestamp);
+                                if (!groupedMessages.containsKey(date)) {
+                                  groupedMessages[date] = [];
+                                }
+                                groupedMessages[date]!.add(data);
+                              }
+
+                              return ListView.builder(
+                                controller: _scrollController,
+                                itemCount: groupedMessages.length,
+                                itemBuilder: (context, index) {
+                                  final entry =
+                                      groupedMessages.entries.elementAt(index);
+                                  return Column(
+                                    children: [
+                                      //! DATE SECTION HEADER
+                                      CustomerSupportScreenWidgets
+                                          .buildDateSectionHeader(
+                                              context, entry),
+                                      //! MESSAGES
+                                      ...entry.value.map((data) => SlideInRight(
+                                            child: MessageBubble(
+                                                message: data['message'],
+                                                isMe: data['senderID'] ==
+                                                    user.uid,
+                                                userImage: user.userImage ?? '',
+                                                timeStamp: data['timestamp']),
+                                          )),
+                                    ],
                                   );
                                 },
-                              ).toList(),
-                            );
-                          },
-                        )),
-                        CustomerSupportScreenWidgets
-                            .buildMessageInputFieldDivider(context),
-                        //! MESSAGE INPUT FIELD
+                              );
+                            },
+                          ),
+                        ),
+                        //! INPUT FIELD DIVIDER
+                        FadeIn(
+                          delay: const Duration(milliseconds: 500),
+                          child: CustomerSupportScreenWidgets
+                              .buildMessageInputFieldDivider(context),
+                        ),
                         FadeInUp(
+                          //! INPUT FIELD
                           child: CustomerSupportScreenWidgets
                               .buildMessageInputField(
                                   context, myFocusNode, _messageController),
@@ -137,5 +158,21 @@ class _ScreenCustomerSupportState extends State<ScreenCustomerSupport> {
         ),
       ),
     );
+  }
+
+  String _formatMessageDate(Timestamp timestamp) {
+    final DateTime dateTime = timestamp.toDate();
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final messageDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
+
+    if (messageDate == today) {
+      return 'Today';
+    } else if (messageDate == yesterday) {
+      return 'Yesterday';
+    } else {
+      return '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+    }
   }
 }

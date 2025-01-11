@@ -54,7 +54,9 @@ class ScreenCart extends StatelessWidget {
 
               return Stack(
                 children: [
-                  CartWidgets.buildCartItemsCard(cartItems),
+                  FadeIn(
+                    duration: const Duration(milliseconds: 100),
+                    child: CartWidgets.buildCartItemsCard(cartItems)),
                   SlideInUp(
                     child: AnimatedCartItemsPriceDetailsContainer(
                         subtotal: subtotal, discount: discount, total: total),

@@ -87,7 +87,7 @@ Widget buildSearchBar(double screenWidth, BuildContext context) {
                 ),
               ],
               isRepeatingAnimation: false,
-              displayFullTextOnTap: true,
+              displayFullTextOnTap: false,
             ),
           ),
         ],
@@ -284,7 +284,6 @@ Widget buildLastestArrivalsText(BuildContext context) {
   );
 }
 
-// Latest Arrivals Section Implementation
 Widget buildLatestArrivalsSection(BuildContext context) {
   return BlocBuilder<ProductBloc, ProductState>(
     builder: (context, state) {
@@ -299,7 +298,7 @@ Widget buildLatestArrivalsSection(BuildContext context) {
             crossAxisCount: 2,
             crossAxisSpacing: 15,
             mainAxisSpacing: 7.5,
-            childAspectRatio: 0.604,
+            childAspectRatio: 0.545,
           ),
           itemCount: products.length,
           itemBuilder: (context, index) {

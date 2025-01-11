@@ -29,7 +29,7 @@ PreferredSizeWidget customAppbarWithBackbutton(
                         shape: BoxShape.circle,
                         color: isLightTheme
                             ? AppColors.lightGreyThemeColor
-                            : AppColors.whiteThemeColor),
+                            : AppColors.darkishGrey),
                     child: const Icon(Icons.arrow_back_ios_new_rounded,
                         size: 24, color: AppColors.blackThemeColor),
                   ),

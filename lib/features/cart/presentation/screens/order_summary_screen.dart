@@ -71,15 +71,25 @@ class ScreenOrderSummary extends StatelessWidget {
                                 top: 18, left: 18, right: 18, bottom: 18),
                             child: Column(
                               children: [
-                                OrderSummaryScreenWidgets
-                                    .buildAccountInformationContainer(
-                                        context, user),
+                                FadeIn(
+                                  duration: const Duration(milliseconds: 100),
+                                  child: OrderSummaryScreenWidgets
+                                      .buildAccountInformationContainer(
+                                          context, user),
+                                ),
                                 const SizedBox(height: 18),
-                                OrderSummaryScreenWidgets
-                                    .buildDeliveryAddressContainer(context),
+                                FadeIn(
+                                  duration: const Duration(milliseconds: 200),
+                                  child: OrderSummaryScreenWidgets
+                                      .buildDeliveryAddressContainer(context),
+                                ),
                                 const SizedBox(height: 18),
-                                OrderSummaryScreenWidgets.buildItemsContainer(
-                                    context, cartItemsList),
+                                FadeIn(
+                                  duration: const Duration(milliseconds: 300),
+                                  child: OrderSummaryScreenWidgets
+                                      .buildItemsContainer(
+                                          context, cartItemsList),
+                                ),
                                 const SizedBox(height: 18),
                                 // Just showing a sizedbox the strcture the ui.
                                 cartItemsList.length == 1

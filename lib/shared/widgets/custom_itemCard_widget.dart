@@ -21,7 +21,8 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
     onTap: () => NavigationHelper.navigateToWithoutReplacement(
         context,
         InternetConnectionWrapper(
-            child: ScreenViewProducts(productModel: product))),
+            child: ScreenViewProducts(productModel: product)),
+        transitionDuration: 300),
     child: Stack(
       children: [
         Container(
@@ -40,19 +41,23 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: SizedBox(
-                      height: 150,
-                      width: MediaQuery.sizeOf(context).width * 0.38,
-                      child: CachedNetworkImage(
-                        imageUrl: product.imageUrls[0],
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) {
-                          return SizedBox(
-                              width: 16,
-                              height: 16,
-                              child:
-                                  Image.asset('assets/wulflex_logo_nobg.png'));
-                        },
-                      )),
+                    height: 150,
+                    width: MediaQuery.sizeOf(context).width * 0.38,
+                    child: CachedNetworkImage(
+                      imageUrl: product.imageUrls[0],
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) {
+                        return SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Image.asset('assets/wulflex_app_icon.png'),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 9),
@@ -60,6 +65,7 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       product.brandName,
@@ -82,16 +88,14 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                             "₹${NumberFormat('#,##,###.##').format(product.retailPrice)}",
                             style: AppTextStyles.itemCardSecondSubTitleText
                                 .copyWith(
-                              decoration: TextDecoration
-                                  .lineThrough, // Add strikethrough to retail price
-                              color: Colors
-                                  .grey, // Optional: make retail price appear less prominent
+                              decoration: TextDecoration.lineThrough,
+                              color: Colors.grey,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const SizedBox(width: 5), // Reduced spacing
+                        const SizedBox(width: 5),
                         Flexible(
                           child: Text(
                             "₹${NumberFormat('#,##,###.##').format(product.offerPrice)}",
@@ -103,17 +107,24 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                       ],
                     ),
                     const SizedBox(height: 5),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 9, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: isLightTheme(context)
-                            ? AppColors.whiteThemeColor
-                            : const Color.fromARGB(255, 247, 247, 247),
-                        borderRadius: BorderRadius.circular(7.5),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 9,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isLightTheme(context)
+                              ? AppColors.whiteThemeColor
+                              : const Color.fromARGB(255, 247, 247, 247),
+                          borderRadius: BorderRadius.circular(7.5),
+                        ),
+                        child: Text(
+                          "Save upto $discountPercentage%",
+                          style: AppTextStyles.itemCardThirdSubTitleText,
+                        ),
                       ),
-                      child: Text("Save upto $discountPercentage%",
-                          style: AppTextStyles.itemCardThirdSubTitleText),
                     ),
                   ],
                 ),
@@ -121,18 +132,23 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
             ],
           ),
         ),
-        // Positioned Like Button
         Positioned(
           top: 0,
           right: 3.95,
           child: Container(
-            padding:
-                const EdgeInsets.only(left: 7, right: 5, top: 11, bottom: 11),
+            padding: const EdgeInsets.only(
+              left: 7,
+              right: 5,
+              top: 11,
+              bottom: 11,
+            ),
             decoration: const BoxDecoration(
-                color: AppColors.greenThemeColor,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(18),
-                    bottomLeft: Radius.circular(18))),
+              color: AppColors.greenThemeColor,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(18),
+                bottomLeft: Radius.circular(18),
+              ),
+            ),
             child: Center(
               child: BlocBuilder<FavoriteBloc, FavoriteState>(
                 builder: (context, state) {
@@ -167,11 +183,13 @@ Widget buildItemCard(BuildContext context, ProductModel product) {
                             );
                     },
                     circleColor: const CircleColor(
-                        start: AppColors.blackThemeColor,
-                        end: AppColors.blackThemeColor),
+                      start: AppColors.blackThemeColor,
+                      end: AppColors.blackThemeColor,
+                    ),
                     bubblesColor: const BubblesColor(
-                        dotPrimaryColor: AppColors.blueThemeColor,
-                        dotSecondaryColor: AppColors.blackThemeColor),
+                      dotPrimaryColor: AppColors.blueThemeColor,
+                      dotSecondaryColor: AppColors.blackThemeColor,
+                    ),
                     size: 21.6,
                   );
                 },

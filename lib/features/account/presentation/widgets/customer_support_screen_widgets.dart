@@ -199,4 +199,32 @@ class CustomerSupportScreenWidgets {
       ],
     );
   }
+
+  static Widget buildDateSectionHeader(
+      BuildContext context, MapEntry<String, List<dynamic>> entry) {
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? Colors.grey.shade200
+              : Colors.grey.shade800,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          entry.key,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey.shade700
+                : Colors.grey.shade300,
+          ),
+        ),
+      ),
+    );
+  }
 }

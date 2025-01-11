@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -133,41 +134,49 @@ class ScreenPaymentState extends State<ScreenPayment> {
                       top: 18, left: 18, right: 18, bottom: 24),
                   child: Column(
                     children: [
-                      PaymentScreenWidgets.buildTotalamountContainer(
-                          context, widget.totalAmount),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 200),
+                        child: PaymentScreenWidgets.buildTotalamountContainer(
+                            context, widget.totalAmount),
+                      ),
                       const SizedBox(height: 18),
-                      PaymentScreenWidgets.buildPaymentOptionsContainer(
-                          context, state),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 400),
+                        child: PaymentScreenWidgets.buildPaymentOptionsContainer(
+                            context, state),
+                      ),
                       const Spacer(),
-                      GreenButtonWidget(
-                        onTap: () {
-                          if (state.isCashOnDeliverySelected == false &&
-                              state.isRazorpaySelected == false) {
-                            CustomSnackbar.showCustomSnackBar(
-                                context, 'Please select a payment method!',
-                                icon: Icons.error);
-                          } else if (state.isRazorpaySelected) {
-                            // Call Razorpay payment method
-                            _startRazorpayPayment();
-                          } else {
-                            // Clear all cart items
-                            context
-                                .read<CartBloc>()
-                                .add(ClearAllCartItemsEvent());
-                            // Create order
-                            context.read<OrderBloc>().add(CreateOrderEvent(
-                                products: widget.cartProducts,
-                                address: widget.selectedAddress,
-                                paymentMode: 'Cash on delivery'));
-                            NavigationHelper.navigateToWithReplacement(
-                                context, const ScreenOrderSuccess());
-                          }
-                        },
-                        buttonText: 'Place Order',
-                        borderRadius: 25,
-                        width: 1,
-                        addIcon: true,
-                        icon: Icons.check_circle_outline_rounded,
+                      SlideInUp(
+                        child: GreenButtonWidget(
+                          onTap: () {
+                            if (state.isCashOnDeliverySelected == false &&
+                                state.isRazorpaySelected == false) {
+                              CustomSnackbar.showCustomSnackBar(
+                                  context, 'Please select a payment method!',
+                                  icon: Icons.error);
+                            } else if (state.isRazorpaySelected) {
+                              // Call Razorpay payment method
+                              _startRazorpayPayment();
+                            } else {
+                              // Clear all cart items
+                              context
+                                  .read<CartBloc>()
+                                  .add(ClearAllCartItemsEvent());
+                              // Create order
+                              context.read<OrderBloc>().add(CreateOrderEvent(
+                                  products: widget.cartProducts,
+                                  address: widget.selectedAddress,
+                                  paymentMode: 'Cash on delivery'));
+                              NavigationHelper.navigateToWithReplacement(
+                                  context, const ScreenOrderSuccess());
+                            }
+                          },
+                          buttonText: 'Place Order',
+                          borderRadius: 25,
+                          width: 1,
+                          addIcon: true,
+                          icon: Icons.check_circle_outline_rounded,
+                        ),
                       )
                     ],
                   ),

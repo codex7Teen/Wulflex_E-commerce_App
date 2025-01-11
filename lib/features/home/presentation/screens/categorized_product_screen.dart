@@ -162,7 +162,7 @@ class _ScreenCategorizedProductState extends State<ScreenCategorizedProduct> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 15,
                                 mainAxisSpacing: 7.5,
-                                childAspectRatio: 0.604),
+                                childAspectRatio: 0.545),
                         itemCount: _filteredProducts.length,
                         itemBuilder: (context, index) {
                           return buildItemCard(

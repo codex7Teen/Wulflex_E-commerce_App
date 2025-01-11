@@ -78,111 +78,150 @@ class ScreenAccount extends StatelessWidget {
                       ),
                       const SizedBox(height: 28),
                       //! ACCOUNT HEADING
-                      AccountScreenWidgets.buildAccountHeading(context),
+                      FadeIn(
+                          duration: const Duration(milliseconds: 100),
+                          child: AccountScreenWidgets.buildAccountHeading(
+                              context)),
                       const SizedBox(height: 8),
                       //! MY ORDERS
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () =>
-                              NavigationHelper.navigateToWithoutReplacement(
-                                  context,
-                                  const InternetConnectionWrapper(
-                                      child: ScreenMyOrders())),
-                          icon: Icons.shopping_bag_rounded,
-                          name: "MY ORDERS"),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 200),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context,
+                                    const InternetConnectionWrapper(
+                                        child: ScreenMyOrders())),
+                            icon: Icons.shopping_bag_rounded,
+                            name: "MY ORDERS"),
+                      ),
                       const SizedBox(height: 14),
                       //! MY PROFILE
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () =>
-                              NavigationHelper.navigateToWithoutReplacement(
-                                  context,
-                                  const InternetConnectionWrapper(
-                                      child: ScreenProfile())),
-                          icon: Icons.person,
-                          name: "MY PROFILE"),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 300),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context,
+                                    const InternetConnectionWrapper(
+                                        child: ScreenProfile())),
+                            icon: Icons.person,
+                            name: "MY PROFILE"),
+                      ),
                       const SizedBox(height: 14),
                       //! ADDRESS BOOK
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () =>
-                              NavigationHelper.navigateToWithoutReplacement(
-                                  context,
-                                  const InternetConnectionWrapper(
-                                      child: ScreenManageAddress())),
-                          icon: Icons.my_library_books,
-                          name: "ADDRESS BOOK"),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 400),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context,
+                                    const InternetConnectionWrapper(
+                                        child: ScreenManageAddress())),
+                            icon: Icons.my_library_books,
+                            name: "ADDRESS BOOK"),
+                      ),
                       const SizedBox(height: 14),
                       //! SETTINGS
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () {
-                            NavigationHelper.navigateToWithoutReplacement(
-                                context,
-                                const InternetConnectionWrapper(
-                                    child: ScreenSettings()));
-                          },
-                          icon: Icons.settings,
-                          name: "SETTINGS"),
-                      const SizedBox(height: 28),
-                      //! CUSTOMER SUPPORT
-                      AccountScreenWidgets.buildConnectHeading(context),
-                      const SizedBox(height: 8),
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () =>
+                      FadeIn(
+                        duration: const Duration(milliseconds: 500),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () {
                               NavigationHelper.navigateToWithoutReplacement(
                                   context,
                                   const InternetConnectionWrapper(
-                                      child: ScreenCustomerSupport())),
-                          icon: Icons.support_agent_rounded,
-                          name: "CUSTOMER SUPPORT"),
+                                      child: ScreenSettings()), transitionDuration: 150);
+                            },
+                            icon: Icons.settings,
+                            name: "SETTINGS"),
+                      ),
+                      const SizedBox(height: 28),
+                      //! CONNECT HEADING
+                      FadeIn(
+                          duration: const Duration(milliseconds: 600),
+                          child: AccountScreenWidgets.buildConnectHeading(
+                              context)),
+                      const SizedBox(height: 8),
+                      //! CUSTOMER SUPPORT
+                      FadeIn(
+                        duration: const Duration(milliseconds: 700),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context,
+                                    const InternetConnectionWrapper(
+                                        child: ScreenCustomerSupport())),
+                            icon: Icons.support_agent_rounded,
+                            name: "CUSTOMER SUPPORT"),
+                      ),
                       const SizedBox(height: 14),
                       //! SOCIAL MEDIA ACCOUNT
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () async {
-                            try {
-                              await AccountScreenWidgets.launchInstagram();
-                            } catch (error) {
-                              if (context.mounted) {
-                                CustomSnackbar.showCustomSnackBar(
-                                    context, "Could not open Instagram",
-                                    icon: Icons.error);
+                      FadeIn(
+                        duration: const Duration(milliseconds: 800),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () async {
+                              try {
+                                await AccountScreenWidgets.launchInstagram();
+                              } catch (error) {
+                                if (context.mounted) {
+                                  CustomSnackbar.showCustomSnackBar(
+                                      context, "Could not open Instagram",
+                                      icon: Icons.error);
+                                }
+                                log(error.toString());
                               }
-                              log(error.toString());
-                            }
-                          },
-                          icon: Icons.smartphone_rounded,
-                          name: "INSTAGRAM"),
+                            },
+                            icon: Icons.smartphone_rounded,
+                            name: "INSTAGRAM"),
+                      ),
                       const SizedBox(height: 28),
                       //! SIGN OUT
-                      AccountScreenWidgets.buildAppHeading(context),
+                      FadeIn(
+                          duration: const Duration(milliseconds: 900),
+                          child: AccountScreenWidgets.buildAppHeading(context)),
                       const SizedBox(height: 8),
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () {
-                            showCustomSignoutWarningAlertBox(context);
-                          },
-                          icon: Icons.logout_rounded,
-                          name: "SIGN OUT"),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 1000),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () {
+                              showCustomSignoutWarningAlertBox(context);
+                            },
+                            icon: Icons.logout_rounded,
+                            name: "SIGN OUT"),
+                      ),
                       const SizedBox(height: 14),
                       //! DELETE ACCOUNT
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () =>
-                              NavigationHelper.navigateToWithoutReplacement(
-                                  context, const ScreenRelogin()),
-                          icon: Icons.person_off_rounded,
-                          name: "DELETE ACCOUNT"),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 1100),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context, const ScreenRelogin()),
+                            icon: Icons.person_off_rounded,
+                            name: "DELETE ACCOUNT"),
+                      ),
                       const SizedBox(height: 14),
                       //! PRIVACY POLICY
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () =>
-                              NavigationHelper.navigateToWithoutReplacement(
-                                  context, const PrivacyPolicyScreen()),
-                          icon: Icons.security,
-                          name: "PRIVACY POLICY"),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 1200),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context, const PrivacyPolicyScreen(), transitionDuration: 150),
+                            icon: Icons.security,
+                            name: "PRIVACY POLICY"),
+                      ),
                       const SizedBox(height: 14),
                       //! TERMS AND CONDITIONS
-                      AccountScreenWidgets.buildButtonCards(
-                          onTap: () =>
-                              NavigationHelper.navigateToWithoutReplacement(
-                                  context, const TermsAndConditionsScreen()),
-                          icon: Icons.assignment,
-                          name: "TERMS & CONDITIONS"),
+                      FadeIn(
+                        duration: const Duration(milliseconds: 1300),
+                        child: AccountScreenWidgets.buildButtonCards(
+                            onTap: () =>
+                                NavigationHelper.navigateToWithoutReplacement(
+                                    context, const TermsAndConditionsScreen(), transitionDuration: 150),
+                            icon: Icons.assignment,
+                            name: "TERMS & CONDITIONS"),
+                      ),
                     ],
                   ),
                 ),

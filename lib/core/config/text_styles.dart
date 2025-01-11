@@ -172,8 +172,8 @@ class AppTextStyles {
   static final TextStyle itemCardBrandText = GoogleFonts.robotoCondensed(
       fontWeight: FontWeight.bold,
       color: AppColors.blackThemeColor,
-      fontSize: 17.5,
-      letterSpacing: 0.8);
+      fontSize: 17,
+      letterSpacing: 0.7);
 
   //! ITEM-CARD PRODUCT NAME TEXT (ITEM NAME)
   static final TextStyle itemCardNameText = GoogleFonts.robotoCondensed(

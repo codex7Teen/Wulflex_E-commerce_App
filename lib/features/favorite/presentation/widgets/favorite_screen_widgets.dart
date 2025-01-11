@@ -28,7 +28,7 @@ class FavoriteScreenWidgets {
           crossAxisCount: 2,
           crossAxisSpacing: 15,
           mainAxisSpacing: 7.5,
-          childAspectRatio: 0.604),
+          childAspectRatio: 0.545),
       itemCount: state.favorites.length,
       itemBuilder: (context, index) {
         return buildItemCard(context, state.favorites[index]);

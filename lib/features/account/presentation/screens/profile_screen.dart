@@ -48,14 +48,24 @@ class ScreenProfile extends StatelessWidget {
                           child: ProfileScreenWidgets.buildWelcomeText(
                               context, user.name)),
                       const SizedBox(height: 15),
-                      ProfileScreenWidgets.buildName(user.name),
+                      FadeIn(
+                          delay: const Duration(milliseconds: 100),
+                          child: ProfileScreenWidgets.buildName(user.name)),
                       const SizedBox(height: 15),
-                      ProfileScreenWidgets.buildAccountInfo(user.email),
+                      FadeIn(
+                          delay: const Duration(milliseconds: 200),
+                          child: ProfileScreenWidgets.buildAccountInfo(
+                              user.email)),
                       const SizedBox(height: 15),
-                      ProfileScreenWidgets.buildPhoneNumber(
-                          user.phoneNumber ?? ''),
+                      FadeIn(
+                        delay: const Duration(milliseconds: 300),
+                        child: ProfileScreenWidgets.buildPhoneNumber(
+                            user.phoneNumber ?? ''),
+                      ),
                       const SizedBox(height: 15),
-                      ProfileScreenWidgets.buildDob(user.dob ?? ''),
+                      FadeIn(
+                          delay: const Duration(milliseconds: 400),
+                          child: ProfileScreenWidgets.buildDob(user.dob ?? '')),
                       const SizedBox(height: 28),
                       ProfileScreenWidgets.buildEditButton(
                           context,

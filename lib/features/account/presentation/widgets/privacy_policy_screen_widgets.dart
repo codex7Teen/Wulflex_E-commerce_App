@@ -20,7 +20,7 @@ class PrivacyPolicyScreenWidgets {
         ),
         const SizedBox(height: 10),
         const Text(
-          'Effective Date: January 2, 2025',
+          'Effective Date: January 11, 2025',
           style: TextStyle(fontSize: 14, color: Colors.grey),
         ),
         const SizedBox(height: 20),

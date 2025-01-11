@@ -72,7 +72,7 @@ class NotificationServices {
 
     try {
       const AndroidInitializationSettings initializationSettingsAndroid =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
+          AndroidInitializationSettings('@mipmap/launcher_icon');
 
       const InitializationSettings initializationSettings =
           InitializationSettings(android: initializationSettingsAndroid);
@@ -88,14 +88,12 @@ class NotificationServices {
 
     try {
       const AndroidNotificationDetails androidNotificationDetails =
-          AndroidNotificationDetails(
-        'channel_id',
-        'Channel Name',
-        channelDescription: 'Channel Description',
-        importance: Importance.high,
-        priority: Priority.high,
-        ticker: 'ticker',
-      );
+          AndroidNotificationDetails('channel_id', 'Channel Name',
+              channelDescription: 'Channel Description',
+              importance: Importance.high,
+              priority: Priority.high,
+              ticker: 'ticker',
+              icon: '@mipmap/launcher_icon');
 
       const NotificationDetails notificationDetails =
           NotificationDetails(android: androidNotificationDetails);

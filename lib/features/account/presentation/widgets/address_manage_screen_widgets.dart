@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -45,105 +46,108 @@ class AddressManageScreenWidgets {
         },
         itemBuilder: (context, index) {
           final address = addressList[index];
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border:
-                    Border.all(color: AppColors.greyThemeColor, width: 0.5)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      address.name,
-                      style: AppTextStyles.addressNameText(context),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(address.houseName,
-                        style: AppTextStyles.addressListItemsText(context)),
-                    Text("${address.areaName}, ${address.cityName}",
-                        style: AppTextStyles.addressListItemsText(context)),
-                    Text("${address.stateName}, ${address.pincode}",
-                        style: AppTextStyles.addressListItemsText(context)),
-                    const SizedBox(height: 10),
-                    Text("Phone: ${address.phoneNumber}",
-                        style: AppTextStyles.addressListItemsText(context)),
-                  ],
-                ),
-                const Spacer(),
-                PopupMenuButton<int>(
-                  onSelected: (value) {
-                    if (value == 0) {
-                      // Handle Edit action
-                      log('${address.id} EDIT ATTEMPTED');
-                      NavigationHelper.navigateToWithoutReplacement(
-                          context,
-                          ScreenEditAddress(
-                            addressId: address.id!,
-                            name: address.name,
-                            phoneNumber: address.phoneNumber,
-                            pincode: address.pincode,
-                            state: address.stateName,
-                            city: address.cityName,
-                            houseName: address.houseName,
-                            areaName: address.areaName,
-                          ));
-                    } else if (value == 1) {
-                      log('${address.id} DELETE ATTEMPTED');
-                      // Handle Delete action
-                      context
-                          .read<AddressBloc>()
-                          .add(DeleteAddressEvent(addressId: address.id!));
-                    }
-                  },
-                  icon: const Icon(
-                    Icons.more_vert_rounded,
-                    color: AppColors.darkishGrey,
-                    size: 24,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 0,
-                      child: Row(
-                        children: [
-                          const Icon(Icons.edit, color: AppColors.darkishGrey),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Edit',
-                            style: GoogleFonts.robotoCondensed(
-                              color: AppColors.blackThemeColor,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
+          return FadeIn(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  border:
+                      Border.all(color: AppColors.greyThemeColor, width: 0.5)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        address.name,
+                        style: AppTextStyles.addressNameText(context),
                       ),
+                      const SizedBox(height: 10),
+                      Text(address.houseName,
+                          style: AppTextStyles.addressListItemsText(context)),
+                      Text("${address.areaName}, ${address.cityName}",
+                          style: AppTextStyles.addressListItemsText(context)),
+                      Text("${address.stateName}, ${address.pincode}",
+                          style: AppTextStyles.addressListItemsText(context)),
+                      const SizedBox(height: 10),
+                      Text("Phone: ${address.phoneNumber}",
+                          style: AppTextStyles.addressListItemsText(context)),
+                    ],
+                  ),
+                  const Spacer(),
+                  PopupMenuButton<int>(
+                    onSelected: (value) {
+                      if (value == 0) {
+                        // Handle Edit action
+                        log('${address.id} EDIT ATTEMPTED');
+                        NavigationHelper.navigateToWithoutReplacement(
+                            context,
+                            ScreenEditAddress(
+                              addressId: address.id!,
+                              name: address.name,
+                              phoneNumber: address.phoneNumber,
+                              pincode: address.pincode,
+                              state: address.stateName,
+                              city: address.cityName,
+                              houseName: address.houseName,
+                              areaName: address.areaName,
+                            ));
+                      } else if (value == 1) {
+                        log('${address.id} DELETE ATTEMPTED');
+                        // Handle Delete action
+                        context
+                            .read<AddressBloc>()
+                            .add(DeleteAddressEvent(addressId: address.id!));
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.more_vert_rounded,
+                      color: AppColors.darkishGrey,
+                      size: 24,
                     ),
-                    PopupMenuItem(
-                      value: 1,
-                      child: Row(
-                        children: [
-                          const Icon(Icons.delete, color: Colors.red),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Delete',
-                            style: GoogleFonts.robotoCondensed(
-                              color: AppColors.blackThemeColor,
-                              fontSize: 16,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: 0,
+                        child: Row(
+                          children: [
+                            const Icon(Icons.edit,
+                                color: AppColors.darkishGrey),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Edit',
+                              style: GoogleFonts.robotoCondensed(
+                                color: AppColors.blackThemeColor,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      PopupMenuItem(
+                        value: 1,
+                        child: Row(
+                          children: [
+                            const Icon(Icons.delete, color: Colors.red),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Delete',
+                              style: GoogleFonts.robotoCondensed(
+                                color: AppColors.blackThemeColor,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           );
         },
@@ -176,100 +180,95 @@ class AddressManageScreenWidgets {
 
   static Widget buildAddressShimmer() {
     return Expanded(
-                    child: ListView.separated(
-                      itemCount: 4, // Show 3 shimmer cards
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 14),
-                      itemBuilder: (context, index) {
-                        return Shimmer.fromColors(
-                          baseColor: isLightTheme(context)
-                              ? Colors.grey[300]!
-                              : Colors.grey[800]!,
-                          highlightColor: isLightTheme(context)
-                              ? Colors.grey[100]!
-                              : Colors.grey[700]!,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              border: Border.all(
-                                  color: AppColors.greyThemeColor, width: 0.5),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Name shimmer
-                                    Container(
-                                      width: 120,
-                                      height: 20,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    // House name shimmer
-                                    Container(
-                                      width: 200,
-                                      height: 16,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    // Area and city shimmer
-                                    Container(
-                                      width: 180,
-                                      height: 16,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    // State and pincode shimmer
-                                    Container(
-                                      width: 160,
-                                      height: 16,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    // Phone number shimmer
-                                    Container(
-                                      width: 140,
-                                      height: 16,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                // Menu icon shimmer
-                                Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+      child: ListView.separated(
+        itemCount: 4, // Show 3 shimmer cards
+        separatorBuilder: (context, index) => const SizedBox(height: 14),
+        itemBuilder: (context, index) {
+          return Shimmer.fromColors(
+            baseColor:
+                isLightTheme(context) ? Colors.grey[300]! : Colors.grey[800]!,
+            highlightColor:
+                isLightTheme(context) ? Colors.grey[100]! : Colors.grey[700]!,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(color: AppColors.greyThemeColor, width: 0.5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Name shimmer
+                      Container(
+                        width: 120,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // House name shimmer
+                      Container(
+                        width: 200,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      // Area and city shimmer
+                      Container(
+                        width: 180,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      // State and pincode shimmer
+                      Container(
+                        width: 160,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Phone number shimmer
+                      Container(
+                        width: 140,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  // Menu icon shimmer
+                  Container(
+                    width: 24,
+                    height: 24,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
                     ),
-                  );
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
