@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
@@ -35,6 +36,9 @@ class _NoNetworkScreenState extends State<NoNetworkScreen>
   }
 
   void _onRetry() async {
+    // Open network settings
+    await AppSettings.openAppSettingsPanel(
+        AppSettingsPanelType.internetConnectivity);
     setState(() {
       _isLoading = true;
     });

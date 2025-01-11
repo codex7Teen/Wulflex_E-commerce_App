@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wulflex/features/account/presentation/screens/privacy_policy_screen.dart';
+import 'package:wulflex/features/account/presentation/screens/terms_and_conditions_screen.dart';
 import 'package:wulflex/features/auth/bloc/authentication_bloc/authenticaton_bloc_bloc.dart';
 import 'package:wulflex/features/auth/presentation/screens/login_screen.dart';
 import 'package:wulflex/core/config/text_styles.dart';
@@ -127,7 +128,8 @@ class SignupWidgets {
         ),
         const SizedBox(width: 5),
         GestureDetector(
-           onTap: () => NavigationHelper.navigateToWithoutReplacement(context, const PrivacyPolicyScreen()),
+          onTap: () => NavigationHelper.navigateToWithoutReplacement(
+              context, const TermsAndConditionsScreen()),
           child: Text("Terms & Conditions",
               style: AppTextStyles.termsAndConditionAndPrivacyPolicyGreenText),
         ),

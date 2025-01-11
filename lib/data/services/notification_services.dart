@@ -28,7 +28,7 @@ class NotificationServices {
     }
   }
 
-    // Check current permission status
+  // Check current permission status
   Future<bool> checkPermissionStatus() async {
     final settings = await _firebaseMessaging.getNotificationSettings();
     return settings.authorizationStatus == AuthorizationStatus.authorized;
