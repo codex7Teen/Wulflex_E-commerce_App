@@ -35,4 +35,23 @@ class FavoriteScreenWidgets {
       },
     );
   }
+
+  static Widget buildEmptyFavoritesDisplay(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Lottie.asset('assets/lottie/favorite_hearts_lottie.json',
+              width: 190, repeat: false),
+          Text(
+            'Your favorites list is lonely.\n Add some love!',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.emptyScreenText(context),
+          ),
+          const SizedBox(height: 90)
+        ],
+      ),
+    );
+  }
 }

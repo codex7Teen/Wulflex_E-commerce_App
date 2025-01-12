@@ -9,6 +9,9 @@ PreferredSizeWidget customAppbarWithBackbutton(
   return AppBar(
     backgroundColor: Colors.transparent,
     automaticallyImplyLeading: false,
+    elevation: 0, // Add this to remove shadow
+    scrolledUnderElevation: 0, // Add this to prevent color change on scroll
+    surfaceTintColor: Colors.transparent, // Add this to prevent tint
     actions: [
       Expanded(
         child: Row(

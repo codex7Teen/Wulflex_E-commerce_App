@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/features/cart/bloc/cart_bloc/cart_bloc.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
@@ -19,6 +20,7 @@ class _ScreenHomeState extends State<ScreenHome> {
   @override
   void initState() {
     super.initState();
+    context.read<UserProfileBloc>().add(FetchUserProfileEvent());
     context.read<CartBloc>().add(FetchCartEvent());
     context.read<FavoriteBloc>().add(LoadFavoritesEvent());
     // Delaying the pre-caching to ensure the context is fully built

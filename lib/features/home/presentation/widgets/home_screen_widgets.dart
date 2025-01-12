@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wulflex/features/account/bloc/user_profile_bloc/user_profile_bloc.dart';
 import 'package:wulflex/features/home/bloc/product_bloc/product_bloc.dart';
 import 'package:wulflex/features/account/presentation/screens/profile_screen.dart';
 import 'package:wulflex/features/home/presentation/screens/all_categories_screen.dart';
@@ -39,15 +41,54 @@ Widget buildExploreTextAndLogo(BuildContext context) {
       const Spacer(),
       // Theme toggle switch widget
       ThemeToggleSwitchWidget(isLightTheme: isLightTheme),
-      IconButton(
-        icon: Icon(Icons.person,
-            color: isLightTheme
-                ? AppColors.blackThemeColor
-                : AppColors.whiteThemeColor,
-            size: 30),
-        onPressed: () {
-          NavigationHelper.navigateToWithoutReplacement(
-              context, const ScreenProfile());
+      BlocBuilder<UserProfileBloc, UserProfileState>(
+        buildWhen: (previous, current) {
+          return current is UserProfileLoaded;
+        },
+        builder: (context, state) {
+          if (state is UserProfileLoaded) {
+            final user = state.user;
+            if (user.userImage != null) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 10, right: 4),
+                child: GestureDetector(
+                  onTap: () => NavigationHelper.navigateToWithoutReplacement(
+                      context, const ScreenProfile()),
+                  child: SizedBox(
+                      height: 28,
+                      width: 28,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(25),
+                          child: Hero(
+                            tag: 'user_image',
+                            child: CachedNetworkImage(
+                              imageUrl: user.userImage!,
+                              fit: BoxFit.cover,
+                            ),
+                          ))),
+                ),
+              );
+            }
+            return IconButton(
+                icon: Icon(Icons.person,
+                    color: isLightTheme
+                        ? AppColors.blackThemeColor
+                        : AppColors.whiteThemeColor,
+                    size: 30),
+                onPressed: () => NavigationHelper.navigateToWithoutReplacement(
+                    context, const ScreenProfile()));
+          }
+          return IconButton(
+            icon: Icon(Icons.person,
+                color: isLightTheme
+                    ? AppColors.blackThemeColor
+                    : AppColors.whiteThemeColor,
+                size: 30),
+            onPressed: () {
+              NavigationHelper.navigateToWithoutReplacement(
+                  context, const ScreenProfile());
+            },
+          );
         },
       )
     ],

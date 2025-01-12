@@ -1,8 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
-import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/favorite/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/features/favorite/presentation/widgets/favorite_screen_widgets.dart';
@@ -41,25 +39,10 @@ class ScreenFavorite extends StatelessWidget {
               } else if (state is FavoriteLoaded) {
                 // check if favorites list is empty
                 if (state.favorites.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Lottie.asset(
-                            'assets/lottie/favorite_hearts_lottie.json',
-                            width: 190,
-                            repeat: false),
-                        Text(
-                          'Your favorites list is lonely.\n Add some love!',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.emptyScreenText(context),
-                        ),
-                        const SizedBox(height: 90)
-                      ],
-                    ),
-                  );
+                  //! FAVORITES EMPTY
+                  return FavoriteScreenWidgets.buildEmptyFavoritesDisplay(context);
                 } else {
+                  //! FAVORITE ITEM CARDS
                   return SlideInDown(
                       child:
                           FavoriteScreenWidgets.buildItemCards(context, state));
