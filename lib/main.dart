@@ -26,17 +26,14 @@ void main() async {
   // Request notification permission
   await NotificationServices().requestPermission();
   await NotificationServices().init();
-
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      //! BLOC PROVIDERS
       providers: AppBlocProviders.providers,
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
