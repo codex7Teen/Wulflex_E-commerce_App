@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/navigation/bottom_navigation_screen.dart';
 import 'package:wulflex/data/models/order_model.dart';

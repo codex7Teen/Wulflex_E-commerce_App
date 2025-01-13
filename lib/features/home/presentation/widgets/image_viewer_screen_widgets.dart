@@ -60,7 +60,7 @@ class ImageViewerScreenWidgets {
           count: imageUrls.length,
           effect: ExpandingDotsEffect(
             activeDotColor: AppColors.greenThemeColor,
-            dotColor: Colors.black.withOpacity(0.4),
+            dotColor: Colors.black.withValues(alpha: 0.4),
             dotHeight: 8,
             dotWidth: 8,
           ),

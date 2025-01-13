@@ -217,7 +217,8 @@ class PaymentScreenShimmer extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 18, left: 18, right: 18, bottom: 24),
+        padding:
+            const EdgeInsets.only(top: 18, left: 18, right: 18, bottom: 24),
         child: Shimmer.fromColors(
           baseColor: isLightTheme(context)
               ? const Color(0xFFEEEEEE)
@@ -229,7 +230,8 @@ class PaymentScreenShimmer extends StatelessWidget {
             children: [
               // Total Amount Container Shimmer
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -272,10 +274,11 @@ class PaymentScreenShimmer extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 18),
-              
+
               // Payment Options Container Shimmer
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 11, horizontal: 18),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -306,12 +309,13 @@ class PaymentScreenShimmer extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    
+
                     // Cash on Delivery Option Shimmer
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 14),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 11, horizontal: 14),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.white.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -346,12 +350,13 @@ class PaymentScreenShimmer extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    
+
                     // Razorpay Option Shimmer
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 14, horizontal: 14),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.white.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -379,9 +384,9 @@ class PaymentScreenShimmer extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               const Spacer(),
-              
+
               // Place Order Button Shimmer
               Container(
                 width: double.infinity,
