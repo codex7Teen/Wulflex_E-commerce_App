@@ -1,8 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/features/account/bloc/notification_bloc/notification_bloc_bloc.dart';
 import 'package:wulflex/features/account/presentation/widgets/settings_screen_widgets.dart';
 import 'package:wulflex/core/config/app_colors.dart';
@@ -36,12 +34,12 @@ class _ScreenSettingsState extends State<ScreenSettings> {
         child: Column(
           children: [
             FadeIn(
-              duration: Duration(milliseconds: 100),
-              child: SettingsScreenWidgets.buildAppthemeToggler(context)),
+                duration: const Duration(milliseconds: 100),
+                child: SettingsScreenWidgets.buildAppthemeToggler(context)),
             const SizedBox(height: 14),
             FadeIn(
-              duration: Duration(milliseconds: 200),
-              child: SettingsScreenWidgets.buildNotificationToggeler())
+                duration: const Duration(milliseconds: 200),
+                child: SettingsScreenWidgets.buildNotificationToggeler())
           ],
         ),
       ),

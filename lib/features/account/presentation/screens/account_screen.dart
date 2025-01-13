@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -130,7 +129,8 @@ class ScreenAccount extends StatelessWidget {
                               NavigationHelper.navigateToWithoutReplacement(
                                   context,
                                   const InternetConnectionWrapper(
-                                      child: ScreenSettings()), transitionDuration: 150);
+                                      child: ScreenSettings()),
+                                  transitionDuration: 150);
                             },
                             icon: Icons.settings,
                             name: "SETTINGS"),
@@ -207,7 +207,8 @@ class ScreenAccount extends StatelessWidget {
                         child: AccountScreenWidgets.buildButtonCards(
                             onTap: () =>
                                 NavigationHelper.navigateToWithoutReplacement(
-                                    context, const PrivacyPolicyScreen(), transitionDuration: 150),
+                                    context, const PrivacyPolicyScreen(),
+                                    transitionDuration: 150),
                             icon: Icons.security,
                             name: "PRIVACY POLICY"),
                       ),
@@ -218,10 +219,16 @@ class ScreenAccount extends StatelessWidget {
                         child: AccountScreenWidgets.buildButtonCards(
                             onTap: () =>
                                 NavigationHelper.navigateToWithoutReplacement(
-                                    context, const TermsAndConditionsScreen(), transitionDuration: 150),
+                                    context, const TermsAndConditionsScreen(),
+                                    transitionDuration: 150),
                             icon: Icons.assignment,
                             name: "TERMS & CONDITIONS"),
                       ),
+                      const SizedBox(height: 28),
+                      //! APP LOGO & VERSION
+                      AccountScreenWidgets.buildAppLogo(context),
+                      const SizedBox(height: 2),
+                      AccountScreenWidgets.buildAppVersion(context),
                     ],
                   ),
                 ),

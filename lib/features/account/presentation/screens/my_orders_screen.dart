@@ -39,10 +39,10 @@ class ScreenMyOrders extends StatelessWidget {
                 if (orders.isNotEmpty) {
                   return Padding(
                     padding: const EdgeInsets.only(
-                        left: 6, right: 6, top: 18, bottom: 18),
+                        left: 6, right: 6, top: 18, bottom: 10),
                     child: Column(children: [
                       MyOrdersScreenWidgets.buildOrdersContainerWidget(
-                          context, orders)
+                          context, orders),
                     ]),
                   );
                 } else {
@@ -50,7 +50,7 @@ class ScreenMyOrders extends StatelessWidget {
                       context);
                 }
               }
-              return const Text('sorry');
+              return const Text('Unexpected error! Please retry...');
             },
           ),
           Visibility(

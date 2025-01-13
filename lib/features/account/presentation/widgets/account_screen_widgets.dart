@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:wulflex/core/config/app_colors.dart';
 import 'package:wulflex/core/config/text_styles.dart';
 import 'package:wulflex/data/models/user_model.dart';
+import 'package:wulflex/shared/widgets/theme_data_helper_widget.dart';
 
 class AccountScreenWidgets {
   static Widget buildButtonCards(
@@ -56,7 +57,7 @@ class AccountScreenWidgets {
                     left: 36.6,
                     top: 36,
                     child: Hero(
-                       tag: 'user_image',
+                      tag: 'user_image',
                       child: SizedBox(
                         height: 180 * 0.6, // 70% of the Lottie's size
                         width: 180 * 0.6,
@@ -83,7 +84,8 @@ class AccountScreenWidgets {
                                     strokeWidth: 6,
                                     value: loadingProgress.expectedTotalBytes !=
                                             null
-                                        ? loadingProgress.cumulativeBytesLoaded /
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
                                             loadingProgress.expectedTotalBytes!
                                         : null),
                               ));
@@ -154,5 +156,22 @@ class AccountScreenWidgets {
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  static Widget buildAppLogo(BuildContext context) {
+    return Center(
+      child: Image.asset("assets/wulflex_logo_nobg.png",
+          width: 27,
+          color: isLightTheme(context)
+              ? AppColors.blackThemeColor
+              : AppColors.whiteThemeColor),
+    );
+  }
+
+  static Widget buildAppVersion(BuildContext context) {
+    return Center(
+      child: Text('Version: 1.0.0',
+          style: AppTextStyles.ratingScreenTextFieldhintStyle(context)),
+    );
   }
 }
