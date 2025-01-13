@@ -351,10 +351,19 @@ class ViewProductDetailsWidgets {
 
   static Widget buildWeightSelectors(String? selectedWeight,
       ProductModel product, void Function(String) onSizeTapped) {
+    // Create a sorted copy of the weights list
+    final sortedWeights = List<String>.from(product.weights)
+      ..sort((a, b) {
+        // Extract numbers from strings (removing 'KG' and converting to double)
+        double weightA = double.parse(a.replaceAll(' KG', ''));
+        double weightB = double.parse(b.replaceAll(' KG', ''));
+        return weightA.compareTo(weightB);
+      });
+
     return Visibility(
       visible: product.weights.isNotEmpty,
       child: Row(
-        children: product.weights.reversed.map((weight) {
+        children: sortedWeights.map((weight) {
           return Padding(
             padding: const EdgeInsets.only(right: 10),
             child: CustomWeightandsizeSelectorContainerWidget(

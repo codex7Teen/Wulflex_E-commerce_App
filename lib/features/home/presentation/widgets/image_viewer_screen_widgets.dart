@@ -31,6 +31,9 @@ class ImageViewerScreenWidgets {
               : event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 1),
         ),
       ),
+      backgroundDecoration: const BoxDecoration(
+        color: Colors.white, // Set gallery background decoration
+      ),
     );
   }
 
@@ -39,7 +42,7 @@ class ImageViewerScreenWidgets {
       top: MediaQuery.of(context).padding.top + 10,
       left: 10,
       child: IconButton(
-        icon: const Icon(Icons.close, color: Colors.white, size: 30),
+        icon: const Icon(Icons.close, color: Colors.black, size: 30),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
@@ -57,7 +60,7 @@ class ImageViewerScreenWidgets {
           count: imageUrls.length,
           effect: ExpandingDotsEffect(
             activeDotColor: AppColors.greenThemeColor,
-            dotColor: Colors.white.withValues(alpha: 0.4),
+            dotColor: Colors.black.withOpacity(0.4),
             dotHeight: 8,
             dotWidth: 8,
           ),
