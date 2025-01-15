@@ -27,6 +27,12 @@ allprojects {
     }
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "com.example.wulflex"
     compileSdk = flutter.compileSdkVersion
@@ -50,13 +56,22 @@ android {
         minSdkVersion 24
     }
 
+    signingConfigs {
+        release {
+            keyAlias = keystoreProperties['keyAlias']
+            keyPassword = keystoreProperties['keyPassword']
+            storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword = keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
             // Add ProGuard configuration for release build
             minifyEnabled true // Enables ProGuard
             shrinkResources true // Shrinks unused resources
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' // Reference the ProGuard file
-            signingConfig signingConfigs.debug // You can change this to your release signing config
+            signingConfig = signingConfigs.release
         }
     }
 }
@@ -67,4 +82,5 @@ flutter {
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.5.1')
+    implementation("com.google.android.material:material:1.12.0")
 }

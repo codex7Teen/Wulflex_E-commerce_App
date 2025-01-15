@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,6 +53,7 @@ class ScreenCart extends StatelessWidget {
                   0.0,
                   (sum, product) =>
                       sum + (product.offerPrice * product.quantity));
+              log('TOTAL AMOUNT: ${total.toInt()}');
 
               return Stack(
                 children: [

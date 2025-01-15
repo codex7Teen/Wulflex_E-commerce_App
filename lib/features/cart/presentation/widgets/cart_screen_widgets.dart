@@ -91,38 +91,33 @@ class _AnimatedCartItemsPriceDetailsContainerState
     with TickerProviderStateMixin {
   late AnimationController _priceController;
   late AnimationController _scaleController;
-
   late Animation<double> _totalAnimation;
   late Animation<double> _scaleAnimation;
   late Animation<double> opacityAnimation;
 
+  double _previousTotal = 0.0;
   final NumberFormat _numberFormat = NumberFormat('#,##,###.##');
 
   @override
   void initState() {
     super.initState();
+    _initializeAnimations();
+    _previousTotal = widget.total;
+  }
 
-    // Setup price animation controller
+  void _initializeAnimations() {
     _priceController = AnimationController(
       duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
 
-    // Setup scale animation controller
     _scaleController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
 
-    _totalAnimation = Tween<double>(
-      begin: 0,
-      end: widget.total,
-    ).animate(CurvedAnimation(
-      parent: _priceController,
-      curve: Curves.easeOutCubic,
-    ));
+    _updateTotalAnimation();
 
-    // Scale animation for the "bang" effect
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 1.0, end: 1.15),
@@ -137,7 +132,6 @@ class _AnimatedCartItemsPriceDetailsContainerState
       curve: Curves.easeInOut,
     ));
 
-    // Opacity animation
     opacityAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -146,11 +140,34 @@ class _AnimatedCartItemsPriceDetailsContainerState
       curve: const Interval(0.6, 1.0, curve: Curves.easeIn),
     ));
 
-    // Start animations
-    Future.delayed(const Duration(milliseconds: 300), () async {
-      await _priceController.forward();
+    // Start initial animations
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _priceController.forward();
       _scaleController.forward();
     });
+  }
+
+  void _updateTotalAnimation() {
+    _totalAnimation = Tween<double>(
+      begin: _previousTotal,
+      end: widget.total,
+    ).animate(CurvedAnimation(
+      parent: _priceController,
+      curve: Curves.easeOutCubic,
+    ));
+  }
+
+  @override
+  void didUpdateWidget(AnimatedCartItemsPriceDetailsContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.total != widget.total) {
+      _previousTotal = oldWidget.total;
+      _updateTotalAnimation();
+      _priceController.reset();
+      _scaleController.reset();
+      _priceController.forward();
+      _scaleController.forward();
+    }
   }
 
   @override
@@ -283,7 +300,8 @@ class _AnimatedCartItemsPriceDetailsContainerState
                 onTap: () {
                   NavigationHelper.navigateToWithoutReplacement(
                     context,
-                    const InternetConnectionWrapper(child: ScreenOrderSummary()),
+                    const InternetConnectionWrapper(
+                        child: ScreenOrderSummary()),
                   );
                 },
                 addIcon: true,

@@ -101,7 +101,7 @@ class AuthService {
 
       return await _auth.signInWithCredential(cred);
     } catch (e) {
-      log("GOOGLE AUTHORISATION ERROR");
+      log("GOOGLE AUTHORISATION ERROR ${e.toString()}");
       handleError("Error: Something went wrong");
     }
     return null;
