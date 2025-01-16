@@ -64,6 +64,10 @@ Widget buildExploreTextAndLogo(BuildContext context) {
                             child: CachedNetworkImage(
                               imageUrl: user.userImage!,
                               fit: BoxFit.cover,
+                              progressIndicatorBuilder:
+                                  (context, url, progress) {
+                                return const CircularProgressIndicator();
+                              },
                             ),
                           ))),
                 ),

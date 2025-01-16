@@ -170,7 +170,7 @@ class AccountScreenWidgets {
 
   static Widget buildAppVersion(BuildContext context) {
     return Center(
-      child: Text('Version: 1.0.1',
+      child: Text('Version: 1.0.2',
           style: AppTextStyles.ratingScreenTextFieldhintStyle(context)),
     );
   }
