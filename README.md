@@ -26,7 +26,7 @@ Here are some previews of Wulflex in action:
   <img src="screenshots/Screenshot_20250114_161225.jpg" width="250"> 
 </p>
 
-_All screenshots are available in the `assets/screenshots/` folder._
+_All screenshots are available in the `screenshots/` folder._
 
 ## 📲 Download the App
 🔗 **User App:** [Wulflex App](https://www.amazon.com/dp/B0DT47LW78)  
