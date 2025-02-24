@@ -66,7 +66,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 **Author:** Dennis  
-📌 **LinkedIn:** (https://www.linkedin.com/in/dennis-johnson-flutter-developer/)
-📌 **GitHub:** (https://github.com/codex7Teen)
+📌 **LinkedIn:** [LinkedIn](https://www.linkedin.com/in/dennis-johnson-flutter-developer/)
+📌 **GitHub:** [GitHub](https://github.com/codex7Teen)
 
 **Let me know your thoughts and feel free to contribute! 🚀🔥**
